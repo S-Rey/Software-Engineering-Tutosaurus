@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ch.epfl.sweng.tutosaurus.MainActivity">
+
+    <Button
+        android:text="Home Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nextActivityButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textStyle="normal|bold"
+        android:onClick="sendMessage" />
+
+    <TextView
+        android:text="@string/welcoming_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomingMessage"
+        android:textSize="24sp"
+        android:textStyle="normal|bold|italic"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/instructions_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/instructionsMessage"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textAllCaps="false"
+        android:layout_below="@+id/welcomingMessage"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/username_ask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usernameText"
+        android:textSize="24sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textAlignment="center"
+        android:layout_below="@+id/instructionsMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/usernameEntry"
+        android:hint="@string/username"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@+id/usernameText"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/password_ask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/passwordText"
+        android:textSize="24sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textAlignment="center"
+        android:layout_below="@+id/usernameEntry"
+        android:layout_alignLeft="@+id/usernameText"
+        android:layout_alignStart="@+id/usernameText"
+        android:layout_marginTop="11dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/passwordEntry"
+        android:hint="@string/password"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@+id/passwordText"
+        android:layout_alignLeft="@+id/usernameEntry"
+        android:layout_alignStart="@+id/usernameEntry" />
+
+    <Button
+        android:text="@string/connection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/connectionButton"
+        android:background="@android:drawable/editbox_background"
+        android:textSize="24sp"
+        android:textColor="@android:color/holo_green_dark"
+        android:layout_below="@+id/passwordEntry"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:textAllCaps="false"
+        android:textStyle="normal|bold|italic" />
+
+</RelativeLayout>

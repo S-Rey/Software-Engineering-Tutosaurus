@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">TutoSaurus</string>
+    <string name="welcoming_message">Welcome to TutoSaurus !</string>
+    <string name="instructions_message">Please sign in with your GASPAR account !</string>
+    <string name="username_ask">Enter username</string>
+    <string name="password_ask">Enter password</string>
+    <string name="connection_button">Log in</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_logOut">Log out</string>
+
+    <string name="first_text">Developed by Team No Clue EPFL</string>
+    <string name="second_text">Software Engineering 2016</string>
+    <string name="third_text">All right reserved ©</string>
+
+    <string name="firstLayout_button">Profile</string>
+    <string name="secondLayout_button">Find Tutors</string>
+    <string name="thirdLayout_button">Be A Tutor</string>
+    <string name="fourthLayout_button">Settings</string>
+    <string name="fifthLayout_button">Help</string>
+    <string name="sixthLayout_button">About</string>
+    <string name="seventhLayout_button">My Appoint Results</string>
+</resources>
