@@ -1,32 +1,23 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
-public class PublicProfileActivity extends AppCompatActivity
+public class MathsProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_public_profile);
+        setContentView(R.layout.activity_maths_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,32 +30,7 @@ public class PublicProfileActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        RatingBar professorRate=(RatingBar) findViewById(R.id.ratingBarProfessor);
-        professorRate.setRating(3.5f);
-        RatingBar studentRate=(RatingBar) findViewById(R.id.ratingBarStudent);
-        studentRate.setRating(4f);
-
-        ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
-        level.setProgress(88);
-
-        ImageButton mathsButton=(ImageButton) findViewById(R.id.subjectOne);
-        mathsButton.setImageResource(R.drawable.calculator);
-
-        View.OnClickListener mathsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMathsProfile(v);
-            }
-        };
-        mathsButton.setOnClickListener(mathsClick);
-
         Intent intent = getIntent();
-    }
-
-
-    public void openMathsProfile(@SuppressWarnings("UnusedParameters") View view) {
-        Intent intent = new Intent(this, MathsProfileActivity.class);
-        startActivity(intent);
     }
     @Override
     public void onBackPressed() {

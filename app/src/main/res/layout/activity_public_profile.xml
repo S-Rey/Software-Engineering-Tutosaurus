@@ -107,7 +107,7 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="15dp"
-            android:id="@+id/progressBar2"
+            android:id="@+id/levelBar"
             android:progress="85"
             android:progressDrawable="@drawable/greenprogress"
             android:layout_marginTop="20dp"/>
@@ -157,9 +157,7 @@
                     android:background="@null"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    app:srcCompat="@drawable/calculator"
-                    android:id="@+id/mathsButton"
-                    android:onClick="openMathsProfile"/>
+                    android:id="@+id/subjectOne" />
                 <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
