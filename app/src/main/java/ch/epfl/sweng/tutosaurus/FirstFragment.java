@@ -1,17 +1,15 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Vincent on 05/10/2016.
- */
-
-public class FirstFragment extends Fragment {
+public class FirstFragment extends PreferenceFragment {
 
     View myView;
 
@@ -22,4 +20,7 @@ public class FirstFragment extends Fragment {
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Profile");
         return myView;
     }
+
+
+
 }
