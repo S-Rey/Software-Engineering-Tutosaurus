@@ -24,4 +24,8 @@
     <string name="fifthLayout_button">Help</string>
     <string name="sixthLayout_button">About</string>
     <string name="seventhLayout_button">My Appoint Results</string>
+    <string name="rate_app">Rate the app</string>
+    <string name="share_location">Share location</string>
+    <string name="sync_calendar">Sync calendar</string>
+    <string name="push_notifications">Notifications</string>
 </resources>
