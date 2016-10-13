@@ -115,7 +115,7 @@ public class PublicProfileActivity extends AppCompatActivity {
     }
     public void hideComments(@SuppressWarnings("UnusedParameters") View view){
         TextView comments=(TextView) findViewById(R.id.commentsView);
-        comments.setVisibility(View.INVISIBLE);
+        comments.setVisibility(View.GONE);
         Button thisButton=(Button) findViewById(R.id.commentsButton);
         thisButton.setText("Show comments");
         View.OnClickListener hideCommentsClick=new View.OnClickListener() {
