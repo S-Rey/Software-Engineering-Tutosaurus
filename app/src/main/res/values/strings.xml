@@ -27,4 +27,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rate_app">Rate the app</string>
+    <string name="share_location">Share location</string>
+    <string name="sync_calendar">Sync calendar</string>
+    <string name="push_notifications">Notifications</string>
+    <string name="load_picture">Load Picture</string>
+    <string name="title_lists_subjects">List of subjects</string>
+    <string name="dialog_list_subjects">dialog_list_subjects</string>
 </resources>

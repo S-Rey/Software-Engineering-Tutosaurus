@@ -1,10 +1,15 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +19,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static final int GALLERY_REQUEST = 1;
+    private ImageView pictureView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +49,7 @@ public class HomeScreenActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent intent = getIntent();
+        pictureView = (ImageView) findViewById(R.id.pictureView);
     }
 
     @Override
@@ -103,5 +118,39 @@ public class HomeScreenActivity extends AppCompatActivity
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
+    }
+
+    public void loadImageFromGallery(View view) {
+        Intent imageGalleryIntent = new Intent(Intent.ACTION_PICK);
+        File picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String picturesDirectoryPath = picturesDirectory.getPath();
+        Uri uriRepresentationPicturesDir = Uri.parse(picturesDirectoryPath);
+        imageGalleryIntent.setDataAndType(uriRepresentationPicturesDir, "image/*");
+
+        startActivityForResult(imageGalleryIntent, GALLERY_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GALLERY_REQUEST) {
+
+            if (resultCode == RESULT_OK) {
+
+                Uri imageSelectedUri = data.getData();
+                InputStream inputStream;
+
+                try {
+                    inputStream = getContentResolver().openInputStream(imageSelectedUri);
+                    Log.d("Tutosaurus", inputStream.toString());
+                    Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
+                    pictureView = (ImageView) findViewById(R.id.pictureView);
+                    pictureView.setImageBitmap(imageSelected);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }
     }
 }
