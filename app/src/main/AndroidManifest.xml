@@ -20,13 +20,21 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PublicProfileActivity"
-            android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MathsProfileActivity"
+            android:name=".MathsProfileActivity"
             android:label="Mathematics"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PhysicsProfileActivity"
+            android:label="Physics"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChemistryProfileActivity"
+            android:label="Chemistry"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PublicProfileActivity"
+            android:label="@string/title_activity_public_profile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

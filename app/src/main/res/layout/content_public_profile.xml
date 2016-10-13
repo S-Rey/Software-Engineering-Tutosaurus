@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ch.epfl.sweng.tutosaurus.PublicProfileActivity"
+    tools:showIn="@layout/activity_public_profile">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="false"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="16dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_weight="0.6">
+
+                <TextView
+                    android:text="Alberto Chiappa"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.50"
+                    android:id="@+id/profileName"
+                    android:textSize="36sp"
+                    android:gravity="center_horizontal|top"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:text="Professor"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.1"
+                    android:id="@+id/professorView"
+                    android:textSize="16sp"
+                    android:gravity="top"
+                    android:textAlignment="center"/>
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.2"
+                    android:id="@+id/ratingBarProfessor"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:numStars="5"
+                    android:stepSize="0.1"
+                    android:isIndicator="true" />
+                <TextView
+                    android:text="Student"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.1"
+                    android:id="@+id/studentView"
+                    android:textSize="16sp"
+                    android:gravity="top"
+                    android:textAlignment="center"/>
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.2"
+                    android:id="@+id/ratingBarStudent"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:numStars="5"
+                    android:stepSize="0.1"
+                    android:isIndicator="true" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/foto_mia"
+                android:id="@+id/imageView2"
+                android:maxWidth="42dp"
+                android:maxHeight="42dp"
+                android:scaleType="fitCenter"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="0dp" />
+        </LinearLayout>
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:id="@+id/levelBar"
+            android:progress="85"
+            android:progressDrawable="@drawable/greenprogress"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:text="level 10: Tirannosaurus Rex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/levelTextView"
+            android:textSize="20sp"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_gravity="bottom"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Expert in:"
+                android:layout_height="40dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_width="match_parent"
+                android:id="@+id/textView9"
+                android:textSize="24sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="65dp">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxWidth="42dp"
+                    android:maxHeight="42dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:id="@+id/subjectOne" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxWidth="42dp"
+                    android:maxHeight="42dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:id="@+id/subjectTwo" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxWidth="42dp"
+                    android:maxHeight="42dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    android:id="@+id/subjectThree" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxWidth="42dp"
+                    android:maxHeight="42dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+                    app:srcCompat="@drawable/computer"
+                    android:id="@+id/computerButton" />
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxWidth="42dp"
+                    android:maxHeight="42dp"
+                    android:scaleType="fitCenter"
+                    android:background="@null"
+
+                    app:srcCompat="@drawable/shapes"
+                    android:id="@+id/mechanicsButton" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:text="Email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView6"
+                    android:textSize="24sp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="bottom"/>
+
+                <TextView
+                    android:hint="alberto.chiappa@epfl.ch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView12"
+                    android:textSize="24sp"
+                    android:gravity="end|center_vertical"
+                    android:layout_gravity="bottom"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:text="Show comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/commentsButton"
+            android:background="@null"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:paddingTop="16dp"
+            android:onClick="showComments"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/large_text"
+            android:textSize="18sp"
+            android:visibility="invisible"
+            android:id="@+id/commentsView"
+            />
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

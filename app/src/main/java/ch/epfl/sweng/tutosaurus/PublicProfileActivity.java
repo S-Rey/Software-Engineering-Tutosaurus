@@ -2,26 +2,18 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class PublicProfileActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class PublicProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +22,31 @@ public class PublicProfileActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        // Set the ratings TODO: get ratings from database
         RatingBar professorRate=(RatingBar) findViewById(R.id.ratingBarProfessor);
         professorRate.setRating(3.5f);
         RatingBar studentRate=(RatingBar) findViewById(R.id.ratingBarStudent);
         studentRate.setRating(4f);
 
+        // Set the level TODO: get progress from database
         ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
         level.setProgress(88);
 
+        // Set the thaught subjects.
+        // TODO: get subject list from database
+        // TODO: make a method that sets the subject buttons
+        // TODO: make a general activity for subject and set specific elements depending on which button is clicked
+
+        // Maths button
         ImageButton mathsButton=(ImageButton) findViewById(R.id.subjectOne);
         mathsButton.setImageResource(R.drawable.calculator);
 
@@ -58,77 +58,73 @@ public class PublicProfileActivity extends AppCompatActivity
         };
         mathsButton.setOnClickListener(mathsClick);
 
+        // Physics button
+        ImageButton physicsButton=(ImageButton) findViewById(R.id.subjectTwo);
+        physicsButton.setImageResource(R.drawable.molecule);
+
+        View.OnClickListener physicsClick=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPhysicsProfile(v);
+            }
+        };
+        physicsButton.setOnClickListener(physicsClick);
+
+        // Chemistry button
+        ImageButton chemistryButton=(ImageButton) findViewById(R.id.subjectThree);
+        chemistryButton.setImageResource(R.drawable.flask);
+
+        View.OnClickListener chemistryClick=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openChemistryProfile(v);
+            }
+        };
+        chemistryButton.setOnClickListener(chemistryClick);
+
+
         Intent intent = getIntent();
     }
-
 
     public void openMathsProfile(@SuppressWarnings("UnusedParameters") View view) {
         Intent intent = new Intent(this, MathsProfileActivity.class);
         startActivity(intent);
     }
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    public void openPhysicsProfile(@SuppressWarnings("UnusedParameters") View view) {
+        Intent intent = new Intent(this, PhysicsProfileActivity.class);
+        //String message = "Physics";
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
+    public void openChemistryProfile(@SuppressWarnings("UnusedParameters") View view) {
+        Intent intent = new Intent(this, ChemistryProfileActivity.class);
+        startActivity(intent);
+    }
+    public void showComments(@SuppressWarnings("UnusedParameters") View view){
+        TextView comments=(TextView) findViewById(R.id.commentsView);
+        comments.setVisibility(View.VISIBLE);
+        Button thisButton=(Button) findViewById(R.id.commentsButton);
+        thisButton.setText("Hide comments");
+        View.OnClickListener showCommentsClick=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideComments(v);
+            }
+        };
+        thisButton.setOnClickListener(showCommentsClick);
+    }
+    public void hideComments(@SuppressWarnings("UnusedParameters") View view){
+        TextView comments=(TextView) findViewById(R.id.commentsView);
+        comments.setVisibility(View.INVISIBLE);
+        Button thisButton=(Button) findViewById(R.id.commentsButton);
+        thisButton.setText("Show comments");
+        View.OnClickListener hideCommentsClick=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showComments(v);
+            }
+        };
+        thisButton.setOnClickListener(hideCommentsClick);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logOutButton) {
-            Intent myIntent = new Intent(this, MainActivity.class);
-            startActivity(myIntent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        android.app.FragmentManager fragmentManager = getFragmentManager();
-
-        if (id == R.id.nav_first_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new FirstFragment()).commit();
-        } else if (id == R.id.nav_second_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new SecondFragment()).commit();
-        } else if (id == R.id.nav_third_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new ThirdFragment()).commit();
-        } else if (id == R.id.nav_fourth_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new FourthFragment()).commit();
-        } else if (id == R.id.nav_fifth_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new FifthFragment()).commit();
-        } else if (id == R.id.nav_sixth_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new SixthFragment()).commit();
-        } else if (id == R.id.nav_seventh_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new SeventhFragment()).commit();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    public void setActionBarTitle(String title) {
-        getSupportActionBar().setTitle(title);
-    }
 }
