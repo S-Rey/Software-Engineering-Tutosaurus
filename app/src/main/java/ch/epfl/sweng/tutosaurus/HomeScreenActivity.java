@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -48,7 +49,6 @@ public class HomeScreenActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent intent = getIntent();
-
         pictureView = (ImageView) findViewById(R.id.pictureView);
     }
 
@@ -139,7 +139,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
                 try {
                     inputStream = getContentResolver().openInputStream(imageSelectedUri);
+                    Log.d("Tutosaurus", inputStream.toString());
                     Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
+                    pictureView = (ImageView) findViewById(R.id.pictureView);
                     pictureView.setImageBitmap(imageSelected);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
