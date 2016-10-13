@@ -6,6 +6,8 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.NavigationViewActions;
@@ -16,6 +18,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -37,7 +41,7 @@ public class ProfileFragmentTest {
             HomeScreenActivity.class
     );
 
-    @Before
+    @Before()
     public void stubLoadProfilePictureIntent() {
         Intent intent = new Intent();
         Resources resources = InstrumentationRegistry.getTargetContext().getResources();
@@ -47,6 +51,14 @@ public class ProfileFragmentTest {
                 resources.getResourceEntryName(R.mipmap.ic_launcher));
         intent.setType("image/*");
         intent.setData(imageUri);
+
+        Bundle bundle = new Bundle();
+        ArrayList<Parcelable> parcels = new ArrayList<>();
+        Parcelable parcelable1 = (Parcelable) imageUri;
+        parcels.add(parcelable1);
+        bundle.putParcelableArrayList(Intent.EXTRA_STREAM, parcels);
+        intent.putExtras(bundle);
+
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
         intending(anyOf(
                 hasAction(Intent.ACTION_PICK),
@@ -55,13 +67,16 @@ public class ProfileFragmentTest {
     }
 
     @Test
-    public void testProfilePictureIsNotNullAfterTakingPicture() throws InterruptedException {
+    public void testProfilePictureContainsBitmapAfterLoadingPicture() throws InterruptedException {
 
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_first_layout));
         Thread.sleep(1000);
         onView(withId(R.id.buttonLoadPicture)).perform(click());
-        onView(withId(R.id.pictureView)).check((matches(not(noDrawable()))));
-        onView(withId(R.id.buttonTakePicture)).check(matches(not(noDrawable())));
+        onView(withId(R.id.pictureView)).check(matches(not(noDrawable())));
+        Thread.sleep(1000);
+        onView(withId(R.id.buttonTakePicture)).perform(click());
+        onView(withId(R.id.pictureView)).check(matches(not(noDrawable())));
+        Thread.sleep(1000);
     }
 }
