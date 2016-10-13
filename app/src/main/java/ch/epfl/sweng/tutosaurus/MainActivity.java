@@ -19,4 +19,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HomeScreenActivity.class);
         startActivity(intent);
     }
+    public void openProfile(View view) {
+        Intent intent = new Intent(this, PublicProfileActivity.class);
+        startActivity(intent);
+    }
 }
