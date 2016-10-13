@@ -30,6 +30,10 @@
             android:id="@+id/nav_seventh_layout"
             android:icon="@android:drawable/btn_star"
             android:title="@string/seventhLayout_button" />
+        <item
+            android:id="@+id/nav_db_layout"
+            android:title="Firebase db test"
+            android:icon="?android:attr/actionModeCutDrawable" />
     </group>
 
 </menu>

@@ -92,6 +92,8 @@ public class HomeScreenActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new SixthFragment()).commit();
         } else if (id == R.id.nav_seventh_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new SeventhFragment()).commit();
+        } else if (id == R.id.nav_db_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new DatabaseFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

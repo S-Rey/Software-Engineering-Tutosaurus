@@ -24,4 +24,7 @@
     <string name="fifthLayout_button">Help</string>
     <string name="sixthLayout_button">About</string>
     <string name="seventhLayout_button">My Appoint Results</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
