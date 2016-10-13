@@ -2,6 +2,9 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <PreferenceCategory
+        android:layout="@layout/first_layout"/>
+
     <!-- onCheckBoxClicked method to be added in FourthFragment.java -->
     <CheckBoxPreference
         android:id="@+id/checkbox_notifications"
@@ -19,9 +22,9 @@
         android:onClick="onCheckboxClicked" />
 
     <PreferenceScreen
-            android:title="@string/rate_app">
-            <intent android:action="android.intent.action.VIEW"
-                android:data="http://google.com/" />
+        android:title="@string/rate_app">
+        <intent android:action="android.intent.action.VIEW"
+            android:data="http://google.com/" />
     </PreferenceScreen>
 
 </PreferenceScreen>
