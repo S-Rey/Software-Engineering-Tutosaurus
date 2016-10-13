@@ -17,15 +17,31 @@
             android:layout_weight="1" >
         </ImageView>
 
-        <Button
-            android:id="@+id/buttonLoadPicture"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:onClick="loadImageFromGallery"
-            android:text="@string/load_picture" >
-        </Button>
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonLoadPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="loadImageFromGallery"
+                android:text="@string/load_picture" >
+            </Button>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonTakePicture"
+                android:layout_weight="1"
+                android:text="Take Picture"
+                android:onClick="dispatchTakePictureIntent"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

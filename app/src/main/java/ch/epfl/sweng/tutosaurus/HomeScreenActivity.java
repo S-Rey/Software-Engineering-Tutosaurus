@@ -1,11 +1,13 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +32,7 @@ public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int GALLERY_REQUEST = 1;
+    public static final int REQUEST_IMAGE_CAPTURE = 2;
     private ImageView pictureView;
 
     @Override
@@ -130,6 +133,22 @@ public class HomeScreenActivity extends AppCompatActivity
         startActivityForResult(imageGalleryIntent, GALLERY_REQUEST);
     }
 
+    public void dispatchTakePictureIntent(View v) {
+        if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+            Toast toast = Toast.makeText(HomeScreenActivity.this, "No camera", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if(takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+            else {
+                Toast.makeText(HomeScreenActivity.this, "Camera is busy", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GALLERY_REQUEST) {
@@ -151,6 +170,11 @@ public class HomeScreenActivity extends AppCompatActivity
                 }
 
             }
+        }
+        else if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ((ImageView) findViewById(R.id.pictureView)).setImageBitmap(imageBitmap);
         }
     }
 }
