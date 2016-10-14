@@ -20,8 +20,8 @@
     <string name="send_information_button">Send</string>
     <string name="thanks_message1">Thank you for registering !</string>
     <string name="thanks_message2">
-        If the information you provided are correct you will be able to connect to TutoSaurus with your GASPAR account soon</string>
-    <string name="recap_message">Provided information are :</string>
+        If the information you provided is correct you will be able to connect to TutoSaurus with your GASPAR account soon</string>
+    <string name="recap_message">Provided information is :</string>
     <string name="back_to_login_button">Back to log in screen</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
