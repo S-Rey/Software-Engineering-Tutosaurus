@@ -8,12 +8,15 @@ import junit.framework.TestResult;
 import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openContextualActionModeOverflowMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.contrib.DrawerActions.open;
+import static android.support.test.espresso.contrib.DrawerActions.close;
 
 /**
  * Created by Vincent on 14/10/2016.
@@ -36,6 +39,9 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         onView(withId(R.id.usernameEntry)).perform(typeText("myUsername")).perform(closeSoftKeyboard());
         onView(withId(R.id.passwordEntry)).perform(typeText("myPassword")).perform(closeSoftKeyboard());
         onView(withId(R.id.connectionButton)).perform(click());
+        onView(withId(R.id.drawer_layout)).perform(open());
+        onView(withId(R.id.drawer_layout)).perform(close());
+        onView(withId(R.id.action_logOutButton)).perform(click());
     }
 
     @Test
