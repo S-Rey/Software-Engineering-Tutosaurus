@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class HomeScreenActivity extends AppCompatActivity
@@ -52,7 +53,7 @@ public class HomeScreenActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent intent = getIntent();
-        pictureView = (ImageView) findViewById(R.id.pictureView);
+        pictureView = (ImageView) findViewById(R.id.picture_view);
     }
 
     @Override
@@ -160,11 +161,11 @@ public class HomeScreenActivity extends AppCompatActivity
 
                 try {
                     inputStream = getContentResolver().openInputStream(imageSelectedUri);
-                    Log.d("Tutosaurus", inputStream.toString());
                     Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
-                    pictureView = (ImageView) findViewById(R.id.pictureView);
+                    pictureView = (ImageView) findViewById(R.id.picture_view);
                     pictureView.setImageBitmap(imageSelected);
-                } catch (FileNotFoundException e) {
+                    inputStream.close();
+                } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();
                 }

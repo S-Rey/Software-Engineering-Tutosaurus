@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -8,14 +7,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/pictureView"
+            android:id="@+id/picture_view"
             android:layout_width="128dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </ImageView>
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -41,10 +40,76 @@
 
         </LinearLayout>
 
-
-
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_list_subjects"
+            android:text="@string/title_subjects_offered"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"/>
+
+        <TextView
+            android:id="@+id/subtitle_list_subjects"
+            android:text="@string/subtitle_subjects_offered"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <CheckBox android:id="@+id/mathematics_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Mathematics"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <CheckBox android:id="@+id/physics_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Physics"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <CheckBox android:id="@+id/chemistry_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Chemistry"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <CheckBox android:id="@+id/computer_science_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Computer science"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>

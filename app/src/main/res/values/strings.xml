@@ -31,7 +31,10 @@
     <string name="share_location">Share location</string>
     <string name="sync_calendar">Sync calendar</string>
     <string name="push_notifications">Notifications</string>
+
     <string name="load_picture">Load Picture</string>
     <string name="title_lists_subjects">List of subjects</string>
     <string name="dialog_list_subjects">dialog_list_subjects</string>
+    <string name="title_subjects_offered">List of subjects offered</string>
+    <string name="subtitle_subjects_offered">Choose the subjects you are expert in</string>
 </resources>
