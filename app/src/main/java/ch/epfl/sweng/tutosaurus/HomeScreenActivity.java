@@ -142,6 +142,7 @@ public class HomeScreenActivity extends AppCompatActivity
                     Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
                     pictureView = (ImageView) findViewById(R.id.picture_view);
                     pictureView.setImageBitmap(imageSelected);
+                    inputStream.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();

@@ -2,24 +2,21 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory
-        android:layout="@layout/first_layout"/>
-
-    <!-- onCheckBoxClicked method to be added in FourthFragment.java -->
+    <!-- onCheckboxSettingsClicked method to be added in FourthFragment.java -->
     <CheckBoxPreference
         android:id="@+id/checkbox_notifications"
         android:title="@string/push_notifications"
-        android:onClick="onCheckboxClicked" />
+        android:onClick="onCheckboxSettingsClicked" />
 
     <CheckBoxPreference
         android:id="@+id/checkbox_calendar"
         android:title="@string/sync_calendar"
-        android:onClick="onCheckboxClicked" />
+        android:onClick="onCheckboxSettingsClicked" />
 
     <CheckBoxPreference
         android:id="@+id/checkbox_location"
         android:title="@string/share_location"
-        android:onClick="onCheckboxClicked" />
+        android:onClick="onCheckboxSettingsClicked" />
 
     <PreferenceScreen
         android:title="@string/rate_app">

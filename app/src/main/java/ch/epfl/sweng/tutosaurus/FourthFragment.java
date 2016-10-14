@@ -7,8 +7,6 @@ import android.view.View;
 
 public class FourthFragment extends PreferenceFragment {
 
-    View myView;
-
     @Nullable
     @Override
     public void onCreate(Bundle savedInstanceState) {
