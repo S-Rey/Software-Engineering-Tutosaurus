@@ -3,6 +3,10 @@ package ch.epfl.sweng.tutosaurus;
 import android.support.test.InstrumentationRegistry;
 import android.test.ActivityInstrumentationTestCase2;
 
+import junit.framework.TestResult;
+
+import org.junit.Test;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -26,7 +30,16 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
     }
 
-    public void testApp() {
+    @Test
+    public void testLogIn() {
+        getActivity();
+        onView(withId(R.id.usernameEntry)).perform(typeText("myUsername")).perform(closeSoftKeyboard());
+        onView(withId(R.id.passwordEntry)).perform(typeText("myPassword")).perform(closeSoftKeyboard());
+        onView(withId(R.id.connectionButton)).perform(click());
+    }
+
+    @Test
+    public void testSignUp() {
         getActivity();
         onView(withId(R.id.registerButton)).perform(click());
         onView(withId(R.id.firstNameEntry)).perform(typeText("Vincent")).perform(closeSoftKeyboard());
@@ -39,8 +52,5 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         onView(withId(R.id.emailAddressProvided)).check(matches(withText("Email address : vincent.rinaldi@epfl.ch")));
         onView(withId(R.id.sciperProvided)).check(matches(withText("Sciper : 239759")));
         onView(withId(R.id.backToLoginButton)).perform(click());
-        onView(withId(R.id.usernameEntry)).perform(typeText("myUsername")).perform(closeSoftKeyboard());
-        onView(withId(R.id.passwordEntry)).perform(typeText("myPassword")).perform(closeSoftKeyboard());
-        onView(withId(R.id.connectionButton)).perform(click());
     }
 }
