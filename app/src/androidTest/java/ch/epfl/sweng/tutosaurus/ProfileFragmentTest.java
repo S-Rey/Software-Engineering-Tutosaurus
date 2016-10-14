@@ -73,10 +73,10 @@ public class ProfileFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_first_layout));
         Thread.sleep(1000);
         onView(withId(R.id.buttonLoadPicture)).perform(click());
-        onView(withId(R.id.pictureView)).check(matches(not(noDrawable())));
+        onView(withId(R.id.picture_view)).check(matches(not(noDrawable())));
         Thread.sleep(1000);
         onView(withId(R.id.buttonTakePicture)).perform(click());
-        onView(withId(R.id.pictureView)).check(matches(not(noDrawable())));
+        onView(withId(R.id.picture_view)).check(matches(not(noDrawable())));
         Thread.sleep(1000);
     }
 }

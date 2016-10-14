@@ -4,6 +4,7 @@
 
     <!-- onCheckboxSettingsClicked method to be added in FourthFragment.java -->
     <CheckBoxPreference
+        android:key="checkbox_preference"
         android:id="@+id/checkbox_notifications"
         android:title="@string/push_notifications"
         android:onClick="onCheckboxSettingsClicked" />
