@@ -43,47 +43,73 @@ public class PublicProfileActivity extends AppCompatActivity {
 
         // Set the thaught subjects.
         // TODO: get subject list from database
-        // TODO: make a method that sets the subject buttons
+        boolean isMathsTeacher=true;
+        boolean isPhysicsTeacher=false;
+        boolean isChemistryTeacehr=false;
+        boolean isComputerTeacher=true;
+
         // TODO: make a general activity for subject and set specific elements depending on which button is clicked
+        setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacehr,isComputerTeacher);
 
-        // Maths button
-        ImageButton mathsButton=(ImageButton) findViewById(R.id.subjectOne);
-        mathsButton.setImageResource(R.drawable.calculator);
-
-        View.OnClickListener mathsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMathsProfile(v);
-            }
-        };
-        mathsButton.setOnClickListener(mathsClick);
-
-        // Physics button
-        ImageButton physicsButton=(ImageButton) findViewById(R.id.subjectTwo);
-        physicsButton.setImageResource(R.drawable.molecule);
-
-        View.OnClickListener physicsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPhysicsProfile(v);
-            }
-        };
-        physicsButton.setOnClickListener(physicsClick);
-
-        // Chemistry button
-        ImageButton chemistryButton=(ImageButton) findViewById(R.id.subjectThree);
-        chemistryButton.setImageResource(R.drawable.flask);
-
-        View.OnClickListener chemistryClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openChemistryProfile(v);
-            }
-        };
-        chemistryButton.setOnClickListener(chemistryClick);
 
 
         Intent intent = getIntent();
+    }
+
+    private void setSubjectButtons(boolean isMathsTeacher,
+                                   boolean isPhysicsTeacher,
+                                   boolean isChemistryTeacher,
+                                   boolean isComputerTeacher){
+        // Maths button
+        if(isMathsTeacher) {
+            ImageButton mathsButton = (ImageButton) findViewById(R.id.mathsButton);
+            mathsButton.setImageResource(R.drawable.school);
+            mathsButton.setVisibility(View.VISIBLE);
+            View.OnClickListener mathsClick = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openMathsProfile(v);
+                }
+            };
+            mathsButton.setOnClickListener(mathsClick);
+        }
+
+        // Physics button
+        if(isPhysicsTeacher) {
+            ImageButton physicsButton = (ImageButton) findViewById(R.id.physicsButton);
+            physicsButton.setImageResource(R.drawable.molecule);
+            physicsButton.setVisibility(View.VISIBLE);
+
+            View.OnClickListener physicsClick = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openPhysicsProfile(v);
+                }
+            };
+            physicsButton.setOnClickListener(physicsClick);
+        }
+
+        // Chemistry button
+        if(isChemistryTeacher) {
+            ImageButton chemistryButton = (ImageButton) findViewById(R.id.chemistryButton);
+            chemistryButton.setImageResource(R.drawable.flask);
+            chemistryButton.setVisibility(View.VISIBLE);
+            View.OnClickListener chemistryClick = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openChemistryProfile(v);
+                }
+            };
+            chemistryButton.setOnClickListener(chemistryClick);
+        }
+        // Computer button
+        if(isComputerTeacher) {
+            ImageButton computerButton = (ImageButton) findViewById(R.id.computerButton);
+            computerButton.setImageResource(R.drawable.computer);
+            computerButton.setVisibility(View.VISIBLE);
+
+        }
+
     }
 
     public void openMathsProfile(@SuppressWarnings("UnusedParameters") View view) {

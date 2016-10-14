@@ -141,9 +141,10 @@
                     android:maxHeight="42dp"
                     android:scaleType="fitCenter"
                     android:background="@null"
+                    android:visibility="gone"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:id="@+id/subjectOne" />
+                    android:id="@+id/mathsButton" />
                 <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -152,7 +153,8 @@
                     android:maxHeight="42dp"
                     android:scaleType="fitCenter"
                     android:background="@null"
-                    android:id="@+id/subjectTwo" />
+                    android:visibility="gone"
+                    android:id="@+id/physicsButton" />
                 <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -161,7 +163,8 @@
                     android:maxHeight="42dp"
                     android:scaleType="fitCenter"
                     android:background="@null"
-                    android:id="@+id/subjectThree" />
+                    android:visibility="gone"
+                    android:id="@+id/chemistryButton" />
                 <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -170,6 +173,7 @@
                     android:maxHeight="42dp"
                     android:scaleType="fitCenter"
                     android:background="@null"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/computer"
                     android:id="@+id/computerButton" />
                 <ImageButton
@@ -180,7 +184,7 @@
                     android:maxHeight="42dp"
                     android:scaleType="fitCenter"
                     android:background="@null"
-
+                    android:visibility="gone"
                     app:srcCompat="@drawable/shapes"
                     android:id="@+id/mechanicsButton" />
             </LinearLayout>
