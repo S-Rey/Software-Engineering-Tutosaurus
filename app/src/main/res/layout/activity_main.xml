@@ -95,7 +95,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:textAllCaps="false"
-        android:textStyle="normal|bold|italic" />
+        android:textStyle="normal|bold|italic"
+        android:onClick="sendMessageForHome" />
 
     <Button
         android:text="@string/register_button"
