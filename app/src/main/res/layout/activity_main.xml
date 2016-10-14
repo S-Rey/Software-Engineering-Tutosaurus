@@ -10,17 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ch.epfl.sweng.tutosaurus.MainActivity">
 
-    <Button
-        android:text="Home Test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nextActivityButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textStyle="normal|bold"
-        android:onClick="sendMessage" />
-
     <TextView
         android:text="@string/welcoming_message"
         android:layout_width="wrap_content"
@@ -107,5 +96,20 @@
         android:layout_marginTop="26dp"
         android:textAllCaps="false"
         android:textStyle="normal|bold|italic" />
+
+    <Button
+        android:text="@string/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerButton"
+        android:background="@android:drawable/editbox_background"
+        android:textSize="24sp"
+        android:textStyle="normal|bold"
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_blue_dark"
+        android:onClick="sendMessageForReg"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp" />
 
 </RelativeLayout>

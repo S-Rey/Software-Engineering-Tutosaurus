@@ -1,21 +1,35 @@
 <resources>
     <string name="app_name">TutoSaurus</string>
     <string name="welcoming_message">Welcome to TutoSaurus !</string>
-    <string name="instructions_message">Please sign in with your GASPAR account !</string>
+    <string name="instructions_message">Please sign in with your GASPAR account</string>
     <string name="username_ask">Enter username</string>
     <string name="password_ask">Enter password</string>
     <string name="connection_button">Log in</string>
+    <string name="register_button">Sign up</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+
+    <string name="activity_register_name">Register</string>
+    <string name="instructions_register">
+        Please fill in the information below to verify you are from EPFL and provide you access
+        to TutoSaurus with your corresponding full name, EPFL email address and Sciper</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="sciper">Sciper</string>
+    <string name="send_information_button">Send</string>
+    <string name="thanks_message1">Thank you for registering !</string>
+    <string name="thanks_message2">
+        If the information you provided are correct you will be able to connect to TutoSaurus with your GASPAR account soon</string>
+    <string name="back_to_login_button">Back to log in screen</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_logOut">Log out</string>
 
-    <string name="first_text">Developed by Team No Clue EPFL</string>
-    <string name="second_text">Software Engineering 2016</string>
-    <string name="third_text">All right reserved ©</string>
+    <string name="first_text">Android Studio</string>
+    <string name="second_text">android.studio@epfl.ch</string>
 
     <string name="firstLayout_button">Profile</string>
     <string name="secondLayout_button">Find Tutors</string>
