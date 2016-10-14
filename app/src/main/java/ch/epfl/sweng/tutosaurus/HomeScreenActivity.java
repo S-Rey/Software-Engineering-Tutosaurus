@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class HomeScreenActivity extends AppCompatActivity
@@ -143,7 +144,7 @@ public class HomeScreenActivity extends AppCompatActivity
                     pictureView = (ImageView) findViewById(R.id.picture_view);
                     pictureView.setImageBitmap(imageSelected);
                     inputStream.close();
-                } catch (FileNotFoundException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();
                 }
