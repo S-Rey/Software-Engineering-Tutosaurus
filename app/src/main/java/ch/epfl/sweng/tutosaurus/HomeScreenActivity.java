@@ -175,7 +175,7 @@ public class HomeScreenActivity extends AppCompatActivity
         else if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ((ImageView) findViewById(R.id.pictureView)).setImageBitmap(imageBitmap);
+            ((ImageView) findViewById(R.id.picture_view)).setImageBitmap(imageBitmap);
         }
     }
 }
