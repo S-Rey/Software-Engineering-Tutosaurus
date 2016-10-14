@@ -113,4 +113,26 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="21dp" />
 
+    <Button
+        android:text="Profile Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileTestButton"
+        android:textStyle="normal|bold"
+        android:onClick="openProfile"
+        android:layout_above="@+id/nextActivityButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Home Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nextActivityButton"
+        android:textStyle="normal|bold"
+        android:onClick="sendMessage"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

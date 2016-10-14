@@ -7,10 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Vincent on 05/10/2016.
- */
-
 public class FirstFragment extends Fragment {
 
     View myView;
@@ -22,4 +18,7 @@ public class FirstFragment extends Fragment {
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Profile");
         return myView;
     }
+
+
+
 }

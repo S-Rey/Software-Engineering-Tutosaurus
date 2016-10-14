@@ -22,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessageForReg(View view) {
         Intent intent = new Intent(this, RegisterScreenActivity.class);
+    }
+
+    public void openProfile(View view) {
+        Intent intent = new Intent(this, PublicProfileActivity.class);
+
         startActivity(intent);
     }
 }
