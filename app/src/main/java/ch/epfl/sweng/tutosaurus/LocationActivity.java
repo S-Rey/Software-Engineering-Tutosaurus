@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -31,16 +33,24 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class LocationActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class LocationActivity extends FragmentActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
 
     private static final int SECOND = 1000;
     private static final long MINUTE = 60 * SECOND;
     private static final int REQUEST_LOCATION = 1000;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest locationRequest;
+
+    private GoogleMap mMap;
     private FusedLocationProviderApi locationProvider = LocationServices.FusedLocationApi;
     private PendingResult<LocationSettingsResult> result;
     private double latitude;
@@ -50,8 +60,10 @@ public class LocationActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
 
@@ -66,7 +78,7 @@ public class LocationActivity extends AppCompatActivity implements
         locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(MINUTE);
-        locationRequest.setFastestInterval(20 * SECOND);
+        locationRequest.setFastestInterval(5 * SECOND);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest);
@@ -109,27 +121,21 @@ public class LocationActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case REQUEST_LOCATION:
-                switch (resultCode)
-                {
-                    case Activity.RESULT_OK:
-                    {
+                switch (resultCode) {
+                    case Activity.RESULT_OK: {
                         // All required changes were successfully made
                         break;
                     }
-                    case Activity.RESULT_CANCELED:
-                    {
+                    case Activity.RESULT_CANCELED: {
                         // The user was asked to change settings, but chose not to
                         break;
                     }
-                    default:
-                    {
+                    default: {
                         break;
                     }
                 }
@@ -153,12 +159,12 @@ public class LocationActivity extends AppCompatActivity implements
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+        locationProvider.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        
+
     }
 
     @Override
@@ -200,8 +206,28 @@ public class LocationActivity extends AppCompatActivity implements
         super.onPause();
         if (mGoogleApiClient != null) {
             if (mGoogleApiClient.isConnected()) {
-                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+                locationProvider.removeLocationUpdates(mGoogleApiClient, this);
             }
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
+        LatLng myPosition = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(myPosition).title("Marker in my location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
     }
 }
