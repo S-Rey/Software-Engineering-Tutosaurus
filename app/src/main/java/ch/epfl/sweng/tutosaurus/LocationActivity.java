@@ -53,8 +53,7 @@ public class LocationActivity extends FragmentActivity implements
     private GoogleMap mMap;
     private FusedLocationProviderApi locationProvider = LocationServices.FusedLocationApi;
     private PendingResult<LocationSettingsResult> result;
-    private double latitude;
-    private double longitude;
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +159,13 @@ public class LocationActivity extends FragmentActivity implements
             return;
         }
         locationProvider.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+        location = locationProvider.getLastLocation(mGoogleApiClient);
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+
+        LatLng myPosition = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(myPosition).title("Marker in my location"));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 16.0f));
     }
 
     @Override
@@ -174,8 +180,8 @@ public class LocationActivity extends FragmentActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+
+        this.location = location;
     }
 
     @Override
@@ -226,8 +232,5 @@ public class LocationActivity extends FragmentActivity implements
         }
         mMap.setMyLocationEnabled(true);
 
-        LatLng myPosition = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(myPosition).title("Marker in my location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
     }
 }
