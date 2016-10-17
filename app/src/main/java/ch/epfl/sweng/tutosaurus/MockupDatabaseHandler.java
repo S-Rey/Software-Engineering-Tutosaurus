@@ -2,9 +2,9 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 
 /**
  * Created by albertochiappa on 17/10/16.
@@ -50,4 +50,17 @@ public class MockupDatabaseHandler extends SQLiteOpenHelper {
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
+
+    public ProfileMockup getProfile(int sciper) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] sciperString=new String[] { String.valueOf(sciper) };
+        Cursor cursor = db.query(TABLE_NAME, null, SCIPER + "=?", sciperString, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        ProfileMockup contact = new ProfileMockup(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)),
+                Float.parseFloat(cursor.getString(4)));
+        return contact;
+    }
+
 }
