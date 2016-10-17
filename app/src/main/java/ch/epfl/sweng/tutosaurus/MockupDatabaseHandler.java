@@ -63,4 +63,11 @@ public class MockupDatabaseHandler extends SQLiteOpenHelper {
         return contact;
     }
 
+    public void deleteProfile (ProfileMockup profile) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, SCIPER + " = ?",
+                new String[] { String.valueOf(profile.getSciperNumber()) });
+        db.close();
+    }
+
 }
