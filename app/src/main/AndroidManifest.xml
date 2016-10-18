@@ -8,34 +8,34 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:fullName=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:fullName="android.intent.action.MAIN" />
+                <category android:fullName="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeScreenActivity"
+            android:fullName=".HomeScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegisterScreenActivity"
+            android:fullName=".RegisterScreenActivity"
             android:label="@string/activity_register_name">
         </activity>
         <activity
-            android:name=".ConfirmationActivity"
+            android:fullName=".ConfirmationActivity"
             android:label="@string/activity_register_name">
         </activity>
         <activity
-            android:name=".PublicProfileActivity"
+            android:fullName=".PublicProfileActivity"
             android:label="Profile"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
     
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:fullName="android.permission.INTERNET" />
+    <uses-permission android:fullName="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:fullName="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:fullName="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>

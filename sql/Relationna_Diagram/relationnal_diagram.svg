@@ -39,7 +39,7 @@
       <ellipse rx="38.7212" ry="15" clip-path="url(#clipPath2)" cx="78.7064" cy="225.7399" stroke="none"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="sans-serif" transform="matrix(1,0,0,1,-24,-9)" stroke-linecap="butt">
-      <text x="62.725" xml:space="preserve" y="230.275" clip-path="url(#clipPath2)" stroke="none">name</text>
+      <text x="62.725" xml:space="preserve" y="230.275" clip-path="url(#clipPath2)" stroke="none">fullName</text>
       <ellipse rx="38.7212" fill="none" ry="15" clip-path="url(#clipPath2)" cx="78.7064" cy="225.7399"/>
     </g>
     <g fill="rgb(255,204,0)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-24,-9)" stroke="rgb(255,204,0)">
@@ -96,7 +96,7 @@
       <ellipse rx="31.3031" ry="15" clip-path="url(#clipPath2)" cx="753.5651" cy="311.6268" stroke="none"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="sans-serif" transform="matrix(1,0,0,1,-24,-9)" stroke-linecap="butt">
-      <text x="737.5836" xml:space="preserve" y="316.162" clip-path="url(#clipPath2)" stroke="none">name</text>
+      <text x="737.5836" xml:space="preserve" y="316.162" clip-path="url(#clipPath2)" stroke="none">fullName</text>
       <ellipse rx="31.3031" fill="none" ry="15" clip-path="url(#clipPath2)" cx="753.5651" cy="311.6268"/>
     </g>
     <g fill="rgb(255,204,0)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-24,-9)" stroke="rgb(255,204,0)">

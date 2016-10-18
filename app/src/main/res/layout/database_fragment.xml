@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:hint="Full name"
+        android:hint="Full fullName"
         android:id="@+id/db_signup_name" />
 
     <Button
