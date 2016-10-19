@@ -25,6 +25,10 @@ public class User {
      */
     public User(int sciper) {
         this.sciper = sciper;
+        this.meetings = new ArrayList<Meeting>(0);
+        this.teaching = new ArrayList<Course>(0);
+        this.studying = new ArrayList<Course>(0);
+
     }
 
     /**
@@ -35,6 +39,10 @@ public class User {
     public User(int sciper, String username) {
         this.sciper = sciper;
         this.username = username;
+        this.meetings = new ArrayList<Meeting>(0);
+        this.teaching = new ArrayList<Course>(0);
+        this.teaching=new ArrayList<Course>(0);
+
     }
 
     /**
@@ -202,4 +210,12 @@ public class User {
         return ratings.get(courseId);
     }
 
+    /**
+     * Returns the name automatically (to be used in the listview)
+     * @return the full name
+     */
+
+    public String toString(){
+        return this.fullName;
+    }
 }

@@ -4,10 +4,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class FindTutorResult extends AppCompatActivity {
@@ -22,10 +27,26 @@ public class FindTutorResult extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
-        String methodToCall= extras.getString("METHOD_TO_CALL");
+        String methodToCall = extras.getString("METHOD_TO_CALL");
 
-        if(methodToCall.equals("findTutorByName")){
-            findTutorByName(extras.getString("NAME_TO_SEARCH"),profiles);
+        Toast toast=Toast.makeText(this, methodToCall, Toast.LENGTH_SHORT);
+        toast.show();
+
+        if (methodToCall.equals("findTutorByName")) {
+            findTutorByName(extras.getString("NAME_TO_SEARCH"), profiles);
+        }
+        else if (methodToCall.equals("findMathsTutor")) {
+            toast=Toast.makeText(this, "Should search maths tutors...", Toast.LENGTH_SHORT);
+            toast.show();
+            ArrayList<String> mathsTutorNames=new ArrayList<>();
+            mathsTutorNames=findTutorBySubject("Maths", profiles);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    this,
+                    android.R.layout.simple_list_item_1,
+                    mathsTutorNames);
+            ListView tutorList=(ListView) findViewById(R.id.tutorList);
+            tutorList.setAdapter(arrayAdapter);
+
         }
         //((TextView) findViewById(R.id.sciperNumber)).setText(sciperNumber);
 
@@ -58,37 +79,78 @@ public class FindTutorResult extends AppCompatActivity {
 
     }
 
-    private User[] createProfiles(){
-        User profileOne=new User(273516);
+    private User[] createProfiles() {
+
+        Course maths= new Course(0,"Maths");
+        Course physics= new Course(1,"Physics");
+
+
+        User profileOne = new User(273516);
         profileOne.setFullName("Alberto Chiappa");
         profileOne.setEmail("alberto.chiappa@epfl.ch");
+        profileOne.addTeachingCourse(maths);
 
-        User profileTwo=new User(223415);
+        User profileTwo = new User(223415);
         profileTwo.setFullName("Albert Einstein");
         profileTwo.setEmail("albert.einstein@epfl.ch");
+        profileTwo.addTeachingCourse(physics);
 
-        User profileThree=new User(124821);
+        User profileThree = new User(124821);
         profileThree.setFullName("Kurt Godel");
         profileThree.setEmail("kurt.godel@epfl.ch");
+        profileThree.addTeachingCourse(maths);
 
-        return new User[] {profileOne,profileTwo,profileThree};
+        User profileFour = new User(100000);
+        profileFour.setFullName("Maurizio Grasselli");
+        profileFour.setEmail("maurizio.grasselli@epfl.ch");
+        profileFour.addTeachingCourse(maths);
+
+        return new User[]{profileOne, profileTwo, profileThree, profileFour};
     }
 
-    private void findTutorByName(String name, User[] profiles){
+    private void findTutorByName(String name, User[] profiles) {
         int count = 0;
-        for(User profile : profiles){
-            if(profile.getFullName().equals(name)){
+        for (User profile : profiles) {
+            if (profile.getFullName().equals(name)) {
                 ((TextView) findViewById(R.id.nameOne)).setText(name);
+
                 count++;
             }
         }
-        if(count==0){
+        if (count == 0) {
             ((TextView) findViewById(R.id.nameOne)).setText("Non ho trovato un tubo");
 
         }
     }
+
+    private ArrayList<String> findTutorBySubject(String subject, User[] profiles) {
+        int id = -1;
+        if (subject.equals("Maths")) {
+            id = 0;
+        }
+        else if(subject.equals("Physics")){
+            id=1;
+        }
+        int count = 0;
+        ArrayList<String> teachers = new ArrayList<>(0);
+        for (User profile : profiles) {
+            for (Course taughtCourse : profile.getTeachingCourses()) {
+                if (taughtCourse.getId() == id) {
+                    //((TextView) findViewById(R.id.nameOne)).setText(profile.getFullName());
+                    teachers.add(profile.getFullName());
+                    count++;
+                }
+
+            }
+        }
+        if (count == 0) {
+            ((TextView) findViewById(R.id.nameOne)).setText("Non ho trovato un tubo");
+        }
     /*private void fillDatabase(MockupDatabaseHandler dbHandler){
         ProfileMockup alberto=new ProfileMockup(273516,"Alberto Silvio","Chiappa",3.5f,4.0f);
         dbHandler.addProfile(alberto);
     }*/
+        return teachers;
+    }
 }
+

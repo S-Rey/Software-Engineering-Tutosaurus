@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,40 @@ public class SecondFragment extends Fragment {
                 nameLayout.setVisibility(View.VISIBLE);
             }
         });
+
+        // Display search by subject listener
+        Button displayBySubject = (Button) myView.findViewById(R.id.bySubject);
+        displayBySubject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout subjectLayout=(LinearLayout) getView().findViewById(R.id.subjectLayout);
+                subjectLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // Display search by sciper listener
+        Button displayBySciper = (Button) myView.findViewById(R.id.bySciper);
+        displayBySciper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout nameLayout=(LinearLayout) getView().findViewById(R.id.sciperLayout);
+                nameLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // Search by subject listener
+        ImageButton searchMathsButton = (ImageButton) myView.findViewById(R.id.mathsButton);
+        searchMathsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FindTutorResult.class);
+                Bundle extras = new Bundle();
+                extras.putString("METHOD_TO_CALL","findMathsTutor");
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
 
         return myView;
     }
