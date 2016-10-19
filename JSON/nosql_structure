@@ -24,6 +24,9 @@ Structure ot the noSQL JSON database
 
 	"course" : {
 		"courseId" : {
+			"courseName" : {
+				"courseNameFr" : "name of course in Fr"
+			}
 			"teachCourse" : {
 				"userId" : "id of user"
 			}

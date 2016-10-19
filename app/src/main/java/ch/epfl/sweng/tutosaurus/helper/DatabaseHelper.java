@@ -32,4 +32,14 @@ public class DatabaseHelper {
         ref.setValue(email);
 
     }
+    public void addCourse(String id, String name, String teacher) {
+        String headPath = "courses/" + id;
+        String pName = headPath + "/name";
+        String pTeacher = headPath + "/teachBy";
+        Log.d("DBH", "headPath:" + headPath);
+        DatabaseReference ref = db.getReference(pName);
+        ref.setValue(name);
+        ref = db.getReference(pTeacher);
+        ref.setValue(teacher);
+    }
 }
