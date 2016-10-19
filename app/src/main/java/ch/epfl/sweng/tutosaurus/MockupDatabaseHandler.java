@@ -15,7 +15,7 @@ public class MockupDatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "profiles";
     private static final String DATABASE_NAME = "profileMockup";
 
-    // Shops Table Columns names
+    // Profile Table Columns names
     private static final String SCIPER = "sciperNumber";
     private static final String NAME = "name";
     private static final String SURNAME = "surname";
@@ -32,6 +32,15 @@ public class MockupDatabaseHandler extends SQLiteOpenHelper {
         + SURNAME + "TEXT" +  PROFESSOR_RATING +"REAL"+ STUDENT_RATING +
                 "REAL)";
         db.execSQL(CREATE_PROFILE_TABLE);
+
+        // Initializing with one profile
+        ContentValues values=new ContentValues();
+        values.put(SCIPER,273516);
+        values.put(NAME,"Alberto");
+        values.put(SURNAME,"Chiappa");
+        values.put(PROFESSOR_RATING,3.5f);
+        values.put(STUDENT_RATING,4f);
+        db.insert(TABLE_NAME,null,values);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
