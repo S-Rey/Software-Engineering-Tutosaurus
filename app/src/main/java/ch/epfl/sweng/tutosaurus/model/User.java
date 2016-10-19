@@ -84,6 +84,14 @@ public class User {
     }
 
     /**
+     * Returns this user's username (normally the GASPAR username).
+     * @return the username of the user
+     */
+    public String getUsername() {
+        return this.username;
+    }
+
+    /**
      * Returns this user's full fullName.
      * @return the full fullName of the user
      */
