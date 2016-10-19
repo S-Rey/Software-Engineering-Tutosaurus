@@ -26,6 +26,14 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
+        android:id="@+id/db_signup_sciper"
+        android:hint="sciper" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
         android:id="@+id/db_signup_username"
         android:hint="username" />
 
@@ -36,6 +44,14 @@
         android:ems="10"
         android:hint="Full name"
         android:id="@+id/db_signup_name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="email "
+        android:id="@+id/db_signup_email" />
 
     <Button
         android:text="Sign up"

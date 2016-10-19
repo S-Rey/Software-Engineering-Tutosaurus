@@ -48,8 +48,10 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
 
     private void signUp() {
         DatabaseHelper dbh = new DatabaseHelper();
+        String sciper = ((EditText)myView.findViewById(R.id.db_signup_sciper)).getText().toString();
         String username = ((EditText)myView.findViewById(R.id.db_signup_username)).getText().toString();
         String fullName = ((EditText)myView.findViewById(R.id.db_signup_name)).getText().toString();
-        dbh.signUp(username, fullName);
+        String email = ((EditText)myView.findViewById(R.id.db_signup_email)).getText().toString();
+        dbh.signUp(sciper, username, fullName, email);
     }
 }
