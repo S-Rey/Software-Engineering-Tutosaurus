@@ -43,6 +43,22 @@ public class SecondFragment extends Fragment {
                 }
         });
 
+        // Search by sciper listener
+        Button searchBySciper = (Button) myView.findViewById(R.id.searchBySciper);
+        searchBySciper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FindTutorResult.class);
+                EditText sciperToSearch=(EditText) getView().findViewById(R.id.sciperToSearch);
+                String sciper=sciperToSearch.getText().toString();
+                Bundle extras = new Bundle();
+                extras.putString("SCIPER_TO_SEARCH",sciper);
+                extras.putString("METHOD_TO_CALL","findTutorBySciper");
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
         // Display search by name listener
         Button displayByName = (Button) myView.findViewById(R.id.byName);
         displayByName.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +90,7 @@ public class SecondFragment extends Fragment {
         });
 
         // Search by subject listener
+
         ImageButton searchMathsButton = (ImageButton) myView.findViewById(R.id.mathsButton);
         searchMathsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +103,39 @@ public class SecondFragment extends Fragment {
             }
         });
 
-
+        ImageButton searchPhysicsButton = (ImageButton) myView.findViewById(R.id.physicsButton);
+        searchPhysicsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FindTutorResult.class);
+                Bundle extras = new Bundle();
+                extras.putString("METHOD_TO_CALL","findPhysicsTutor");
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+        ImageButton searchChemistryButton = (ImageButton) myView.findViewById(R.id.chemistryButton);
+        searchChemistryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FindTutorResult.class);
+                Bundle extras = new Bundle();
+                extras.putString("METHOD_TO_CALL","findChemistryTutor");
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+        ImageButton searchComputerButton = (ImageButton) myView.findViewById(R.id.computerButton);
+        searchComputerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FindTutorResult.class);
+                Bundle extras = new Bundle();
+                extras.putString("METHOD_TO_CALL","findComputerTutor");
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
         return myView;
     }
 

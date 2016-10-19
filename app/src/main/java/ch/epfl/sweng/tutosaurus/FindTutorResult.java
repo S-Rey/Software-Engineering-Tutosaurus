@@ -29,38 +29,25 @@ public class FindTutorResult extends AppCompatActivity {
 
         String methodToCall = extras.getString("METHOD_TO_CALL");
 
-        Toast toast=Toast.makeText(this, methodToCall, Toast.LENGTH_SHORT);
-        toast.show();
 
         if (methodToCall.equals("findTutorByName")) {
-            findTutorByName(extras.getString("NAME_TO_SEARCH"), profiles);
+            fillListView(findTutorByName(extras.getString("NAME_TO_SEARCH"), profiles));
+        }
+        else if (methodToCall.equals("findTutorBySciper")) {
+            fillListView(findTutorBySciper(extras.getString("SCIPER_TO_SEARCH"), profiles));
         }
         else if (methodToCall.equals("findMathsTutor")) {
-            toast=Toast.makeText(this, "Should search maths tutors...", Toast.LENGTH_SHORT);
-            toast.show();
-            ArrayList<String> mathsTutorNames=new ArrayList<>();
-            mathsTutorNames=findTutorBySubject("Maths", profiles);
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    mathsTutorNames);
-            ListView tutorList=(ListView) findViewById(R.id.tutorList);
-            tutorList.setAdapter(arrayAdapter);
-
+            fillListView(findTutorBySubject("Maths", profiles));
         }
-        //((TextView) findViewById(R.id.sciperNumber)).setText(sciperNumber);
-
-        /*Toast toast=Toast.makeText(this, "Profiles created", Toast.LENGTH_SHORT);
-        toast.show();
-        ((TextView) findViewById(R.id.sciperNumberOne)).setText(String.valueOf(profiles[0].getSciper()));
-        ((TextView) findViewById(R.id.nameOne)).setText(String.valueOf(profiles[0].getFullName()));
-
-        ((TextView) findViewById(R.id.sciperNumberTwo)).setText(String.valueOf(profiles[1].getSciper()));
-        ((TextView) findViewById(R.id.nameTwo)).setText(String.valueOf(profiles[1].getFullName()));
-
-        ((TextView) findViewById(R.id.sciperNumberThree)).setText(String.valueOf(profiles[2].getSciper()));
-        ((TextView) findViewById(R.id.nameThree)).setText(String.valueOf(profiles[2].getFullName()));
-
+        else if (methodToCall.equals("findPhysicsTutor")) {
+            fillListView(findTutorBySubject("Physics", profiles));
+        }
+        else if (methodToCall.equals("findChemistryTutor")) {
+            fillListView(findTutorBySubject("Chemistry", profiles));
+        }
+        else if (methodToCall.equals("findComputerTutor")) {
+            fillListView(findTutorBySubject("Computer", profiles));
+        }
         /*
         // Create example database
         MockupDatabaseHandler dbHandler = new MockupDatabaseHandler(this);
@@ -83,17 +70,20 @@ public class FindTutorResult extends AppCompatActivity {
 
         Course maths= new Course(0,"Maths");
         Course physics= new Course(1,"Physics");
-
+        Course chemistry= new Course(2,"Chemistry");
+        Course computer= new Course(3,"Computer Science");
 
         User profileOne = new User(273516);
         profileOne.setFullName("Alberto Chiappa");
         profileOne.setEmail("alberto.chiappa@epfl.ch");
         profileOne.addTeachingCourse(maths);
+        profileOne.addTeachingCourse(computer);
 
         User profileTwo = new User(223415);
         profileTwo.setFullName("Albert Einstein");
         profileTwo.setEmail("albert.einstein@epfl.ch");
         profileTwo.addTeachingCourse(physics);
+        profileTwo.addTeachingCourse(maths);
 
         User profileThree = new User(124821);
         profileThree.setFullName("Kurt Godel");
@@ -105,32 +95,61 @@ public class FindTutorResult extends AppCompatActivity {
         profileFour.setEmail("maurizio.grasselli@epfl.ch");
         profileFour.addTeachingCourse(maths);
 
-        return new User[]{profileOne, profileTwo, profileThree, profileFour};
+        User profileFive = new User(223615);
+        profileFive.setFullName("Linus Torval");
+        profileFive.setEmail("linus.torval@epfl.ch");
+        profileFive.addTeachingCourse(computer);
+
+        User profileSix = new User(443213);
+        profileSix.setFullName("Carlo Rubbia");
+        profileSix.setEmail("carlo.rubbia@epfl.ch");
+        profileSix.addTeachingCourse(chemistry);
+        profileSix.addTeachingCourse(physics);
+
+
+        return new User[]{profileOne, profileTwo, profileThree, profileFour, profileFive,profileSix};
     }
 
-    private void findTutorByName(String name, User[] profiles) {
+    // TODO: make a search algorithm that is more flexible
+    private ArrayList<String> findTutorByName(String name, User[] profiles) {
+
         int count = 0;
+        ArrayList<String> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
             if (profile.getFullName().equals(name)) {
-                ((TextView) findViewById(R.id.nameOne)).setText(name);
+                teachers.add(profile.getFullName());
+                count++;
+            }
+        }
 
+        if (count == 0) {
+            TextView message=(TextView) findViewById(R.id.message);
+            message.setText("The research produced no results");
+            message.setVisibility(View.VISIBLE);
+        }
+        return teachers;
+    }
+
+    private ArrayList<String> findTutorBySciper(String sciper, User[] profiles) {
+
+        int count = 0;
+        int sciperNumber=Integer.parseInt(sciper);
+        ArrayList<String> teachers = new ArrayList<>(0);
+        for (User profile : profiles) {
+            if (profile.getSciper()==sciperNumber) {
+                teachers.add(profile.getFullName());
                 count++;
             }
         }
         if (count == 0) {
-            ((TextView) findViewById(R.id.nameOne)).setText("Non ho trovato un tubo");
-
+            TextView message=(TextView) findViewById(R.id.message);
+            message.setText("The research produced no results");
+            message.setVisibility(View.VISIBLE);
         }
+        return teachers;
     }
-
     private ArrayList<String> findTutorBySubject(String subject, User[] profiles) {
-        int id = -1;
-        if (subject.equals("Maths")) {
-            id = 0;
-        }
-        else if(subject.equals("Physics")){
-            id=1;
-        }
+        int id=convertNameToId(subject);
         int count = 0;
         ArrayList<String> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
@@ -144,13 +163,37 @@ public class FindTutorResult extends AppCompatActivity {
             }
         }
         if (count == 0) {
-            ((TextView) findViewById(R.id.nameOne)).setText("Non ho trovato un tubo");
+            TextView message=(TextView) findViewById(R.id.message);
+            message.setText("The research produced no results");
+            message.setVisibility(View.VISIBLE);
         }
-    /*private void fillDatabase(MockupDatabaseHandler dbHandler){
-        ProfileMockup alberto=new ProfileMockup(273516,"Alberto Silvio","Chiappa",3.5f,4.0f);
-        dbHandler.addProfile(alberto);
-    }*/
+
         return teachers;
+    }
+    private void fillListView(ArrayList<String> tutorNames){
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                tutorNames);
+        ListView tutorList=(ListView) findViewById(R.id.tutorList);
+        tutorList.setAdapter(arrayAdapter);
+    }
+    private int convertNameToId(String subject){
+        int id = -1;
+
+        if (subject.equals("Maths")) {
+            id = 0;
+        }
+        else if(subject.equals("Physics")){
+            id=1;
+        }
+        else if(subject.equals("Chemistry")){
+            id=2;
+        }
+        else if(subject.equals("Computer Science")||subject.equals("Computer")){
+            id=3;
+        }
+        return id;
     }
 }
 
