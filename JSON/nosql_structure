@@ -1,0 +1,53 @@
+Structure ot the noSQL JSON database
+
+{
+	"user" : {
+		"sciper" : {
+			"userName" : "name of user",
+			"fullName" : "surname of user",
+			"email" : "email of user",
+			"pic" : "picture of user"
+			"meetings" : {
+				"meetingId" : "meeting id"	
+			}
+			"teachCourse" : {
+				"courseId" : {
+					"totalHour" : "number of hour",
+					"rate" : "rating of the user"
+				}
+			}
+			"learnCourse" : {
+				"courseId" : "course id"
+			}
+		}
+	}
+
+	"course" : {
+		"courseId" : {
+			"courseName" : {
+				"courseNameFr" : "name of course in Fr"
+			}
+			"teachCourse" : {
+				"userId" : "id of user"
+			}
+			"learnCourse" : {
+				"userId" : "id of user"
+			}
+			"meeting" : {
+				"meetingId" : "id of meeting"
+			}
+		}
+	} 
+
+	"meeting" : {
+		"meetingId" : {
+			"date" : "time of the meeting",
+			"location" : "location the meeting"
+			"courseId" : "id of course"
+			"participants" : {
+				"userId" : "id of participant"
+			}	
+		}	
+	}
+}
+
