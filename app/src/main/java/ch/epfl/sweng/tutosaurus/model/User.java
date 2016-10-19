@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class User {
@@ -9,13 +10,13 @@ public class User {
     private String username;
     private String fullName;
     private String email;
-    private ArrayList<Meeting> meetings;
+    private ArrayList<Meeting> meetings = new ArrayList<>();
 
-    private ArrayList<Course> teaching;
-    private ArrayList<Course> studying;
+    private ArrayList<Course> teaching = new ArrayList<>();
+    private ArrayList<Course> studying = new ArrayList<>();
 
-    private Map<Integer, Double> ratings; /* (course id -> rating) */
-    private Map<Integer, Integer> totalHoursTaught; /* (course id -> hours taught */
+    private Map<Integer, Double> ratings = new HashMap<>(); /* (course id -> rating) */
+    private Map<Integer, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
 
     private double rating;
 
