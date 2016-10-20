@@ -1,6 +1,8 @@
 package ch.epfl.sweng.tutosaurus.model;
 
 import android.location.Location;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Meeting {
@@ -8,6 +10,7 @@ public class Meeting {
     private final int id;
     private Date date;
     private Location location;
+    private ArrayList<Integer> participants = new ArrayList<>();
 
     /**
      * Constructor for the Meeting class

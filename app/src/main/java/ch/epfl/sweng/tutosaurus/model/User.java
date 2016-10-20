@@ -10,7 +10,6 @@ public class User {
     private String username;
     private String fullName;
     private String email;
-    private ArrayList<Meeting> meetings = new ArrayList<>();
 
     private ArrayList<Course> teaching = new ArrayList<>();
     private ArrayList<Course> studying = new ArrayList<>();
@@ -137,18 +136,6 @@ public class User {
      */
     public void addStudyingCourse(Course course) {
         studying.add(course);
-    }
-
-    /**
-     * Returns a list containing all of the user's planned meetings.
-     * @return a list of meetings
-     */
-    public ArrayList<Meeting> getMeetings() {
-        ArrayList<Meeting> ls = new ArrayList<>();
-        for(Meeting m : this.meetings) {
-            ls.add(m);
-        }
-        return ls;
     }
 
     /**
