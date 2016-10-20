@@ -114,15 +114,7 @@ public class User {
         return this.rating;
     }
 
-    /**
-     * Add a meeting to this user's meeting list.
-     * @param meeting the meeting to add to this user
-     */
-    public void addMeeting(Meeting meeting) {
-        meetings.add(meeting);
-    }
-
-    /**
+     /**
      * Add a course to the list of courses that this user is prepared to teach.
      * @param course the course to add
      */

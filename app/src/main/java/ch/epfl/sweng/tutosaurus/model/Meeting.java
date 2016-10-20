@@ -47,6 +47,14 @@ public class Meeting {
     }
 
     /**
+     * Add a participant to this meeting.
+     * @param sciper the sciper number of the participant
+     */
+    public void addParticipant(int sciper) {
+        this.participants.add(sciper);
+    }
+
+    /**
      * Returns the unique id of this meeting.
      * @return the unique id for the meeting
      */
