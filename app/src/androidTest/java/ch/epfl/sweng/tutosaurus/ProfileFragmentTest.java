@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.espresso.contrib.DrawerActions;
@@ -26,22 +25,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
 
 import ch.epfl.sweng.tutosaurus.matcher.CustomMatchers;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.contrib.DrawerActions.open;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static ch.epfl.sweng.tutosaurus.matcher.CustomMatchers.noDrawable;
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.not;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -52,7 +41,7 @@ public class ProfileFragmentTest {
             HomeScreenActivity.class
     );
 
-    @Before()
+    @Before
     public void stubLoadProfilePictureIntent() {
         Intent intent = new Intent();
         Resources resources = InstrumentationRegistry.getTargetContext().getResources();
@@ -80,14 +69,14 @@ public class ProfileFragmentTest {
     @Test
     public void testProfilePictureContainsBitmapAfterLoadingPicture() throws InterruptedException {
 
-        Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        Espresso.onView(ViewMatchers.withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_first_layout));
+        onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(ViewMatchers.withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_first_layout));
         Thread.sleep(1000);
-        Espresso.onView(ViewMatchers.withId(R.id.buttonLoadPicture)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.picture_view)).check(ViewAssertions.matches(CoreMatchers.not(CustomMatchers.noDrawable())));
+        onView(ViewMatchers.withId(R.id.buttonLoadPicture)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(R.id.picture_view)).check(ViewAssertions.matches(CoreMatchers.not(CustomMatchers.noDrawable())));
         Thread.sleep(1000);
-        Espresso.onView(ViewMatchers.withId(R.id.buttonTakePicture)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.picture_view)).check(ViewAssertions.matches(CoreMatchers.not(CustomMatchers.noDrawable())));
+        onView(ViewMatchers.withId(R.id.buttonTakePicture)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(R.id.picture_view)).check(ViewAssertions.matches(CoreMatchers.not(CustomMatchers.noDrawable())));
         Thread.sleep(1000);
     }
 }
