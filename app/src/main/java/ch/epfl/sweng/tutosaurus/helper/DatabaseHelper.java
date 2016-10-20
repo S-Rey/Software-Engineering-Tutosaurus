@@ -28,6 +28,7 @@ public class DatabaseHelper {
         String pUsername = headPath + "/username";
         String pName = headPath + "/name";
         String pEmail = headPath + "/email";
+        String pPicture = headPath + "/pic";
         Log.d("DBH", "headPath: " + headPath);
         DatabaseReference ref = db.getReference(pUsername);
         ref.setValue(username);
@@ -35,7 +36,8 @@ public class DatabaseHelper {
         ref.setValue(name);
         ref = db.getReference(pEmail);
         ref.setValue(email);
-
+        ref = db.getReference(pPicture);
+        ref.setValue(PictureHelper.encodeToString("/storage/emulated/0/Download/pic.jpg"));
     }
 
     public void signUp(User user) {
