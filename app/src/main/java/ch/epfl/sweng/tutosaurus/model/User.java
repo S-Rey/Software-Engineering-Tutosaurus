@@ -190,7 +190,11 @@ public class User {
      * @param rating the rating for this course
      */
     public void setCourseRating(int courseId, double rating) {
-        ratings.put(courseId, rating);
+        if(rating > 1.0 || rating < 0) {
+            throw new IllegalArgumentException("The rating should be between 0 and 1");
+        } else {
+            ratings.put(courseId, rating);
+        }
     }
 
     /**
