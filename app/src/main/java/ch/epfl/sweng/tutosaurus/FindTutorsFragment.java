@@ -18,13 +18,13 @@ import android.widget.TextView;
  * Created by Vincent on 05/10/2016.
  */
 
-public class SecondFragment extends Fragment {
+public class FindTutorsFragment extends Fragment {
     View myView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.second_layout, container, false);
+        myView = inflater.inflate(R.layout.find_tutors_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Find Tutors");
 
         // Search by name listener

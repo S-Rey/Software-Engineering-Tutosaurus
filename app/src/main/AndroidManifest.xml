@@ -2,16 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.epfl.sweng.tutosaurus">
 
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,7 +21,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,10 +30,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterScreenActivity"
-            android:label="@string/activity_register_name"></activity>
+            android:label="@string/activity_register_name">
+        </activity>
         <activity
             android:name=".ConfirmationActivity"
-            android:label="@string/activity_register_name"></activity>
+            android:label="@string/activity_register_name">
+        </activity>
         <activity
             android:name=".PublicProfileActivity"
             android:label="Profile"
@@ -56,7 +47,20 @@
         <activity
             android:name=".FindTutorResult"
             android:label="List of matches">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".HelpDeskActivity"
+            android:label="@string/helpdesk">
+            <intent-filter>
+                <action android:name="com.example.myapp.activities.MyActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>

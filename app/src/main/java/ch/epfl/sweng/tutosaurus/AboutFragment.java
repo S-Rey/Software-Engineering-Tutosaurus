@@ -11,14 +11,14 @@ import android.view.ViewGroup;
  * Created by Vincent on 05/10/2016.
  */
 
-public class SixthFragment extends Fragment {
+public class AboutFragment extends Fragment {
 
     View myView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.sixth_layout, container, false);
+        myView = inflater.inflate(R.layout.about_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("About");
         return myView;
     }

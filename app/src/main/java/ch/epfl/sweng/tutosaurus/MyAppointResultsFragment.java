@@ -7,18 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FirstFragment extends Fragment {
+/**
+ * Created by Vincent on 05/10/2016.
+ */
+
+public class MyAppointResultsFragment extends Fragment {
 
     View myView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.first_layout, container, false);
-        ((HomeScreenActivity) getActivity()).setActionBarTitle("Profile");
+        myView = inflater.inflate(R.layout.my_appoint_results_layout, container, false);
+        ((HomeScreenActivity) getActivity()).setActionBarTitle("My Appoint Results");
         return myView;
     }
-
-
-
 }
