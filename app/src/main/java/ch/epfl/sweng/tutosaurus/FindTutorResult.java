@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ch.epfl.sweng.tutosaurus.findTutor.Tutor;
+import ch.epfl.sweng.tutosaurus.findTutor.TutorAdapter;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.User;
 
@@ -78,46 +80,53 @@ public class FindTutorResult extends AppCompatActivity {
         profileOne.setEmail("alberto.chiappa@epfl.ch");
         profileOne.addTeachingCourse(maths);
         profileOne.addTeachingCourse(computer);
+        profileOne.setPicture(R.drawable.foto_mia);
 
         User profileTwo = new User(223415);
         profileTwo.setFullName("Albert Einstein");
         profileTwo.setEmail("albert.einstein@epfl.ch");
         profileTwo.addTeachingCourse(physics);
         profileTwo.addTeachingCourse(maths);
+        profileTwo.setPicture(R.drawable.einstein);
 
         User profileThree = new User(124821);
         profileThree.setFullName("Kurt Godel");
         profileThree.setEmail("kurt.godel@epfl.ch");
         profileThree.addTeachingCourse(maths);
+        profileThree.setPicture(R.drawable.godel);
 
         User profileFour = new User(100000);
         profileFour.setFullName("Maurizio Grasselli");
         profileFour.setEmail("maurizio.grasselli@epfl.ch");
         profileFour.addTeachingCourse(maths);
+        profileFour.setPicture(R.drawable.grasselli);
 
         User profileFive = new User(223615);
-        profileFive.setFullName("Linus Torval");
+        profileFive.setFullName("Linus Torvald");
         profileFive.setEmail("linus.torval@epfl.ch");
         profileFive.addTeachingCourse(computer);
+        profileFive.setPicture(R.drawable.torvald);
 
         User profileSix = new User(443213);
         profileSix.setFullName("Carlo Rubbia");
         profileSix.setEmail("carlo.rubbia@epfl.ch");
         profileSix.addTeachingCourse(chemistry);
         profileSix.addTeachingCourse(physics);
+        profileSix.setPicture(R.drawable.rubbia);
 
 
         return new User[]{profileOne, profileTwo, profileThree, profileFour, profileFive,profileSix};
     }
 
     // TODO: make a search algorithm that is more flexible
-    private ArrayList<String> findTutorByName(String name, User[] profiles) {
-
+    private ArrayList<Tutor> findTutorByName(String name, User[] profiles) {
         int count = 0;
-        ArrayList<String> teachers = new ArrayList<>(0);
+        Tutor tutorToAdd;
+        ArrayList<Tutor> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
             if (profile.getFullName().equals(name)) {
-                teachers.add(profile.getFullName());
+                tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName());
+                teachers.add(tutorToAdd);
                 count++;
             }
         }
@@ -130,14 +139,15 @@ public class FindTutorResult extends AppCompatActivity {
         return teachers;
     }
 
-    private ArrayList<String> findTutorBySciper(String sciper, User[] profiles) {
-
+    private ArrayList<Tutor> findTutorBySciper(String sciper, User[] profiles) {
         int count = 0;
         int sciperNumber=Integer.parseInt(sciper);
-        ArrayList<String> teachers = new ArrayList<>(0);
+        Tutor tutorToAdd;
+        ArrayList<Tutor> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
             if (profile.getSciper()==sciperNumber) {
-                teachers.add(profile.getFullName());
+                tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName());
+                teachers.add(tutorToAdd);
                 count++;
             }
         }
@@ -148,15 +158,17 @@ public class FindTutorResult extends AppCompatActivity {
         }
         return teachers;
     }
-    private ArrayList<String> findTutorBySubject(String subject, User[] profiles) {
+
+    private ArrayList<Tutor> findTutorBySubject(String subject, User[] profiles) {
         int id=convertNameToId(subject);
         int count = 0;
-        ArrayList<String> teachers = new ArrayList<>(0);
+        Tutor tutorToAdd;
+        ArrayList<Tutor> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
             for (Course taughtCourse : profile.getTeachingCourses()) {
                 if (taughtCourse.getId() == id) {
-                    //((TextView) findViewById(R.id.nameOne)).setText(profile.getFullName());
-                    teachers.add(profile.getFullName());
+                    tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName());
+                    teachers.add(tutorToAdd);
                     count++;
                 }
 
@@ -170,10 +182,10 @@ public class FindTutorResult extends AppCompatActivity {
 
         return teachers;
     }
-    private void fillListView(ArrayList<String> tutorNames){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+    private void fillListView(ArrayList<Tutor> tutorNames){
+        TutorAdapter arrayAdapter = new TutorAdapter(
                 this,
-                android.R.layout.simple_list_item_1,
+                R.layout.listview_tutor_row,
                 tutorNames);
         ListView tutorList=(ListView) findViewById(R.id.tutorList);
         tutorList.setAdapter(arrayAdapter);

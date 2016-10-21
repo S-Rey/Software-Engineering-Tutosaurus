@@ -9,6 +9,7 @@ public class User {
     private String username;
     private String fullName;
     private String email;
+    private int profilePicture;
     private ArrayList<Meeting> meetings;
 
     private ArrayList<Course> teaching;
@@ -70,6 +71,14 @@ public class User {
     }
 
     /**
+     * Sets this user's email address
+     * @param profilePicture the id of the profile picture
+     */
+    public void setPicture(int profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    /**
      * Sets this user's teacher rating, as a number between 0 and 1 included.
      * @param rating the user's rating between 0 and 1
      * @throws IllegalArgumentException if the rating is not comprised between 0 and 1
@@ -106,6 +115,13 @@ public class User {
         return this.email;
     }
 
+    /**
+     * Returns this user's email address.
+     * @return the id of the profile picture
+     */
+    public int getPicture() {
+        return this.profilePicture;
+    }
     /**
      * Returns this user's teacher rating.
      * @return the rating of the user
