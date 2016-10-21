@@ -23,18 +23,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:text="@string/first_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/firstNameText"
-        android:textSize="24sp"
-        android:textColor="@android:color/holo_purple"
-        android:layout_marginTop="34dp"
-        android:layout_below="@+id/instructionsRegister"
-        android:layout_alignLeft="@+id/lastNameText"
-        android:layout_alignStart="@+id/lastNameText" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +42,7 @@
         android:id="@+id/lastNameText"
         android:textSize="24sp"
         android:textColor="@android:color/holo_purple"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="35dp"
         android:layout_below="@+id/firstNameEntry"
         android:layout_centerHorizontal="true" />
 
@@ -77,7 +65,7 @@
         android:id="@+id/emailAddressText"
         android:textSize="24sp"
         android:textColor="@android:color/holo_purple"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:layout_below="@+id/lastNameEntry"
         android:layout_centerHorizontal="true" />
 
@@ -93,27 +81,16 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="@string/sciper"
+        android:text="@string/first_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sciperText"
+        android:id="@+id/firstNameText"
         android:textSize="24sp"
         android:textColor="@android:color/holo_purple"
-        android:layout_marginTop="24dp"
-        android:layout_below="@+id/emailAddressEntry"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/sciperEntry"
-        android:background="@android:drawable/editbox_background"
-        android:hint="@string/sciper"
-        android:layout_below="@+id/sciperText"
-        android:layout_alignLeft="@+id/emailAddressEntry"
-        android:layout_alignStart="@+id/emailAddressEntry" />
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/instructionsRegister"
+        android:layout_alignLeft="@+id/lastNameText"
+        android:layout_alignStart="@+id/lastNameText" />
 
     <Button
         android:text="@string/send_information_button"
@@ -124,8 +101,9 @@
         android:background="@android:drawable/editbox_background"
         android:textColor="@android:color/holo_red_dark"
         android:textAllCaps="false"
+        android:onClick="sendMessageForAccess"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="sendMessageForAccess" />
+        android:layout_marginBottom="14dp" />
 
 </RelativeLayout>

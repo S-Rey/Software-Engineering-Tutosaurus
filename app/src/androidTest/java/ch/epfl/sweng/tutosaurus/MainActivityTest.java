@@ -51,12 +51,10 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         onView(withId(R.id.firstNameEntry)).perform(typeText("Vincent")).perform(closeSoftKeyboard());
         onView(withId(R.id.lastNameEntry)).perform(typeText("Rinaldi")).perform(closeSoftKeyboard());
         onView(withId(R.id.emailAddressEntry)).perform(typeText("vincent.rinaldi@epfl.ch")).perform(closeSoftKeyboard());
-        onView(withId(R.id.sciperEntry)).perform(typeText("239759")).perform(closeSoftKeyboard());
         onView(withId(R.id.sendButton)).perform(click());
         onView(withId(R.id.firstNameProvided)).check(matches(withText("First name : Vincent")));
         onView(withId(R.id.lastNameProvided)).check(matches(withText("Last name : Rinaldi")));
         onView(withId(R.id.emailAddressProvided)).check(matches(withText("Email address : vincent.rinaldi@epfl.ch")));
-        onView(withId(R.id.sciperProvided)).check(matches(withText("Sciper : 239759")));
         onView(withId(R.id.backToLoginButton)).perform(click());
     }
 }

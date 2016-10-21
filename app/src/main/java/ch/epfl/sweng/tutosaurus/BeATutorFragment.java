@@ -11,14 +11,14 @@ import android.view.ViewGroup;
  * Created by Vincent on 05/10/2016.
  */
 
-public class ThirdFragment extends Fragment {
+public class BeATutorFragment extends Fragment {
 
     View myView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.third_layout, container, false);
+        myView = inflater.inflate(R.layout.be_a_tutor_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Be A Tutor");
         return myView;
     }

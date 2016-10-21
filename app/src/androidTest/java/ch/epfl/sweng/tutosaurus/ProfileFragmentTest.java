@@ -70,7 +70,7 @@ public class ProfileFragmentTest {
     public void testProfilePictureContainsBitmapAfterLoadingPicture() throws InterruptedException {
 
         onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_first_layout));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_profile_layout));
         Thread.sleep(1000);
         onView(withId(R.id.buttonLoadPicture)).perform(click());
         onView(withId(R.id.picture_view)).check(matches(not(noDrawable())));

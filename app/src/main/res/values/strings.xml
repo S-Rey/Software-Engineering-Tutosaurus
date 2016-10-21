@@ -12,20 +12,22 @@
     <string name="activity_register_name">Register</string>
     <string name="instructions_register">
         Please fill in the information below to verify you are from EPFL and provide you access
-        to TutoSaurus with your corresponding full name, EPFL email address and Sciper</string>
+        to TutoSaurus with your corresponding full name and email address</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="email_address">Email Address</string>
-    <string name="sciper">Sciper</string>
     <string name="send_information_button">Send</string>
     <string name="thanks_message1">Thank you for registering !</string>
     <string name="thanks_message2">
-        If the information you provided is correct you will be able to connect to TutoSaurus with your GASPAR account soon</string>
+        You will be able to connect to TutoSaurus with your new created account soon.</string>
     <string name="recap_message">Provided information is :</string>
     <string name="back_to_login_button">Back to log in screen</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="welcome_message_1">WHY LOOKING FOR BUTTONS</string>
+    <string name="welcome_message_2">WHEN YOU HAVE A BURGER MENU ?</string>
 
     <string name="action_logOut">Log out</string>
 
@@ -40,12 +42,35 @@
     <string name="sixthLayout_button">About</string>
     <string name="seventhLayout_button">My Appoint Results</string>
 
+    <string name="title">TutoSaurus ©</string>
+    <string name="version">Version : 1.0.0</string>
+    <string name="description">Copyright EPFL Inc. 2016. All rights reserved.</string>
+    <string name="developers">TutoSaurus is developed by the team No Clue from EPFL.</string>
+    <string name="goal">
+        This Android application is intended for students and tutors from Switzerland
+        and provides study material needed to help every student realize their potential.</string>
+
+    <string name="helpdesk">Help Desk</string>
+
+    <string name="phone_number_help">+41 21 000 0000</string>
+    <string name="clock_message_phone">Monday to Friday : 06:00 to 18:00</string>
+    <string name="help_message_phone">Need some help urgently ? You can call our support line.
+        You will be put in interaction with one of our support agents.</string>
+    <string name="email_address_help">android.studio@epfl.ch</string>
+    <string name="clock_message_email">Service available 24/7</string>
+    <string name="help_message_email">You can also send us an email.
+        A member of the assistance service will answer to your request soon.</string>
+
+    <!-- What we can add -->
+    <string name="report_bug">Report Bug</string>
+    <string name="faq">FAQ</string>
+    <string name="website">TutoSaurus website</string>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="rate_app">Rate the app</string>
+    <string name="push_notifications">Enable Notifications</string>
+    <string name="sync_calendar">Synchronise calendar</string>
     <string name="share_location">Share location</string>
-    <string name="sync_calendar">Sync calendar</string>
-    <string name="push_notifications">Notifications</string>
+    <string name="rate_app">Rate the app</string>
 
     <string name="load_picture">Load Picture</string>
     <string name="title_lists_subjects">List of subjects</string>

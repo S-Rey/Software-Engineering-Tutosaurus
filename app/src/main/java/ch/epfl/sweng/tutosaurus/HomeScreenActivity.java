@@ -8,10 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -97,20 +92,20 @@ public class HomeScreenActivity extends AppCompatActivity
         int id = item.getItemId();
         android.app.FragmentManager fragmentManager = getFragmentManager();
 
-        if (id == R.id.nav_first_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new FirstFragment()).commit();
-        } else if (id == R.id.nav_second_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new SecondFragment()).commit();
-        } else if (id == R.id.nav_third_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new ThirdFragment()).commit();
-        } else if (id == R.id.nav_fourth_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new FourthFragment()).commit();
-        } else if (id == R.id.nav_fifth_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new FifthFragment()).commit();
-        } else if (id == R.id.nav_sixth_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new SixthFragment()).commit();
-        } else if (id == R.id.nav_seventh_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new SeventhFragment()).commit();
+        if (id == R.id.nav_profile_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
+        } else if (id == R.id.nav_findTutors_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new FindTutorsFragment()).commit();
+        } else if (id == R.id.nav_beATutor_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new BeATutorFragment()).commit();
+        } else if (id == R.id.nav_settings_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+        } else if (id == R.id.nav_help_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new HelpFragment()).commit();
+        } else if (id == R.id.nav_about_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
+        } else if (id == R.id.nav_myAppointResults_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new MyAppointResultsFragment()).commit();
         } else if (id == R.id.nav_db_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new DatabaseFragment()).commit();
         }
