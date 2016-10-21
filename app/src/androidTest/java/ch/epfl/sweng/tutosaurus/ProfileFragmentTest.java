@@ -10,10 +10,17 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.assertion.ViewAssertions;
+import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.intent.matcher.IntentMatchers;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,16 +28,9 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
+import ch.epfl.sweng.tutosaurus.matcher.CustomMatchers;
+
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.contrib.DrawerActions.open;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static ch.epfl.sweng.tutosaurus.matcher.CustomMatchers.noDrawable;
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.not;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -41,7 +41,7 @@ public class ProfileFragmentTest {
             HomeScreenActivity.class
     );
 
-    @Before()
+    @Before
     public void stubLoadProfilePictureIntent() {
         Intent intent = new Intent();
         Resources resources = InstrumentationRegistry.getTargetContext().getResources();
@@ -60,23 +60,23 @@ public class ProfileFragmentTest {
         intent.putExtras(bundle);
 
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, intent);
-        intending(anyOf(
-                hasAction(Intent.ACTION_PICK),
-                hasAction(MediaStore.ACTION_IMAGE_CAPTURE))
+        Intents.intending(CoreMatchers.anyOf(
+                IntentMatchers.hasAction(Intent.ACTION_PICK),
+                IntentMatchers.hasAction(MediaStore.ACTION_IMAGE_CAPTURE))
         ).respondWith(result);
     }
 
     @Test
     public void testProfilePictureContainsBitmapAfterLoadingPicture() throws InterruptedException {
 
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_profile_layout));
+        onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(ViewMatchers.withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_first_layout));
         Thread.sleep(1000);
-        onView(withId(R.id.buttonLoadPicture)).perform(click());
-        onView(withId(R.id.picture_view)).check(matches(not(noDrawable())));
+        onView(ViewMatchers.withId(R.id.buttonLoadPicture)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(R.id.picture_view)).check(ViewAssertions.matches(CoreMatchers.not(CustomMatchers.noDrawable())));
         Thread.sleep(1000);
-        onView(withId(R.id.buttonTakePicture)).perform(click());
-        onView(withId(R.id.picture_view)).check(matches(not(noDrawable())));
+        onView(ViewMatchers.withId(R.id.buttonTakePicture)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(R.id.picture_view)).check(ViewAssertions.matches(CoreMatchers.not(CustomMatchers.noDrawable())));
         Thread.sleep(1000);
     }
 }

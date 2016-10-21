@@ -13,7 +13,6 @@ import org.hamcrest.TypeSafeMatcher;
 /**
  * Credit to <a href="https://medium.com/@dbottillo/android-ui-test-espresso-matcher-for-imageview-1a28c832626f#.b51qy2644">Daniele Botillo</a>
  */
-
 public class DrawableMatcher extends TypeSafeMatcher<View> {
 
     private final int expectedId;

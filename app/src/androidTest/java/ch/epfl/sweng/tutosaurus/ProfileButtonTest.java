@@ -1,12 +1,17 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.support.test.InstrumentationRegistry;
+import android.support.v4.view.NestedScrollingChild;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -36,14 +41,14 @@ public class ProfileButtonTest extends ActivityInstrumentationTestCase2<MainActi
         getActivity();
         onView(withId(R.id.profileTestButton)).perform(click());
         onView(withId(R.id.profileName)).check(matches(withText("Alberto Chiappa")));
-        onView(withId(R.id.commentsButton)).perform(click());
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         onView(withId(R.id.commentsButton)).check(matches(withText("Hide comments")));
     }
     public void testCanOpenSubjects(){
         getActivity();
         onView(withId(R.id.profileTestButton)).perform(click());
         onView(withId(R.id.profileName)).check(matches(withText("Alberto Chiappa")));
-        onView(withId(R.id.mathsButton)).perform(click());
+        onView(withId(R.id.mathsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         onView(withId(R.id.subjectName)).check(matches(withText("Mathematics")));
         onView(withId(R.id.physicsButton)).perform(click());
         onView(withId(R.id.subjectName)).check(matches(withText("Physics")));

@@ -25,6 +25,8 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         testButton.setOnClickListener(this);
         Button signupButton = (Button) myView.findViewById(R.id.db_signup_button);
         signupButton.setOnClickListener(this);
+        Button courseButton = (Button) myView.findViewById(R.id.db_course_button);
+        courseButton.setOnClickListener(this);
         return myView;
     }
 
@@ -37,6 +39,9 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
             case R.id.db_signup_button :
                 signUp();
                 break;
+            case R.id.db_course_button :
+                addCourse();
+                break;
         }
     }
 
@@ -48,8 +53,18 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
 
     private void signUp() {
         DatabaseHelper dbh = new DatabaseHelper();
+        String sciper = ((EditText)myView.findViewById(R.id.db_signup_sciper)).getText().toString();
         String username = ((EditText)myView.findViewById(R.id.db_signup_username)).getText().toString();
         String fullName = ((EditText)myView.findViewById(R.id.db_signup_name)).getText().toString();
-        dbh.signUp(username, fullName);
+        String email = ((EditText)myView.findViewById(R.id.db_signup_email)).getText().toString();
+        dbh.signUp(sciper, username, fullName, email);
+    }
+
+    private void addCourse() {
+        DatabaseHelper dbh = new DatabaseHelper();
+        String id = ((EditText)myView.findViewById(R.id.db_course_id)).getText().toString();
+        String name = ((EditText)myView.findViewById(R.id.db_course_name)).getText().toString();
+        String teacher = ((EditText)myView.findViewById(R.id.db_course_teacher)).getText().toString();
+        dbh.addCourse(id, name, teacher);
     }
 }

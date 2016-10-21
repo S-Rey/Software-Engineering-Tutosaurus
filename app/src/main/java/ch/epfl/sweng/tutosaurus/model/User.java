@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class User {
@@ -10,13 +11,12 @@ public class User {
     private String fullName;
     private String email;
     private int profilePicture;
-    private ArrayList<Meeting> meetings;
 
-    private ArrayList<Course> teaching;
-    private ArrayList<Course> studying;
+    private ArrayList<Course> teaching = new ArrayList<>();
+    private ArrayList<Course> studying = new ArrayList<>();
 
-    private Map<Integer, Double> ratings; /* (course id -> rating) */
-    private Map<Integer, Integer> totalHoursTaught; /* (course id -> hours taught */
+    private Map<Integer, Double> ratings = new HashMap<>(); /* (course id -> rating) */
+    private Map<Integer, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
 
     private double rating;
 
@@ -26,10 +26,6 @@ public class User {
      */
     public User(int sciper) {
         this.sciper = sciper;
-        this.meetings = new ArrayList<Meeting>(0);
-        this.teaching = new ArrayList<Course>(0);
-        this.studying = new ArrayList<Course>(0);
-
     }
 
     /**
@@ -40,10 +36,6 @@ public class User {
     public User(int sciper, String username) {
         this.sciper = sciper;
         this.username = username;
-        this.meetings = new ArrayList<Meeting>(0);
-        this.teaching = new ArrayList<Course>(0);
-        this.teaching=new ArrayList<Course>(0);
-
     }
 
     /**
@@ -100,6 +92,14 @@ public class User {
     }
 
     /**
+     * Returns this user's username (normally the GASPAR username).
+     * @return the username of the user
+     */
+    public String getUsername() {
+        return this.username;
+    }
+
+    /**
      * Returns this user's full fullName.
      * @return the full fullName of the user
      */
@@ -116,13 +116,6 @@ public class User {
     }
 
     /**
-     * Returns this user's email address.
-     * @return the id of the profile picture
-     */
-    public int getPicture() {
-        return this.profilePicture;
-    }
-    /**
      * Returns this user's teacher rating.
      * @return the rating of the user
      */
@@ -130,15 +123,7 @@ public class User {
         return this.rating;
     }
 
-    /**
-     * Add a meeting to this user's meeting list.
-     * @param meeting the meeting to add to this user
-     */
-    public void addMeeting(Meeting meeting) {
-        meetings.add(meeting);
-    }
-
-    /**
+     /**
      * Add a course to the list of courses that this user is prepared to teach.
      * @param course the course to add
      */
@@ -152,18 +137,6 @@ public class User {
      */
     public void addStudyingCourse(Course course) {
         studying.add(course);
-    }
-
-    /**
-     * Returns a list containing all of the user's planned meetings.
-     * @return a list of meetings
-     */
-    public ArrayList<Meeting> getMeetings() {
-        ArrayList<Meeting> ls = new ArrayList<>();
-        for(Meeting m : this.meetings) {
-            ls.add(m);
-        }
-        return ls;
     }
 
     /**
@@ -205,7 +178,11 @@ public class User {
      * @param rating the rating for this course
      */
     public void setCourseRating(int courseId, double rating) {
-        ratings.put(courseId, rating);
+        if(rating > 1.0 || rating < 0) {
+            throw new IllegalArgumentException("The rating should be between 0 and 1");
+        } else {
+            ratings.put(courseId, rating);
+        }
     }
 
     /**
@@ -218,6 +195,14 @@ public class User {
     }
 
     /**
+     * Returns this user's email address.
+     * @return the id of the profile picture
+     */
+    public int getPicture() {
+        return this.profilePicture;
+    }
+
+    /**
      * Get the rating for a particular course
      * @param courseId the unique id of the course
      * @return the rating for this course
@@ -226,12 +211,4 @@ public class User {
         return ratings.get(courseId);
     }
 
-    /**
-     * Returns the name automatically (to be used in the listview)
-     * @return the full name
-     */
-
-    public String toString(){
-        return this.fullName;
-    }
 }
