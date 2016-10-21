@@ -53,6 +53,10 @@
             android:name=".LocationActivity"
             android:label="@string/location"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".FindTutorResult"
+            android:label="List of matches">
+        </activity>
     </application>
 
 </manifest>
