@@ -136,6 +136,20 @@ public class SecondFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        // Show full list
+        Button showFullList = (Button) myView.findViewById(R.id.showFullList);
+        showFullList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),FindTutorResult.class);
+                Bundle extras = new Bundle();
+                extras.putString("METHOD_TO_CALL","showFullList");
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
+
         return myView;
     }
 

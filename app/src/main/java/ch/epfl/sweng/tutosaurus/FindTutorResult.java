@@ -50,6 +50,9 @@ public class FindTutorResult extends AppCompatActivity {
         else if (methodToCall.equals("findComputerTutor")) {
             fillListView(findTutorBySubject("Computer", profiles));
         }
+        else if (methodToCall.equals("showFullList")){
+            fillListView(showFullList(profiles));
+        }
         /*
         // Create example database
         MockupDatabaseHandler dbHandler = new MockupDatabaseHandler(this);
@@ -180,6 +183,24 @@ public class FindTutorResult extends AppCompatActivity {
             message.setVisibility(View.VISIBLE);
         }
 
+        return teachers;
+    }
+
+    private ArrayList<Tutor> showFullList(User[] profiles) {
+        int count = 0;
+        Tutor tutorToAdd;
+        ArrayList<Tutor> teachers = new ArrayList<>(0);
+        for (User profile : profiles) {
+            tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName());
+            teachers.add(tutorToAdd);
+            count++;
+        }
+
+        if (count == 0) {
+            TextView message=(TextView) findViewById(R.id.message);
+            message.setText("The research produced no results");
+            message.setVisibility(View.VISIBLE);
+        }
         return teachers;
     }
     private void fillListView(ArrayList<Tutor> tutorNames){
