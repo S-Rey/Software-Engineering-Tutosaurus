@@ -40,9 +40,9 @@
         android:id="@+id/clockMessagePhone"
         android:textSize="16sp"
         android:textStyle="normal|bold|italic"
+        android:layout_marginTop="12dp"
         android:layout_below="@+id/phoneNumberHelp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="@string/help_message_phone"
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/sym_action_email"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="57dp"
         android:id="@+id/imageView4"
         android:scaleX="3"
         android:scaleY="3"
@@ -72,18 +72,18 @@
         android:text="@string/email_address_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/emailAddressHelp"
         android:textSize="21sp"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/imageView4"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="@string/clock_message_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="14dp"
         android:id="@+id/clockMessageEmail"
         android:textStyle="normal|bold|italic"
         android:textSize="16sp"

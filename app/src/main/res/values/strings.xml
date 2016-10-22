@@ -45,7 +45,7 @@
     <string name="title">TutoSaurus ©</string>
     <string name="version">Version : 1.0.0</string>
     <string name="description">Copyright EPFL Inc. 2016. All rights reserved.</string>
-    <string name="developers">TutoSaurus is developed by the team No Clue from EPFL.</string>
+    <string name="developers">This app is developed by team No Clue from EPFL.</string>
     <string name="goal">
         This Android application is intended for students and tutors from Switzerland
         and provides study material needed to help every student realize their potential.</string>

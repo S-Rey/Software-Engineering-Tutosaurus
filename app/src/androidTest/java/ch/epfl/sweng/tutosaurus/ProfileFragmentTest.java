@@ -70,7 +70,7 @@ public class ProfileFragmentTest {
     public void testProfilePictureContainsBitmapAfterLoadingPicture() throws InterruptedException {
 
         onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(ViewMatchers.withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_first_layout));
+        onView(ViewMatchers.withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_profile_layout));
         Thread.sleep(1000);
         onView(ViewMatchers.withId(R.id.buttonLoadPicture)).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.picture_view)).check(ViewAssertions.matches(CoreMatchers.not(CustomMatchers.noDrawable())));
