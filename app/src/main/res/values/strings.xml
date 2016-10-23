@@ -16,6 +16,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="email_address">Email Address</string>
+    <string name="sciper">Sciper</string>
     <string name="send_information_button">Send</string>
     <string name="thanks_message1">Thank you for registering !</string>
     <string name="thanks_message2">
