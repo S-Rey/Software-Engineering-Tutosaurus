@@ -62,6 +62,12 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         User user = new User(Integer.parseInt(sciper), username);
         user.setFullName(fullName);
         user.setEmail(email);
+
+        Course maths = new Course(1234, "Maths");
+        user.addTeachingCourse(maths);
+        Course physics = new Course(5678, "Physics");
+        user.addTeachingCourse(physics);
+
         dbh.signUp(user);
     }
 
