@@ -1,11 +1,17 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
+
+import java.io.IOException;
+
+import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -15,6 +21,14 @@ public class RegisterScreenActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE_LAST_NAME = "com.example.myfirstapp.LASTNAME";
     public final static String EXTRA_MESSAGE_EMAIL_ADDRESS = "com.example.myfirstapp.EMAILADDRESS";
     public final static String EXTRA_MESSAGE_SCIPER = "com.example.myfirstapp.SCIPER";
+
+    private static final String CLIENT_ID = "";
+    private static final String CLIENT_KEY = "";
+    private static final String REDIRECT_URI = "tutosaurus://login";
+
+    public Dialog authDialog;
+    public WebView authWebv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,5 +67,10 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
+
+    private static OAuth2Config readConfig() throws IOException {
+        return new OAuth2Config(new String[]{"Tequila.profile"}, CLIENT_ID, CLIENT_KEY, REDIRECT_URI);
+    }
+
 
 }
