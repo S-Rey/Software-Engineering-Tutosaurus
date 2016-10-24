@@ -2,7 +2,8 @@ Structure ot the noSQL JSON database
 
 {
 	"user" : {
-		"sciper" : {
+		"userId" : {
+		    "sciper"   : "sciper number of user"
 			"userName" : "name of user",
 			"fullName" : "surname of user",
 			"email" : "email of user",

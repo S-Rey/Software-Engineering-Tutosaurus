@@ -4,6 +4,7 @@ import android.location.Location;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Meeting {
 
@@ -52,6 +53,11 @@ public class Meeting {
      */
     public void addParticipant(int sciper) {
         this.participants.add(sciper);
+    }
+
+
+    public List<Integer> getParticipants(){
+        return this.participants;
     }
 
     /**
