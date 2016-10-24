@@ -39,6 +39,14 @@ public class RegisterScreenActivity extends AppCompatActivity {
         mActionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
+
+        authDialog = new Dialog(this);
+        authDialog.setContentView(R.layout.authentification_screen);
+        authDialog.setCancelable(true);
+
+        authWebv = (WebView) authDialog.findViewById(R.id.webv);
+        authWebv.getSettings().setJavaScriptEnabled(true);
+        authWebv.loadUrl("http://google.com");
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
