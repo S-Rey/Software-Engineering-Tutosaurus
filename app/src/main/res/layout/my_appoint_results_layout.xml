@@ -4,4 +4,45 @@
     android:layout_height="match_parent"
     android:background="#fffafafa">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="Santo Gioia\n1 novembre 2016"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add to calendar"
+                android:layout_weight="1"
+                android:onClick="addCalendar"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="Maurizio Grasselli\n2 novembre 2016"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add to calendar"
+                android:layout_weight="1"
+                android:onClick="addCalendar"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
