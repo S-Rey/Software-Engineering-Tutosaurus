@@ -13,7 +13,7 @@ Structure ot the noSQL JSON database
 			"teachCourse" : {
 				"courseId" : {
 					"totalHour" : "number of hour",
-					"rate" : "rating of the user"
+					"rate" : "globalRating of the user"
 				}
 			}
 			"learnCourse" : {

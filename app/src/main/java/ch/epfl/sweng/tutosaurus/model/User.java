@@ -15,10 +15,10 @@ public class User {
     private ArrayList<Course> teaching = new ArrayList<>();
     private ArrayList<Course> studying = new ArrayList<>();
 
-    private Map<Integer, Double> ratings = new HashMap<>(); /* (course id -> rating) */
+    private Map<Integer, Double> ratings = new HashMap<>(); /* (course id -> globalRating) */
     private Map<Integer, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
 
-    private double rating;
+    private double globalRating;
 
     /**
      * Default constructor (for Firebase database)
@@ -78,15 +78,15 @@ public class User {
     }
 
     /**
-     * Sets this user's teacher rating, as a number between 0 and 1 included.
-     * @param rating the user's rating between 0 and 1
-     * @throws IllegalArgumentException if the rating is not comprised between 0 and 1
+     * Sets this user's teacher globalRating, as a number between 0 and 1 included.
+     * @param globalRating the user's globalRating between 0 and 1
+     * @throws IllegalArgumentException if the globalRating is not comprised between 0 and 1
      */
-    public void setRating(double rating){
-        if(rating > 1.0 || rating < 0) {
-            throw new IllegalArgumentException("The rating should be between 0 and 1");
+    public void setGlobalRating(double globalRating){
+        if(globalRating > 1.0 || globalRating < 0) {
+            throw new IllegalArgumentException("The globalRating should be between 0 and 1");
         } else {
-            this.rating = rating;
+            this.globalRating = globalRating;
         }
     }
 
@@ -123,11 +123,11 @@ public class User {
     }
 
     /**
-     * Returns this user's teacher rating.
-     * @return the rating of the user
+     * Returns this user's teacher globalRating.
+     * @return the globalRating of the user
      */
-    public double getRating() {
-        return this.rating;
+    public double getGlobalRating() {
+        return this.globalRating;
     }
 
      /**
@@ -180,13 +180,13 @@ public class User {
     }
 
     /**
-     * Set the rating for a particular course.
+     * Set the globalRating for a particular course.
      * @param courseId the unique id of the course
-     * @param rating the rating for this course
+     * @param rating the globalRating for this course
      */
     public void setCourseRating(int courseId, double rating) {
         if(rating > 1.0 || rating < 0) {
-            throw new IllegalArgumentException("The rating should be between 0 and 1");
+            throw new IllegalArgumentException("The globalRating should be between 0 and 1");
         } else {
             ratings.put(courseId, rating);
         }
@@ -210,9 +210,9 @@ public class User {
     }
 
     /**
-     * Get the rating for a particular course
+     * Get the globalRating for a particular course
      * @param courseId the unique id of the course
-     * @return the rating for this course
+     * @return the globalRating for this course
      */
     public double getCourseRating(int courseId) {
         return ratings.get(courseId);

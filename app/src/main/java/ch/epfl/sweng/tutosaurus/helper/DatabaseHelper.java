@@ -25,19 +25,19 @@ public class DatabaseHelper {
 
     public void signUp(User user) {
         String key = db.child("users").push().getKey();
-        DatabaseReference ref = db.child("user" + key);
+        DatabaseReference ref = db.child("user/" + key);
         ref.setValue(user);
     }
 
     public void addCourse(Course course) {
         String key = db.child("course").push().getKey();
-        DatabaseReference ref = db.child("course" + key);
+        DatabaseReference ref = db.child("course/" + key);
         ref.setValue(course);
     }
 
     public void addMeeting(Meeting meeting) {
         String key = db.child("meeting").push().getKey();
-        DatabaseReference ref = db.child("meeting" + key);
+        DatabaseReference ref = db.child("meeting/" + key);
         ref.setValue(meeting);
     }
 }

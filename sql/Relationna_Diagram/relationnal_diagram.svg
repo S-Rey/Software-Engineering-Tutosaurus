@@ -60,14 +60,14 @@
       <ellipse rx="34.3515" ry="15" clip-path="url(#clipPath2)" cx="78.7064" cy="346.5203" stroke="none"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="sans-serif" transform="matrix(1,0,0,1,-24,-9)" stroke-linecap="butt">
-      <text x="61.4945" xml:space="preserve" y="351.0554" clip-path="url(#clipPath2)" stroke="none">rating</text>
+      <text x="61.4945" xml:space="preserve" y="351.0554" clip-path="url(#clipPath2)" stroke="none">globalRating</text>
       <ellipse rx="34.3515" fill="none" ry="15" clip-path="url(#clipPath2)" cx="78.7064" cy="346.5203"/>
     </g>
     <g fill="rgb(255,204,0)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-24,-9)" stroke="rgb(255,204,0)">
       <ellipse rx="34.3515" ry="15" clip-path="url(#clipPath2)" cx="565.0453" cy="61.5734" stroke="none"/>
     </g>
     <g text-rendering="geometricPrecision" stroke-miterlimit="1.45" shape-rendering="geometricPrecision" font-family="sans-serif" transform="matrix(1,0,0,1,-24,-9)" stroke-linecap="butt">
-      <text x="547.8334" xml:space="preserve" y="66.1085" clip-path="url(#clipPath2)" stroke="none">rating</text>
+      <text x="547.8334" xml:space="preserve" y="66.1085" clip-path="url(#clipPath2)" stroke="none">globalRating</text>
       <ellipse rx="34.3515" fill="none" ry="15" clip-path="url(#clipPath2)" cx="565.0453" cy="61.5734"/>
     </g>
     <g fill="rgb(255,204,0)" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" transform="matrix(1,0,0,1,-24,-9)" stroke="rgb(255,204,0)">
