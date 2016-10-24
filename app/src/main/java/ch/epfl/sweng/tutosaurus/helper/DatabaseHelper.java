@@ -11,73 +11,33 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class DatabaseHelper {
 
-    FirebaseDatabase db;
+    DatabaseReference db;
 
     public DatabaseHelper(){
         super();
-        db = FirebaseDatabase.getInstance();
+        db = FirebaseDatabase.getInstance().getReference();
     }
 
     public void writeSomething(String value) {
-        DatabaseReference ref = db.getReference("test");
+        DatabaseReference ref = db.child("test");
         ref.setValue(value);
     }
 
-    public void signUp(String sciper, String username, String name, String email) {
-        String headPath = "user/" + sciper;
-        String pUsername = headPath + "/username";
-        String pName = headPath + "/name";
-        String pEmail = headPath + "/email";
-        String pPicture = headPath + "/pic";
-        Log.d("DBH", "headPath: " + headPath);
-        DatabaseReference ref = db.getReference(pUsername);
-        ref.setValue(username);
-        ref = db.getReference(pName);
-        ref.setValue(name);
-        ref = db.getReference(pEmail);
-        ref.setValue(email);
-        ref = db.getReference(pPicture);
-        ref.setValue(PictureHelper.encodeToString("/storage/emulated/0/Download/pic.jpg"));
-    }
-
     public void signUp(User user) {
-        String rootPath = "user/" + user.getSciper();
-        String pUsername = rootPath + "/username";
-        String pName = rootPath + "/name";
-        String pEmail = rootPath + "/email";
-        DatabaseReference ref = db.getReference(pUsername);
-        ref.setValue(user.getUsername());
-        ref = db.getReference(pName);
-        ref.setValue(user.getFullName());
-        ref = db.getReference(pEmail);
-        ref.setValue(user.getEmail());
-    }
-
-    public void addCourse(String id, String name, String teacher) {
-        String headPath = "courses/" + id;
-        String pName = headPath + "/name";
-        String pTeacher = headPath + "/teachBy";
-        Log.d("DBH", "headPath:" + headPath);
-        DatabaseReference ref = db.getReference(pName);
-        ref.setValue(name);
-        ref = db.getReference(pTeacher);
-        ref.setValue(teacher);
+        String key = db.child("users").push().getKey();
+        DatabaseReference ref = db.child("user" + key);
+        ref.setValue(user);
     }
 
     public void addCourse(Course course) {
-        String rootPath = "course/" + course.getId();
-        String pName = rootPath + "/courseName";
-        DatabaseReference ref = db.getReference(pName);
-        ref.setValue(course.getName());
+        String key = db.child("course").push().getKey();
+        DatabaseReference ref = db.child("course" + key);
+        ref.setValue(course);
     }
 
     public void addMeeting(Meeting meeting) {
-        String rootPath = "/meeting" + meeting.getId();
-        String pDate = rootPath + "/date";
-        String pLocation = rootPath + "/location";
-        DatabaseReference ref = db.getReference(pDate);
-        ref.setValue(meeting.getDate());
-        ref = db.getReference(pLocation);
-        ref.setValue(meeting.getLocation());
+        String key = db.child("meeting").push().getKey();
+        DatabaseReference ref = db.child("meeting" + key);
+        ref.setValue(meeting);
     }
 }

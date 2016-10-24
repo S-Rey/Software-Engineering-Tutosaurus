@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.Course;
+import ch.epfl.sweng.tutosaurus.model.User;
 
 public class DatabaseFragment extends Fragment implements View.OnClickListener {
 
@@ -57,7 +59,10 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         String username = ((EditText)myView.findViewById(R.id.db_signup_username)).getText().toString();
         String fullName = ((EditText)myView.findViewById(R.id.db_signup_name)).getText().toString();
         String email = ((EditText)myView.findViewById(R.id.db_signup_email)).getText().toString();
-        dbh.signUp(sciper, username, fullName, email);
+        User user = new User(Integer.parseInt(sciper), username);
+        user.setFullName(fullName);
+        user.setEmail(email);
+        dbh.signUp(user);
     }
 
     private void addCourse() {
@@ -65,6 +70,7 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         String id = ((EditText)myView.findViewById(R.id.db_course_id)).getText().toString();
         String name = ((EditText)myView.findViewById(R.id.db_course_name)).getText().toString();
         String teacher = ((EditText)myView.findViewById(R.id.db_course_teacher)).getText().toString();
-        dbh.addCourse(id, name, teacher);
+        Course course = new Course(Integer.parseInt(id), name);
+        dbh.addCourse(course);
     }
 }

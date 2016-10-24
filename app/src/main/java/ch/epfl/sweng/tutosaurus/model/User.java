@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class User {
 
-    private final int sciper;
+    private int sciper;
     private String username;
     private String fullName;
     private String email;
@@ -19,6 +19,13 @@ public class User {
     private Map<Integer, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
 
     private double rating;
+
+    /**
+     * Default constructor (for Firebase database)
+     */
+    public User(){
+
+    }
 
     /**
      * Constructor for the User class.
