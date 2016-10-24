@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import java.io.IOException;
 
+import ch.epfl.sweng.tutosaurus.Tequila.AuthClient;
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -28,6 +29,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
     public Dialog authDialog;
     public WebView authWebv;
+    public String codeRequestUrl;
 
 
     @Override
@@ -40,13 +42,25 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        try{
+            OAuth2Config config = readConfig();
+            codeRequestUrl = AuthClient.createCodeRequestUrl(config);
+        }catch(IOException e){
+
+        }
+
+
         authDialog = new Dialog(this);
+        //authDialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         authDialog.setContentView(R.layout.authentification_screen);
         authDialog.setCancelable(true);
 
         authWebv = (WebView) authDialog.findViewById(R.id.webv);
         authWebv.getSettings().setJavaScriptEnabled(true);
-        authWebv.loadUrl("http://google.com");
+        authWebv.clearCache(true);
+        authWebv.loadUrl(codeRequestUrl);
+
+        authDialog.show();
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
