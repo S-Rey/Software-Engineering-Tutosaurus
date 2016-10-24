@@ -9,9 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import ch.epfl.sweng.tutosaurus.model.User;
 
 public class PublicProfileActivity extends AppCompatActivity {
 
@@ -50,8 +53,19 @@ public class PublicProfileActivity extends AppCompatActivity {
 
         // TODO: make a general activity for subject and set specific elements depending on which button is clicked
         setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacehr,isComputerTeacher);
+        FindTutorResult result=new FindTutorResult();
+        User[] profiles = result.createProfiles();
 
         Intent intent = getIntent();
+        int sciperNumber = intent.getIntExtra("SCIPER_NUMBER",0);
+        for(User profile : profiles){
+            if(profile.getSciper()==sciperNumber){
+                TextView profileName= (TextView) findViewById(R.id.profileName);
+                profileName.setText(profile.getFullName());
+                ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
+                profilePicture.setImageResource(profile.getPicture());
+            }
+        }
     }
 
     private void setSubjectButtons(boolean isMathsTeacher,
@@ -257,5 +271,6 @@ public class PublicProfileActivity extends AppCompatActivity {
         };
         thisButton.setOnClickListener(hideCommentsClick);
     }
+
 
 }
