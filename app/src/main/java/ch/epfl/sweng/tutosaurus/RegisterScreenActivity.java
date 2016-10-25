@@ -1,13 +1,20 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 
@@ -23,13 +30,9 @@ public class RegisterScreenActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE_EMAIL_ADDRESS = "com.example.myfirstapp.EMAILADDRESS";
     public final static String EXTRA_MESSAGE_SCIPER = "com.example.myfirstapp.SCIPER";
 
-    private static final String CLIENT_ID = "";
-    private static final String CLIENT_KEY = "";
-    private static final String REDIRECT_URI = "tutosaurus://login";
-
-    public Dialog authDialog;
-    public WebView authWebv;
-    public String codeRequestUrl;
+    /*Dialog authDialog;
+    WebView authWebv;
+    public String codeRequestUrl;*/
 
 
     @Override
@@ -42,7 +45,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        try{
+        /*try{
             OAuth2Config config = readConfig();
             codeRequestUrl = AuthClient.createCodeRequestUrl(config);
         }catch(IOException e){
@@ -52,15 +55,27 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         authDialog = new Dialog(this);
         //authDialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-        authDialog.setContentView(R.layout.authentification_screen);
+        //authDialog.setContentView(R.layout.authentification_screen);
         authDialog.setCancelable(true);
 
-        authWebv = (WebView) authDialog.findViewById(R.id.webv);
+        authWebv = new WebView(this);
         authWebv.getSettings().setJavaScriptEnabled(true);
         authWebv.clearCache(true);
         authWebv.loadUrl(codeRequestUrl);
 
-        authDialog.show();
+        authWebv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+
+                return true;
+            }
+        });
+
+        authDialog.setContentView(authWebv);
+
+        authDialog.show();*/
+        showDialog();
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
@@ -90,8 +105,16 @@ public class RegisterScreenActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private static OAuth2Config readConfig() throws IOException {
+    /*private static OAuth2Config readConfig() throws IOException {
         return new OAuth2Config(new String[]{"Tequila.profile"}, CLIENT_ID, CLIENT_KEY, REDIRECT_URI);
+    }*/
+
+    void showDialog() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.addToBackStack(null);
+
+        AuthFragment newFragment = new AuthFragment();
+        newFragment.show(ft, "Dialog");
     }
 
 
