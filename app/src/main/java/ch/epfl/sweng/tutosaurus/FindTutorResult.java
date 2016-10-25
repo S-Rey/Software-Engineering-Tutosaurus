@@ -65,11 +65,18 @@ public class FindTutorResult extends AppCompatActivity {
         Course chemistry= new Course(2,"Chemistry");
         Course computer= new Course(3,"Computer Science");
 
+        int mathsId=0;
+        int physicsId=1;
+        int chemistryId=2;
+        int computerId=3;
         User profileOne = new User(273516);
         profileOne.setFullName("Alberto Chiappa");
         profileOne.setEmail("alberto.chiappa@epfl.ch");
         profileOne.addTeachingCourse(maths);
         profileOne.addTeachingCourse(computer);
+        //profileOne.setCourseRating(mathsId,2.5);
+        //profileOne.setCourseRating(computerId,1);
+        profileOne.setRating(2);
         profileOne.setPicture(R.drawable.foto_mia);
 
         User profileTwo = new User(223415);
@@ -77,24 +84,28 @@ public class FindTutorResult extends AppCompatActivity {
         profileTwo.setEmail("albert.einstein@epfl.ch");
         profileTwo.addTeachingCourse(physics);
         profileTwo.addTeachingCourse(maths);
+        profileTwo.setRating(4.5);
         profileTwo.setPicture(R.drawable.einstein);
 
         User profileThree = new User(124821);
         profileThree.setFullName("Kurt Godel");
         profileThree.setEmail("kurt.godel@epfl.ch");
         profileThree.addTeachingCourse(maths);
+        profileThree.setRating(5);
         profileThree.setPicture(R.drawable.godel);
 
         User profileFour = new User(100000);
         profileFour.setFullName("Maurizio Grasselli");
         profileFour.setEmail("maurizio.grasselli@epfl.ch");
         profileFour.addTeachingCourse(maths);
+        profileFour.setRating(5);
         profileFour.setPicture(R.drawable.grasselli);
 
         User profileFive = new User(223615);
         profileFive.setFullName("Linus Torvalds");
         profileFive.setEmail("linus.torval@epfl.ch");
         profileFive.addTeachingCourse(computer);
+        profileFive.setRating(3);
         profileFive.setPicture(R.drawable.torvalds);
 
         User profileSix = new User(443213);
@@ -102,6 +113,7 @@ public class FindTutorResult extends AppCompatActivity {
         profileSix.setEmail("carlo.rubbia@epfl.ch");
         profileSix.addTeachingCourse(chemistry);
         profileSix.addTeachingCourse(physics);
+        profileSix.setRating(3.7);
         profileSix.setPicture(R.drawable.rubbia);
 
 

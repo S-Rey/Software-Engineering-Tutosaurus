@@ -20,6 +20,7 @@ public class User {
 
     private double rating;
 
+
     /**
      * Constructor for the User class.
      * @param sciper the sciper number of this user, used as an unique identifier
@@ -42,7 +43,7 @@ public class User {
         this.username = username;
         this.meetings = new ArrayList<Meeting>(0);
         this.teaching = new ArrayList<Course>(0);
-        this.teaching=new ArrayList<Course>(0);
+        this.studying = new ArrayList<Course>(0);
 
     }
 
@@ -79,13 +80,13 @@ public class User {
     }
 
     /**
-     * Sets this user's teacher rating, as a number between 0 and 1 included.
-     * @param rating the user's rating between 0 and 1
-     * @throws IllegalArgumentException if the rating is not comprised between 0 and 1
+     * Sets this user's teacher rating, as a number between 0 and 5 included.
+     * @param rating the user's rating between 0 and 5
+     * @throws IllegalArgumentException if the rating is not comprised between 0 and 5
      */
     public void setRating(double rating){
-        if(rating > 1.0 || rating < 0) {
-            throw new IllegalArgumentException("The rating should be between 0 and 1");
+        if(rating > 5.0 || rating < 0) {
+            throw new IllegalArgumentException("The rating should be between 0 and 5");
         } else {
             this.rating = rating;
         }
@@ -233,5 +234,14 @@ public class User {
 
     public String toString(){
         return this.fullName;
+    }
+
+    public boolean isTeacher(int courseId){
+        for(Course course : teaching){
+            if(course.getId()==courseId){
+                return true;
+            }
+        }
+        return false;
     }
 }

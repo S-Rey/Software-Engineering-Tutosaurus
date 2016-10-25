@@ -34,11 +34,41 @@ public class PublicProfileActivity extends AppCompatActivity {
             }
         });
 
+        // Create the profiles
+        FindTutorResult result=new FindTutorResult();
+        User[] profiles = result.createProfiles();
+
+        Intent intent = getIntent();
+        int sciperNumber = intent.getIntExtra("SCIPER_NUMBER",0);
+
+        User matchingTutor=new User(0);
+        for(User profile : profiles){
+            if(profile.getSciper()==sciperNumber){
+                matchingTutor=profile;
+            }
+        }
+
+        // Set profile name
+        TextView profileName= (TextView) findViewById(R.id.profileName);
+        profileName.setText(matchingTutor.getFullName());
+
+        // Set profile picture
+        ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
+        profilePicture.setImageResource(matchingTutor.getPicture());
+
+        // Set email
+        TextView email = (TextView) findViewById(R.id.emailView);
+        email.setText(matchingTutor.getEmail());
+
         // Set the ratings TODO: get ratings from database
         RatingBar professorRate=(RatingBar) findViewById(R.id.ratingBarProfessor);
-        professorRate.setRating(3.5f);
-        RatingBar studentRate=(RatingBar) findViewById(R.id.ratingBarStudent);
-        studentRate.setRating(4f);
+        professorRate.setRating((float) matchingTutor.getRating());
+        professorRate.setVisibility(View.VISIBLE);
+        TextView professorView = (TextView) findViewById(R.id.professorView);
+        professorView.setVisibility(View.VISIBLE);
+
+        //RatingBar studentRate=(RatingBar) findViewById(R.id.ratingBarStudent);
+        //studentRate.setRating(4f);
 
         // Set the level TODO: get progress from database
         ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
@@ -46,26 +76,13 @@ public class PublicProfileActivity extends AppCompatActivity {
 
         // Set the thaught subjects.
         // TODO: get subject list from database
-        boolean isMathsTeacher=true;
-        boolean isPhysicsTeacher=true;
-        boolean isChemistryTeacehr=true;
-        boolean isComputerTeacher=true;
+        boolean isMathsTeacher=matchingTutor.isTeacher(0);
+        boolean isPhysicsTeacher=matchingTutor.isTeacher(1);
+        boolean isChemistryTeacehr=matchingTutor.isTeacher(2);
+        boolean isComputerTeacher=matchingTutor.isTeacher(3);
 
-        // TODO: make a general activity for subject and set specific elements depending on which button is clicked
         setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacehr,isComputerTeacher);
-        FindTutorResult result=new FindTutorResult();
-        User[] profiles = result.createProfiles();
 
-        Intent intent = getIntent();
-        int sciperNumber = intent.getIntExtra("SCIPER_NUMBER",0);
-        for(User profile : profiles){
-            if(profile.getSciper()==sciperNumber){
-                TextView profileName= (TextView) findViewById(R.id.profileName);
-                profileName.setText(profile.getFullName());
-                ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
-                profilePicture.setImageResource(profile.getPicture());
-            }
-        }
     }
 
     private void setSubjectButtons(boolean isMathsTeacher,
@@ -271,6 +288,5 @@ public class PublicProfileActivity extends AppCompatActivity {
         };
         thisButton.setOnClickListener(hideCommentsClick);
     }
-
 
 }
