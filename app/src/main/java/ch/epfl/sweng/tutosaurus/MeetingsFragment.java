@@ -1,11 +1,18 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.app.Fragment;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +32,26 @@ import ch.epfl.sweng.tutosaurus.findTutor.Tutor;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+import static android.content.ContentUris.*;
+
 public class MeetingsFragment extends Fragment {
 
     View myView;
     View myListView;
     private ArrayList<Meeting> meetings = new ArrayList<>();
+
+    public static final String[] EVENT_PROJECTION = new String[] {
+            CalendarContract.Calendars._ID,                           // 0
+            CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
+            CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
+            CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
+    };
+
+    // The indices for the projection array above.
+    private static final int PROJECTION_ID_INDEX = 0;
+    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
+    private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
+    private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
 
     @Nullable
     @Override
@@ -50,24 +72,39 @@ public class MeetingsFragment extends Fragment {
         syncCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                java.util.Calendar beginTime = java.util.Calendar.getInstance();
                 //beginTime.setTime(meeting.getDate());
-                beginTime.set(2016, 10, 19, 7, 30);
-                java.util.Calendar endTime = java.util.Calendar.getInstance();
                 //endTime.setTime(meeting.getDate());
                 //endTime.add(Calendar.HOUR, meeting.getDuration());
-                endTime.set(2016, 10, 19, 8, 30);
-                Intent intent = new Intent(Intent.ACTION_INSERT)
-                        .setData(CalendarContract.Events.CONTENT_URI)
-                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
-                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
-                        //.putExtra(CalendarContract.Events.TITLE, meeting.getId())
-                        .putExtra(CalendarContract.Events.DESCRIPTION, "Partial differential equations")
-                        //.putExtra(CalendarContract.Events.EVENT_LOCATION, meeting.getLocation())
-                        .putExtra(Intent.EXTRA_EMAIL, "santo.gioia@epfl.ch")
-                        .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
-                startActivity(intent);
+
+                long startMillis = 0;
+                long endMillis = 0;
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.set(2016, 10, 14, 7, 30);
+                startMillis = beginTime.getTimeInMillis();
+                Calendar endTime = Calendar.getInstance();
+                endTime.set(2016, 10, 14, 8, 45);
+                endMillis = endTime.getTimeInMillis();
+
+                long calID = 0;
+                ContentResolver cr = getActivity().getContentResolver();
+                Uri uri = CalendarContract.Calendars.CONTENT_URI;
+                Cursor cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
+                cur.moveToFirst();
+                calID = cur.getLong(PROJECTION_ID_INDEX);
+                ContentValues values = new ContentValues();
+                values.put(CalendarContract.Events.DTSTART, startMillis);
+                values.put(CalendarContract.Events.DTEND, endMillis);
+                values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
+                values.put(CalendarContract.Events.TITLE, "santooo");
+                values.put(CalendarContract.Events.DESCRIPTION, "Some description");
+                values.put(CalendarContract.Events.CALENDAR_ID, calID);
+                if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                Uri newEvent = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+
             }
+
         });
 
         return myView;
