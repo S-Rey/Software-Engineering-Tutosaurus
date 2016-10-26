@@ -1,15 +1,10 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,7 +12,6 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.util.Map;
@@ -27,7 +21,6 @@ import ch.epfl.sweng.tutosaurus.Tequila.AuthServer;
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class RegisterScreenActivity extends AppCompatActivity {
 
@@ -72,7 +65,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         webViewOauth.setWebViewClient(new WebViewClient() {
             boolean authComplete = false;
-            Intent resultIntent = new Intent();
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -80,6 +72,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
             }
 
+            @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
@@ -95,30 +88,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
         authDialog.show();
         authDialog.setCancelable(true);
         authDialog.setTitle("Tequila authentification");
-
-
-        /**authDialog = new Dialog(this);
-         //authDialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-         //authDialog.setContentView(R.layout.authentification_screen);
-         authDialog.setCancelable(true);
-
-         authWebv = new WebView(this);
-         authWebv.getSettings().setJavaScriptEnabled(true);
-         authWebv.clearCache(true);
-         authWebv.loadUrl(codeRequestUrl);
-
-         authWebv.setWebViewClient(new WebViewClient() {
-        @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        view.loadUrl(url);
-
-        return true;
-        }
-        });
-
-         authDialog.setContentView(authWebv);
-
-         authDialog.show();*/
-        //showDialog();
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -129,16 +98,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
     public void sendMessageForAccess(View view) {
         Intent intent = new Intent(this, ConfirmationActivity.class);
-
-        /**EditText first_name_text = (EditText) findViewById(R.id.firstNameEntry);
-        EditText last_name_text = (EditText) findViewById(R.id.lastNameEntry);
-        EditText email_address_text = (EditText) findViewById(R.id.emailAddressEntry);
-        EditText sciper_text = (EditText) findViewById(R.id.sciperEntry);
-
-        String first_name = first_name_text.getText().toString();
-        String last_name = last_name_text.getText().toString();
-        String email_address = email_address_text.getText().toString();
-        String sciper = sciper_text.getText().toString();*/
 
         intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
         intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
@@ -179,7 +138,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private class ManageAccessToken extends AsyncTask<String, String, String> {
 
         private ProgressDialog pDialog;
-        String Code;
 
         @Override
         protected void onPreExecute() {
@@ -205,13 +163,20 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
-    /*void showDialog() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
+    private void setScreenInfo(){
+        if(profile != null){
+            EditText first_name_text = (EditText) findViewById(R.id.firstNameEntry);
+            EditText last_name_text = (EditText) findViewById(R.id.lastNameEntry);
+            EditText email_address_text = (EditText) findViewById(R.id.emailAddressEntry);
+            EditText sciper_text = (EditText) findViewById(R.id.sciperEntry);
 
-        AuthFragment newFragment = new AuthFragment();
-        newFragment.show(ft, "Dialog");
-    }*/
+            first_name_text.setText(profile.firstNames);
+            last_name_text.setText(profile.lastNames);
+            email_address_text.setText(profile.email);
+            sciper_text.setText(profile.sciper);
+        }
+
+    }
 
 
 }
