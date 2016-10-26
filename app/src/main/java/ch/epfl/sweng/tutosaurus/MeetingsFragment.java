@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 import ch.epfl.sweng.tutosaurus.findTutor.Tutor;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
@@ -37,7 +38,6 @@ import static android.content.ContentUris.*;
 public class MeetingsFragment extends Fragment {
 
     View myView;
-    View myListView;
     private ArrayList<Meeting> meetings = new ArrayList<>();
 
     public static final String[] EVENT_PROJECTION = new String[] {
@@ -63,8 +63,8 @@ public class MeetingsFragment extends Fragment {
         updateList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Meeting> meetings_created = createMeetings();
-                fillListView(meetings_created);
+                ArrayList<Meeting> newMeetings = createMeetings();
+                fillListView(newMeetings);
             }
         });
 
@@ -72,36 +72,35 @@ public class MeetingsFragment extends Fragment {
         syncCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //beginTime.setTime(meeting.getDate());
-                //endTime.setTime(meeting.getDate());
-                //endTime.add(Calendar.HOUR, meeting.getDuration());
+                for (Meeting m : meetings) {
+                    long startMillis = 0;
+                    long endMillis = 0;
+                    Calendar beginTime = Calendar.getInstance();
+                    beginTime.setTime(m.getDate());
+                    startMillis = beginTime.getTimeInMillis();
+                    Calendar endTime = Calendar.getInstance();
+                    endTime.setTime(m.getDate());
+                    endTime.add(Calendar.HOUR, m.getDuration());
+                    endMillis = endTime.getTimeInMillis();
 
-                long startMillis = 0;
-                long endMillis = 0;
-                Calendar beginTime = Calendar.getInstance();
-                beginTime.set(2016, 10, 14, 7, 30);
-                startMillis = beginTime.getTimeInMillis();
-                Calendar endTime = Calendar.getInstance();
-                endTime.set(2016, 10, 14, 8, 45);
-                endMillis = endTime.getTimeInMillis();
-
-                long calID = 0;
-                ContentResolver cr = getActivity().getContentResolver();
-                Uri uri = CalendarContract.Calendars.CONTENT_URI;
-                Cursor cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
-                cur.moveToFirst();
-                calID = cur.getLong(PROJECTION_ID_INDEX);
-                ContentValues values = new ContentValues();
-                values.put(CalendarContract.Events.DTSTART, startMillis);
-                values.put(CalendarContract.Events.DTEND, endMillis);
-                values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                values.put(CalendarContract.Events.TITLE, "santooo");
-                values.put(CalendarContract.Events.DESCRIPTION, "Some description");
-                values.put(CalendarContract.Events.CALENDAR_ID, calID);
-                if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                    return;
+                    long calID = 0;
+                    ContentResolver cr = getActivity().getContentResolver();
+                    Uri uri = CalendarContract.Calendars.CONTENT_URI;
+                    Cursor cur = cr.query(uri, EVENT_PROJECTION, null, null, null);
+                    cur.moveToFirst();
+                    calID = cur.getLong(PROJECTION_ID_INDEX);
+                    ContentValues values = new ContentValues();
+                    values.put(CalendarContract.Events.DTSTART, startMillis);
+                    values.put(CalendarContract.Events.DTEND, endMillis);
+                    values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
+                    values.put(CalendarContract.Events.TITLE, "subject");
+                    values.put(CalendarContract.Events.DESCRIPTION, "teacher or student");
+                    values.put(CalendarContract.Events.CALENDAR_ID, calID);
+                    if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    Uri newEvent = cr.insert(CalendarContract.Events.CONTENT_URI, values);
                 }
-                Uri newEvent = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
             }
 
@@ -115,8 +114,8 @@ public class MeetingsFragment extends Fragment {
         SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
         Location l = new Location("network");
         try {
-            for (int i = 0; i < 10; i++) {
-                Date date = dateformat.parse("17/07/1989");
+            for (int i = '0'; i < '9'; i++) {
+                Date date = dateformat.parse("1" + (char)i + "/11/2016");
                 Meeting newMeeting = new Meeting(i, date, 2);
                 newMeeting.setLocation(l);
                 meetList.add(newMeeting);
@@ -135,7 +134,12 @@ public class MeetingsFragment extends Fragment {
                 meetingNames);
         ListView meetingList = (ListView) getView().findViewById(R.id.meetingList);
         meetingList.setAdapter(arrayAdapter);
-
+        ArrayList<Meeting> newMeetings = createMeetings();
+        for (Meeting m : newMeetings) {
+            if (!meetings.contains(m)) {
+                meetings.add(m);
+            }
+        }
         Meeting meetingToAdd;
         for (Meeting meeting : meetingNames) {
             meetingToAdd = new Meeting(meeting.getId(), meeting.getDate(), meeting.getDuration());
