@@ -133,6 +133,14 @@ public class FindTutorResult extends AppCompatActivity {
             }
         }
 
+        for (User profile : profiles) {
+            if (profile.getFullName().toLowerCase().contains(name.toLowerCase())) {
+                tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(),profile.getSciper());
+                teachers.add(tutorToAdd);
+                count++;
+            }
+        }
+
         if (count == 0) {
             TextView message=(TextView) findViewById(R.id.message);
             message.setText("The research produced no results");
