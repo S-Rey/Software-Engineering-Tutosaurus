@@ -49,6 +49,14 @@ public class HomeScreenActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         pictureView = (ImageView) findViewById(R.id.picture_view);
+
+//RECEIVE THE INTENT FOR "MY APPOINT RESULT" TAB
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals("OPEN_TAB_MY_APPOINTMENT_RESULT")) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new MyAppointResultsFragment()).commit();
+            }
+        }
     }
 
     @Override
