@@ -1,7 +1,10 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.webkit.WebViewClient;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.util.Map;
 
 import ch.epfl.sweng.tutosaurus.Tequila.AuthClient;
@@ -35,6 +39,11 @@ public class AuthFragment extends DialogFragment {
     private static Profile profile;
     String codeRequestUrl;
 
+    static String firstName;
+    static String lastName;
+    static String sciper;
+    static String email;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,19 +61,50 @@ public class AuthFragment extends DialogFragment {
     }
 
     private static class MyWebViewClient extends WebViewClient {
-        @Override
+        /*@Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             //check if the login was successful and the access token returned
             //this test depend of your API
             if (url.contains("code=")) {
                 //save your token
                 String code = AuthClient.extractCode(url);
-                //getAccessToken(config, code);
+                getAccessToken(config, code);
                 //getProfile();
                 return false;
             }
             return false;
+        }*/
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            if (url.contains("code=")){
+                //new ManageAccessToken().execute(url);
+                /**enableStrictMode();
+                getAccessToken(config, code);**/
+                getProfile();
+                firstName = profile.firstNames;
+                lastName = profile.lastNames;
+                sciper = profile.sciper;
+                email = profile.email;
+
+                Log.d("FirstName!", firstName);
+                Log.d("LastName!", lastName);
+                Log.d("Sciper", sciper);
+                Log.d("Email", email);
+            }
         }
+    }
+
+    private class ManageAccessToken extends AsyncTask<String, Integer, Long>{
+
+
+        @Override
+        protected Long doInBackground(String... url){
+            String code = AuthClient.extractCode(url[0]);
+            getAccessToken(config, code);
+            return 0l;
+        }
+
     }
 
     @Override
@@ -118,5 +158,11 @@ public class AuthFragment extends DialogFragment {
         }
     }
 
+    public static void enableStrictMode()
+    {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+    }
 
 }
