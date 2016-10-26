@@ -1,6 +1,8 @@
 package ch.epfl.sweng.tutosaurus.model;
 
 import android.location.Location;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +11,7 @@ public class Meeting {
 
     private final int id;
     private Date date;
+    private int duration;
     private Location location;
     private ArrayList<Integer> participants = new ArrayList<>();
 
@@ -31,11 +34,31 @@ public class Meeting {
     }
 
     /**
+     * Constructor for the Meeting class
+     * @param id the unique id of this meeting
+     * @param date the date at which the meeting takes place
+     * @param duration the duration of the meeting (hours)
+     */
+    public Meeting(int id, Date date, int duration) {
+        this.id = id;
+        this.date = date;
+        this.duration = duration;
+    }
+
+    /**
      * Sets the date at which this meeting takes place.
      * @param date the date of this meeting
      */
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    /**
+     * Sets the date at which this meeting takes place.
+     * @param duration the duration of this meeting
+     */
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     /**
@@ -71,10 +94,19 @@ public class Meeting {
     }
 
     /**
+     * Returns the duration of this meeting.
+     * @return the duration of the meeting
+     */
+    public int getDuration() {
+        return this.duration;
+    }
+
+    /**
      * Returns the location where this meeting takes place.
      * @return the location of the meeting
      */
     public Location getLocation() {
         return this.location;
     }
+
 }

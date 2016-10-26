@@ -5,12 +5,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.CalendarContract;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,7 +23,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -109,7 +105,7 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_about_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
         } else if (id == R.id.nav_myAppointResults_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new MyAppointResultsFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
         } else if (id == R.id.nav_db_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new DatabaseFragment()).commit();
         }
@@ -178,20 +174,4 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-    public void addCalendar(@SuppressWarnings("UnusedParameters") View view) {
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2016, 10, 19, 7, 30);
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(2016, 10, 19, 8, 30);
-        Intent intent = new Intent(Intent.ACTION_INSERT)
-                .setData(CalendarContract.Events.CONTENT_URI)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
-                .putExtra(CalendarContract.Events.TITLE, "Maths class")
-                .putExtra(CalendarContract.Events.DESCRIPTION, "Partial differential equations")
-                .putExtra(CalendarContract.Events.EVENT_LOCATION, "CM1 101")
-                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-                .putExtra(Intent.EXTRA_EMAIL, "sgioia@epfl.ch");
-        startActivity(intent);
-    }
 }
