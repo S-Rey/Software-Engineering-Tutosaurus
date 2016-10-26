@@ -37,11 +37,17 @@ public class MeetingsFragment extends Fragment {
         myView = inflater.inflate(R.layout.meetings_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Meetings");
 
-        myListView = inflater.inflate(R.layout.listview_meetings_row, container, false);
-        ImageButton addCalendar = (ImageButton) myListView.findViewById(R.id.add_calendar);
+        Button updateList = (Button) myView.findViewById(R.id.updateList);
+        updateList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Meeting> meetings_created = createMeetings();
+                fillListView(meetings_created);
+            }
+        });
 
-        addCalendar.setOnClickListener(new View.OnClickListener() {
-
+        Button syncCalendar = (Button) myView.findViewById(R.id.syncCalendar);
+        syncCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 java.util.Calendar beginTime = java.util.Calendar.getInstance();
@@ -51,8 +57,7 @@ public class MeetingsFragment extends Fragment {
                 //endTime.setTime(meeting.getDate());
                 //endTime.add(Calendar.HOUR, meeting.getDuration());
                 endTime.set(2016, 10, 19, 8, 30);
-                Intent intent = new Intent(getActivity(), HomeScreenActivity.class)
-                        .setAction(Intent.ACTION_INSERT)
+                Intent intent = new Intent(Intent.ACTION_INSERT)
                         .setData(CalendarContract.Events.CONTENT_URI)
                         .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
                         .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
@@ -62,16 +67,6 @@ public class MeetingsFragment extends Fragment {
                         .putExtra(Intent.EXTRA_EMAIL, "santo.gioia@epfl.ch")
                         .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
                 startActivity(intent);
-            }
-        });
-
-
-        Button updateList = (Button) myView.findViewById(R.id.updateList);
-        updateList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<Meeting> meetings_created = createMeetings();
-                fillListView(meetings_created);
             }
         });
 
