@@ -16,8 +16,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * Created by albertochiappa on 14/10/16.
  */
 
-public class ProfileButtonTest extends ActivityInstrumentationTestCase2<MainActivity> {
-    public ProfileButtonTest() {
+public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActivity> {
+    public PublicProfileTest() {
         super(MainActivity.class);
     }
 
