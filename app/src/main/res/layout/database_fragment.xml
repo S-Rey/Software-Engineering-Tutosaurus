@@ -102,6 +102,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/db_course_button" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:hint="meeting Id"
+                android:id="@+id/db_getMeeting_text" />
+
+            <Button
+                android:text="get Meeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/db_meetingID_button" />
         </LinearLayout>
     </ScrollView>
 
