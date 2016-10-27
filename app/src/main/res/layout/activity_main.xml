@@ -113,16 +113,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="21dp" />
 
-    <Button
-        android:text="Profile Test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/profileTestButton"
-        android:textStyle="normal|bold"
-        android:onClick="openProfile"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <Button
         android:text="Location Test"
@@ -131,8 +121,8 @@
         android:id="@+id/locationTestButton"
         android:textStyle="normal|bold"
         android:onClick="openLocation"
-        android:layout_above="@+id/profileTestButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/registerButton"
+        android:layout_toEndOf="@+id/registerButton" />
 
 </RelativeLayout>
