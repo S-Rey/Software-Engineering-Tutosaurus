@@ -33,27 +33,21 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         list.setVerticalScrollBarEnabled(false);
     }
 
-    Preference.OnPreferenceChangeListener listener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            // newValue is the value you choose
-            return false;
-        }
-    };
-
-
-//-----------------------
-//UNUSED METHODS BELOW
-//-----------------------
-
-
-//JUST A METHOD FOR POSSIBLE USE
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("checkbox_preference_notification")) {
             //Do Something
         }
+        if (key.equals("checkbox_preference_calendar")) {
+            //Do Something
+        }
+        if (key.equals("checkbox_preference_location")) {
+            //Do Something
+        }
     }
 
+//-----------------------
+//UNUSED METHODS BELOW
+//-----------------------
 //THE FOLLOWING METHODS ARE FOR CLICKING AUTOMATICALLY ON A PREFERENCE IN THE LIST DEPENDING ON THE KEY
 //RESERVED FOR TESTS !!!!!!
     public PreferenceScreen findPreferenceScreenForPreference(String key, PreferenceScreen screen ) {

@@ -11,12 +11,14 @@
         android:onClick="onCheckboxSettingsClicked" />
 
     <CheckBoxPreference
+        android:key="checkbox_preference_calendar"
         android:id="@+id/checkbox_calendar"
         android:title="@string/sync_calendar"
         android:layout="@layout/preference_checkbox"
         android:onClick="onCheckboxSettingsClicked" />
 
     <CheckBoxPreference
+        android:key="checkbox_preference_location"
         android:id="@+id/checkbox_location"
         android:title="@string/share_location"
         android:layout="@layout/preference_checkbox"
@@ -27,11 +29,6 @@
         android:layout="@layout/preference_intent">
         <intent android:action="android.intent.action.VIEW"
             android:data="http://google.com/" />
-    </PreferenceScreen>
-
-    <PreferenceScreen
-        android:title="NULL SETTINGS ENTRY"
-        android:layout="@layout/preference_intent">
     </PreferenceScreen>
 
     <PreferenceScreen

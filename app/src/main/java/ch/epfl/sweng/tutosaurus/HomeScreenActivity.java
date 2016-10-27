@@ -1,5 +1,6 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,12 +19,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,6 +57,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         pictureView = (ImageView) findViewById(R.id.picture_view);
+
+        CircleImageView item = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
+        linkProfilePictureToNavView(item);
 
 //RECEIVE THE INTENT FOR "MY APPOINT RESULT" TAB
         if (intent.getAction() != null) {
@@ -153,6 +164,36 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
+    private void saveToInternalStorage(Bitmap bitmapImage) {
+        FileOutputStream fos = null;
+        try {
+            fos = getApplicationContext().openFileOutput("user_profile_pic.bmp", Context.MODE_PRIVATE);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void linkProfilePictureToNavView(CircleImageView item) {
+        FileInputStream in = null;
+        try {
+            in = getApplicationContext().openFileInput("user_profile_pic.bmp");
+            Bitmap b = BitmapFactory.decodeStream(in);
+            item.setImageBitmap(b);
+        }
+        catch (FileNotFoundException e) {
+            item.setImageResource(R.drawable.dino_logo);
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GALLERY_REQUEST) {
@@ -167,6 +208,7 @@ public class HomeScreenActivity extends AppCompatActivity
                     Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
                     pictureView = (ImageView) findViewById(R.id.picture_view);
                     pictureView.setImageBitmap(imageSelected);
+                    saveToInternalStorage(imageSelected);
                     inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -174,11 +216,12 @@ public class HomeScreenActivity extends AppCompatActivity
                 }
 
             }
-        }
-        else if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ((ImageView) findViewById(R.id.picture_view)).setImageBitmap(imageBitmap);
+            saveToInternalStorage(imageBitmap);
         }
     }
+
 }
