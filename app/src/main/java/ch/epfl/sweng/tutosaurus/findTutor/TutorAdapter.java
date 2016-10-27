@@ -2,6 +2,7 @@ package ch.epfl.sweng.tutosaurus.findTutor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ch.epfl.sweng.tutosaurus.FindTutorResult;
+import ch.epfl.sweng.tutosaurus.PublicProfileActivity;
 import ch.epfl.sweng.tutosaurus.R;
 
 /**
@@ -32,7 +35,7 @@ public class TutorAdapter extends ArrayAdapter<Tutor> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         View row=convertView;
-        TutorHolder holder=null;
+        TutorHolder holder;
         if(row==null){
             LayoutInflater inflater=((Activity) context).getLayoutInflater();
             row=inflater.inflate(layoutResourceId, parent, false);
@@ -50,12 +53,27 @@ public class TutorAdapter extends ArrayAdapter<Tutor> {
         holder.profileName.setText(tutor.profileName);
         holder.profilePicture.setImageResource(tutor.profilePicture);
 
+        // Set the OnClickListener on each name of the list
+        final Intent intent = new Intent(context, PublicProfileActivity.class);
+        intent.putExtra("SCIPER_NUMBER",tutor.sciperNumber);
+
+        holder.profileName.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                v.getContext().startActivity(intent);
+            }
+        });
+
         return row;
     }
 
     static private class TutorHolder{
         ImageView profilePicture;
         TextView profileName;
+    }
+
+    public Tutor getItemAtPosition(int position){
+        return tutorList.get(position);
     }
 
 }
