@@ -12,7 +12,7 @@ public class Meeting {
     private final int id;
     private Date date;
     private int duration;
-    private Location location;
+    private String location;
     private ArrayList<Integer> participants = new ArrayList<>();
 
     /**
@@ -65,7 +65,7 @@ public class Meeting {
      * Sets the location were this meeting takes place.
      * @param location the location of the meeting
      */
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -105,7 +105,7 @@ public class Meeting {
      * Returns the location where this meeting takes place.
      * @return the location of the meeting
      */
-    public Location getLocation() {
+    public String getLocation() {
         return this.location;
     }
 

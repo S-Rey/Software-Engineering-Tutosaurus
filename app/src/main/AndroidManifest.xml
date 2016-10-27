@@ -69,5 +69,10 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
+    <service
+        android:name=".FetchAddressIntentService"
+        android:exported="false"/>
+
+
 
 </manifest>
