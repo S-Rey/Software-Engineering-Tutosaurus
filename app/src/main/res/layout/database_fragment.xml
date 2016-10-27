@@ -20,21 +20,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/dbTestInput"
-                android:hint="Enter value" />
-
-            <Button
-                android:text="Submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/dbSubmitButton" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:ems="10"
                 android:id="@+id/db_signup_sciper"
                 android:hint="sciper" />
@@ -116,6 +102,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/db_meetingID_button" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Meeting location"
+                android:id="@+id/db_meeting_location" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:hint="Meeting participant 1"
+                android:id="@+id/db_meeting_part1" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:hint="Meeting participant 2"
+                android:id="@+id/db_meeting_part2" />
+
+            <Button
+                android:text="Add meeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/db_meeting_add" />
         </LinearLayout>
     </ScrollView>
 

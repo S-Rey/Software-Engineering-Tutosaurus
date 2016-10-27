@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class User {
 
-    private int sciper;
+    private String sciper;
     private String username;
     private String fullName;
     private String email;
@@ -31,7 +31,7 @@ public class User {
      * Constructor for the User class.
      * @param sciper the sciper number of this user, used as an unique identifier
      */
-    public User(int sciper) {
+    public User(String sciper) {
         this.sciper = sciper;
     }
 
@@ -40,7 +40,7 @@ public class User {
      * @param sciper the sciper number of this user, used as an unique identifier
      * @param username the username of this user (normally a GASPAR username)
      */
-    public User(int sciper, String username) {
+    public User(String sciper, String username) {
         this.sciper = sciper;
         this.username = username;
     }
@@ -94,7 +94,7 @@ public class User {
      * Returns this user's sciper number.
      * @return the sciper number of the user
      */
-    public int getSciper() {
+    public String getSciper() {
         return this.sciper;
     }
 

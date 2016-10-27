@@ -9,31 +9,44 @@ import java.util.List;
 
 public class Meeting {
 
-    private  int id;
+    private  String id;
     private Date date;
     private String location;
-    private ArrayList<Integer> participants = new ArrayList<>();
+    private int duration;
+    private ArrayList<String> participants = new ArrayList<>();
+
 
     /**
-     * Constructor for the Meeting class
-     * @param id the unique id of this meeting
+     * Empty constructor for Meeting (required for firebase deserialization)
      */
-    public Meeting(int id) {
-        this.id = id;
+    public Meeting () {
+
     }
 
     /**
      * Constructor for the Meeting class
-     * @param id the unique id of this meeting
      * @param date the date at which the meeting takes place
      */
-    public Meeting(int id, Date date) {
-        this.id = id;
+    public Meeting(Date date) {
         this.date = date;
     }
 
-    public Meeting () {
+    /**
+     * Constructor for the Meeting class
+     * @param date the date at which the meeting takes place
+     * @param duration the duration of this meeting (in minutes)
+     */
+    public Meeting(Date date, int duration) {
+        this.date = date;
+        this.duration = duration;
+    }
 
+    /**
+     * Sets this meeting's unique id.
+     * @param id the unique id of this meeting
+     */
+    public void setId(String id){
+        this.id = id;
     }
 
     /**
@@ -53,6 +66,15 @@ public class Meeting {
     }
 
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+
     /**
      * Sets the location were this meeting takes place.
      * @param location the location of the meeting
@@ -65,12 +87,12 @@ public class Meeting {
      * Add a participant to this meeting.
      * @param sciper the sciper number of the participant
      */
-    public void addParticipant(int sciper) {
+    public void addParticipant(String sciper) {
         this.participants.add(sciper);
     }
 
 
-    public List<Integer> getParticipants(){
+    public List<String> getParticipants(){
         return this.participants;
     }
 
@@ -78,7 +100,7 @@ public class Meeting {
      * Returns the unique id of this meeting.
      * @return the unique id for the meeting
      */
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 

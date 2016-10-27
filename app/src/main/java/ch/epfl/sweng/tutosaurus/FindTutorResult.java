@@ -78,39 +78,39 @@ public class FindTutorResult extends AppCompatActivity {
         Course chemistry= new Course(2,"Chemistry");
         Course computer= new Course(3,"Computer Science");
 
-        User profileOne = new User(273516);
+        User profileOne = new User("273516");
         profileOne.setFullName("Alberto Chiappa");
         profileOne.setEmail("alberto.chiappa@epfl.ch");
         profileOne.addTeachingCourse(maths);
         profileOne.addTeachingCourse(computer);
         profileOne.setPicture(R.drawable.foto_mia);
 
-        User profileTwo = new User(223415);
+        User profileTwo = new User("223415");
         profileTwo.setFullName("Albert Einstein");
         profileTwo.setEmail("albert.einstein@epfl.ch");
         profileTwo.addTeachingCourse(physics);
         profileTwo.addTeachingCourse(maths);
         profileTwo.setPicture(R.drawable.einstein);
 
-        User profileThree = new User(124821);
+        User profileThree = new User("124821");
         profileThree.setFullName("Kurt Godel");
         profileThree.setEmail("kurt.godel@epfl.ch");
         profileThree.addTeachingCourse(maths);
         profileThree.setPicture(R.drawable.godel);
 
-        User profileFour = new User(100000);
+        User profileFour = new User("100000");
         profileFour.setFullName("Maurizio Grasselli");
         profileFour.setEmail("maurizio.grasselli@epfl.ch");
         profileFour.addTeachingCourse(maths);
         profileFour.setPicture(R.drawable.grasselli);
 
-        User profileFive = new User(223615);
+        User profileFive = new User("223615");
         profileFive.setFullName("Linus Torvalds");
         profileFive.setEmail("linus.torval@epfl.ch");
         profileFive.addTeachingCourse(computer);
         profileFive.setPicture(R.drawable.torvalds);
 
-        User profileSix = new User(443213);
+        User profileSix = new User("443213");
         profileSix.setFullName("Carlo Rubbia");
         profileSix.setEmail("carlo.rubbia@epfl.ch");
         profileSix.addTeachingCourse(chemistry);
@@ -148,7 +148,7 @@ public class FindTutorResult extends AppCompatActivity {
         Tutor tutorToAdd;
         ArrayList<Tutor> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
-            if (profile.getSciper()==sciperNumber) {
+            if (profile.getSciper().equals(sciperNumber)) {
                 tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName());
                 teachers.add(tutorToAdd);
                 count++;

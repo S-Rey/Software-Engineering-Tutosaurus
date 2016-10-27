@@ -9,7 +9,7 @@ Structure ot the noSQL JSON database
 			"email" : "email of user",
 			"pic" : "picture of user"
 			"meetings" : {
-				"meetingId" : "meeting id"	
+				"meetingId" : "true"
 			}
 			"teachCourse" : {
 				"courseId" : {
