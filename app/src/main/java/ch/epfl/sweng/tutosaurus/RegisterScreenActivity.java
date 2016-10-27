@@ -175,7 +175,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
             email_address_text.setText(profile.email);
             sciper_text.setText(profile.sciper);
         }
-
     }
 
 
