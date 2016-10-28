@@ -9,15 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.io.IOException;
 import java.util.Map;
 
 import ch.epfl.sweng.tutosaurus.Tequila.AuthClient;
 import ch.epfl.sweng.tutosaurus.Tequila.AuthServer;
+import ch.epfl.sweng.tutosaurus.Tequila.MyAppVariables;
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
@@ -59,9 +63,15 @@ public class RegisterScreenActivity extends AppCompatActivity {
         authDialog.setContentView(R.layout.auth_screen);
 
         webViewOauth = (WebView) authDialog.findViewById(R.id.web_oauth);
+        //webViewOauth = new WebView(this);
         webViewOauth.getSettings().setJavaScriptEnabled(true);
         webViewOauth.clearCache(true);
         webViewOauth.loadUrl(codeRequestUrl);
+
+        /**CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();*/
+
+        //authDialog.setContentView(webViewOauth);
 
         webViewOauth.setWebViewClient(new WebViewClient() {
             boolean authComplete = false;
@@ -76,7 +86,10 @@ public class RegisterScreenActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
+                //webViewOauth.loadUrl("javascript:MyApp.resize(document.body.getBoundingClientRect().height)");
+
                 if (url.contains("?code=") && authComplete != true) {
+                    MyAppVariables.setRegistered(true);
                     authComplete = true;
                     authDialog.dismiss();
                     new ManageAccessToken().execute(url);
@@ -85,10 +98,21 @@ public class RegisterScreenActivity extends AppCompatActivity {
             }
         });
 
+        //webViewOauth.addJavascriptInterface(this, "MyApp");
+
         authDialog.show();
         authDialog.setCancelable(true);
         authDialog.setTitle("Tequila authentification");
     }
+
+    /**@JavascriptInterface
+    public void resize(final float height) {
+        RegisterScreenActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                webViewOauth.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
+            }
+        });}*/
 
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
@@ -163,7 +187,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void setScreenInfo(){
+    /**private void setScreenInfo(){
         if(profile != null){
             EditText first_name_text = (EditText) findViewById(R.id.firstNameEntry);
             EditText last_name_text = (EditText) findViewById(R.id.lastNameEntry);
@@ -175,7 +199,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
             email_address_text.setText(profile.email);
             sciper_text.setText(profile.sciper);
         }
-    }
+    }*/
 
 
 }

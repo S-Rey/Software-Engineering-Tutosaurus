@@ -35,69 +35,6 @@
         android:layout_below="@+id/welcomingMessage"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="@string/username_ask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/usernameText"
-        android:textSize="24sp"
-        android:textColor="@android:color/holo_red_dark"
-        android:textAlignment="center"
-        android:layout_below="@+id/instructionsMessage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/usernameEntry"
-        android:hint="@string/username"
-        android:background="@android:drawable/editbox_background"
-        android:layout_below="@+id/usernameText"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="@string/password_ask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/passwordText"
-        android:textSize="24sp"
-        android:textColor="@android:color/holo_red_dark"
-        android:textAlignment="center"
-        android:layout_below="@+id/usernameEntry"
-        android:layout_alignLeft="@+id/usernameText"
-        android:layout_alignStart="@+id/usernameText"
-        android:layout_marginTop="11dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordEntry"
-        android:hint="@string/password"
-        android:background="@android:drawable/editbox_background"
-        android:layout_below="@+id/passwordText"
-        android:layout_alignLeft="@+id/usernameEntry"
-        android:layout_alignStart="@+id/usernameEntry" />
-
-    <Button
-        android:text="@string/connection_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/connectionButton"
-        android:background="@android:drawable/editbox_background"
-        android:textSize="24sp"
-        android:textColor="@android:color/holo_green_dark"
-        android:layout_below="@+id/passwordEntry"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:textAllCaps="false"
-        android:textStyle="normal|bold|italic"
-        android:onClick="sendMessageForHome" />
-
     <Button
         android:text="@string/register_button"
         android:layout_width="wrap_content"
@@ -134,5 +71,18 @@
         android:layout_above="@+id/profileTestButton"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="@string/connection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/connectionButton"
+        android:background="@android:drawable/editbox_background"
+        android:textSize="24sp"
+        android:textColor="@android:color/holo_green_dark"
+        android:textAllCaps="false"
+        android:textStyle="normal|bold|italic"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
