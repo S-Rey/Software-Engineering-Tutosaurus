@@ -41,81 +41,13 @@ public class MeetingsFragment extends Fragment {
     private CustomAdapter adapter;
     private String currentUser = "236905";
 
-    public static final String[] EVENT_PROJECTION = new String[] {
-            CalendarContract.Calendars._ID,                           // 0
-            CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
-            CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
-            CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
-    };
-
-    // The indices for the projection array above.
-    private static final int PROJECTION_ID_INDEX = 0;
-    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-    private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-    private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.meetings_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Meetings");
 
-        Button syncCalendar = (Button) myView.findViewById(R.id.syncCalendar);
-        syncCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseHelper dbh = new DatabaseHelper();
-                DatabaseReference ref = dbh.getReference();
-                ref.child("meeting/").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot meetingSnapshot: snapshot.getChildren()) {
-                            Meeting meeting = meetingSnapshot.getValue(Meeting.class);
-                            long startMillis = 0;
-                            long endMillis = 0;
-                            Calendar beginTime = Calendar.getInstance();
-                            beginTime.setTime(meeting.getDate());
-                            startMillis = beginTime.getTimeInMillis();
-                            Calendar endTime = Calendar.getInstance();
-                            endTime.setTime(meeting.getDate());
-                            endTime.add(Calendar.HOUR, meeting.getDuration());
-                            endMillis = endTime.getTimeInMillis();
-
-                            long calID;
-                            ContentResolver contentResolver = getActivity().getContentResolver();
-                            Uri uri = CalendarContract.Calendars.CONTENT_URI;
-                            Cursor cursorCalendarID = contentResolver.query(uri, EVENT_PROJECTION, null, null, null);
-                            cursorCalendarID.moveToFirst();
-                            calID = cursorCalendarID.getLong(PROJECTION_ID_INDEX);
-
-                            ContentValues values = new ContentValues();
-                            values.put(CalendarContract.Events.DTSTART, startMillis);
-                            values.put(CalendarContract.Events.DTEND, endMillis);
-                            values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                            values.put(CalendarContract.Events.TITLE, meeting.getLocation());
-                            values.put(CalendarContract.Events.DESCRIPTION, "teacher or student");
-                            values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getLocation());
-                            values.put(CalendarContract.Events.CALENDAR_ID, calID);
-                            if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                                return;
-                            }
-                            Uri newEvent = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
-
-                        }
-                    }
-
-
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        System.out.println("The read failed: " + databaseError.getMessage());
-                    }
-
-                });
-
-            }
-
-        });
+        //Button syncCalendar = (Button) myView.findViewById(R.id.syncCalendar);
 
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
         Query ref = DatabaseHelper.getMeetingsRefForUser(currentUser);

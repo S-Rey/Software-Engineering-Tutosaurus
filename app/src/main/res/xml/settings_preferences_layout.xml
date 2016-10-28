@@ -2,13 +2,11 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- onCheckboxSettingsClicked method to be added in SettingsFragment.java -->
     <CheckBoxPreference
         android:key="checkbox_preference_notification"
         android:id="@+id/checkbox_notifications"
         android:title="@string/push_notifications"
-        android:layout="@layout/preference_checkbox"
-        android:onClick="onCheckboxSettingsClicked" />
+        android:layout="@layout/preference_checkbox" />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
@@ -19,8 +17,7 @@
         android:key="checkbox_preference_calendar"
         android:id="@+id/checkbox_calendar"
         android:title="@string/sync_calendar"
-        android:layout="@layout/preference_checkbox"
-        android:onClick="onCheckboxSettingsClicked" />
+        android:layout="@layout/preference_checkbox" />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
@@ -31,8 +28,7 @@
         android:key="checkbox_preference_location"
         android:id="@+id/checkbox_location"
         android:title="@string/share_location"
-        android:layout="@layout/preference_checkbox"
-        android:onClick="onCheckboxSettingsClicked" />
+        android:layout="@layout/preference_checkbox" />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
