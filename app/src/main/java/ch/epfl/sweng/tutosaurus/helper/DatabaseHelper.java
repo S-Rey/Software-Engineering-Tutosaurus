@@ -4,6 +4,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import ch.epfl.sweng.tutosaurus.model.Course;
@@ -17,13 +18,12 @@ public class DatabaseHelper {
     public static final String COURSE_PATH = "course/";
     public static final String MEETING_PER_USER_PATH = "meetingsPerUser/";
 
-    private static FirebaseDatabase db;
-    private static DatabaseReference dbf;
+    private FirebaseDatabase db;
+    private DatabaseReference dbf;
 
     private static DatabaseHelper instance = null;
 
     private DatabaseHelper(){
-       super();
         db = FirebaseDatabase.getInstance();
         db.setPersistenceEnabled(true);
         dbf = db.getReference();
@@ -99,7 +99,7 @@ public class DatabaseHelper {
         });
     }
 
-    public static DatabaseReference getMeetingsRefForUser(String sciper) {
+    public DatabaseReference getMeetingsRefForUser(String sciper) {
         return dbf.child(MEETING_PER_USER_PATH + sciper);
     }
 
