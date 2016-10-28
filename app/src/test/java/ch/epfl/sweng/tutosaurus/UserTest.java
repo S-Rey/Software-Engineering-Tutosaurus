@@ -15,14 +15,14 @@ public class UserTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void ratingCanOnlyBeBetweenZeroAndOne() {
-        User user = new User(000000);
+        User user = new User("000000");
         user.setGlobalRating(4.2);
         user.setGlobalRating(-0.8);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void courseRatingCanOnlyBeBetweenZeroAndOne() {
-        User user = new User(000000);
-        user.setCourseRating(0, 4.2);
+        User user = new User("000000");
+        user.setCourseRating("0", 4.2);
     }
 }
