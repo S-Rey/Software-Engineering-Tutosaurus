@@ -41,7 +41,7 @@
     <string name="fourthLayout_button">Settings</string>
     <string name="fifthLayout_button">Help</string>
     <string name="sixthLayout_button">About</string>
-    <string name="seventhLayout_button">My Appoint Results</string>
+    <string name="seventhLayout_button">Meetings</string>
 
     <string name="title">TutoSaurus ©</string>
     <string name="version">Version : 1.0.0</string>

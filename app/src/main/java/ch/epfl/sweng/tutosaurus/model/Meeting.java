@@ -1,8 +1,5 @@
 package ch.epfl.sweng.tutosaurus.model;
 
-import android.location.Location;
-
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +10,16 @@ public class Meeting {
     private Date date;
     private String location;
     private int duration;
-    private ArrayList<String> participants = new ArrayList<>();
+
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    private List<String> participants = new ArrayList<>();
     private Course course;
 
 
@@ -70,14 +76,6 @@ public class Meeting {
         this.date = date;
     }
 
-    /**
-     * Sets the date at which this meeting takes place.
-     * @param date the date of this meeting
-     */
-    public void setDate(long date) {
-        this.date = new Date(date);
-    }
-
     public void setCourse(Course course) {
         this.course = course;
     }
@@ -115,6 +113,7 @@ public class Meeting {
     public List<String> getParticipants(){
         return this.participants;
     }
+
 
     /**
      * Returns the unique id of this meeting.

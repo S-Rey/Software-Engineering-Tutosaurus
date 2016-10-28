@@ -3,7 +3,14 @@ package ch.epfl.sweng.tutosaurus.model;
 public class Course {
 
     private String name;
-    private final String id;
+    private String id;
+
+    /**
+     * Constructor with no arguments for Course (required for firebase deserialization)
+     */
+    public Course() {
+
+    }
 
     /**
      * Constructor for the Course class.

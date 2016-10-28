@@ -15,12 +15,12 @@ public class DatabaseHelper {
     public static final String MEETING_PATH = "meeting/";
     public static final String USER_PATH = "user/";
     public static final String COURSE_PATH = "course/";
+    public static final String MEETING_PER_USER_PATH = "meetingsPerUser/";
 
-    private DatabaseReference db;
+    private static DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
     public DatabaseHelper(){
         super();
-        db = FirebaseDatabase.getInstance().getReference();
     }
 
     public void signUp(User user) {
@@ -52,9 +52,12 @@ public class DatabaseHelper {
         meeting.setId(key);
         DatabaseReference meetingRef = db.child(MEETING_PATH + key);
         DatabaseReference userRef = db.child(USER_PATH);
+        DatabaseReference meetingsPerUserRef = db.child(MEETING_PER_USER_PATH);
         for (String sciper: meeting.getParticipants()) {
-            DatabaseReference ref = userRef.child(sciper + "/meetings/" + meeting.getId());
-            ref.setValue(true);
+            DatabaseReference userMeetingsRef = userRef.child(sciper + "/meetings/" + meeting.getId());
+            DatabaseReference meetingsPerUserUserRef = meetingsPerUserRef.child(sciper + "/" + meeting.getId());
+            userMeetingsRef.setValue(true);
+            meetingsPerUserUserRef.setValue(meeting);
         }
         meetingRef.setValue(meeting);
         DatabaseReference courseMeetingRef = db.child(COURSE_PATH + meeting.getCourse().getId() + "/meeting/" + meeting.getId());
@@ -77,6 +80,10 @@ public class DatabaseHelper {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+    }
+
+    public static DatabaseReference getMeetingsRefForUser(String sciper) {
+        return db.child(MEETING_PER_USER_PATH + sciper);
     }
 
 
