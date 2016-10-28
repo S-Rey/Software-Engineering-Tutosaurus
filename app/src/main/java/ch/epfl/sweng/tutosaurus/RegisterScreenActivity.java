@@ -5,14 +5,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -39,6 +43,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
     Dialog authDialog;
     WebView webViewOauth;
+    Button sendButton;
 
     private static OAuth2Config config;
     private static Map<String, String> tokens;
@@ -68,8 +73,18 @@ public class RegisterScreenActivity extends AppCompatActivity {
         webViewOauth.clearCache(true);
         webViewOauth.loadUrl(codeRequestUrl);
 
-        /**CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeAllCookie();*/
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+                // a callback which is executed when the cookies have been removed
+                @Override
+                public void onReceiveValue(Boolean aBoolean) {
+                }
+            });
+        }
+        else {
+            cookieManager.removeAllCookie();
+        }
 
         //authDialog.setContentView(webViewOauth);
 
@@ -121,14 +136,16 @@ public class RegisterScreenActivity extends AppCompatActivity {
     }
 
     public void sendMessageForAccess(View view) {
-        Intent intent = new Intent(this, ConfirmationActivity.class);
+        if(MyAppVariables.getRegistered() == true){
+            Intent intent = new Intent(this, ConfirmationActivity.class);
 
-        intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
-        intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
-        intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
-        intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
+            intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
+            intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
+            intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
+            intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
 
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 
     private static OAuth2Config readConfig() throws IOException {
