@@ -25,6 +25,6 @@ public class CustomAdapter extends FirebaseListAdapter<Meeting>{
         TextView location = (TextView) view.findViewById(R.id.location);
         TextView date = (TextView) view.findViewById(R.id.date);
         location.setText(meeting.getLocation());
-        location.setText(meeting.getDate().toString());
+        date.setText(meeting.getDate().toString());
     }
 }
