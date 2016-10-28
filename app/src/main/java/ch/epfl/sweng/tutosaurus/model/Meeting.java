@@ -68,14 +68,6 @@ public class Meeting {
         this.id = id;
     }
 
-    /**
-     * Sets the date at which this meeting takes place.
-     * @param date the date of this meeting
-     */
-    public void setDateD(Date date) {
-        this.date = date;
-    }
-
     public void setCourse(Course course) {
         this.course = course;
     }
