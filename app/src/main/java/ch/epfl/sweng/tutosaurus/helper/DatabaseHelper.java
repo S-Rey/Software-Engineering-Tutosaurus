@@ -25,6 +25,7 @@ public class DatabaseHelper {
     private DatabaseHelper(){
        super();
         db = FirebaseDatabase.getInstance();
+        db.setPersistenceEnabled(true);
         dbf = db.getReference();
     }
 
