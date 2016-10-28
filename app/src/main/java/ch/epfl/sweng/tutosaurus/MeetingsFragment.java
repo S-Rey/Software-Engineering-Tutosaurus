@@ -44,5 +44,4 @@ public class MeetingsFragment extends Fragment {
         adapter.cleanup();
     }
 
-
 }

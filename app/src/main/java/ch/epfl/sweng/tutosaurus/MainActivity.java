@@ -50,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
     public void notification(View view) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Appoint Result Notification")
+                        .setContentTitle("Meeting Notification")
                         .setContentText("Click Here To Test The Notification")
                         .setAutoCancel(true)
                         .setColor(getResources().getColor(R.color.colorPrimaryDark));
 // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, HomeScreenActivity.class);
-        resultIntent.setAction("OPEN_TAB_MY_APPOINTMENT_RESULT");
+        resultIntent.setAction("OPEN_TAB_MEETINGS");
 // The stack builder object will contain an artificial back stack for the
 // started Activity.
 // This ensures that navigating backward from the Activity leads out of

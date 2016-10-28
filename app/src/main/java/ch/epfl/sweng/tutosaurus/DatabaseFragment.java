@@ -1,8 +1,8 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,6 @@ import android.widget.EditText;
 import java.util.Date;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
-import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
@@ -120,4 +119,5 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         String courseId = ((EditText)myView.findViewById(R.id.db_course_id_teach_learn)).getText().toString();
         dbh.addStudentToCourse(sciper, Integer.parseInt(courseId));
     }
+
 }

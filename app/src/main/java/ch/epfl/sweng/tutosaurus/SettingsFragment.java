@@ -100,7 +100,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                                     return;
                                 }
                                 Uri newEvent = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
-
                             }
                         }
 
@@ -198,6 +197,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 }
                 break;
         }
+
     }
 
 }

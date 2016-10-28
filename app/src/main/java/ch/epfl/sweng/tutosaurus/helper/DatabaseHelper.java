@@ -4,7 +4,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import ch.epfl.sweng.tutosaurus.model.Course;
@@ -89,7 +88,6 @@ public class DatabaseHelper {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Meeting meeting = dataSnapshot.getValue(Meeting.class);
                 System.out.println(meeting);
-
             }
 
             @Override
@@ -102,7 +100,5 @@ public class DatabaseHelper {
     public DatabaseReference getMeetingsRefForUser(String sciper) {
         return dbf.child(MEETING_PER_USER_PATH + sciper);
     }
-
-
 
 }
