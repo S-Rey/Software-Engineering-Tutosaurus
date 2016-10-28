@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
@@ -40,6 +41,9 @@ public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActi
         getActivity();
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
+        onView(withId(R.id.bySubject)).perform(click());
+        onView(withId(R.id.mathsButton)).perform(click());
+        onView(withId(R.id.tutorList)).perform(click());
         //onView(withId(R.id.profileName)).check(matches(withText("Alberto Chiappa")));
         //onView(withId(R.id.commentsButton)).perform(click());
         //onView(withId(R.id.commentsButton)).check(matches(withText("Hide comments")));
