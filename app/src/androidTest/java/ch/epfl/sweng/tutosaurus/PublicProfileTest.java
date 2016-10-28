@@ -39,7 +39,7 @@ public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActi
         onView(withId(R.id.connectionButton)).perform(click());
         getActivity();
         onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_second_layout));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
         //onView(withId(R.id.profileName)).check(matches(withText("Alberto Chiappa")));
         //onView(withId(R.id.commentsButton)).perform(click());
         //onView(withId(R.id.commentsButton)).check(matches(withText("Hide comments")));

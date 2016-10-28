@@ -1,6 +1,5 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -26,39 +25,16 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
+
     @Rule
     public IntentsTestRule<MainActivity> mainActivityRule = new IntentsTestRule<MainActivity>(
             MainActivity.class
     );
 
     @Test
-    public void testNavigationMenu() {
-        onView(withId(R.id.usernameEntry)).perform(typeText("myUsername")).perform(closeSoftKeyboard());
-        onView(withId(R.id.passwordEntry)).perform(typeText("myPassword")).perform(closeSoftKeyboard());
+    public void testLogIn() {
         onView(withId(R.id.connectionButton)).perform(click());
         onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_profile_layout));
-        onView(withId(R.id.drawer_layout)).perform(close());
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
-        onView(withId(R.id.drawer_layout)).perform(close());
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_beATutor_layout));
-        onView(withId(R.id.drawer_layout)).perform(close());
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
-        onView(withId(R.id.drawer_layout)).perform(close());
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_help_layout));
-        onView(withId(R.id.drawer_layout)).perform(close());
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_about_layout));
-        onView(withId(R.id.drawer_layout)).perform(close());
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_myAppointResults_layout));
-        onView(withId(R.id.drawer_layout)).perform(close());
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_db_layout));
         onView(withId(R.id.drawer_layout)).perform(close());
         onView(withId(R.id.action_logOutButton)).perform(click());
     }
@@ -66,10 +42,6 @@ public class MainActivityTest {
     @Test
     public void testSignUp() {
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.firstNameEntry)).perform(typeText("Vincent")).perform(closeSoftKeyboard());
-        onView(withId(R.id.lastNameEntry)).perform(typeText("Rinaldi")).perform(closeSoftKeyboard());
-        onView(withId(R.id.emailAddressEntry)).perform(typeText("vincent.rinaldi@epfl.ch")).perform(closeSoftKeyboard());
-        onView(withId(R.id.sciperEntry)).perform(typeText("239759")).perform(closeSoftKeyboard());
         onView(withId(R.id.sendButton)).perform(click());
         onView(withId(R.id.firstNameProvided)).check(matches(withText("First name : Vincent")));
         onView(withId(R.id.lastNameProvided)).check(matches(withText("Last name : Rinaldi")));
@@ -77,5 +49,4 @@ public class MainActivityTest {
         onView(withId(R.id.sciperProvided)).check(matches(withText("Sciper : 239759")));
         onView(withId(R.id.backToLoginButton)).perform(click());
     }
-
 }
