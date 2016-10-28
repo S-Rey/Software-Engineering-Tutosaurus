@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -105,7 +106,8 @@ public class MeetingsFragment extends Fragment {
         });
 
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
-        DatabaseReference ref = DatabaseHelper.getMeetingsRefForUser(currentUser);
+        Query ref = DatabaseHelper.getMeetingsRefForUser(currentUser);
+        ref = ref.orderByChild("date");
         adapter = new CustomAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
 

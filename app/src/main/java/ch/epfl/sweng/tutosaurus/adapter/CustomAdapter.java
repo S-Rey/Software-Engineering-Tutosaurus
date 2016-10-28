@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
@@ -16,7 +17,7 @@ import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class CustomAdapter extends FirebaseListAdapter<Meeting>{
 
-    public CustomAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, DatabaseReference ref) {
+    public CustomAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
     }
 
