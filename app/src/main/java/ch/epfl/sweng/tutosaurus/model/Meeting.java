@@ -14,6 +14,7 @@ public class Meeting {
     private String location;
     private int duration;
     private ArrayList<String> participants = new ArrayList<>();
+    private Course course;
 
 
     /**
@@ -42,6 +43,18 @@ public class Meeting {
     }
 
     /**
+     * Constructor for the Meeting class
+     * @param date the date at which the meeting takes place
+     * @param duration the duration of this meeting (in minutes)
+     * @param course the subject of this meeting
+     */
+    public Meeting(Date date, int duration, Course course) {
+        this.date = date;
+        this.duration = duration;
+        this.course = course;
+    }
+
+    /**
      * Sets this meeting's unique id.
      * @param id the unique id of this meeting
      */
@@ -65,6 +78,13 @@ public class Meeting {
         this.date = new Date(date);
     }
 
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Course getCourse() {
+        return this.course;
+    }
 
     public int getDuration() {
         return duration;

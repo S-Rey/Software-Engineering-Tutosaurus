@@ -28,11 +28,23 @@ public class DatabaseHelper {
         ref.setValue(user);
     }
 
-    public String addCourse(Course course) {
-        String key = db.child(COURSE_PATH).push().getKey();
-        DatabaseReference ref = db.child(COURSE_PATH + key);
+    public void addCourse(Course course) {
+        DatabaseReference ref = db.child(COURSE_PATH + course.getId());
         ref.setValue(course);
-        return key;
+    }
+
+    public void addTeacherToCourse(String sciper, int courseId) {
+        DatabaseReference courseRef = db.child(COURSE_PATH + courseId + "/teaching/" + sciper);
+        DatabaseReference userTeachCourseRef = db.child(USER_PATH + sciper + "/teaching/" + courseId);
+        userTeachCourseRef.setValue(true);
+        courseRef.setValue(true);
+    }
+
+    public void addStudentToCourse(String sciper, int courseId) {
+        DatabaseReference courseRef = db.child(COURSE_PATH + courseId + "/studying/" + sciper);
+        DatabaseReference userLearnCourseRef = db.child(USER_PATH + sciper + "/studying/" + courseId);
+        userLearnCourseRef.setValue(true);
+        courseRef.setValue(true);
     }
 
     public String addMeeting(Meeting meeting) {
@@ -45,6 +57,8 @@ public class DatabaseHelper {
             ref.setValue(true);
         }
         meetingRef.setValue(meeting);
+        DatabaseReference courseMeetingRef = db.child(COURSE_PATH + meeting.getCourse().getId() + "/meeting/" + meeting.getId());
+        courseMeetingRef.setValue(true);
         return key;
     }
 

@@ -3,13 +3,13 @@ package ch.epfl.sweng.tutosaurus.model;
 public class Course {
 
     private String name;
-    private final int id;
+    private final String id;
 
     /**
      * Constructor for the Course class.
      * @param id the unique id of this course
      */
-    public Course(int id) {
+    public Course(String id) {
         this.id = id;
     }
 
@@ -18,7 +18,7 @@ public class Course {
      * @param id the unique id of this course
      * @param name the name of this course
      */
-    public Course(int id, String name) {
+    public Course(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -36,7 +36,7 @@ public class Course {
      * Returns this course's unique id.
      * @return the unique id for this course
      */
-    public int getId(){
+    public String getId(){
         return this.id;
     }
 

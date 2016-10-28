@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -73,48 +70,48 @@ public class FindTutorResult extends AppCompatActivity {
 
     private User[] createProfiles() {
 
-        Course maths= new Course(0,"Maths");
-        Course physics= new Course(1,"Physics");
-        Course chemistry= new Course(2,"Chemistry");
-        Course computer= new Course(3,"Computer Science");
+        Course maths= new Course("0","Maths");
+        Course physics= new Course("1","Physics");
+        Course chemistry= new Course("2","Chemistry");
+        Course computer= new Course("3","Computer Science");
 
         User profileOne = new User("273516");
         profileOne.setFullName("Alberto Chiappa");
         profileOne.setEmail("alberto.chiappa@epfl.ch");
-        profileOne.addTeachingCourse(maths);
-        profileOne.addTeachingCourse(computer);
+        profileOne.addTeaching(maths.getId());
+        profileOne.addTeaching(computer.getId());
         profileOne.setPicture(R.drawable.foto_mia);
 
         User profileTwo = new User("223415");
         profileTwo.setFullName("Albert Einstein");
         profileTwo.setEmail("albert.einstein@epfl.ch");
-        profileTwo.addTeachingCourse(physics);
-        profileTwo.addTeachingCourse(maths);
+        profileTwo.addTeaching(physics.getId());
+        profileTwo.addTeaching(maths.getId());
         profileTwo.setPicture(R.drawable.einstein);
 
         User profileThree = new User("124821");
         profileThree.setFullName("Kurt Godel");
         profileThree.setEmail("kurt.godel@epfl.ch");
-        profileThree.addTeachingCourse(maths);
+        profileThree.addTeaching(maths.getId());
         profileThree.setPicture(R.drawable.godel);
 
         User profileFour = new User("100000");
         profileFour.setFullName("Maurizio Grasselli");
         profileFour.setEmail("maurizio.grasselli@epfl.ch");
-        profileFour.addTeachingCourse(maths);
+        profileFour.addTeaching(maths.getId());
         profileFour.setPicture(R.drawable.grasselli);
 
         User profileFive = new User("223615");
         profileFive.setFullName("Linus Torvalds");
         profileFive.setEmail("linus.torval@epfl.ch");
-        profileFive.addTeachingCourse(computer);
+        profileFive.addTeaching(computer.getId());
         profileFive.setPicture(R.drawable.torvalds);
 
         User profileSix = new User("443213");
         profileSix.setFullName("Carlo Rubbia");
         profileSix.setEmail("carlo.rubbia@epfl.ch");
-        profileSix.addTeachingCourse(chemistry);
-        profileSix.addTeachingCourse(physics);
+        profileSix.addTeaching(chemistry.getId());
+        profileSix.addTeaching(physics.getId());
         profileSix.setPicture(R.drawable.rubbia);
 
 
@@ -163,13 +160,13 @@ public class FindTutorResult extends AppCompatActivity {
     }
 
     private ArrayList<Tutor> findTutorBySubject(String subject, User[] profiles) {
-        int id=convertNameToId(subject);
+        String id=convertNameToId(subject);
         int count = 0;
         Tutor tutorToAdd;
         ArrayList<Tutor> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
-            for (Course taughtCourse : profile.getTeachingCourses()) {
-                if (taughtCourse.getId() == id) {
+            for (String taughtCourseId : profile.getTeaching().keySet()) {
+                if (taughtCourseId.equals(id)) {
                     tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName());
                     teachers.add(tutorToAdd);
                     count++;
@@ -211,20 +208,20 @@ public class FindTutorResult extends AppCompatActivity {
         ListView tutorList=(ListView) findViewById(R.id.tutorList);
         tutorList.setAdapter(arrayAdapter);
     }
-    private int convertNameToId(String subject){
-        int id = -1;
+    private String convertNameToId(String subject){
+        String id = "-1";
 
         if (subject.equals("Maths")) {
-            id = 0;
+            id = "0";
         }
         else if(subject.equals("Physics")){
-            id=1;
+            id="1";
         }
         else if(subject.equals("Chemistry")){
-            id=2;
+            id="2";
         }
         else if(subject.equals("Computer Science")||subject.equals("Computer")){
-            id=3;
+            id="3";
         }
         return id;
     }

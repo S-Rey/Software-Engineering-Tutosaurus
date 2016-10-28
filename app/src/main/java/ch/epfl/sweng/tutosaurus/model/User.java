@@ -12,11 +12,11 @@ public class User {
     private String email;
     private int profilePicture;
 
-    private ArrayList<Course> teaching = new ArrayList<>();
-    private ArrayList<Course> studying = new ArrayList<>();
+    private Map<String, Boolean> teaching = new HashMap<>();
+    private Map<String, Boolean> studying = new HashMap<>();
 
-    private Map<Integer, Double> ratings = new HashMap<>(); /* (course id -> globalRating) */
-    private Map<Integer, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
+    private Map<String, Double> ratings = new HashMap<>(); /* (course id -> globalRating) */
+    private Map<String, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
 
     private double globalRating;
 
@@ -132,40 +132,40 @@ public class User {
 
      /**
      * Add a course to the list of courses that this user is prepared to teach.
-     * @param course the course to add
+     * @param courseId the course to add
      */
-    public void addTeachingCourse(Course course) {
-        teaching.add(course);
+    public void addTeaching(String courseId) {
+        teaching.put(courseId, true);
     }
 
     /**
      * Add a course to the list of courses that this user wants assistance with.
-     * @param course the course to add.
+     * @param courseId the course to add.
      */
-    public void addStudyingCourse(Course course) {
-        studying.add(course);
+    public void addStudying(String courseId) {
+        studying.put(courseId, true);
     }
 
     /**
-     * Returns a list containing the courses that this user has agreed to teach
-     * @return a list of courses
+     * Returns a map containing the courses that this user has agreed to teach
+     * @return a map of courses mapped to the true boolean value
      */
-    public ArrayList<Course> getTeachingCourses() {
-        ArrayList<Course> ls = new ArrayList<>();
-        for(Course c : teaching) {
-            ls.add(c);
+    public Map<String, Boolean> getTeaching() {
+        Map<String, Boolean> ls = new HashMap<>();
+        for(String c : teaching.keySet()) {
+            ls.put(c, true);
         }
         return ls;
     }
 
     /**
-     * Returns a list containing te courses that this user wants help with.
-     * @return a list of courses
+     * Returns a map containing the courses that this user wants help with.
+     * @return a map of courses mapped to the true boolean value
      */
-    public ArrayList<Course> getStudyingCourses() {
-        ArrayList<Course> ls = new ArrayList<>();
-        for(Course c : studying) {
-            ls.add(c);
+    public Map<String, Boolean> getStudying() {
+        Map<String, Boolean> ls = new HashMap<>();
+        for(String c : studying.keySet()) {
+            ls.put(c, true);
         }
         return ls;
     }
@@ -175,16 +175,16 @@ public class User {
      * @param courseId the unique id of the course
      * @param hours the number of hours by which to increase the number of hours taught
      */
-    public void addHoursTaught(int courseId, int hours) {
+    public void addHoursTaught(String courseId, int hours) {
         totalHoursTaught.put(courseId, totalHoursTaught.get(courseId) + hours);
     }
 
     /**
      * Set the globalRating for a particular course.
-     * @param courseId the unique id of the course
+     * @param courseId the unique id of the §course
      * @param rating the globalRating for this course
      */
-    public void setCourseRating(int courseId, double rating) {
+    public void setCourseRating(String courseId, double rating) {
         if(rating > 1.0 || rating < 0) {
             throw new IllegalArgumentException("The globalRating should be between 0 and 1");
         } else {

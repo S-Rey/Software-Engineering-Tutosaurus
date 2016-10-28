@@ -18,7 +18,7 @@ Structure ot the noSQL JSON database
 				}
 			}
 			"learnCourse" : {
-				"courseId" : "course id"
+				"courseId" : "true"
 			}
 		}
 	}
@@ -28,14 +28,14 @@ Structure ot the noSQL JSON database
 			"courseName" : {
 				"courseNameFr" : "name of course in Fr"
 			}
-			"teachCourse" : {
-				"userId" : "id of user"
+			"teaching" : {
+				"userId" : "true"
 			}
-			"learnCourse" : {
-				"userId" : "id of user"
+			"studying" : {
+				"userId" : "true"
 			}
 			"meeting" : {
-				"meetingId" : "id of meeting"
+				"meetingId" : "true"
 			}
 		}
 	} 

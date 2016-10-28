@@ -19,6 +19,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 public class DatabaseFragment extends Fragment implements View.OnClickListener {
 
     View myView;
+    DatabaseHelper dbh = new DatabaseHelper();
 
     @Nullable
     @Override
@@ -34,6 +35,10 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         getMeetingButton.setOnClickListener(this);
         Button addMeetingButton = (Button) myView.findViewById(R.id.db_meeting_add);
         addMeetingButton.setOnClickListener(this);
+        Button addTeacherToCourseButton = (Button) myView.findViewById(R.id.db_course_teach_add);
+        addTeacherToCourseButton.setOnClickListener(this);
+        Button addStudentToCourseButton = (Button) myView.findViewById(R.id.db_course_learn_add);
+        addStudentToCourseButton.setOnClickListener(this);
         return myView;
     }
 
@@ -52,11 +57,16 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
             case R.id.db_meeting_add :
                 addMeeting();
                 break;
+            case R.id.db_course_teach_add :
+                addTeacherToCourse();
+                break;
+            case R.id.db_course_learn_add :
+                addStudentToCourse();
+                break;
         }
     }
 
     private void signUp() {
-        DatabaseHelper dbh = new DatabaseHelper();
         String sciper = ((EditText)myView.findViewById(R.id.db_signup_sciper)).getText().toString();
         String username = ((EditText)myView.findViewById(R.id.db_signup_username)).getText().toString();
         String fullName = ((EditText)myView.findViewById(R.id.db_signup_name)).getText().toString();
@@ -65,39 +75,45 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         user.setFullName(fullName);
         user.setEmail(email);
 
-        Course maths = new Course(1234, "Maths");
-        user.addTeachingCourse(maths);
-        Course physics = new Course(5678, "Physics");
-        user.addTeachingCourse(physics);
+        user.addTeaching("0");
+        user.addStudying("1");
 
         dbh.signUp(user);
     }
 
     private void addCourse() {
-        DatabaseHelper dbh = new DatabaseHelper();
-        String id = ((EditText)myView.findViewById(R.id.db_course_id)).getText().toString();
+        String id = ((EditText)myView.findViewById(R.id.db_course_id_add)).getText().toString();
         String name = ((EditText)myView.findViewById(R.id.db_course_name)).getText().toString();
-        String teacher = ((EditText)myView.findViewById(R.id.db_course_teacher)).getText().toString();
-        Course course = new Course(Integer.parseInt(id), name);
+        Course course = new Course(id, name);
         dbh.addCourse(course);
     }
 
     private void retrieveMeeting() {
-        DatabaseHelper dbh = new DatabaseHelper();
         String key = ((EditText)myView.findViewById(R.id.db_getMeeting_text)).getText().toString();
         dbh.getMeeting(key);
     }
 
     private void addMeeting(){
-        DatabaseHelper dbh = new DatabaseHelper();
         String location = ((EditText)myView.findViewById(R.id.db_meeting_location)).getText().toString();
         String part1 = ((EditText)myView.findViewById(R.id.db_meeting_part1)).getText().toString();
         String part2 = ((EditText)myView.findViewById(R.id.db_meeting_part2)).getText().toString();
         Date date = new Date();
-        Meeting meeting = new Meeting(date, 60);
+        Meeting meeting = new Meeting(date, 60, new Course("0", "Maths"));
         meeting.setLocation(location);
         meeting.addParticipant(part1);
         meeting.addParticipant(part2);
         dbh.addMeeting(meeting);
+    }
+
+    private void addTeacherToCourse() {
+        String sciper = ((EditText)myView.findViewById(R.id.db_sciper_teach_learn)).getText().toString();
+        String courseId = ((EditText)myView.findViewById(R.id.db_course_id_teach_learn)).getText().toString();
+        dbh.addTeacherToCourse(sciper, Integer.parseInt(courseId));
+    }
+
+    private void addStudentToCourse() {
+        String sciper = ((EditText)myView.findViewById(R.id.db_sciper_teach_learn)).getText().toString();
+        String courseId = ((EditText)myView.findViewById(R.id.db_course_id_teach_learn)).getText().toString();
+        dbh.addStudentToCourse(sciper, Integer.parseInt(courseId));
     }
 }

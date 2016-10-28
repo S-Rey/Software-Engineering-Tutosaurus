@@ -59,13 +59,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:ems="10"
                 android:hint="course id  "
-                android:id="@+id/db_course_id" />
+                android:id="@+id/db_course_id_teach_learn" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:hint="sciper number"
+                android:id="@+id/db_sciper_teach_learn" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:text="Add teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/db_course_teach_add" />
+                <Button
+                    android:text="Add student"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/db_course_learn_add" />
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:hint="course id  "
+                android:id="@+id/db_course_id_add" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -74,15 +107,6 @@
                 android:ems="10"
                 android:hint="course name"
                 android:id="@+id/db_course_name" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:hint="teacher id"
-                android:id="@+id/db_course_teacher" />
-
             <Button
                 android:text="Add Course"
                 android:layout_width="match_parent"
