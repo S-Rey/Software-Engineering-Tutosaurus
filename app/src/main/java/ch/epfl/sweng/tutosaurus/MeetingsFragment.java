@@ -37,6 +37,7 @@ public class MeetingsFragment extends Fragment {
     private ArrayList<Meeting> meetings = new ArrayList<>();
     private CustomAdapter adapter;
     private String currentUser = "236905";
+    DatabaseHelper dbh = DatabaseHelper.getDBH();
 
     public static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
@@ -106,7 +107,7 @@ public class MeetingsFragment extends Fragment {
         });
 
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
-        Query ref = DatabaseHelper.getMeetingsRefForUser(currentUser);
+        Query ref = dbh.getMeetingsRefForUser(currentUser);
         ref = ref.orderByChild("date");
         adapter = new CustomAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
