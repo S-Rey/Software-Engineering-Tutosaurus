@@ -2,6 +2,7 @@ package ch.epfl.sweng.tutosaurus.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -11,6 +12,8 @@ public class User {
     private String fullName;
     private String email;
     private int profilePicture;
+
+    private Map<String, Boolean> languages = new HashMap<>();
 
     private Map<String, Boolean> teaching = new HashMap<>();
     private Map<String, Boolean> studying = new HashMap<>();
@@ -144,6 +147,26 @@ public class User {
      */
     public void addStudying(String courseId) {
         studying.put(courseId, true);
+    }
+
+    /**
+     * Add a language to the list of this user's spoken languages.
+     * @param language the language to add
+     */
+    public void addLanguage(String language) {
+        this.languages.put(language, true);
+    }
+
+    /**
+     * Returns a map containing this user's spoken languages, mapped to the boolean value true.
+     * @return a map of this user's spoken languages
+     */
+    public Map<String, Boolean> getLanguages() {
+        Map<String, Boolean> map = new HashMap<>();
+        for(String l : languages.keySet()) {
+            map.put(l, true);
+        }
+        return map;
     }
 
     /**

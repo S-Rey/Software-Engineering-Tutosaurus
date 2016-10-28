@@ -77,6 +77,7 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
 
         user.addTeaching("0");
         user.addStudying("1");
+        user.addLanguage("English");
 
         dbh.signUp(user);
     }
