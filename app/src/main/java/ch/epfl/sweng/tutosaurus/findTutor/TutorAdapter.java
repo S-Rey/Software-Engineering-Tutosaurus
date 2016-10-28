@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ch.epfl.sweng.tutosaurus.FindTutorResult;
 import ch.epfl.sweng.tutosaurus.PublicProfileActivity;
 import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.model.Tutor;
 
 /**
  * Created by albertochiappa on 21/10/16.

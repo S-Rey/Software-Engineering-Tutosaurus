@@ -40,11 +40,11 @@ public class PublicProfileActivity extends AppCompatActivity {
         User[] profiles = result.createProfiles();
 
         Intent intent = getIntent();
-        int sciperNumber = intent.getIntExtra("SCIPER_NUMBER",0);
+        String sciperNumber = intent.getStringExtra("SCIPER_NUMBER");
 
-        User matchingTutor=new User(0);
+        User matchingTutor=new User("0");
         for(User profile : profiles){
-            if(profile.getSciper()==sciperNumber){
+            if(profile.getSciper().equals(sciperNumber)){
                 matchingTutor=profile;
             }
         }
@@ -63,7 +63,7 @@ public class PublicProfileActivity extends AppCompatActivity {
 
         // Set the ratings TODO: get ratings from database
         RatingBar professorRate=(RatingBar) findViewById(R.id.ratingBarProfessor);
-        professorRate.setRating((float) matchingTutor.getRating());
+        professorRate.setRating((float) matchingTutor.getGlobalRating());
         professorRate.setVisibility(View.VISIBLE);
         TextView professorView = (TextView) findViewById(R.id.professorView);
         professorView.setVisibility(View.VISIBLE);
@@ -77,12 +77,11 @@ public class PublicProfileActivity extends AppCompatActivity {
 
         // Set the thaught subjects.
         // TODO: get subject list from database
-        boolean isMathsTeacher=matchingTutor.isTeacher(0);
-        boolean isPhysicsTeacher=matchingTutor.isTeacher(1);
-        boolean isChemistryTeacehr=matchingTutor.isTeacher(2);
-        boolean isComputerTeacher=matchingTutor.isTeacher(3);
-
-        setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacehr,isComputerTeacher);
+        boolean isMathsTeacher=matchingTutor.isTeacher("0");
+        boolean isPhysicsTeacher=matchingTutor.isTeacher("1");
+        boolean isChemistryTeacher=matchingTutor.isTeacher("2");
+        boolean isComputerTeacher=matchingTutor.isTeacher("3");
+        setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacher,isComputerTeacher);
 
     }
 

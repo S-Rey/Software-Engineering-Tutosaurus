@@ -1,48 +1,95 @@
 package ch.epfl.sweng.tutosaurus.model;
 
-import android.location.Location;
-
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Meeting {
 
-    private final int id;
+    private  String id;
     private Date date;
-    private Location location;
-    private ArrayList<Integer> participants = new ArrayList<>();
+    private String location;
+    private int duration;
 
-    /**
-     * Constructor for the Meeting class
-     * @param id the unique id of this meeting
-     */
-    public Meeting(int id) {
-        this.id = id;
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
     }
 
-    /**
-     * Constructor for the Meeting class
-     * @param id the unique id of this meeting
-     * @param date the date at which the meeting takes place
-     */
-    public Meeting(int id, Date date) {
-        this.id = id;
-        this.date = date;
-    }
-
-    /**
-     * Sets the date at which this meeting takes place.
-     * @param date the date of this meeting
-     */
     public void setDate(Date date) {
         this.date = date;
     }
+
+    private List<String> participants = new ArrayList<>();
+    private Course course;
+
+
+    /**
+     * Empty constructor for Meeting (required for firebase deserialization)
+     */
+    public Meeting () {
+
+    }
+
+    /**
+     * Constructor for the Meeting class
+     * @param date the date at which the meeting takes place
+     */
+    public Meeting(Date date) {
+        this.date = date;
+    }
+
+    /**
+     * Constructor for the Meeting class
+     * @param date the date at which the meeting takes place
+     * @param duration the duration of this meeting (in minutes)
+     */
+    public Meeting(Date date, int duration) {
+        this.date = date;
+        this.duration = duration;
+    }
+
+    /**
+     * Constructor for the Meeting class
+     * @param date the date at which the meeting takes place
+     * @param duration the duration of this meeting (in minutes)
+     * @param course the subject of this meeting
+     */
+    public Meeting(Date date, int duration, Course course) {
+        this.date = date;
+        this.duration = duration;
+        this.course = course;
+    }
+
+    /**
+     * Sets this meeting's unique id.
+     * @param id the unique id of this meeting
+     */
+    public void setId(String id){
+        this.id = id;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Course getCourse() {
+        return this.course;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
 
     /**
      * Sets the location were this meeting takes place.
      * @param location the location of the meeting
      */
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -50,15 +97,21 @@ public class Meeting {
      * Add a participant to this meeting.
      * @param sciper the sciper number of the participant
      */
-    public void addParticipant(int sciper) {
+    public void addParticipant(String sciper) {
         this.participants.add(sciper);
     }
+
+
+    public List<String> getParticipants(){
+        return this.participants;
+    }
+
 
     /**
      * Returns the unique id of this meeting.
      * @return the unique id for the meeting
      */
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -74,7 +127,7 @@ public class Meeting {
      * Returns the location where this meeting takes place.
      * @return the location of the meeting
      */
-    public Location getLocation() {
+    public String getLocation() {
         return this.location;
     }
 }

@@ -2,30 +2,39 @@ package ch.epfl.sweng.tutosaurus.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
 
-    private final int sciper;
+    private String sciper;
     private String username;
     private String fullName;
     private String email;
     private int profilePicture;
 
-    private ArrayList<Course> teaching = new ArrayList<>();
-    private ArrayList<Course> studying = new ArrayList<>();
+    private Map<String, Boolean> languages = new HashMap<>();
 
-    private Map<Integer, Double> ratings = new HashMap<>(); /* (course id -> rating) */
-    private Map<Integer, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
+    private Map<String, Boolean> teaching = new HashMap<>();
+    private Map<String, Boolean> studying = new HashMap<>();
 
-    private double rating;
+    private Map<String, Double> ratings = new HashMap<>(); /* (course id -> globalRating) */
+    private Map<String, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
 
+    private double globalRating;
+
+    /**
+     * Default constructor (for Firebase database)
+     */
+    public User(){
+
+    }
 
     /**
      * Constructor for the User class.
      * @param sciper the sciper number of this user, used as an unique identifier
      */
-    public User(int sciper) {
+    public User(String sciper) {
         this.sciper = sciper;
     }
 
@@ -34,10 +43,9 @@ public class User {
      * @param sciper the sciper number of this user, used as an unique identifier
      * @param username the username of this user (normally a GASPAR username)
      */
-    public User(int sciper, String username) {
+    public User(String sciper, String username) {
         this.sciper = sciper;
         this.username = username;
-
     }
 
     /**
@@ -73,15 +81,15 @@ public class User {
     }
 
     /**
-     * Sets this user's teacher rating, as a number between 0 and 5 included.
-     * @param rating the user's rating between 0 and 5
-     * @throws IllegalArgumentException if the rating is not comprised between 0 and 5
+     * Sets this user's teacher globalRating, as a number between 0 and 1 included.
+     * @param globalRating the user's globalRating between 0 and 1
+     * @throws IllegalArgumentException if the globalRating is not comprised between 0 and 1
      */
-    public void setRating(double rating){
-        if(rating > 5.0 || rating < 0) {
-            throw new IllegalArgumentException("The rating should be between 0 and 5");
+    public void setGlobalRating(double globalRating){
+        if(globalRating > 1.0 || globalRating < 0) {
+            throw new IllegalArgumentException("The globalRating should be between 0 and 1");
         } else {
-            this.rating = rating;
+            this.globalRating = globalRating;
         }
     }
 
@@ -89,7 +97,7 @@ public class User {
      * Returns this user's sciper number.
      * @return the sciper number of the user
      */
-    public int getSciper() {
+    public String getSciper() {
         return this.sciper;
     }
 
@@ -118,49 +126,69 @@ public class User {
     }
 
     /**
-     * Returns this user's teacher rating.
-     * @return the rating of the user
+     * Returns this user's teacher globalRating.
+     * @return the globalRating of the user
      */
-    public double getRating() {
-        return this.rating;
+    public double getGlobalRating() {
+        return this.globalRating;
     }
 
      /**
      * Add a course to the list of courses that this user is prepared to teach.
-     * @param course the course to add
+     * @param courseId the course to add
      */
-    public void addTeachingCourse(Course course) {
-        teaching.add(course);
+    public void addTeaching(String courseId) {
+        teaching.put(courseId, true);
     }
 
     /**
      * Add a course to the list of courses that this user wants assistance with.
-     * @param course the course to add.
+     * @param courseId the course to add.
      */
-    public void addStudyingCourse(Course course) {
-        studying.add(course);
+    public void addStudying(String courseId) {
+        studying.put(courseId, true);
     }
 
     /**
-     * Returns a list containing the courses that this user has agreed to teach
-     * @return a list of courses
+     * Add a language to the list of this user's spoken languages.
+     * @param language the language to add
      */
-    public ArrayList<Course> getTeachingCourses() {
-        ArrayList<Course> ls = new ArrayList<>();
-        for(Course c : teaching) {
-            ls.add(c);
+    public void addLanguage(String language) {
+        this.languages.put(language, true);
+    }
+
+    /**
+     * Returns a map containing this user's spoken languages, mapped to the boolean value true.
+     * @return a map of this user's spoken languages
+     */
+    public Map<String, Boolean> getLanguages() {
+        Map<String, Boolean> map = new HashMap<>();
+        for(String l : languages.keySet()) {
+            map.put(l, true);
+        }
+        return map;
+    }
+
+    /**
+     * Returns a map containing the courses that this user has agreed to teach
+     * @return a map of courses mapped to the true boolean value
+     */
+    public Map<String, Boolean> getTeaching() {
+        Map<String, Boolean> ls = new HashMap<>();
+        for(String c : teaching.keySet()) {
+            ls.put(c, true);
         }
         return ls;
     }
 
     /**
-     * Returns a list containing te courses that this user wants help with.
-     * @return a list of courses
+     * Returns a map containing the courses that this user wants help with.
+     * @return a map of courses mapped to the true boolean value
      */
-    public ArrayList<Course> getStudyingCourses() {
-        ArrayList<Course> ls = new ArrayList<>();
-        for(Course c : studying) {
-            ls.add(c);
+    public Map<String, Boolean> getStudying() {
+        Map<String, Boolean> ls = new HashMap<>();
+        for(String c : studying.keySet()) {
+            ls.put(c, true);
         }
         return ls;
     }
@@ -170,18 +198,18 @@ public class User {
      * @param courseId the unique id of the course
      * @param hours the number of hours by which to increase the number of hours taught
      */
-    public void addHoursTaught(int courseId, int hours) {
+    public void addHoursTaught(String courseId, int hours) {
         totalHoursTaught.put(courseId, totalHoursTaught.get(courseId) + hours);
     }
 
     /**
-     * Set the rating for a particular course.
-     * @param courseId the unique id of the course
-     * @param rating the rating for this course
+     * Set the globalRating for a particular course.
+     * @param courseId the unique id of the §course
+     * @param rating the globalRating for this course
      */
-    public void setCourseRating(int courseId, double rating) {
+    public void setCourseRating(String courseId, double rating) {
         if(rating > 1.0 || rating < 0) {
-            throw new IllegalArgumentException("The rating should be between 0 and 1");
+            throw new IllegalArgumentException("The globalRating should be between 0 and 1");
         } else {
             ratings.put(courseId, rating);
         }
@@ -205,9 +233,9 @@ public class User {
     }
 
     /**
-     * Get the rating for a particular course
+     * Get the globalRating for a particular course
      * @param courseId the unique id of the course
-     * @return the rating for this course
+     * @return the globalRating for this course
      */
     public double getCourseRating(int courseId) {
         return ratings.get(courseId);
@@ -223,9 +251,9 @@ public class User {
         return this.fullName;
     }
 
-    public boolean isTeacher(int courseId){
-        for(Course course : teaching){
-            if(course.getId()==courseId){
+    public boolean isTeacher(String courseId){
+        for(String course : teaching.keySet()){
+            if(course.equals(courseId)){
                 return true;
             }
         }

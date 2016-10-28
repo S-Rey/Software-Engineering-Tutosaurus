@@ -1,20 +1,15 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ch.epfl.sweng.tutosaurus.findTutor.Tutor;
+import ch.epfl.sweng.tutosaurus.model.Tutor;
 import ch.epfl.sweng.tutosaurus.findTutor.TutorAdapter;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.User;
@@ -55,65 +50,68 @@ public class FindTutorResult extends AppCompatActivity {
         else if (methodToCall.equals("showFullList")){
             fillListView(showFullList(profiles));
         }
+        /*
+        // Create example database
+        MockupDatabaseHandler dbHandler = new MockupDatabaseHandler(this);
+        //ProfileMockup alberto=new ProfileMockup(273516,"Alberto Silvio","Chiappa",3.5f,4.0f);
+        //dbHandler.addProfile(alberto);
+        //fillDatabase(dbHandler);
+
+        // Writes the name of id 273516
+        TextView name=(TextView) findViewById(R.id.name);
+        Toast toast=Toast.makeText(this, "Looking for the profile", Toast.LENGTH_SHORT);
+        toast.show();
+        //String nameToDisplay=dbHandler.getProfile(273516).getName();
+        //name.setText(dbHandler.getProfile(273516).getName());
+        //name1.setText("Alberto");
+        */
 
     }
 
     public User[] createProfiles() {
 
-        Course maths= new Course(0,"Maths");
-        Course physics= new Course(1,"Physics");
-        Course chemistry= new Course(2,"Chemistry");
-        Course computer= new Course(3,"Computer Science");
+        Course maths= new Course("0","Maths");
+        Course physics= new Course("1","Physics");
+        Course chemistry= new Course("2","Chemistry");
+        Course computer= new Course("3","Computer Science");
 
-        int mathsId=0;
-        int physicsId=1;
-        int chemistryId=2;
-        int computerId=3;
-        User profileOne = new User(273516);
+        User profileOne = new User("273516");
         profileOne.setFullName("Alberto Chiappa");
         profileOne.setEmail("alberto.chiappa@epfl.ch");
-        profileOne.addTeachingCourse(maths);
-        profileOne.addTeachingCourse(computer);
-        //profileOne.setCourseRating(mathsId,2.5);
-        //profileOne.setCourseRating(computerId,1);
-        profileOne.setRating(2);
+        profileOne.addTeaching(maths.getId());
+        profileOne.addTeaching(computer.getId());
         profileOne.setPicture(R.drawable.foto_mia);
 
-        User profileTwo = new User(223415);
+        User profileTwo = new User("223415");
         profileTwo.setFullName("Albert Einstein");
         profileTwo.setEmail("albert.einstein@epfl.ch");
-        profileTwo.addTeachingCourse(physics);
-        profileTwo.addTeachingCourse(maths);
-        profileTwo.setRating(4.5);
+        profileTwo.addTeaching(physics.getId());
+        profileTwo.addTeaching(maths.getId());
         profileTwo.setPicture(R.drawable.einstein);
 
-        User profileThree = new User(124821);
+        User profileThree = new User("124821");
         profileThree.setFullName("Kurt Godel");
         profileThree.setEmail("kurt.godel@epfl.ch");
-        profileThree.addTeachingCourse(maths);
-        profileThree.setRating(5);
+        profileThree.addTeaching(maths.getId());
         profileThree.setPicture(R.drawable.godel);
 
-        User profileFour = new User(100000);
+        User profileFour = new User("100000");
         profileFour.setFullName("Maurizio Grasselli");
         profileFour.setEmail("maurizio.grasselli@epfl.ch");
-        profileFour.addTeachingCourse(maths);
-        profileFour.setRating(5);
+        profileFour.addTeaching(maths.getId());
         profileFour.setPicture(R.drawable.grasselli);
 
-        User profileFive = new User(223615);
+        User profileFive = new User("223615");
         profileFive.setFullName("Linus Torvalds");
         profileFive.setEmail("linus.torval@epfl.ch");
-        profileFive.addTeachingCourse(computer);
-        profileFive.setRating(3);
+        profileFive.addTeaching(computer.getId());
         profileFive.setPicture(R.drawable.torvalds);
 
-        User profileSix = new User(443213);
+        User profileSix = new User("443213");
         profileSix.setFullName("Carlo Rubbia");
         profileSix.setEmail("carlo.rubbia@epfl.ch");
-        profileSix.addTeachingCourse(chemistry);
-        profileSix.addTeachingCourse(physics);
-        profileSix.setRating(3.7);
+        profileSix.addTeaching(chemistry.getId());
+        profileSix.addTeaching(physics.getId());
         profileSix.setPicture(R.drawable.rubbia);
 
 
@@ -155,8 +153,8 @@ public class FindTutorResult extends AppCompatActivity {
         Tutor tutorToAdd;
         ArrayList<Tutor> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
-            if (profile.getSciper()==sciperNumber) {
-                tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(),profile.getSciper());
+            if (profile.getSciper().equals(sciperNumber)) {
+                tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(), profile.getSciper());
                 teachers.add(tutorToAdd);
                 count++;
             }
@@ -170,13 +168,13 @@ public class FindTutorResult extends AppCompatActivity {
     }
 
     private ArrayList<Tutor> findTutorBySubject(String subject, User[] profiles) {
-        int id=convertNameToId(subject);
+        String id=convertNameToId(subject);
         int count = 0;
         Tutor tutorToAdd;
         ArrayList<Tutor> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
-            for (Course taughtCourse : profile.getTeachingCourses()) {
-                if (taughtCourse.getId() == id) {
+            for (String taughtCourseId : profile.getTeaching().keySet()) {
+                if (taughtCourseId.equals(id)) {
                     tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(), profile.getSciper());
                     teachers.add(tutorToAdd);
                     count++;
@@ -210,30 +208,28 @@ public class FindTutorResult extends AppCompatActivity {
         }
         return teachers;
     }
-
-    private void fillListView(ArrayList<Tutor> tutors){
+    private void fillListView(ArrayList<Tutor> tutorNames){
         TutorAdapter arrayAdapter = new TutorAdapter(
                 this,
                 R.layout.listview_tutor_row,
-                tutors);
-        final ListView tutorList=(ListView) findViewById(R.id.tutorList);
+                tutorNames);
+        ListView tutorList=(ListView) findViewById(R.id.tutorList);
         tutorList.setAdapter(arrayAdapter);
-
     }
-    private int convertNameToId(String subject){
-        int id = -1;
+    private String convertNameToId(String subject){
+        String id = "-1";
 
         if (subject.equals("Maths")) {
-            id = 0;
+            id = "0";
         }
         else if(subject.equals("Physics")){
-            id=1;
+            id="1";
         }
         else if(subject.equals("Chemistry")){
-            id=2;
+            id="2";
         }
         else if(subject.equals("Computer Science")||subject.equals("Computer")){
-            id=3;
+            id="3";
         }
         return id;
     }
