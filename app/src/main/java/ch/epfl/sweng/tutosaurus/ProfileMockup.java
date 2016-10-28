@@ -1,11 +1,5 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.widget.ProgressBar;
-
-/**
- * Created by albertochiappa on 17/10/16.
- */
-
 public class ProfileMockup {
     private int sciperNumber;
     private String name;

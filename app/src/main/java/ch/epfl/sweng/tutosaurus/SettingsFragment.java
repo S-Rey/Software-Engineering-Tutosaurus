@@ -5,34 +5,26 @@ import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
-import ch.epfl.sweng.tutosaurus.adapter.CustomAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
@@ -47,9 +39,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
-    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-    private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-    private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -72,10 +61,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         syncCheck.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
+
                 if (preference.isEnabled()) {
                     DatabaseHelper dbh = new DatabaseHelper();
                     DatabaseReference ref = dbh.getReference();
                     ref.child("meetingsPerUser/").addValueEventListener(new ValueEventListener() {
+
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
                             for (DataSnapshot meetingSnapshot : snapshot.getChildren()) {
@@ -126,51 +117,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         });
     }
 
-
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkbox_calendar:
-                if (checked) {
-
-
-                }
-                else {
-
-                }
-                break;
-            case R.id.checkbox_location:
-                if (checked) {
-
-                }
-                else {
-
-                }
-                break;
-            case R.id.checkbox_notifications:
-                if (checked) {
-
-                }
-                else {
-
-                }
-                break;
-        }
-    }
-
-
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("checkbox_preference_notification")) {
             //Do Something
         }
-        if (key.equals("checkbox_preference_location")) {
+        if (key.equals("checkbox_preference_calendar")) {
             //Do Something
         }
-        if (key.equals("checkbox_preference_calendar")) {
-
+        if (key.equals("checkbox_preference_location")) {
+            //Do Something
         }
     }
 
@@ -208,6 +163,40 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         PreferenceScreen screen = findPreferenceScreenForPreference( key, null );
         if( screen != null ) {
             screen.onItemClick(null, null, findPreference(key).getOrder(), 0);
+        }
+    }
+
+//JUST A SIMPLE ONCHECKBOXCLICKED METHOD
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_calendar:
+                if (checked) {
+
+                }
+                else {
+
+                }
+                break;
+            case R.id.checkbox_location:
+                if (checked) {
+
+                }
+                else {
+
+                }
+                break;
+            case R.id.checkbox_notifications:
+                if (checked) {
+
+                }
+                else {
+
+                }
+                break;
         }
     }
 

@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeScreenActivity extends AppCompatActivity
@@ -121,7 +122,7 @@ public class HomeScreenActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new HelpFragment()).commit();
         } else if (id == R.id.nav_about_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
-        } else if (id == R.id.nav_myAppointResults_layout) {
+        } else if (id == R.id.nav_meetings_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
         } else if (id == R.id.nav_db_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new DatabaseFragment()).commit();
@@ -153,10 +154,9 @@ public class HomeScreenActivity extends AppCompatActivity
         }
         else {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if(takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-            else {
+            } else {
                 Toast.makeText(HomeScreenActivity.this, "Camera is busy", Toast.LENGTH_SHORT).show();
             }
         }
@@ -177,6 +177,7 @@ public class HomeScreenActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
         linkProfilePictureToNavView(circleView);
