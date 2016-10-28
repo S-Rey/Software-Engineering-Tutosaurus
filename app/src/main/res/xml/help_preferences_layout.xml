@@ -8,17 +8,13 @@
     </PreferenceScreen>
 
     <PreferenceScreen
-        android:title="NULL HELP ENTRY"
-        android:layout="@layout/preference_intent">
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
     </PreferenceScreen>
 
     <PreferenceScreen
-        android:title="NULL HELP ENTRY"
-        android:layout="@layout/preference_intent">
-    </PreferenceScreen>
-
-    <PreferenceScreen
-        android:layout="@layout/preference_blank">
+        android:layout="@layout/preference_blank"
+        android:selectable="false">
     </PreferenceScreen>
 
 </PreferenceScreen>

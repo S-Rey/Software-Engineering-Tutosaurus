@@ -27,7 +27,8 @@
         <activity
             android:name=".HomeScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".RegisterScreenActivity"
             android:label="@string/activity_register_name">
@@ -39,15 +40,18 @@
         <activity
             android:name=".PublicProfileActivity"
             android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".LocationActivity"
             android:label="@string/location"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".FindTutorResult"
-            android:label="List of matches">
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="List of matches"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".HelpDeskActivity"
             android:label="@string/helpdesk">
@@ -68,11 +72,9 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <service
         android:name=".FetchAddressIntentService"
         android:exported="false"/>
-
-
-
 </manifest>
