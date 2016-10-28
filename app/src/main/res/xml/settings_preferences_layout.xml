@@ -10,12 +10,22 @@
         android:layout="@layout/preference_checkbox"
         android:onClick="onCheckboxSettingsClicked" />
 
+    <PreferenceScreen
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
+    </PreferenceScreen>
+
     <CheckBoxPreference
         android:key="checkbox_preference_calendar"
         android:id="@+id/checkbox_calendar"
         android:title="@string/sync_calendar"
         android:layout="@layout/preference_checkbox"
         android:onClick="onCheckboxSettingsClicked" />
+
+    <PreferenceScreen
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
+    </PreferenceScreen>
 
     <CheckBoxPreference
         android:key="checkbox_preference_location"
@@ -25,6 +35,11 @@
         android:onClick="onCheckboxSettingsClicked" />
 
     <PreferenceScreen
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
+    </PreferenceScreen>
+
+    <PreferenceScreen
         android:title="@string/rate_app"
         android:layout="@layout/preference_intent">
         <intent android:action="android.intent.action.VIEW"
@@ -32,7 +47,13 @@
     </PreferenceScreen>
 
     <PreferenceScreen
-        android:layout="@layout/preference_blank">
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:layout="@layout/preference_blank"
+        android:selectable="false">
     </PreferenceScreen>
 
 </PreferenceScreen>

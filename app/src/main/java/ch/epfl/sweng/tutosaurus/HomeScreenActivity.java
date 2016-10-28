@@ -38,6 +38,7 @@ public class HomeScreenActivity extends AppCompatActivity
     public static final int GALLERY_REQUEST = 1;
     public static final int REQUEST_IMAGE_CAPTURE = 2;
     private ImageView pictureView;
+    private CircleImageView circleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,8 @@ public class HomeScreenActivity extends AppCompatActivity
         Intent intent = getIntent();
         pictureView = (ImageView) findViewById(R.id.picture_view);
 
-        CircleImageView item = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
-        linkProfilePictureToNavView(item);
+        circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
+        linkProfilePictureToNavView(circleView);
 
 //RECEIVE THE INTENT FOR "MY APPOINT RESULT" TAB
         if (intent.getAction() != null) {
@@ -179,6 +180,9 @@ public class HomeScreenActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
+        linkProfilePictureToNavView(circleView);
     }
 
     private void linkProfilePictureToNavView(CircleImageView item) {
@@ -216,6 +220,7 @@ public class HomeScreenActivity extends AppCompatActivity
                 }
 
             }
+
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");

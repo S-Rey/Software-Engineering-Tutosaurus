@@ -29,8 +29,7 @@ public class HelpFragment extends PreferenceFragment {
         // remove dividers
         View rootView = getView();
         ListView list = (ListView) rootView.findViewById(android.R.id.list);
-        list.setDivider(new ColorDrawable(this.getResources().getColor(R.color.colorPrimaryDark)));
-        list.setDividerHeight(2);
+        list.setDividerHeight(0);
         list.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 return (event.getAction() == MotionEvent.ACTION_MOVE);
