@@ -19,6 +19,7 @@ public class MeetingsFragment extends Fragment {
     View myView;
     private CustomAdapter adapter;
     private String currentUser = "236905";
+    DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Nullable
     @Override
@@ -29,7 +30,7 @@ public class MeetingsFragment extends Fragment {
         //Button syncCalendar = (Button) myView.findViewById(R.id.syncCalendar);
 
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
-        Query ref = DatabaseHelper.getMeetingsRefForUser(currentUser);
+        Query ref = dbh.getMeetingsRefForUser(currentUser);
         ref = ref.orderByChild("date");
         adapter = new CustomAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
