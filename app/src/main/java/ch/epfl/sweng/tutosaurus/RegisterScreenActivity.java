@@ -68,7 +68,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         webViewOauth.clearCache(true);
         webViewOauth.loadUrl(codeRequestUrl);
 
-        CookieManager cookieManager = CookieManager.getInstance();
+        /**CookieManager cookieManager = CookieManager.getInstance();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
                 // a callback which is executed when the cookies have been removed
@@ -79,7 +79,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
         else {
             cookieManager.removeAllCookie();
-        }
+        }*/
 
         webViewOauth.setWebViewClient(new WebViewClient() {
             boolean authComplete = false;
