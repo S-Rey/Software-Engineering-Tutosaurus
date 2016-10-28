@@ -74,8 +74,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             public boolean onPreferenceClick(Preference preference) {
                 if (preference.isEnabled()) {
                     DatabaseHelper dbh = new DatabaseHelper();
-                    DatabaseReference ref = dbh.getReference();
-                    ref.child("meeting/").addValueEventListener(new ValueEventListener() {
+                    DatabaseReference ref = dbh.git getReference();
+                    ref.child("meetingsPerUser/").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
                             for (DataSnapshot meetingSnapshot : snapshot.getChildren()) {

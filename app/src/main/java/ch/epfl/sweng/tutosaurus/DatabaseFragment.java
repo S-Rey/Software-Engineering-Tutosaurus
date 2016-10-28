@@ -40,8 +40,8 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         addTeacherToCourseButton.setOnClickListener(this);
         Button addStudentToCourseButton = (Button) myView.findViewById(R.id.db_course_learn_add);
         addStudentToCourseButton.setOnClickListener(this);
-        String picPath = "/storage/emulated/0/Download/android.jpg";
-        PictureHelper.putImage(picPath);
+        //String picPath = "/storage/emulated/0/Download/android.jpg";
+        //PictureHelper.putImage(picPath);
         return myView;
     }
 
