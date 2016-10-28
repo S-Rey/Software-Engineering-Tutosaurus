@@ -8,17 +8,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import java.io.IOException;
 import java.util.Map;
@@ -68,7 +64,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
         authDialog.setContentView(R.layout.auth_screen);
 
         webViewOauth = (WebView) authDialog.findViewById(R.id.web_oauth);
-        //webViewOauth = new WebView(this);
         webViewOauth.getSettings().setJavaScriptEnabled(true);
         webViewOauth.clearCache(true);
         webViewOauth.loadUrl(codeRequestUrl);
@@ -86,8 +81,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
             cookieManager.removeAllCookie();
         }
 
-        //authDialog.setContentView(webViewOauth);
-
         webViewOauth.setWebViewClient(new WebViewClient() {
             boolean authComplete = false;
 
@@ -101,8 +94,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
-                //webViewOauth.loadUrl("javascript:MyApp.resize(document.body.getBoundingClientRect().height)");
-
                 if (url.contains("?code=") && authComplete != true) {
                     MyAppVariables.setRegistered(true);
                     authComplete = true;
@@ -113,21 +104,10 @@ public class RegisterScreenActivity extends AppCompatActivity {
             }
         });
 
-        //webViewOauth.addJavascriptInterface(this, "MyApp");
-
         authDialog.show();
         authDialog.setCancelable(true);
         authDialog.setTitle("Tequila authentification");
     }
-
-    /**@JavascriptInterface
-    public void resize(final float height) {
-        RegisterScreenActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                webViewOauth.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
-            }
-        });}*/
 
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);

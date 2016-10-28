@@ -11,8 +11,7 @@
 
     <string name="activity_register_name">Register</string>
     <string name="instructions_register">
-        Please fill in the information below to verify you are from EPFL and provide you access
-        to TutoSaurus with your corresponding full name and email address</string>
+        Click on Send after successfully logging in with Tequila</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="email_address">Email Address</string>
