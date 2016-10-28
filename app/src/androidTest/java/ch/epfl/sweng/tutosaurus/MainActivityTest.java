@@ -33,8 +33,6 @@ public class MainActivityTest {
 
     @Test
     public void testLogIn() {
-        onView(withId(R.id.usernameEntry)).perform(typeText("myUsername")).perform(closeSoftKeyboard());
-        onView(withId(R.id.passwordEntry)).perform(typeText("myPassword")).perform(closeSoftKeyboard());
         onView(withId(R.id.connectionButton)).perform(click());
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.drawer_layout)).perform(close());
@@ -44,10 +42,6 @@ public class MainActivityTest {
     @Test
     public void testSignUp() {
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.firstNameEntry)).perform(typeText("Vincent")).perform(closeSoftKeyboard());
-        onView(withId(R.id.lastNameEntry)).perform(typeText("Rinaldi")).perform(closeSoftKeyboard());
-        onView(withId(R.id.emailAddressEntry)).perform(typeText("vincent.rinaldi@epfl.ch")).perform(closeSoftKeyboard());
-        onView(withId(R.id.sciperEntry)).perform(typeText("239759")).perform(closeSoftKeyboard());
         onView(withId(R.id.sendButton)).perform(click());
         onView(withId(R.id.firstNameProvided)).check(matches(withText("First name : Vincent")));
         onView(withId(R.id.lastNameProvided)).check(matches(withText("Last name : Rinaldi")));
