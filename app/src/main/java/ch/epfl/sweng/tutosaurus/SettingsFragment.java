@@ -73,7 +73,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (preference.isEnabled()) {
-                    DatabaseHelper dbh = new DatabaseHelper();
+                    DatabaseHelper dbh = DatabaseHelper.getInstance();
                     DatabaseReference ref = dbh.getReference();
                     ref.child("meetingsPerUser/").addValueEventListener(new ValueEventListener() {
                         @Override
