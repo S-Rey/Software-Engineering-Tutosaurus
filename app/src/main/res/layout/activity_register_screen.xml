@@ -38,4 +38,36 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="14dp" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/instructionsRegister"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="53dp"
+        android:id="@+id/register_gaspar_username"
+        android:hint="gaspar" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/register_password"
+        android:hint="Password"
+        android:layout_below="@+id/register_gaspar_username"
+        android:layout_alignLeft="@+id/register_gaspar_username"
+        android:layout_alignStart="@+id/register_gaspar_username" />
+
+    <Button
+        android:text="Log in with tequila"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="58dp"
+        android:id="@+id/register_login"
+        android:layout_below="@+id/register_password"
+        android:layout_centerHorizontal="true"
+        android:onClick="logIn" />
+
 </RelativeLayout>

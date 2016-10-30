@@ -4,6 +4,8 @@ package ch.epfl.sweng.tutosaurus.Tequila;
  * Created by Stephane on 10/24/2016.
  */
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -41,6 +43,7 @@ public final class AuthServer {
     public static Profile fetchProfile(String token) throws IOException {
         String url = "https://tequila.epfl.ch/cgi-bin/OAuth2IdP/userinfo" +
                 "?access_token=" + HttpUtils.urlEncode(token);
+        Log.d("AuthServer", "access_token: " + token);
         JsonProfile profile = HttpUtils.fetch(url, JsonProfile.class);
 
         if (profile.error != null) {
