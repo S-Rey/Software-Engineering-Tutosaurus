@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -18,7 +17,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -44,6 +42,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
 
+    private boolean syncCalendar;
+    DatabaseHelper dbh = DatabaseHelper.getInstance();
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -62,8 +63,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         });
         list.setVerticalScrollBarEnabled(false);
         SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-        final boolean syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
-        synchronization(syncCalendar);
+        syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
+        synchronizeCalendar();
     }
 
     @Override
@@ -84,9 +85,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("checkbox_preference_calendar")) {
-            SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-            final boolean syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
-            synchronization(syncCalendar);
+            synchronizeCalendar();
         }
 
         if (key.equals("checkbox_preference_notification")) {
@@ -98,14 +97,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         }
     }
 
-    private void synchronization(final boolean syncCalendar) {
-        DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private void synchronizeCalendar() {
         DatabaseReference ref = dbh.getReference();
         ref.child("meetingsPerUser/123212").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (syncCalendar) {
-                    Toast.makeText(getActivity().getBaseContext(), "ciao", Toast.LENGTH_SHORT).show();
                     for (DataSnapshot meetingSnapshot : snapshot.getChildren()) {
                         Meeting meeting = meetingSnapshot.getValue(Meeting.class);
                         long startMillis = 0;
@@ -123,7 +120,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         ContentResolver contentResolver = getActivity().getContentResolver();
                         Uri uri = CalendarContract.Calendars.CONTENT_URI;
                         Cursor cursorCalendarID = contentResolver.query(uri, EVENT_PROJECTION, null, null, null);
-                        cursorCalendarID.moveToFirst();
+                        if (cursorCalendarID != null) {
+                            cursorCalendarID.moveToFirst();
+                        }
                         calID = cursorCalendarID.getLong(PROJECTION_ID_INDEX);
 
                         ContentValues values = new ContentValues();
@@ -134,6 +133,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         values.put(CalendarContract.Events.DESCRIPTION, "teacher or student");
                         values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getLocation());
                         values.put(CalendarContract.Events.CALENDAR_ID, calID);
+                        values.put(CalendarContract.Events._ID, meeting.getId());
                         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
                             return;
                         }
