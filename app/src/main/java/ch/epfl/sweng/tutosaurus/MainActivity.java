@@ -28,19 +28,19 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (MyAppVariables.getRegistered() == false) {
-                    AlertDialog.Builder signUpAlertB = new AlertDialog.Builder(MainActivity.this);
-                    signUpAlertB.setMessage("Sign up First!");
-
-                    signUpAlertB.setPositiveButton("Ok", null);
-
-                    AlertDialog signUpAlert = signUpAlertB.create();
-                    signUpAlert.show();
-                } else {
+//                if (MyAppVariables.getRegistered() == false) {
+//                    AlertDialog.Builder signUpAlertB = new AlertDialog.Builder(MainActivity.this);
+//                    signUpAlertB.setMessage("Sign up First!");
+//
+//                    signUpAlertB.setPositiveButton("Ok", null);
+//
+//                    AlertDialog signUpAlert = signUpAlertB.create();
+//                    signUpAlert.show();
+//                } else {
                     Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
                     startActivity(intent);
                 }
-            }
+           // }
         });
 
         Intent intent = getIntent();

@@ -18,7 +18,7 @@ public class MeetingsFragment extends Fragment {
 
     View myView;
     private CustomAdapter adapter;
-    private String currentUser = "236905";
+    private String currentUser = "123212";
     DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Nullable
@@ -26,8 +26,6 @@ public class MeetingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.meetings_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Meetings");
-
-        //Button syncCalendar = (Button) myView.findViewById(R.id.syncCalendar);
 
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
         Query ref = dbh.getMeetingsRefForUser(currentUser);
