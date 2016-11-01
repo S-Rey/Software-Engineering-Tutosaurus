@@ -64,7 +64,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         list.setVerticalScrollBarEnabled(false);
         SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
         syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
-        synchronizeCalendar();
+        if (syncCalendar) {
+            Toast.makeText(getActivity().getBaseContext(), "ciao", Toast.LENGTH_SHORT).show();
+            synchronizeCalendar();
+        }
     }
 
     @Override
@@ -99,10 +102,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     private void synchronizeCalendar() {
         DatabaseReference ref = dbh.getReference();
-        ref.child("meetingsPerUser/123212").addValueEventListener(new ValueEventListener() {
+        ref.child("meetingsPerUser/456892").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (syncCalendar) {
+                    Toast.makeText(getActivity().getBaseContext(), "ciao", Toast.LENGTH_SHORT).show();
                     for (DataSnapshot meetingSnapshot : snapshot.getChildren()) {
                         Meeting meeting = meetingSnapshot.getValue(Meeting.class);
                         long startMillis = 0;

@@ -10,15 +10,15 @@ import android.widget.ListView;
 
 import com.google.firebase.database.Query;
 
-import ch.epfl.sweng.tutosaurus.adapter.CustomAdapter;
+import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class MeetingsFragment extends Fragment {
 
     View myView;
-    private CustomAdapter adapter;
-    private String currentUser = "123212";
+    private MeetingAdapter adapter;
+    private String currentUser = "456892";
     DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Nullable
@@ -30,9 +30,8 @@ public class MeetingsFragment extends Fragment {
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
         Query ref = dbh.getMeetingsRefForUser(currentUser);
         ref = ref.orderByChild("date");
-        adapter = new CustomAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
+        adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
-
         return myView;
     }
 
