@@ -52,14 +52,21 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         TextView date = (TextView) mainView.findViewById(R.id.dateMeeting);
         date.setText(meeting.getDate().toString());
 
+        TextView descriptionMeeting = (TextView) mainView.findViewById(R.id.descriptionMeeting);
+        descriptionMeeting.setText(meeting.getDescription());
+
+        final double latitudeMeeting = meeting.getLatitudeLocation();
+        final double longitudeMeeting = meeting.getLongitudeLocation();
         TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
-        locationMeeting.setText(meeting.getLocation());
+        locationMeeting.setText(meeting.getNameLocation());
 
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
-        final Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
         showLocationMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
+                intent.putExtra("latitudeMeeting", latitudeMeeting);
+                intent.putExtra("longitudeMeeting", longitudeMeeting);
                 view.getContext().startActivity(intent);
             }
         });

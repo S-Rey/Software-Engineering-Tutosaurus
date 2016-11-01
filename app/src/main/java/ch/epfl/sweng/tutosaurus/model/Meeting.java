@@ -8,17 +8,11 @@ public class Meeting {
 
     private  String id;
     private Date date;
-    private String location;
+    private String nameLocation;
+    private double latitudeLocation;
+    private double longitudeLocation;
     private int duration;
-
-    public void setParticipants(List<String> participants) {
-        this.participants = participants;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
+    private String description;
     private List<String> participants = new ArrayList<>();
     private Course course;
 
@@ -60,6 +54,14 @@ public class Meeting {
         this.course = course;
     }
 
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     /**
      * Sets this meeting's unique id.
      * @param id the unique id of this meeting
@@ -86,11 +88,11 @@ public class Meeting {
 
 
     /**
-     * Sets the location were this meeting takes place.
-     * @param location the location of the meeting
+     * Sets the nameLocation were this meeting takes place.
+     * @param nameLocation the nameLocation of the meeting
      */
-    public void setLocation(String location) {
-        this.location = location;
+    public void setNameLocation(String nameLocation) {
+        this.nameLocation = nameLocation;
     }
 
     /**
@@ -124,10 +126,34 @@ public class Meeting {
     }
 
     /**
-     * Returns the location where this meeting takes place.
-     * @return the location of the meeting
+     * Returns the nameLocation where this meeting takes place.
+     * @return the nameLocation of the meeting
      */
-    public String getLocation() {
-        return this.location;
+    public String getNameLocation() {
+        return this.nameLocation;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getLatitudeLocation() {
+        return latitudeLocation;
+    }
+
+    public void setLatitudeLocation(double latitudeLocation) {
+        this.latitudeLocation = latitudeLocation;
+    }
+
+    public double getLongitudeLocation() {
+        return longitudeLocation;
+    }
+
+    public void setLongitudeLocation(double longitudeLocation) {
+        this.longitudeLocation = longitudeLocation;
     }
 }

@@ -45,6 +45,7 @@ public class LocationActivity extends FragmentActivity implements
     private FusedLocationProviderApi locationProvider = LocationServices.FusedLocationApi;
     private PendingResult<LocationSettingsResult> result;
     private Location location;
+    private LatLng locationMeeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,9 @@ public class LocationActivity extends FragmentActivity implements
         mapFragment.getMapAsync(this);
 
         Intent intent = getIntent();
+        double latitude = intent.getDoubleExtra("latitudeMeeting", 0);
+        double longitude = intent.getDoubleExtra("longitudeMeeting", 0);
+        locationMeeting = new LatLng(latitude, longitude);
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -147,9 +151,8 @@ public class LocationActivity extends FragmentActivity implements
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
 
-        LatLng myPosition = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(myPosition).title("Marker in my location"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 16.0f));
+        mMap.addMarker(new MarkerOptions().position(locationMeeting).title("Marker in meeting location"));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationMeeting, 16.0f));
     }
 
     @Override
