@@ -61,13 +61,13 @@
         android:layout_alignStart="@+id/register_gaspar_username" />
 
     <Button
-        android:text="Log in with tequila"
+        android:text="Register with tequila"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="58dp"
         android:id="@+id/register_login"
         android:layout_below="@+id/register_password"
         android:layout_centerHorizontal="true"
-        android:onClick="logIn" />
+        android:onClick="register" />
 
 </RelativeLayout>

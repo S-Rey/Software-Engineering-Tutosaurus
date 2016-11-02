@@ -65,9 +65,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private static Profile profile;
     String codeRequestUrl;
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
     private String gaspar;
     private String password;
 
@@ -80,34 +77,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
 
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
-
         Intent intent = getIntent();
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        if(mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -117,24 +87,15 @@ public class RegisterScreenActivity extends AppCompatActivity {
     }
 
     public void sendMessageForAccess(View view) {
-        if(MyAppVariables.getRegistered() == true){
-            mAuth.createUserWithEmailAndPassword(profile.email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    Log.d(TAG, "createUserWithEmailAndPassword:onComplete:" + task.isSuccessful());
-                    if(!task.isSuccessful()) {
-                        Toast.makeText(RegisterScreenActivity.this, "Auth failed", Toast.LENGTH_SHORT).show();
-                    }
-                    Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
+        if(MyAppVariables.getRegistered()){
+            Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
 
-                    intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
-                    intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
-                    intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
-                    intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
+            intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
+            intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
+            intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
+            intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
 
-                    startActivity(intent);
-                }
-            });
+            startActivity(intent);
         }
     }
 
@@ -199,6 +160,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
                 Log.d(TAG, "token name: " + token + " token value: " + tokens.get(token));
             }
             pDialog.dismiss();
+            sendMessageForAccess(null);
         }
     }
 
@@ -215,8 +177,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
         webViewOauth.getSettings().setDomStorageEnabled(true);
         webViewOauth.clearCache(true);
         webViewOauth.loadUrl(codeRequestUrl);
-
-        CookieManager.getInstance().removeAllCookie();
 
         /**CookieManager cookieManager = CookieManager.getInstance();
          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -247,7 +207,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
                 String js_g = "javascript:document.getElementById('username').value = '" + gaspar + "';";
                 String js_pw = "javascript:document.getElementById('password').value = '" + password + "';";
-                Log.d(TAG, "js: " + js_g + js_pw);
+                //Log.d(TAG, "js: " + js_g + js_pw);
 
                 if (url.contains("requestkey")) {
                     Log.d(TAG, "TRIGGERED");
@@ -271,7 +231,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         authDialog.setTitle("Tequila authentification");
     }
 
-    public void logIn(View view) {
+    public void register(View view) {
         String gaspar = ((EditText)findViewById(R.id.register_gaspar_username)).getText().toString();
         String password = ((EditText)findViewById(R.id.register_password)).getText().toString();
 
@@ -282,16 +242,16 @@ public class RegisterScreenActivity extends AppCompatActivity {
     }
 
     /**private void setScreenInfo(){
-        if(profile != null){
-            EditText first_name_text = (EditText) findViewById(R.id.firstNameEntry);
-            EditText last_name_text = (EditText) findViewById(R.id.lastNameEntry);
-            EditText email_address_text = (EditText) findViewById(R.id.emailAddressEntry);
-            EditText sciper_text = (EditText) findViewById(R.id.sciperEntry);
+     if(profile != null){
+     EditText first_name_text = (EditText) findViewById(R.id.firstNameEntry);
+     EditText last_name_text = (EditText) findViewById(R.id.lastNameEntry);
+     EditText email_address_text = (EditText) findViewById(R.id.emailAddressEntry);
+     EditText sciper_text = (EditText) findViewById(R.id.sciperEntry);
 
-            first_name_text.setText(profile.firstNames);
-            last_name_text.setText(profile.lastNames);
-            email_address_text.setText(profile.email);
-            sciper_text.setText(profile.sciper);
-        }
-    }*/
+     first_name_text.setText(profile.firstNames);
+     last_name_text.setText(profile.lastNames);
+     email_address_text.setText(profile.email);
+     sciper_text.setText(profile.sciper);
+     }
+     }*/
 }
