@@ -51,6 +51,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE_LAST_NAME = "com.example.myfirstapp.LASTNAME";
     public final static String EXTRA_MESSAGE_EMAIL_ADDRESS = "com.example.myfirstapp.EMAILADDRESS";
     public final static String EXTRA_MESSAGE_SCIPER = "com.example.myfirstapp.SCIPER";
+    public final static String EXTRA_MESSAGE_GASPAR = "com.example.myfirstapp.GASPAR";
 
     private static final String CLIENT_ID = "2e58be9551a5fd7286b718bd@epfl.ch";
     private static final String CLIENT_KEY = "97fb52cdc30384634c5eeb8cdc684baf";
@@ -94,6 +95,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
             intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
             intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
+            intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.gaspar);
 
             startActivity(intent);
         }

@@ -119,8 +119,7 @@ public class HomeScreenActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logOutButton) {
             mAuth.signOut();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            finish();
             return true;
         }
 
