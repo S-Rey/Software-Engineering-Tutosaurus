@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -41,8 +42,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
-
-    private boolean syncCalendar;
     DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -62,12 +61,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             }
         });
         list.setVerticalScrollBarEnabled(false);
-        SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-        syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
-        if (syncCalendar) {
-            Toast.makeText(getActivity().getBaseContext(), "ciao", Toast.LENGTH_SHORT).show();
-            synchronizeCalendar();
-        }
+
+        //SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+        //syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
     }
 
     @Override
@@ -105,15 +101,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         ref.child("meetingsPerUser/456892").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (syncCalendar) {
-                    Toast.makeText(getActivity().getBaseContext(), "ciao", Toast.LENGTH_SHORT).show();
+                CheckBoxPreference calendar = (CheckBoxPreference) findPreference("checkbox_preference_calendar");
+                if (calendar.isChecked()) {
                     for (DataSnapshot meetingSnapshot : snapshot.getChildren()) {
                         Meeting meeting = meetingSnapshot.getValue(Meeting.class);
                         long startMillis = 0;
                         long endMillis = 0;
                         Calendar beginTime = Calendar.getInstance();
-                        assert meeting != null;
                         beginTime.setTime(meeting.getDate());
+                        Toast.makeText(getActivity().getBaseContext(), meeting.getDate().toString(), Toast.LENGTH_LONG).show();
                         startMillis = beginTime.getTimeInMillis();
                         Calendar endTime = Calendar.getInstance();
                         endTime.setTime(meeting.getDate());
@@ -134,10 +130,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         values.put(CalendarContract.Events.DTEND, endMillis);
                         values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
                         values.put(CalendarContract.Events.TITLE, meeting.getNameLocation());
-                        values.put(CalendarContract.Events.DESCRIPTION, "teacher or student");
+                        values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
                         values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
                         values.put(CalendarContract.Events.CALENDAR_ID, calID);
-                        values.put(CalendarContract.Events._ID, meeting.getId());
+                        //values.put(CalendarContract.Events._ID, meeting.getId());
                         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
                             return;
                         }
