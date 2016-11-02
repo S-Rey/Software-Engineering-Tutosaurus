@@ -84,7 +84,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("checkbox_preference_calendar")) {
-            synchronizeCalendar();
+
         }
 
         if (key.equals("checkbox_preference_notification")) {
@@ -109,7 +109,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         long endMillis = 0;
                         Calendar beginTime = Calendar.getInstance();
                         beginTime.setTime(meeting.getDate());
-                        Toast.makeText(getActivity().getBaseContext(), meeting.getDate().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getBaseContext(), meeting.getId(), Toast.LENGTH_LONG).show();
                         startMillis = beginTime.getTimeInMillis();
                         Calendar endTime = Calendar.getInstance();
                         endTime.setTime(meeting.getDate());
@@ -129,11 +129,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         values.put(CalendarContract.Events.DTSTART, startMillis);
                         values.put(CalendarContract.Events.DTEND, endMillis);
                         values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                        values.put(CalendarContract.Events.TITLE, meeting.getNameLocation());
+                        values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
                         values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
                         values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
                         values.put(CalendarContract.Events.CALENDAR_ID, calID);
-                        //values.put(CalendarContract.Events._ID, meeting.getId());
                         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
                             return;
                         }

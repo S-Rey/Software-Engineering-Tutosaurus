@@ -83,12 +83,4 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
     }
 
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent){
-//        View row=convertView;
-//        TutorAdapter.TutorHolder holder;
-//        if(row==null){
-//            LayoutInflater inflater=((Activity) context).getLayoutInflater();
-//            row=inflater.inflate(layoutResourceId, parent, false);
-//
 }
