@@ -40,6 +40,22 @@
                 android:text="Take Picture"
                 android:onClick="dispatchTakePictureIntent"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_save_picture"
+                android:text="save pic"
+                android:onClick="dispatchTakePictureIntent"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_load_picture"
+                android:text="load picture pic"
+                android:onClick="dispatchTakePictureIntent"
+                android:layout_weight="1" />
+
         </LinearLayout>
 
     </LinearLayout>
