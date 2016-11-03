@@ -76,23 +76,34 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final AlertDialog.Builder loginAlertB = new AlertDialog.Builder(MainActivity.this);
+                loginAlertB.setTitle("Login").setPositiveButton("Ok", null).setIcon(R.drawable.dino_logo);
                 String email = ((EditText) findViewById(R.id.main_email)).getText().toString();
                 String password = ((EditText) findViewById(R.id.main_password)).getText().toString();
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
-                                if (task.isSuccessful()) {
-                                    Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT);
+                if(email.isEmpty() || password.isEmpty()){
+                    loginAlertB.setMessage("Please type in your email and password");
+                    loginAlertB.create().show();
+                }else {
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
+                                    if (task.isSuccessful()) {
+                                        Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT);
+                                        loginAlertB.setMessage("Login failed");
+                                        loginAlertB.create().show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
+
             }
         });
+
     }
 
     //METHOD FOR NOTIFICATION IN "MY APPOINT RESULTS" TAB
