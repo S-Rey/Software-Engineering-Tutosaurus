@@ -9,17 +9,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,10 +38,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "HomeScreenActivity";
+
     public static final int GALLERY_REQUEST = 1;
     public static final int REQUEST_IMAGE_CAPTURE = 2;
     private ImageView pictureView;
     private CircleImageView circleView;
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +54,19 @@ public class HomeScreenActivity extends AppCompatActivity
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener(){
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,7 +83,7 @@ public class HomeScreenActivity extends AppCompatActivity
         circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
         linkProfilePictureToNavView(circleView);
 
-//RECEIVE THE INTENT FOR "MY APPOINT RESULT" TAB
+        //RECEIVE THE INTENT FOR "MY APPOINT RESULT" TAB
         if (intent.getAction() != null) {
             if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -95,8 +118,8 @@ public class HomeScreenActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logOutButton) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            mAuth.signOut();
+            finish();
             return true;
         }
 

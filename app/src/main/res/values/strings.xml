@@ -18,10 +18,9 @@
     <string name="sciper">Sciper</string>
     <string name="send_information_button">Send</string>
     <string name="thanks_message1">Thank you for registering !</string>
-    <string name="thanks_message2">
-        You will be able to connect to TutoSaurus with your new created account soon.</string>
+    <string name="thanks_message2">Please enter a password for your new account below</string>
     <string name="recap_message">Provided information is :</string>
-    <string name="back_to_login_button">Back to log in screen</string>
+    <string name="confirm_register">Confirm registration</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
