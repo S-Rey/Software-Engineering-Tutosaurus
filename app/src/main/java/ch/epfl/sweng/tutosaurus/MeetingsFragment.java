@@ -36,7 +36,7 @@ public class MeetingsFragment extends Fragment {
 
     View myView;
     private MeetingAdapter adapter;
-    private String currentUser = "456892";
+    private String currentUser = "123456";
     DatabaseHelper dbh = DatabaseHelper.getInstance();
     public static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
@@ -78,7 +78,7 @@ public class MeetingsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         DatabaseReference ref = dbh.getReference();
-        ref.child("meetingsPerUser/456892").addValueEventListener(new ValueEventListener() {
+        ref.child("meetingsPerUser/" + currentUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
