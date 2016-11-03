@@ -11,6 +11,7 @@ public class User {
     private String username;
     private String fullName;
     private String email;
+    private String uid;
     private int profilePicture;
 
     private Map<String, Boolean> languages = new HashMap<>();
@@ -78,6 +79,14 @@ public class User {
      */
     public void setPicture(int profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getUid() {
+        return this.uid;
     }
 
     /**

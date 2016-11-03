@@ -40,7 +40,7 @@ public class DatabaseHelper {
     }
 
     public void signUp(User user) {
-        DatabaseReference ref = dbf.child(USER_PATH + user.getSciper());
+        DatabaseReference ref = dbf.child(USER_PATH + user.getUid());
         ref.setValue(user);
     }
 
