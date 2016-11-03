@@ -43,7 +43,7 @@ Structure ot the noSQL JSON database
 	"meeting" : {
 		"meetingId" : {
 			"date" : "time of the meeting",
-			"location" : "location the meeting"
+			"nameLocation" : "nameLocation the meeting"
 			"courseId" : "id of course"
 			"participants" : {
 				"userId" : "id of participant"

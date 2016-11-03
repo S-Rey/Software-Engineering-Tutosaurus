@@ -1,76 +1,86 @@
 package ch.epfl.sweng.tutosaurus.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.provider.CalendarContract;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.database.Query;
 
+import java.util.List;
+
+import ch.epfl.sweng.tutosaurus.LocationActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
-import static android.content.ContentValues.TAG;
-
 /**
- * Created by santo on 25/10/16.
+ * Created by ubervison on 10/28/16.
  */
 
-public class MeetingAdapter extends ArrayAdapter<Meeting> {
-    Context context;
-    int layoutResourceId;
-    ArrayList<Meeting> meetingList = null;
+public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    public MeetingAdapter(Context context, int layoutResourceId, ArrayList<Meeting> meetingList){
-        super(context, layoutResourceId, meetingList);
-        this.layoutResourceId = layoutResourceId;
-        this.context = context;
-        this.meetingList = meetingList;
+    private String currentUser = "456892";
+
+    public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
+        super(activity, modelClass, modelLayout, ref);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
-        View row = convertView;
-        MeetingHolder holder;
-        if(row == null){
-            LayoutInflater inflater=((Activity) context).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
+    protected void populateView(final View mainView, Meeting meeting, int position) {
 
-            holder = new MeetingHolder();
-            holder.location = (TextView) row.findViewById(R.id.location);
-            holder.date = (TextView) row.findViewById(R.id.date);
-            row.setTag(holder);
-        }
-        else{
-            holder = (MeetingHolder) row.getTag();
-        }
-        Meeting meeting = meetingList.get(position);
-        if (meeting.getLocation() != null) {
-            holder.location.setText(meeting.getLocation());
-        }
-        if (meeting.getDate() != null)
-            holder.date.setText(meeting.getDate().toString());
+        TextView subject = (TextView) mainView.findViewById(R.id.subjectMeeting);
+        subject.setText(meeting.getCourse().getName());
 
-        return row;
-    }
+        TextView otherParticipantView = (TextView) mainView.findViewById(R.id.otherParticipantMeeting);
+        List<String> participants = meeting.getParticipants();
+        String content = new String();
+        for (String participant : participants) {
+            if (!participant.equals(currentUser)) {
+                if (content.length() == 0) {
+                    content = participant;
+                }
+                else {
+                    content = content + "\n" + participant;
+                }
+            }
+        }
+        otherParticipantView.setText(content);
 
-    public class MeetingHolder {
-        TextView location;
-        TextView date;
+        TextView date = (TextView) mainView.findViewById(R.id.dateMeeting);
+        date.setText(meeting.getDate().toString());
+
+        TextView descriptionMeeting = (TextView) mainView.findViewById(R.id.descriptionMeeting);
+        descriptionMeeting.setText(meeting.getDescription());
+
+        final double latitudeMeeting = meeting.getLatitudeLocation();
+        final double longitudeMeeting = meeting.getLongitudeLocation();
+        TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
+        locationMeeting.setText(meeting.getNameLocation());
+
+        Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
+        showLocationMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
+                intent.putExtra("latitudeMeeting", latitudeMeeting);
+                intent.putExtra("longitudeMeeting", longitudeMeeting);
+                view.getContext().startActivity(intent);
+            }
+        });
+
+        final Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
+        detailsMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout detailsLayout = (LinearLayout) mainView.findViewById(R.id.detailsMeeting);
+                detailsLayout.setVisibility(View.VISIBLE);
+                //detailsMeeting.setOnClickListener();
+            }
+        });
+
     }
 
 }

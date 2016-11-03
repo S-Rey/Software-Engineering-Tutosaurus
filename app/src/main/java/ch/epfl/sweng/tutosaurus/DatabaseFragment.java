@@ -102,7 +102,7 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         String part2 = ((EditText)myView.findViewById(R.id.db_meeting_part2)).getText().toString();
         Date date = new Date();
         Meeting meeting = new Meeting(date, 60, new Course("0", "Maths"));
-        meeting.setLocation(location);
+        meeting.setNameLocation(location);
         meeting.addParticipant(part1);
         meeting.addParticipant(part2);
         dbh.addMeeting(meeting);
