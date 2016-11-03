@@ -105,7 +105,7 @@ public class ConfirmationActivity extends AppCompatActivity {
                         User user = new User(sciper, gaspar);
                         user.setEmail(email);
                         user.setFullName(fullName);
-                        userRef.setValue(user);
+                        dbh.signUp(user);
                         finish();
                     }
                 }
