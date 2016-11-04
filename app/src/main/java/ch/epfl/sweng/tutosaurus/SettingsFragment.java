@@ -123,9 +123,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (key.equals("checkbox_preference_calendar")) {
             //Do Something
         }
-        if (key.equals("checkbox_preference_location")) {
-            //Do Something
-        }
     }
 
 
@@ -173,14 +170,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.checkbox_calendar:
-                if (checked) {
-
-                }
-                else {
-
-                }
-                break;
-            case R.id.checkbox_location:
                 if (checked) {
 
                 }

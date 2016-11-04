@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile_layout"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/philosoraptor"
             android:title="@string/firstLayout_button" />
         <item
             android:id="@+id/nav_findTutors_layout"

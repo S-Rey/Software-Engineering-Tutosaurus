@@ -2,7 +2,9 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private static Profile profile;
     String codeRequestUrl;
 
+    public static final String PROFILE_INFOS = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +117,15 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
     public void sendMessageForAccess(View view) {
         if(MyAppVariables.getRegistered() == true){
+
+            SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("firstName", profile.firstNames);
+            editor.putString("lastName", profile.lastNames);
+            editor.putString("email", profile.email);
+            editor.putString("sciper", profile.sciper);
+            editor.commit();
+
             Intent intent = new Intent(this, ConfirmationActivity.class);
 
             intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);

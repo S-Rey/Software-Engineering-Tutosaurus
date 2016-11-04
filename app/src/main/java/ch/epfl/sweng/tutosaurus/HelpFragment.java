@@ -1,41 +1,31 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.app.Fragment;
-import android.app.ListFragment;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * Created by Vincent on 05/10/2016.
  */
 
-public class HelpFragment extends PreferenceFragment {
+public class HelpFragment extends Fragment {
 
+    View myView;
+
+    @Nullable
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        myView = inflater.inflate(R.layout.help_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Help");
-        addPreferencesFromResource(R.xml.help_preferences_layout);
 
-        // remove dividers
-        View rootView = getView();
-        ListView list = (ListView) rootView.findViewById(android.R.id.list);
-        list.setDividerHeight(0);
-        list.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
-        list.setVerticalScrollBarEnabled(false);
+        return myView;
     }
 
 }

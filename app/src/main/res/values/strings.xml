@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TutoSaurus</string>
     <string name="welcoming_message">Welcome to TutoSaurus !</string>
-    <string name="instructions_message">Please sign in with your GASPAR account</string>
+    <string name="instructions_message">Do not forget to sign up before logging in.</string>
     <string name="username_ask">Enter username</string>
     <string name="password_ask">Enter password</string>
     <string name="connection_button">Log in</string>
@@ -11,15 +11,12 @@
 
     <string name="activity_register_name">Register</string>
     <string name="instructions_register">
-        Click on Send after successfully logging in with Tequila</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="email_address">Email Address</string>
-    <string name="sciper">Sciper</string>
-    <string name="send_information_button">Send</string>
+        Please click on Confirm after successfully logging in with Tequila.</string>
+    <string name="send_information_button">Confirm</string>
+
     <string name="thanks_message1">Thank you for registering !</string>
     <string name="thanks_message2">
-        You will be able to connect to TutoSaurus with your new created account soon.</string>
+        You can now connect to TutoSaurus.</string>
     <string name="recap_message">Provided information is :</string>
     <string name="back_to_login_button">Back to log in screen</string>
 
@@ -30,9 +27,6 @@
     <string name="welcome_message_2">WHEN YOU HAVE A BURGER MENU ?</string>
 
     <string name="action_logOut">Log out</string>
-
-    <string name="first_text">Android Studio</string>
-    <string name="second_text">android.studio@epfl.ch</string>
 
     <string name="firstLayout_button">Profile</string>
     <string name="secondLayout_button">Find Tutors</string>

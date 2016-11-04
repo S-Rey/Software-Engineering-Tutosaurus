@@ -24,17 +24,6 @@
         android:selectable="false">
     </PreferenceScreen>
 
-    <CheckBoxPreference
-        android:key="checkbox_preference_location"
-        android:id="@+id/checkbox_location"
-        android:title="@string/share_location"
-        android:layout="@layout/preference_checkbox" />
-
-    <PreferenceScreen
-        android:layout="@layout/preference_divider"
-        android:selectable="false">
-    </PreferenceScreen>
-
     <PreferenceScreen
         android:title="@string/rate_app"
         android:layout="@layout/preference_intent">

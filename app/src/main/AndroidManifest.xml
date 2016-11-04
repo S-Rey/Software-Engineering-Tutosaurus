@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/philosoraptor"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -51,14 +51,6 @@
             android:name=".FindTutorResult"
             android:label="List of matches"
             android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".HelpDeskActivity"
-            android:label="@string/helpdesk">
-            <intent-filter>
-                <action android:name="com.example.myapp.activities.MyActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
     </application>
 
