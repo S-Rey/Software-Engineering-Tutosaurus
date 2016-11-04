@@ -2,11 +2,12 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,14 +17,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -69,6 +62,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private String gaspar;
     private String password;
 
+    public static final String PROFILE_INFOS = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +84,14 @@ public class RegisterScreenActivity extends AppCompatActivity {
     public void sendMessageForAccess(View view) {
         if(MyAppVariables.getRegistered()){
             Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
+
+            SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("firstName", profile.firstNames);
+            editor.putString("lastName", profile.lastNames);
+            editor.putString("email", profile.email);
+            editor.putString("sciper", profile.sciper);
+            editor.commit();
 
             intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
             intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
@@ -234,8 +236,8 @@ public class RegisterScreenActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        String gaspar = ((EditText)findViewById(R.id.register_gaspar_username)).getText().toString();
-        String password = ((EditText)findViewById(R.id.register_password)).getText().toString();
+        String gaspar = ((EditText)findViewById(R.id.registerGaspar)).getText().toString();
+        String password = ((EditText)findViewById(R.id.registerPassword)).getText().toString();
 
         this.gaspar = gaspar;
         this.password = password;

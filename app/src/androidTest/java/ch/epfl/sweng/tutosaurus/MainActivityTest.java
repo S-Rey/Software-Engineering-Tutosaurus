@@ -9,9 +9,6 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.close;
 import static android.support.test.espresso.contrib.DrawerActions.open;
@@ -42,7 +39,7 @@ public class MainActivityTest {
     @Test
     public void testSignUp() {
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.sendButton)).perform(click());
+        onView(withId(R.id.confirmButton)).perform(click());
         onView(withId(R.id.firstNameProvided)).check(matches(withText("First name : Vincent")));
         onView(withId(R.id.lastNameProvided)).check(matches(withText("Last name : Rinaldi")));
         onView(withId(R.id.emailAddressProvided)).check(matches(withText("Email address : vincent.rinaldi@epfl.ch")));

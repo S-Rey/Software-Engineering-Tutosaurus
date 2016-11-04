@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
@@ -83,15 +82,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("checkbox_preference_calendar")) {
-
-        }
-
         if (key.equals("checkbox_preference_notification")) {
             //Do Something
         }
-
-        if (key.equals("checkbox_preference_location")) {
+        if (key.equals("checkbox_preference_calendar")) {
             //Do Something
         }
     }
@@ -150,7 +144,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
 
-    //-----------------------
+//-----------------------
 //UNUSED METHODS BELOW
 //-----------------------
 //THE FOLLOWING METHODS ARE FOR CLICKING AUTOMATICALLY ON A PREFERENCE IN THE LIST DEPENDING ON THE KEY

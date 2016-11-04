@@ -1,16 +1,23 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +43,8 @@ import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static ch.epfl.sweng.tutosaurus.RegisterScreenActivity.PROFILE_INFOS;
+
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -44,6 +54,9 @@ public class HomeScreenActivity extends AppCompatActivity
     public static final int REQUEST_IMAGE_CAPTURE = 2;
     private ImageView pictureView;
     private CircleImageView circleView;
+    private TextView nameView;
+    private TextView addressView;
+    private TextView sciperView;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -83,13 +96,78 @@ public class HomeScreenActivity extends AppCompatActivity
         circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
         linkProfilePictureToNavView(circleView);
 
-        //RECEIVE THE INTENT FOR "MY APPOINT RESULT" TAB
+        SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
+        String first_name = settings.getString("firstName", "");
+        String last_name = settings.getString("lastName", "");
+        String email_address = settings.getString("email", "");
+        String sciper = settings.getString("sciper", "");
+
+        nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
+        nameView.setText(first_name + " " + last_name);
+
+        addressView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.mailAddress);
+        addressView.setText(email_address);
+
+        sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
+        sciperView.setText(sciper);
+
         if (intent.getAction() != null) {
+            if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
+            }
             if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
             }
         }
+    }
+
+    public void meetingsNotification(View view) {
+        SharedPreferences notif = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean areNotifEnable = notif.getBoolean("checkbox_preference_notification", true);
+
+        if (areNotifEnable) {
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.philosoraptor)
+                    .setContentTitle("Meeting Notification")
+                    .setContentText("Click Here To Test The Notification")
+                    .setAutoCancel(true)
+                    .setColor(getResources().getColor(R.color.colorPrimaryDark));
+
+            Intent resultIntent = new Intent(this, HomeScreenActivity.class);
+            resultIntent.setAction("OPEN_TAB_MEETINGS");
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addParentStack(HomeScreenActivity.class);
+            stackBuilder.addNextIntent(resultIntent);
+
+            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            mBuilder.setContentIntent(resultPendingIntent);
+
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(9999, mBuilder.build());
+        }
+    }
+
+    public void sendMessageForCall(View view) {
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: (+41)210000000"));
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            //request permission from user if the app hasn't got the required permission
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.CALL_PHONE},   //request specific permission from user
+                    10);
+            return;
+        } else {
+            startActivity(intent);
+        }
+    }
+
+    public void sendMessageForEmail(View view) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setData(Uri.parse("mailto:")).setType("text/plain");
+        intent.putExtra(Intent.EXTRA_EMAIL, "android.studio@epfl.ch");
+        startActivity(intent);
     }
 
     @Override

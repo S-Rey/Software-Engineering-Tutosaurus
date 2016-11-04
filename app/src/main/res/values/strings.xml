@@ -1,37 +1,31 @@
 <resources>
     <string name="app_name">TutoSaurus</string>
     <string name="welcoming_message">Welcome to TutoSaurus !</string>
-    <string name="instructions_message">Please sign in with your GASPAR account</string>
-    <string name="username_ask">Enter username</string>
-    <string name="password_ask">Enter password</string>
+    <string name="instructions_message">Do not forget to sign up before logging in.</string>
+    <string name="email_ask">Enter Email</string>
+    <string name="password_ask">Enter Password</string>
     <string name="connection_button">Log in</string>
     <string name="register_button">Sign up</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
 
+    <string name="gaspar">Gaspar</string>
+    <string name="password">Password</string>
     <string name="activity_register_name">Register</string>
     <string name="instructions_register">
-        Click on Send after successfully logging in with Tequila</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="email_address">Email Address</string>
-    <string name="sciper">Sciper</string>
-    <string name="send_information_button">Send</string>
+        Please click on Confirm after successfully logging in with Tequila.</string>
+    <string name="send_information_button">Confirm</string>
+
     <string name="thanks_message1">Thank you for registering !</string>
-    <string name="thanks_message2">Please enter a password for your new account below</string>
+    <string name="thanks_message2">Please enter a password for your new account below.</string>
+
     <string name="recap_message">Provided information is :</string>
-    <string name="confirm_register">Confirm registration</string>
+    <string name="choose_password">Choose Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_register">Confirm Registration</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="welcome_message_1">WHY LOOKING FOR BUTTONS</string>
-    <string name="welcome_message_2">WHEN YOU HAVE A BURGER MENU ?</string>
-
     <string name="action_logOut">Log out</string>
-
-    <string name="first_text">Android Studio</string>
-    <string name="second_text">android.studio@epfl.ch</string>
 
     <string name="firstLayout_button">Profile</string>
     <string name="secondLayout_button">Find Tutors</string>
@@ -49,8 +43,6 @@
         This Android application is intended for students and tutors from Switzerland
         and provides study material needed to help every student realize their potential.</string>
 
-    <string name="helpdesk">Help Desk</string>
-
     <string name="phone_number_help">+41 21 000 0000</string>
     <string name="clock_message_phone">Monday to Friday : 06:00 to 18:00</string>
     <string name="help_message_phone">Need some help urgently ? You can call our support line.
@@ -59,11 +51,6 @@
     <string name="clock_message_email">Service available 24/7</string>
     <string name="help_message_email">You can also send us an email.
         A member of the assistance service will answer to your request soon.</string>
-
-    <!-- What we can add -->
-    <string name="report_bug">Report Bug</string>
-    <string name="faq">FAQ</string>
-    <string name="website">TutoSaurus website</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="push_notifications">Enable Notifications</string>
