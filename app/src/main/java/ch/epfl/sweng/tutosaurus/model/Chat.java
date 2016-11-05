@@ -6,39 +6,31 @@ package ch.epfl.sweng.tutosaurus.model;
 
 public class Chat implements Identifiable {
 
-    private String otherUserUid;
-    private String otherFullName;
+    private String fullName;
+    private String uid;
 
-    public Chat(){
+    public Chat() {
 
     }
 
-    public String getOtherUserUid() {
-        return otherUserUid;
+    public Chat(String uid){
+        this.uid = uid;
     }
 
-    public Chat(String otherUserUid) {
-        this.otherUserUid = otherUserUid;
+    public String getFullName() {
+        return fullName;
     }
 
-    public Chat(String otherUserUid, String otherFullName) {
-        this.otherFullName = otherFullName;
-        this.otherUserUid = otherUserUid;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public void setOtherUserUid(String otherUserUid) {
-        this.otherUserUid = otherUserUid;
-    }
-
-    public String getOtherFullName() {
-        return otherFullName;
-    }
-
-    public void setOtherFullName(String otherFullName) {
-        this.otherFullName = otherFullName;
-    }
-
+    @Override
     public String getUid() {
-        return this.otherUserUid;
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

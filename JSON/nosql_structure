@@ -53,9 +53,10 @@ Structure ot the noSQL JSON database
 
 	"chats" : {
         "userUid" : {
-            "user1Uid" : true,
-            "user2Uid" : true,
-            ...
+           "uid" : {
+                "uid" : uid,
+                "fullName" : fullName
+           }
         }
 	}
 

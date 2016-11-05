@@ -20,6 +20,6 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat>{
     @Override
     protected void populateView(final View mainView, Chat chat, int position) {
         TextView chatName = (TextView) mainView.findViewById(R.id.message_chat_row_name);
-        chatName.setText(chat.getOtherUserUid());
+        chatName.setText(chat.getFullName());
     }
 }

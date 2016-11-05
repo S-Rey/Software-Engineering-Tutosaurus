@@ -2,8 +2,10 @@ package ch.epfl.sweng.tutosaurus.adapter;
 
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -13,6 +15,10 @@ import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Message;
 
 public class MessageListAdapter extends FirebaseListAdapter<Message>{
+
+    private final static String TAG = "MessageListAdapter";
+    private final static int MESSAGE_INNER_PADDING = 100;
+    private final static int MESSAGE_OUTER_PADDING = 20;
 
     private String currentUser;
     private String otherUser;
@@ -25,15 +31,18 @@ public class MessageListAdapter extends FirebaseListAdapter<Message>{
 
     @Override
     protected void populateView(View mainView, Message message, int position) {
-        TextView content = (TextView) mainView.findViewById(R.id.chat_message_row_content);
+        LinearLayout content = (LinearLayout) mainView.findViewById(R.id.chat_message_row_content);
+        TextView text = (TextView) mainView.findViewById(R.id.chat_message_row_content_text);
         String from = message.getFrom();
         if (from.equals(currentUser)) {
+            Log.d(TAG, "message was from me");
             content.setGravity(Gravity.RIGHT);
-            content.setPadding(30, 0, 0, 0);
+            content.setPadding(MESSAGE_INNER_PADDING, 0, 0, 0);
         } else {
+            Log.d(TAG, "message was from you");
             content.setGravity(Gravity.LEFT);
-            content.setPadding(0, 0, 30, 0);
+            content.setPadding(0, 0, MESSAGE_INNER_PADDING, 0);
         }
-        content.setText(message.getContent());
+        text.setText(message.getContent());
     }
 }

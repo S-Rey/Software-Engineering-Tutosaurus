@@ -133,7 +133,7 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         if (to.equals("")) {
             to = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
-        dbh.sendMessage(from, to, content);
+        dbh.sendMessage(from, "", to, "", content);
     }
 
 }

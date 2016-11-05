@@ -85,7 +85,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         if(MyAppVariables.getRegistered()){
             Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
 
-            SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
+            SharedPreferences settings = getSharedPreferences(profile.email, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("firstName", profile.firstNames);
             editor.putString("lastName", profile.lastNames);

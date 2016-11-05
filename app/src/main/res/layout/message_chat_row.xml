@@ -6,5 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/message_chat_row_name"/>
+        android:id="@+id/message_chat_row_name"
+        android:textSize="30sp"
+        android:background="@drawable/chat_sel_background"/>
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MessagingFragment extends Fragment {
 
+    private static final String TAG = "MessagingFragment";
+
     View myView;
     private ChatListAdapter chatListAdapter;
     private UserListAdapter userListAdapter;
@@ -30,6 +33,7 @@ public class MessagingFragment extends Fragment {
     private ListView listView;
 
     public static final String EXTRA_MESSAGE_USER_ID = "ch.epfl.sweng.tutosaurus.USER_ID";
+    public static final String EXTRA_MESSAGE_FULL_NAME = "ch.epfl.seng.tutosaurus.FULL_NAME";
 
     @Nullable
     @Override
@@ -40,18 +44,21 @@ public class MessagingFragment extends Fragment {
         listView = (ListView) myView.findViewById(R.id.message_list);
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Query chatRef = dbh.getReference().child("chats").child(currentUser);
+        Log.d(TAG, "chatRef: " + chatRef.toString());
         Query userRef = dbh.getReference().child("user");
 
         chatListAdapter = new ChatListAdapter(getActivity(), Chat.class, R.layout.message_chat_row, chatRef);
         userListAdapter = new UserListAdapter(getActivity(), User.class, R.layout.message_user_row, userRef);
 
-        listView.setAdapter(userListAdapter);
+        listView.setAdapter(chatListAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Identifiable item = (Identifiable) listView.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
                 intent.putExtra(EXTRA_MESSAGE_USER_ID, item.getUid());
+                intent.putExtra(EXTRA_MESSAGE_FULL_NAME, item.getFullName());
+                Log.d(TAG, "fullName: " + item.getFullName());
                 startActivity(intent);
             }
         });

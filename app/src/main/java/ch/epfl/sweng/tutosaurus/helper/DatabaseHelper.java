@@ -101,23 +101,24 @@ public class DatabaseHelper {
         });
     }
 
-    public void sendMessage(String from, String to, String content){
-        DatabaseReference chatIdFromRef = dbf.child("chats/" + from);
-        DatabaseReference chatIdToRef = dbf.child("chats/" + to);
+    public void sendMessage(String fromUid, String fromFullName, String toUid, String toFullName, String content){
+        DatabaseReference chatIdFromRef = dbf.child("chats/" + fromUid);
+        DatabaseReference chatIdToRef = dbf.child("chats/" + toUid);
 
-        String chatKey = chatIdFromRef.push().getKey();
-        Chat fromChat = new Chat(to);
-        Chat toChat = new Chat(from);
-        chatIdFromRef.child(chatKey).setValue(fromChat);
-        chatIdToRef.child(chatKey).setValue(toChat);
+        Chat fromChat = new Chat(toUid);
+        fromChat.setFullName(toFullName);
+        Chat toChat = new Chat(fromUid);
+        toChat.setFullName(fromFullName);
+        chatIdFromRef.child(toUid).setValue(fromChat);
+        chatIdToRef.child(fromUid).setValue(toChat);
 
-        DatabaseReference messageFromRef = dbf.child("messages/" + from + "/" +to);
-        DatabaseReference messageToRef = dbf.child("messages/" + to + "/" + from);
+        DatabaseReference messageFromRef = dbf.child("messages/" + fromUid + "/" +toUid);
+        DatabaseReference messageToRef = dbf.child("messages/" + toUid + "/" + fromUid);
 
         String key = messageFromRef.push().getKey();
 
         long timestamp = (new Date()).getTime();
-        Message message = new Message(from, content, timestamp);
+        Message message = new Message(fromUid, content, timestamp);
         messageFromRef.child(key).setValue(message);
         messageToRef.child(key).setValue(message);
     }
