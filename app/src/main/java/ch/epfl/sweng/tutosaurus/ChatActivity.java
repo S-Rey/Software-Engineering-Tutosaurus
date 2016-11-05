@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,5 +55,16 @@ public class ChatActivity extends AppCompatActivity {
         MessageListAdapter adapter = new MessageListAdapter(this, Message.class, R.layout.chat_message_row, conversationRef, currentUser, otherUser);
         ListView messageList = (ListView) findViewById(R.id.chat_message_list);
         messageList.setAdapter(adapter);
+
+        ImageButton sendButton = (ImageButton) findViewById(R.id.chat_message_send);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = ((EditText)findViewById(R.id.chat_message_input)).getText().toString();
+                if(!message.equals("")){
+                    dbh.sendMessage(currentUser, otherUser, message);
+                }
+            }
+        });
     }
 }
