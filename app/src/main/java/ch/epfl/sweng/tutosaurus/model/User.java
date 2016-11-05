@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class User {
+public class User implements Identifiable {
 
     private String sciper;
     private String username;

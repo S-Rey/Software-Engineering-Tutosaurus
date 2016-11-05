@@ -227,6 +227,8 @@ public class HomeScreenActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
         } else if (id == R.id.nav_db_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new DatabaseFragment()).commit();
+        } else if (id == R.id.nav_messaging_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

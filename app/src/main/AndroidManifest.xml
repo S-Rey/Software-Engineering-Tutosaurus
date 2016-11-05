@@ -52,6 +52,9 @@
             android:label="List of matches"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ChatActivity">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

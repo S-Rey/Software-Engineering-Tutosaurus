@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Date;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
@@ -39,6 +41,8 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         addTeacherToCourseButton.setOnClickListener(this);
         Button addStudentToCourseButton = (Button) myView.findViewById(R.id.db_course_learn_add);
         addStudentToCourseButton.setOnClickListener(this);
+        Button sendMessageButton = (Button) myView.findViewById(R.id.db_message_send);
+        sendMessageButton.setOnClickListener(this);
         //String picPath = "/storage/emulated/0/Download/android.jpg";
         //PictureHelper.putImage(picPath);
         return myView;
@@ -65,6 +69,8 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
             case R.id.db_course_learn_add :
                 addStudentToCourse();
                 break;
+            case R.id.db_message_send :
+                sendMessage();
         }
     }
 
@@ -118,6 +124,16 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         String sciper = ((EditText)myView.findViewById(R.id.db_sciper_teach_learn)).getText().toString();
         String courseId = ((EditText)myView.findViewById(R.id.db_course_id_teach_learn)).getText().toString();
         dbh.addStudentToCourse(sciper, Integer.parseInt(courseId));
+    }
+
+    private void sendMessage(){
+        String to = ((EditText)myView.findViewById(R.id.db_message_to)).getText().toString();
+        String content = ((EditText)myView.findViewById(R.id.db_message_content)).getText().toString();
+        String from = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (to.equals("")) {
+            to = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        dbh.sendMessage(from, to, content);
     }
 
 }

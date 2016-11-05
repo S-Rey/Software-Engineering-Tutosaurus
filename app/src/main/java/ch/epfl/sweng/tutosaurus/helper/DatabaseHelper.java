@@ -6,8 +6,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
+import ch.epfl.sweng.tutosaurus.model.Chat;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
+import ch.epfl.sweng.tutosaurus.model.Message;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class DatabaseHelper {
@@ -95,6 +99,27 @@ public class DatabaseHelper {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+    }
+
+    public void sendMessage(String from, String to, String content){
+        DatabaseReference chatIdFromRef = dbf.child("chats/" + from);
+        DatabaseReference chatIdToRef = dbf.child("chats/" + to);
+
+        String chatKey = chatIdFromRef.push().getKey();
+        Chat fromChat = new Chat(to);
+        Chat toChat = new Chat(from);
+        chatIdFromRef.child(chatKey).setValue(fromChat);
+        chatIdToRef.child(chatKey).setValue(toChat);
+
+        DatabaseReference messageFromRef = dbf.child("messages/" + from + "/" +to);
+        DatabaseReference messageToRef = dbf.child("messages/" + to + "/" + from);
+
+        String key = messageFromRef.push().getKey();
+
+        long timestamp = (new Date()).getTime();
+        Message message = new Message(from, content, timestamp);
+        messageFromRef.child(key).setValue(message);
+        messageToRef.child(key).setValue(message);
     }
 
     public DatabaseReference getMeetingsRefForUser(String sciper) {
