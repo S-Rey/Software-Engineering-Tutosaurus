@@ -3,6 +3,7 @@ package ch.epfl.sweng.tutosaurus;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,8 +22,6 @@ import ch.epfl.sweng.tutosaurus.adapter.MessageListAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Message;
 
-import static ch.epfl.sweng.tutosaurus.RegisterScreenActivity.PROFILE_INFOS;
-
 public class ChatActivity extends AppCompatActivity {
     private static final String TAG = "ChatActivity";
 
@@ -38,15 +37,11 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         final android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         dbh = DatabaseHelper.getInstance();
-        SharedPreferences settings = getSharedPreferences(FirebaseAuth.getInstance().getCurrentUser().getEmail(), Context.MODE_PRIVATE);
 
-        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        currentFullName = settings.getString("firstName", "") + " " + settings.getString("lastName", "");
         Intent intent = getIntent();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         otherUser = intent.getStringExtra(MessagingFragment.EXTRA_MESSAGE_USER_ID);
         otherFullName = intent.getStringExtra(MessagingFragment.EXTRA_MESSAGE_FULL_NAME);
-        Log.d(TAG, "otherFullName: " + otherFullName);
-        Log.d(TAG, "currentFullName: " + currentFullName);
 
         mActionBar.setTitle(otherFullName);
 
@@ -57,16 +52,27 @@ public class ChatActivity extends AppCompatActivity {
         ListView messageList = (ListView) findViewById(R.id.chat_message_list);
         messageList.setAdapter(adapter);
 
-        ImageButton sendButton = (ImageButton) findViewById(R.id.chat_message_send);
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        dbh.getReference().child(DatabaseHelper.USER_PATH).child(currentUser).child("fullName").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                String message = ((EditText)findViewById(R.id.chat_message_input)).getText().toString();
-                if(!message.equals("")){
-                    dbh.sendMessage(currentUser, currentFullName, otherUser, otherFullName, message);
-                    EditText messageInput = (EditText) findViewById(R.id.chat_message_input);
-                    messageInput.getText().clear();
-                }
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentFullName = dataSnapshot.getValue(String.class);
+                ImageButton sendButton = (ImageButton) findViewById(R.id.chat_message_send);
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String message = ((EditText)findViewById(R.id.chat_message_input)).getText().toString();
+                        if(!message.equals("")){
+                            dbh.sendMessage(currentUser, currentFullName, otherUser, otherFullName, message);
+                            EditText messageInput = (EditText) findViewById(R.id.chat_message_input);
+                            messageInput.getText().clear();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

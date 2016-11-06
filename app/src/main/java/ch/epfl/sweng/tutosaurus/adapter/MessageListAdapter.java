@@ -35,11 +35,9 @@ public class MessageListAdapter extends FirebaseListAdapter<Message>{
         TextView text = (TextView) mainView.findViewById(R.id.chat_message_row_content_text);
         String from = message.getFrom();
         if (from.equals(currentUser)) {
-            Log.d(TAG, "message was from me");
             content.setGravity(Gravity.RIGHT);
             content.setPadding(MESSAGE_INNER_PADDING, 0, 0, 0);
         } else {
-            Log.d(TAG, "message was from you");
             content.setGravity(Gravity.LEFT);
             content.setPadding(0, 0, MESSAGE_INNER_PADDING, 0);
         }

@@ -96,7 +96,7 @@ public class HomeScreenActivity extends AppCompatActivity
         circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
         linkProfilePictureToNavView(circleView);
 
-        SharedPreferences settings = getSharedPreferences(FirebaseAuth.getInstance().getCurrentUser().getEmail(), Context.MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
         String first_name = settings.getString("firstName", "");
         String last_name = settings.getString("lastName", "");
         String email_address = settings.getString("email", "");
