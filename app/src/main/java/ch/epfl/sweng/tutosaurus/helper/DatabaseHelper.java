@@ -49,16 +49,16 @@ public class DatabaseHelper {
         ref.setValue(course);
     }
 
-    public void addTeacherToCourse(String sciper, int courseId) {
-        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + sciper);
-        DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + sciper + "/teaching/" + courseId);
+    public void addTeacherToCourse(String userId, String courseId) {
+        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
+        DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + userId + "/teaching/" + courseId);
         userTeachCourseRef.setValue(true);
         courseRef.setValue(true);
     }
 
-    public void addStudentToCourse(String sciper, int courseId) {
-        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/studying/" + sciper);
-        DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + sciper + "/studying/" + courseId);
+    public void addStudentToCourse(String userId, String courseId) {
+        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/studying/" + userId);
+        DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + userId + "/studying/" + courseId);
         userLearnCourseRef.setValue(true);
         courseRef.setValue(true);
     }

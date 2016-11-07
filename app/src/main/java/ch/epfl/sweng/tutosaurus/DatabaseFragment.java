@@ -111,13 +111,13 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
     private void addTeacherToCourse() {
         String sciper = ((EditText)myView.findViewById(R.id.db_sciper_teach_learn)).getText().toString();
         String courseId = ((EditText)myView.findViewById(R.id.db_course_id_teach_learn)).getText().toString();
-        dbh.addTeacherToCourse(sciper, Integer.parseInt(courseId));
+        dbh.addTeacherToCourse(sciper, courseId);
     }
 
     private void addStudentToCourse() {
         String sciper = ((EditText)myView.findViewById(R.id.db_sciper_teach_learn)).getText().toString();
         String courseId = ((EditText)myView.findViewById(R.id.db_course_id_teach_learn)).getText().toString();
-        dbh.addStudentToCourse(sciper, Integer.parseInt(courseId));
+        dbh.addStudentToCourse(sciper, courseId);
     }
 
 }

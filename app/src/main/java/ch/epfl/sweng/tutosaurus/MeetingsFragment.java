@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +34,7 @@ public class MeetingsFragment extends Fragment {
 
     View myView;
     private MeetingAdapter adapter;
-    private String currentUser = "123456";
+    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     DatabaseHelper dbh = DatabaseHelper.getInstance();
     public static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0

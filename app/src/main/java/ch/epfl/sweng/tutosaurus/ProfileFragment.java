@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -25,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -34,6 +36,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     CheckBox mathematics;
     CheckBox chemistry;
     CheckBox physics;
+
+    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Nullable
     @Override
@@ -69,6 +74,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if(((CheckBox) v).isChecked()){
                     editor.putBoolean("mathematics_checkbox", true);
                     editor.commit();
+                    dbh.addTeacherToCourse(currentUser, "0");
                 } else {
                     editor.putBoolean("mathematics_checkbox", false);
                     editor.commit();

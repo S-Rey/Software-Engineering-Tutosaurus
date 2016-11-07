@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.Query;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    private String currentUser = "456892";
+    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
