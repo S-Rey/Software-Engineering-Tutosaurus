@@ -7,14 +7,21 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.Query;
+
 import java.util.ArrayList;
 
+import ch.epfl.sweng.tutosaurus.findTutor.FirebaseTutorAdapter;
 import ch.epfl.sweng.tutosaurus.findTutor.TutorAdapter;
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.Tutor;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class FindTutorResult extends AppCompatActivity {
+
+    private String tutorName;
+    DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +37,15 @@ public class FindTutorResult extends AppCompatActivity {
 
 
         if (methodToCall.equals("findTutorByName")) {
-            fillListView(findTutorByName(extras.getString("NAME_TO_SEARCH"), profiles));
+            tutorName=extras.getString("NAME_TO_SEARCH");
+
+            ListView tutorList = (ListView) findViewById(R.id.tutorList);
+            Query ref = dbh.getUserRef();
+            ref = ref.orderByChild("fullName");
+            ref=ref.equalTo(tutorName);
+            FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
+            tutorList.setAdapter(adapter);
+            //fillListView(findTutorByName(extras.getString("NAME_TO_SEARCH"), profiles));
         }
         else if (methodToCall.equals("findTutorBySciper")) {
             fillListView(findTutorBySciper(extras.getString("SCIPER_TO_SEARCH"), profiles));

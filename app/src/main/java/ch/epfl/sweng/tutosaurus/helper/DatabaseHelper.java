@@ -101,4 +101,7 @@ public class DatabaseHelper {
         return dbf.child(MEETING_PER_USER_PATH + sciper);
     }
 
+    public DatabaseReference getUserRef() {
+        return dbf.child(USER_PATH);
+    }
 }
