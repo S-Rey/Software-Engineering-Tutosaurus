@@ -77,9 +77,9 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         user.setFullName(fullName);
         user.setEmail(email);
 
-        user.addTeaching("0");
-        user.addStudying("1");
-        user.addLanguage("English");
+//        user.addTeaching("0");
+//        user.addStudying("1");
+//        user.addLanguage("English");
 
         dbh.signUp(user);
     }
@@ -101,7 +101,7 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         String part1 = ((EditText)myView.findViewById(R.id.db_meeting_part1)).getText().toString();
         String part2 = ((EditText)myView.findViewById(R.id.db_meeting_part2)).getText().toString();
         Date date = new Date();
-        Meeting meeting = new Meeting(date, 60, new Course("0", "Maths"));
+        Meeting meeting = new Meeting(date, 60, new Course("Maths", "Mathematics"));
         meeting.setNameLocation(location);
         meeting.addParticipant(part1);
         meeting.addParticipant(part2);

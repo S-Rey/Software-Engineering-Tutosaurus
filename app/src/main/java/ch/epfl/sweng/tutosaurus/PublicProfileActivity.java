@@ -107,10 +107,10 @@ public class PublicProfileActivity extends AppCompatActivity {
 
                 // Set the thaught subjects.
                 // TODO: get subject list from database
-                boolean isMathsTeacher=matchingTutor.isTeacher("0");
-                boolean isPhysicsTeacher=matchingTutor.isTeacher("1");
-                boolean isChemistryTeacher=matchingTutor.isTeacher("2");
-                boolean isComputerTeacher=matchingTutor.isTeacher("3");
+                boolean isMathsTeacher=matchingTutor.isTeacher("Maths");
+                boolean isPhysicsTeacher=matchingTutor.isTeacher("Physics");
+                boolean isChemistryTeacher=matchingTutor.isTeacher("Chemistry");
+                boolean isComputerTeacher=matchingTutor.isTeacher("Computer");
                 setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacher,isComputerTeacher);
 
             }

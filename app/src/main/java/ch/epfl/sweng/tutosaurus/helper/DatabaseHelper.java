@@ -56,6 +56,13 @@ public class DatabaseHelper {
         courseRef.setValue(true);
     }
 
+    public void removeTeacherFromCourse(String userId, String courseId) {
+        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
+        DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + userId + "/teaching/" + courseId);
+        userTeachCourseRef.setValue(false);
+        courseRef.setValue(false);
+    }
+
     public void addStudentToCourse(String userId, String courseId) {
         DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/studying/" + userId);
         DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + userId + "/studying/" + courseId);

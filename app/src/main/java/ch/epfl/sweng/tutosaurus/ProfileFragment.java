@@ -74,10 +74,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if(((CheckBox) v).isChecked()){
                     editor.putBoolean("mathematics_checkbox", true);
                     editor.commit();
-                    dbh.addTeacherToCourse(currentUser, "0");
+                    dbh.addTeacherToCourse(currentUser, "Maths");
                 } else {
                     editor.putBoolean("mathematics_checkbox", false);
                     editor.commit();
+                    dbh.removeTeacherFromCourse(currentUser, "Maths");
                 }
             }
         });
@@ -89,9 +90,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if(((CheckBox) v).isChecked()){
                     editor.putBoolean("physics_checkbox", true);
                     editor.commit();
+                    dbh.addTeacherToCourse(currentUser, "Physics");
                 } else {
                     editor.putBoolean("physics_checkbox", false);
                     editor.commit();
+                    dbh.removeTeacherFromCourse(currentUser, "Physics");
                 }
             }
         });
@@ -103,9 +106,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if(((CheckBox) v).isChecked()){
                     editor.putBoolean("chemistry_checkbox", true);
                     editor.commit();
+                    dbh.addTeacherToCourse(currentUser, "Chemistry");
                 } else {
                     editor.putBoolean("chemistry_checkbox", false);
                     editor.commit();
+                    dbh.addTeacherToCourse(currentUser, "Chemistry");
                 }
             }
         });
@@ -117,9 +122,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if(((CheckBox) v).isChecked()){
                     editor.putBoolean("computer_science_checkbox", true);
                     editor.commit();
+                    dbh.addTeacherToCourse(currentUser, "Computer");
                 } else {
                     editor.putBoolean("computer_science_checkbox", false);
                     editor.commit();
+                    dbh.addTeacherToCourse(currentUser, "Computer");
                 }
             }
         });
