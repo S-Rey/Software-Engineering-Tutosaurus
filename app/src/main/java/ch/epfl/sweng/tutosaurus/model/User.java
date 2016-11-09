@@ -229,7 +229,7 @@ public class User {
      * @param courseId the unique id of the course
      * @return the number of hours taught
      */
-    public int getHoursTaught(int courseId) {
+    public int getHoursTaught(String courseId) {
         return totalHoursTaught.get(courseId);
     }
 
@@ -261,12 +261,13 @@ public class User {
     }
 
     public boolean isTeacher(String courseId){
-        for(String course : teaching.keySet()){
-            if(course.equals(courseId)){
+        /*for(String course : teaching.keySet()){
+            if(course.){
                 return true;
             }
         }
-        return false;
+        return false;*/
+        return teaching.get(courseId);
     }
 
 }

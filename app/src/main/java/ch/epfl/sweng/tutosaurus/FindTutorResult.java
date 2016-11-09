@@ -28,6 +28,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 public class FindTutorResult extends AppCompatActivity {
 
     private String tutorName;
+    private String tutorSciper;
     DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Override
@@ -35,42 +36,43 @@ public class FindTutorResult extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_tutor_result);
 
-        User[] profiles = createProfiles();
+        //User[] profiles = createProfiles();
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
         String methodToCall = extras.getString("METHOD_TO_CALL");
-
+        ListView tutorList = (ListView) findViewById(R.id.tutorList);
+        Query ref = dbh.getUserRef();
 
         if (methodToCall.equals("findTutorByName")) {
             tutorName=extras.getString("NAME_TO_SEARCH");
-
-            ListView tutorList = (ListView) findViewById(R.id.tutorList);
-            Query ref = dbh.getUserRef();
-            ref = ref.orderByChild("fullName");
-            ref=ref.equalTo(tutorName);
-            FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
-            tutorList.setAdapter(adapter);
+            ref = ref.orderByChild("fullName").equalTo(tutorName);
+            //FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
+            //tutorList.setAdapter(adapter);
         }
         else if (methodToCall.equals("findTutorBySciper")) {
-            fillListView(findTutorBySciper(extras.getString("SCIPER_TO_SEARCH"), profiles));
+            tutorSciper=extras.getString("SCIPER_TO_SEARCH");
+            ref = ref.orderByChild("sciper").equalTo(tutorSciper);
+            //FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
+            //tutorList.setAdapter(adapter);
         }
         else if (methodToCall.equals("findMathsTutor")) {
-            findTutorBySubject("Maths");
+            ref=findTutorBySubject("Maths",ref);
         }
         else if (methodToCall.equals("findPhysicsTutor")) {
-            findTutorBySubject("Physics");
+            ref=findTutorBySubject("Physics",ref);
         }
         else if (methodToCall.equals("findChemistryTutor")) {
-            findTutorBySubject("Chemistry");
+            ref=findTutorBySubject("Chemistry", ref);
         }
         else if (methodToCall.equals("findComputerTutor")) {
-            findTutorBySubject("Computer");
+            ref=findTutorBySubject("Computer",ref);
         }
         else if (methodToCall.equals("showFullList")){
-            fillListView(showFullList(profiles));
         }
+        FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
+        tutorList.setAdapter(adapter);
         /*
         // Create example database
         MockupDatabaseHandler dbHandler = new MockupDatabaseHandler(this);
@@ -88,7 +90,7 @@ public class FindTutorResult extends AppCompatActivity {
         */
 
     }
-
+/*
     public User[] createProfiles() {
 
         Course maths= new Course("0","Maths");
@@ -183,7 +185,7 @@ public class FindTutorResult extends AppCompatActivity {
         }
         return teachers;
     }
-
+*/
     /*private ArrayList<User> findTutorBySubject(String subject, User[] profiles) {
         String id=convertNameToId(subject);
         int count = 0;
@@ -205,13 +207,9 @@ public class FindTutorResult extends AppCompatActivity {
 
         return teachers;
     }*/
-    private void findTutorBySubject(String subject){
-        ListView tutorList = (ListView) findViewById(R.id.tutorList);
-        Query ref = dbh.getUserRef();
-        ref=ref.orderByChild("teaching/" + subject);
-        ref=ref.equalTo(true);
-        FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
-        tutorList.setAdapter(adapter);
+    private Query findTutorBySubject(String subject, Query userRef){
+        Query resultTutorRef=userRef.orderByChild("teaching/" + subject).equalTo(true);
+        return resultTutorRef;
     }
 
     private ArrayList<User> showFullList(User[] profiles) {
