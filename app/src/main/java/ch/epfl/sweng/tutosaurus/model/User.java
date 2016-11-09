@@ -261,13 +261,12 @@ public class User {
     }
 
     public boolean isTeacher(String courseId){
-        /*for(String course : teaching.keySet()){
-            if(course.){
-                return true;
-            }
+        if(teaching.containsKey(courseId)){
+            return teaching.get(courseId);
         }
-        return false;*/
-        return teaching.get(courseId);
+        else{
+            return false;
+        }
     }
 
 }
