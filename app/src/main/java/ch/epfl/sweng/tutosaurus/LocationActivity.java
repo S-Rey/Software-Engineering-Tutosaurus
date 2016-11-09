@@ -148,8 +148,6 @@ public class LocationActivity extends FragmentActivity implements
         }
         locationProvider.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
         location = locationProvider.getLastLocation(mGoogleApiClient);
-        double longitude = location.getLongitude();
-        double latitude = location.getLatitude();
 
         mMap.addMarker(new MarkerOptions().position(locationMeeting).title("Marker in meeting location"));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationMeeting, 16.0f));
