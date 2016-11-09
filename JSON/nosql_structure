@@ -50,5 +50,32 @@ Structure ot the noSQL JSON database
 			}	
 		}	
 	}
+
+	"chats" : {
+        "userUid" : {
+           "uid" : {
+                "uid" : uid,
+                "fullName" : fullName
+           }
+        }
+	}
+
+	"messages" : {
+	    "userUid" : {
+	        "otherUserUid" : {
+                "m1" : {
+                    "from" : uid,
+                    "message" : "Hello world!",
+                    "timestamp" : 9080312312
+                }
+                "m2" : {
+                    "from" : uid,
+                    "message" : "How are you ?",
+                    "timestamp" : 9081128122
+                }
+                ...
+            }
+	    }
+	}
 }
 
