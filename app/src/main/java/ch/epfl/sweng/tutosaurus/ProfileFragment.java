@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 } else {
                     editor.putBoolean("chemistry_checkbox", false);
                     editor.commit();
-                    dbh.addTeacherToCourse(currentUser, "Chemistry");
+                    dbh.removeTeacherFromCourse(currentUser, "Chemistry");
                 }
             }
         });
@@ -126,7 +126,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 } else {
                     editor.putBoolean("computer_science_checkbox", false);
                     editor.commit();
-                    dbh.addTeacherToCourse(currentUser, "Computer");
+                    dbh.removeTeacherFromCourse(currentUser, "Computer");
                 }
             }
         });
