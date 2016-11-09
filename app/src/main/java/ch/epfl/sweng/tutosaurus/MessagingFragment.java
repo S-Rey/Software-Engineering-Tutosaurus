@@ -50,7 +50,7 @@ public class MessagingFragment extends Fragment {
         chatListAdapter = new ChatListAdapter(getActivity(), Chat.class, R.layout.message_chat_row, chatRef);
         userListAdapter = new UserListAdapter(getActivity(), User.class, R.layout.message_user_row, userRef);
 
-        listView.setAdapter(chatListAdapter);
+        listView.setAdapter(userListAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
