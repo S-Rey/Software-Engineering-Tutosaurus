@@ -62,17 +62,6 @@ public class MeetingsFragment extends Fragment {
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
 
-        Button createMeeting = (Button) myView.findViewById(R.id.createMeetingButton);
-        createMeeting.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(myView.getContext(), CreateMeetingActivity.class);
-                myView.getContext().startActivity(intent);
-            }
-        });
-
 
 
         return myView;

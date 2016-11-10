@@ -57,6 +57,17 @@ public class PublicProfileActivity extends AppCompatActivity {
             }
         });
 
+        Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
+        createMeeting.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getApplicationContext(), CreateMeetingActivity.class);
+                startActivity(intent);
+            }
+        });
+
         Intent intent = getIntent();
         String userId = intent.getStringExtra("USER_ID");
 
@@ -314,5 +325,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         };
         thisButton.setOnClickListener(hideCommentsClick);
     }
+
+
 
 }

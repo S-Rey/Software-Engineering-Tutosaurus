@@ -10,12 +10,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/meetingList"/>
 
-    <Button
-        android:id="@+id/createMeetingButton"
-        android:text="Create new meeting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="createMeeting"/>
-
 
 </LinearLayout>
