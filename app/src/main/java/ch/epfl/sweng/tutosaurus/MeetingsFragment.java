@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,15 +62,14 @@ public class MeetingsFragment extends Fragment {
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
 
-        Button button = (Button) myView.findViewById(R.id.createMeetingButton);
-        button.setOnClickListener(new View.OnClickListener()
+        Button createMeeting = (Button) myView.findViewById(R.id.createMeetingButton);
+        createMeeting.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 Intent intent = new Intent(myView.getContext(), CreateMeetingActivity.class);
                 myView.getContext().startActivity(intent);
-
             }
         });
 

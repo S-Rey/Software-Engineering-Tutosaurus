@@ -97,10 +97,10 @@ public class Meeting {
 
     /**
      * Add a participant to this meeting.
-     * @param sciper the sciper number of the participant
+     * @param key the Firebase key of the participant
      */
-    public void addParticipant(String sciper) {
-        this.participants.add(sciper);
+    public void addParticipant(String key) {
+        this.participants.add(key);
     }
 
 

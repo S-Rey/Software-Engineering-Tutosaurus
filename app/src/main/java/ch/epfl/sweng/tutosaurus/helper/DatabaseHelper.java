@@ -80,15 +80,17 @@ public class DatabaseHelper {
         DatabaseReference meetingRef = dbf.child(MEETING_PATH + key);
         DatabaseReference userRef = dbf.child(USER_PATH);
         DatabaseReference meetingsPerUserRef = dbf.child(MEETING_PER_USER_PATH);
-        for (String sciper: meeting.getParticipants()) {
-            DatabaseReference userMeetingsRef = userRef.child(sciper + "/meetings/" + meeting.getId());
-            DatabaseReference meetingsPerUserUserRef = meetingsPerUserRef.child(sciper + "/" + meeting.getId());
+        for (String userKey: meeting.getParticipants()) {
+            DatabaseReference userMeetingsRef = userRef.child(userKey + "/meetings/" + meeting.getId());
+            DatabaseReference meetingsPerUserUserRef = meetingsPerUserRef.child(userKey + "/" + meeting.getId());
             userMeetingsRef.setValue(true);
             meetingsPerUserUserRef.setValue(meeting);
         }
         meetingRef.setValue(meeting);
-        DatabaseReference courseMeetingRef = dbf.child(COURSE_PATH + meeting.getCourse().getId() + "/meeting/" + meeting.getId());
-        courseMeetingRef.setValue(true);
+        if (meeting.getCourse().getId() != null) {
+            DatabaseReference courseMeetingRef = dbf.child(COURSE_PATH + meeting.getCourse().getId() + "/meeting/" + meeting.getId());
+            courseMeetingRef.setValue(true);
+        }
         return key;
     }
 
