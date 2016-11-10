@@ -57,21 +57,9 @@ public class PublicProfileActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        // Create the profiles
-        FindTutorResult result=new FindTutorResult();
-        User[] profiles = result.createProfiles();
-        */
         Intent intent = getIntent();
         String userId = intent.getStringExtra("USER_ID");
-        /*
-        User matchingTutor=new User("0");
-        for(User profile : profiles){
-            if(profile.getSciper().equals(sciperNumber)){
-                matchingTutor=profile;
-            }
-        }
-        */
+
         DatabaseReference ref = dbh.getReference();
         ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -101,7 +89,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                 //RatingBar studentRate=(RatingBar) findViewById(R.id.ratingBarStudent);
                 //studentRate.setRating(4f);
 
-                // Set the level TODO: get progress from database
+                // Set the level TODO: get total progress!!!
                 ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
                 level.setProgress(88);
 
