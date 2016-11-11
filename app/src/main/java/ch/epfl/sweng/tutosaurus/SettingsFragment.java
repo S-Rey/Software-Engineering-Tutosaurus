@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +43,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
     DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -92,7 +94,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     private void synchronizeCalendar() {
         DatabaseReference ref = dbh.getReference();
-        ref.child("meetingsPerUser/456892").addValueEventListener(new ValueEventListener() {
+        ref.child("meetingsPerUser/" + currentUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 CheckBoxPreference calendar = (CheckBoxPreference) findPreference("checkbox_preference_calendar");

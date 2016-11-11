@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class User {
+public class User implements Identifiable {
 
     private String sciper;
     private String username;
@@ -229,7 +229,7 @@ public class User {
      * @param courseId the unique id of the course
      * @return the number of hours taught
      */
-    public int getHoursTaught(int courseId) {
+    public int getHoursTaught(String courseId) {
         return totalHoursTaught.get(courseId);
     }
 
@@ -261,12 +261,12 @@ public class User {
     }
 
     public boolean isTeacher(String courseId){
-        for(String course : teaching.keySet()){
-            if(course.equals(courseId)){
-                return true;
-            }
+        if(teaching.containsKey(courseId)){
+            return teaching.get(courseId);
         }
-        return false;
+        else{
+            return false;
+        }
     }
 
 }

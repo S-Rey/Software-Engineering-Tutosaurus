@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Date;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
@@ -39,6 +41,8 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         addTeacherToCourseButton.setOnClickListener(this);
         Button addStudentToCourseButton = (Button) myView.findViewById(R.id.db_course_learn_add);
         addStudentToCourseButton.setOnClickListener(this);
+        Button sendMessageButton = (Button) myView.findViewById(R.id.db_message_send);
+        sendMessageButton.setOnClickListener(this);
         //String picPath = "/storage/emulated/0/Download/android.jpg";
         //PictureHelper.putImage(picPath);
         return myView;
@@ -65,6 +69,8 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
             case R.id.db_course_learn_add :
                 addStudentToCourse();
                 break;
+            case R.id.db_message_send :
+                sendMessage();
         }
     }
 
@@ -77,9 +83,9 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         user.setFullName(fullName);
         user.setEmail(email);
 
-        user.addTeaching("0");
-        user.addStudying("1");
-        user.addLanguage("English");
+//        user.addTeaching("0");
+//        user.addStudying("1");
+//        user.addLanguage("English");
 
         dbh.signUp(user);
     }
@@ -101,7 +107,7 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
         String part1 = ((EditText)myView.findViewById(R.id.db_meeting_part1)).getText().toString();
         String part2 = ((EditText)myView.findViewById(R.id.db_meeting_part2)).getText().toString();
         Date date = new Date();
-        Meeting meeting = new Meeting(date, 60, new Course("0", "Maths"));
+        Meeting meeting = new Meeting(date, 60, new Course("Maths", "Mathematics"));
         meeting.setNameLocation(location);
         meeting.addParticipant(part1);
         meeting.addParticipant(part2);
@@ -111,13 +117,23 @@ public class DatabaseFragment extends Fragment implements View.OnClickListener {
     private void addTeacherToCourse() {
         String sciper = ((EditText)myView.findViewById(R.id.db_sciper_teach_learn)).getText().toString();
         String courseId = ((EditText)myView.findViewById(R.id.db_course_id_teach_learn)).getText().toString();
-        dbh.addTeacherToCourse(sciper, Integer.parseInt(courseId));
+        dbh.addTeacherToCourse(sciper, courseId);
     }
 
     private void addStudentToCourse() {
         String sciper = ((EditText)myView.findViewById(R.id.db_sciper_teach_learn)).getText().toString();
         String courseId = ((EditText)myView.findViewById(R.id.db_course_id_teach_learn)).getText().toString();
-        dbh.addStudentToCourse(sciper, Integer.parseInt(courseId));
+        dbh.addStudentToCourse(sciper, courseId);
+    }
+
+    private void sendMessage(){
+        String to = ((EditText)myView.findViewById(R.id.db_message_to)).getText().toString();
+        String content = ((EditText)myView.findViewById(R.id.db_message_content)).getText().toString();
+        String from = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (to.equals("")) {
+            to = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        dbh.sendMessage(from, "", to, "", content);
     }
 
 }

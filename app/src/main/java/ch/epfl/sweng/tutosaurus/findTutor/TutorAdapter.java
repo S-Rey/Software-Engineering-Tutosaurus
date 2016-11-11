@@ -15,17 +15,18 @@ import java.util.ArrayList;
 import ch.epfl.sweng.tutosaurus.PublicProfileActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Tutor;
+import ch.epfl.sweng.tutosaurus.model.User;
 
 /**
  * Created by albertochiappa on 21/10/16.
  */
 
-public class TutorAdapter extends ArrayAdapter<Tutor> {
+public class TutorAdapter extends ArrayAdapter<User> {
     Context context;
     int layoutResourceId;
-    ArrayList<Tutor> tutorList = null;
+    ArrayList<User> tutorList = null;
 
-    public TutorAdapter(Context context, int layoutResourceId, ArrayList<Tutor> tutorList){
+    public TutorAdapter(Context context, int layoutResourceId, ArrayList<User> tutorList){
         super(context,layoutResourceId,tutorList);
         this.layoutResourceId=layoutResourceId;
         this.context=context;
@@ -49,13 +50,13 @@ public class TutorAdapter extends ArrayAdapter<Tutor> {
         else{
             holder=(TutorHolder) row.getTag();
         }
-        Tutor tutor = tutorList.get(position);
-        holder.profileName.setText(tutor.profileName);
-        holder.profilePicture.setImageResource(tutor.profilePicture);
+        User tutor = tutorList.get(position);
+        holder.profileName.setText(tutor.getFullName());
+        holder.profilePicture.setImageResource(tutor.getPicture());
 
         // Set the OnClickListener on each name of the list
         final Intent intent = new Intent(context, PublicProfileActivity.class);
-        intent.putExtra("SCIPER_NUMBER",tutor.sciperNumber);
+        intent.putExtra("SCIPER_NUMBER",tutor.getSciper());
 
         holder.profileName.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -72,7 +73,7 @@ public class TutorAdapter extends ArrayAdapter<Tutor> {
         TextView profileName;
     }
 
-    public Tutor getItemAtPosition(int position){
+    public User getItemAtPosition(int position){
         return tutorList.get(position);
     }
 

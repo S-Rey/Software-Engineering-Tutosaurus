@@ -6,8 +6,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+
+import ch.epfl.sweng.tutosaurus.model.Chat;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
+import ch.epfl.sweng.tutosaurus.model.Message;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class DatabaseHelper {
@@ -49,16 +53,23 @@ public class DatabaseHelper {
         ref.setValue(course);
     }
 
-    public void addTeacherToCourse(String sciper, int courseId) {
-        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + sciper);
-        DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + sciper + "/teaching/" + courseId);
+    public void addTeacherToCourse(String userId, String courseId) {
+        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
+        DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + userId + "/teaching/" + courseId);
         userTeachCourseRef.setValue(true);
         courseRef.setValue(true);
     }
 
-    public void addStudentToCourse(String sciper, int courseId) {
-        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/studying/" + sciper);
-        DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + sciper + "/studying/" + courseId);
+    public void removeTeacherFromCourse(String userId, String courseId) {
+        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
+        DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + userId + "/teaching/" + courseId);
+        userTeachCourseRef.setValue(false);
+        courseRef.setValue(false);
+    }
+
+    public void addStudentToCourse(String userId, String courseId) {
+        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/studying/" + userId);
+        DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + userId + "/studying/" + courseId);
         userLearnCourseRef.setValue(true);
         courseRef.setValue(true);
     }
@@ -69,15 +80,17 @@ public class DatabaseHelper {
         DatabaseReference meetingRef = dbf.child(MEETING_PATH + key);
         DatabaseReference userRef = dbf.child(USER_PATH);
         DatabaseReference meetingsPerUserRef = dbf.child(MEETING_PER_USER_PATH);
-        for (String sciper: meeting.getParticipants()) {
-            DatabaseReference userMeetingsRef = userRef.child(sciper + "/meetings/" + meeting.getId());
-            DatabaseReference meetingsPerUserUserRef = meetingsPerUserRef.child(sciper + "/" + meeting.getId());
+        for (String userKey: meeting.getParticipants()) {
+            DatabaseReference userMeetingsRef = userRef.child(userKey + "/meetings/" + meeting.getId());
+            DatabaseReference meetingsPerUserUserRef = meetingsPerUserRef.child(userKey + "/" + meeting.getId());
             userMeetingsRef.setValue(true);
             meetingsPerUserUserRef.setValue(meeting);
         }
         meetingRef.setValue(meeting);
-        DatabaseReference courseMeetingRef = dbf.child(COURSE_PATH + meeting.getCourse().getId() + "/meeting/" + meeting.getId());
-        courseMeetingRef.setValue(true);
+        if (meeting.getCourse().getId() != null) {
+            DatabaseReference courseMeetingRef = dbf.child(COURSE_PATH + meeting.getCourse().getId() + "/meeting/" + meeting.getId());
+            courseMeetingRef.setValue(true);
+        }
         return key;
     }
 
@@ -97,8 +110,33 @@ public class DatabaseHelper {
         });
     }
 
+    public void sendMessage(String fromUid, String fromFullName, String toUid, String toFullName, String content){
+        DatabaseReference chatIdFromRef = dbf.child("chats/" + fromUid);
+        DatabaseReference chatIdToRef = dbf.child("chats/" + toUid);
+
+        Chat fromChat = new Chat(toUid);
+        fromChat.setFullName(toFullName);
+        Chat toChat = new Chat(fromUid);
+        toChat.setFullName(fromFullName);
+        chatIdFromRef.child(toUid).setValue(fromChat);
+        chatIdToRef.child(fromUid).setValue(toChat);
+
+        DatabaseReference messageFromRef = dbf.child("messages/" + fromUid + "/" +toUid);
+        DatabaseReference messageToRef = dbf.child("messages/" + toUid + "/" + fromUid);
+
+        String key = messageFromRef.push().getKey();
+
+        long timestamp = (new Date()).getTime();
+        Message message = new Message(fromUid, content, timestamp);
+        messageFromRef.child(key).setValue(message);
+        messageToRef.child(key).setValue(message);
+    }
+
     public DatabaseReference getMeetingsRefForUser(String sciper) {
         return dbf.child(MEETING_PER_USER_PATH + sciper);
     }
 
+    public DatabaseReference getUserRef() {
+        return dbf.child(USER_PATH);
+    }
 }

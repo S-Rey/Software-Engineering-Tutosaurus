@@ -3,53 +3,76 @@ package ch.epfl.sweng.tutosaurus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import ch.epfl.sweng.tutosaurus.findTutor.FirebaseTutorAdapter;
 import ch.epfl.sweng.tutosaurus.findTutor.TutorAdapter;
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.Tutor;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class FindTutorResult extends AppCompatActivity {
 
+    private String tutorName;
+    private String tutorSciper;
+    DatabaseHelper dbh = DatabaseHelper.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_tutor_result);
 
-        User[] profiles = createProfiles();
+        //User[] profiles = createProfiles();
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
         String methodToCall = extras.getString("METHOD_TO_CALL");
-
+        ListView tutorList = (ListView) findViewById(R.id.tutorList);
+        Query ref = dbh.getUserRef();
 
         if (methodToCall.equals("findTutorByName")) {
-            fillListView(findTutorByName(extras.getString("NAME_TO_SEARCH"), profiles));
+            tutorName=extras.getString("NAME_TO_SEARCH");
+            ref = ref.orderByChild("fullName").equalTo(tutorName);
+            //FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
+            //tutorList.setAdapter(adapter);
         }
         else if (methodToCall.equals("findTutorBySciper")) {
-            fillListView(findTutorBySciper(extras.getString("SCIPER_TO_SEARCH"), profiles));
+            tutorSciper=extras.getString("SCIPER_TO_SEARCH");
+            ref = ref.orderByChild("sciper").equalTo(tutorSciper);
+            //FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
+            //tutorList.setAdapter(adapter);
         }
         else if (methodToCall.equals("findMathsTutor")) {
-            fillListView(findTutorBySubject("Maths", profiles));
+            ref=findTutorBySubject("Maths",ref);
         }
         else if (methodToCall.equals("findPhysicsTutor")) {
-            fillListView(findTutorBySubject("Physics", profiles));
+            ref=findTutorBySubject("Physics",ref);
         }
         else if (methodToCall.equals("findChemistryTutor")) {
-            fillListView(findTutorBySubject("Chemistry", profiles));
+            ref=findTutorBySubject("Chemistry", ref);
         }
         else if (methodToCall.equals("findComputerTutor")) {
-            fillListView(findTutorBySubject("Computer", profiles));
+            ref=findTutorBySubject("Computer",ref);
         }
         else if (methodToCall.equals("showFullList")){
-            fillListView(showFullList(profiles));
         }
+        FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
+        tutorList.setAdapter(adapter);
         /*
         // Create example database
         MockupDatabaseHandler dbHandler = new MockupDatabaseHandler(this);
@@ -67,7 +90,7 @@ public class FindTutorResult extends AppCompatActivity {
         */
 
     }
-
+/*
     public User[] createProfiles() {
 
         Course maths= new Course("0","Maths");
@@ -119,22 +142,20 @@ public class FindTutorResult extends AppCompatActivity {
     }
 
     // TODO: make a search algorithm that is more flexible
-    private ArrayList<Tutor> findTutorByName(String name, User[] profiles) {
+    private ArrayList<User> findTutorByName(String name, User[] profiles) {
         int count = 0;
         Tutor tutorToAdd;
-        ArrayList<Tutor> teachers = new ArrayList<>(0);
+        ArrayList<User> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
             if (profile.getFullName().equals(name)) {
-                tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(),profile.getSciper());
-                teachers.add(tutorToAdd);
+                teachers.add(profile);
                 count++;
             }
         }
 
         for (User profile : profiles) {
             if (profile.getFullName().toLowerCase().contains(name.toLowerCase())) {
-                tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(),profile.getSciper());
-                teachers.add(tutorToAdd);
+                teachers.add(profile);
                 count++;
             }
         }
@@ -147,15 +168,13 @@ public class FindTutorResult extends AppCompatActivity {
         return teachers;
     }
 
-    private ArrayList<Tutor> findTutorBySciper(String sciper, User[] profiles) {
+    private ArrayList<User> findTutorBySciper(String sciper, User[] profiles) {
         int count = 0;
         int sciperNumber=Integer.parseInt(sciper);
-        Tutor tutorToAdd;
-        ArrayList<Tutor> teachers = new ArrayList<>(0);
+        ArrayList<User> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
             if (profile.getSciper().equals(sciperNumber)) {
-                tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(), profile.getSciper());
-                teachers.add(tutorToAdd);
+                teachers.add(profile);
                 count++;
             }
         }
@@ -166,17 +185,15 @@ public class FindTutorResult extends AppCompatActivity {
         }
         return teachers;
     }
-
-    private ArrayList<Tutor> findTutorBySubject(String subject, User[] profiles) {
+*/
+    /*private ArrayList<User> findTutorBySubject(String subject, User[] profiles) {
         String id=convertNameToId(subject);
         int count = 0;
-        Tutor tutorToAdd;
-        ArrayList<Tutor> teachers = new ArrayList<>(0);
+        ArrayList<User> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
             for (String taughtCourseId : profile.getTeaching().keySet()) {
                 if (taughtCourseId.equals(id)) {
-                    tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(), profile.getSciper());
-                    teachers.add(tutorToAdd);
+                    teachers.add(profile);
                     count++;
                 }
 
@@ -189,15 +206,17 @@ public class FindTutorResult extends AppCompatActivity {
         }
 
         return teachers;
+    }*/
+    private Query findTutorBySubject(String subject, Query userRef){
+        Query resultTutorRef=userRef.orderByChild("teaching/" + subject).equalTo(true);
+        return resultTutorRef;
     }
 
-    private ArrayList<Tutor> showFullList(User[] profiles) {
+    private ArrayList<User> showFullList(User[] profiles) {
         int count = 0;
-        Tutor tutorToAdd;
-        ArrayList<Tutor> teachers = new ArrayList<>(0);
+        ArrayList<User> teachers = new ArrayList<>(0);
         for (User profile : profiles) {
-            tutorToAdd=new Tutor(profile.getPicture(),profile.getFullName(),profile.getSciper());
-            teachers.add(tutorToAdd);
+            teachers.add(profile);
             count++;
         }
 
@@ -208,7 +227,7 @@ public class FindTutorResult extends AppCompatActivity {
         }
         return teachers;
     }
-    private void fillListView(ArrayList<Tutor> tutorNames){
+    private void fillListView(ArrayList<User> tutorNames){
         TutorAdapter arrayAdapter = new TutorAdapter(
                 this,
                 R.layout.listview_tutor_row,

@@ -35,7 +35,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.50"
                     android:id="@+id/profileName"
-                    android:textSize="36sp"
+                    android:textSize="32sp"
                     android:gravity="center_horizontal|center_vertical"
                     android:layout_marginBottom="5dp" />
 
@@ -84,7 +84,7 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/foto_mia"
+                app:srcCompat="@drawable/dino_register"
                 android:id="@+id/profilePicture"
                 android:maxWidth="42dp"
                 android:maxHeight="42dp"
@@ -160,7 +160,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="70dp">
 
                 <ImageButton
                     android:layout_width="0dp"
@@ -262,6 +262,13 @@
             android:visibility="gone"
             android:id="@+id/commentsView"
             />
+
+        <Button
+            android:id="@+id/createMeetingButton"
+            android:text="Request meeting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="createMeeting"/>
 
     </LinearLayout>
 

@@ -3,6 +3,7 @@ package ch.epfl.sweng.tutosaurus;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -15,8 +16,11 @@ import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +37,7 @@ public class MeetingsFragment extends Fragment {
 
     View myView;
     private MeetingAdapter adapter;
-    private String currentUser = "123456";
+    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     DatabaseHelper dbh = DatabaseHelper.getInstance();
     public static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
