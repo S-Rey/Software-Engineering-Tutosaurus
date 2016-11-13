@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import ch.epfl.sweng.tutosaurus.findTutor.FirebaseTutorAdapter;
@@ -48,14 +50,10 @@ public class FindTutorResult extends AppCompatActivity {
         if (methodToCall.equals("findTutorByName")) {
             tutorName=extras.getString("NAME_TO_SEARCH");
             ref = ref.orderByChild("fullName").equalTo(tutorName);
-            //FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
-            //tutorList.setAdapter(adapter);
         }
         else if (methodToCall.equals("findTutorBySciper")) {
             tutorSciper=extras.getString("SCIPER_TO_SEARCH");
             ref = ref.orderByChild("sciper").equalTo(tutorSciper);
-            //FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
-            //tutorList.setAdapter(adapter);
         }
         else if (methodToCall.equals("findMathsTutor")) {
             ref=findTutorBySubject("Maths",ref);
@@ -71,24 +69,9 @@ public class FindTutorResult extends AppCompatActivity {
         }
         else if (methodToCall.equals("showFullList")){
         }
+
         FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
         tutorList.setAdapter(adapter);
-        /*
-        // Create example database
-        MockupDatabaseHandler dbHandler = new MockupDatabaseHandler(this);
-        //ProfileMockup alberto=new ProfileMockup(273516,"Alberto Silvio","Chiappa",3.5f,4.0f);
-        //dbHandler.addProfile(alberto);
-        //fillDatabase(dbHandler);
-
-        // Writes the name of id 273516
-        TextView name=(TextView) findViewById(R.id.name);
-        Toast toast=Toast.makeText(this, "Looking for the profile", Toast.LENGTH_SHORT);
-        toast.show();
-        //String nameToDisplay=dbHandler.getProfile(273516).getName();
-        //name.setText(dbHandler.getProfile(273516).getName());
-        //name1.setText("Alberto");
-        */
-
     }
 /*
     public User[] createProfiles() {
@@ -221,7 +204,7 @@ public class FindTutorResult extends AppCompatActivity {
         }
 
         if (count == 0) {
-            TextView message=(TextView) findViewById(R.id.message);
+            TextView message=(TextView) findViewById(R.id.noResultView);
             message.setText("The research produced no results");
             message.setVisibility(View.VISIBLE);
         }
