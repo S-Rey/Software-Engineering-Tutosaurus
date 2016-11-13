@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.test.ActivityInstrumentationTestCase2;
@@ -57,7 +58,7 @@ public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActi
         onView(withId(R.id.mathsButton)).perform(click());
         onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
         onView(withId(R.id.profileName)).check(matches(isDisplayed()));
-        Thread.sleep(1500);
+        Thread.sleep(1000);
         onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         onView(withId(R.id.commentsView)).check(matches(isDisplayed()));
         onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
@@ -65,6 +66,23 @@ public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActi
         onView(withId(R.id.mathsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         onView(withId(R.id.subjectName)).check(matches(withText("Mathematics")));
         onView(withId(R.id.mathsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.subjectName)).check(matches(not(isDisplayed())));
+        Espresso.pressBack();
+        Espresso.pressBack();
+        Thread.sleep(1000);
+        onView(withId(R.id.bySubject)).perform(click());
+        Thread.sleep(1000);
+        onView(withId(R.id.physicsButton)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+        onView(withId(R.id.profileName)).check(matches(isDisplayed()));
+        Thread.sleep(1000);
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.commentsView)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.commentsView)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.physicsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.subjectName)).check(matches(withText("Physics")));
+        onView(withId(R.id.physicsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         onView(withId(R.id.subjectName)).check(matches(not(isDisplayed())));
     }
 
