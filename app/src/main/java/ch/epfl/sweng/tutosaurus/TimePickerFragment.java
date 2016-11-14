@@ -14,6 +14,7 @@ import java.util.Calendar;
 /**
  * Created by santo on 10/11/16.
  */
+
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 
@@ -30,7 +31,7 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        // Do something with the time chosen by the user
+
     }
 
 

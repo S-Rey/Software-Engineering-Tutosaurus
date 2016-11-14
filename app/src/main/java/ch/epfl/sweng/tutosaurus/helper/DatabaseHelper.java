@@ -87,7 +87,7 @@ public class DatabaseHelper {
             meetingsPerUserUserRef.setValue(meeting);
         }
         meetingRef.setValue(meeting);
-        if (meeting.getCourse().getId() != null) {
+        if (meeting.getCourse() != null) {
             DatabaseReference courseMeetingRef = dbf.child(COURSE_PATH + meeting.getCourse().getId() + "/meeting/" + meeting.getId());
             courseMeetingRef.setValue(true);
         }

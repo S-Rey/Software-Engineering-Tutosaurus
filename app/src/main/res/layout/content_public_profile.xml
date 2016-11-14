@@ -273,7 +273,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/date_location_meeting"
@@ -282,18 +282,28 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/pickDate"
-                    android:text="Choose date"
-                    android:layout_weight="1"
+                    android:id="@+id/pickTime"
+                    android:text="Time"
+                    android:layout_weight="0.7"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:onClick="showTimePickerDialog"/>
+
+                <Button
+                    android:id="@+id/pickDate"
+                    android:text="Date"
+                    android:layout_weight="0.7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:onClick="showDatePickerDialog"/>
 
                 <Button
                     android:id="@+id/pickLocation"
-                    android:text="Choose location"
-                    android:layout_weight="1"
+                    android:text="Location"
+                    android:layout_weight="0.7"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:onClick="showLocationPickerDialog"/>
 
             </LinearLayout>
 
@@ -306,6 +316,7 @@
 
             <Button
                 android:id="@+id/addMeeting"
+                android:text="confirm"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
 

@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.FragmentManager;
+import android.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -70,7 +72,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String userId = intent.getStringExtra("USER_ID");
 
-        Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
+        final Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
         createMeeting.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -78,28 +80,6 @@ public class PublicProfileActivity extends AppCompatActivity {
             {
                 LinearLayout addMeetingLayout = (LinearLayout) findViewById(R.id.addMeetingLayout);
                 addMeetingLayout.setVisibility(View.VISIBLE);
-
-            }
-        });
-
-        Button pickLocation = (Button) findViewById(R.id.pickLocation);
-        createMeeting.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-
-
-            }
-        });
-
-        Button pickDate = (Button) findViewById(R.id.pickDate);
-        createMeeting.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-
             }
         });
 
@@ -173,6 +153,11 @@ public class PublicProfileActivity extends AppCompatActivity {
        // meeting.setLatitudeLocation(sLocationMeeting.getLatitude());
        // meeting.setLongitudeLocation(sLocationMeeting.getLongitude());
         dbh.addMeeting(meeting);
+    }
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getFragmentManager(), "timePicker");
     }
 
     private void setSubjectButtons(boolean isMathsTeacher,
