@@ -1,5 +1,6 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -13,17 +14,23 @@ import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +47,8 @@ import ch.epfl.sweng.tutosaurus.model.User;
 public class PublicProfileActivity extends AppCompatActivity {
 
     DatabaseHelper dbh = DatabaseHelper.getInstance();
+    public String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +66,52 @@ public class PublicProfileActivity extends AppCompatActivity {
             }
         });
 
+
+        Intent intent = getIntent();
+        final String userId = intent.getStringExtra("USER_ID");
+
         Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
         createMeeting.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onClick(View view)
             {
-                Intent intent = new Intent(getApplicationContext(), CreateMeetingActivity.class);
-                startActivity(intent);
+                LinearLayout addMeetingLayout = (LinearLayout) findViewById(R.id.addMeetingLayout);
+                addMeetingLayout.setVisibility(View.VISIBLE);
+
             }
         });
 
-        Intent intent = getIntent();
-        String userId = intent.getStringExtra("USER_ID");
+        Button pickLocation = (Button) findViewById(R.id.pickLocation);
+        createMeeting.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+
+            }
+        });
+
+        Button pickDate = (Button) findViewById(R.id.pickDate);
+        createMeeting.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+            }
+        });
+
+        final Button addMeeting = (Button) findViewById(R.id.addMeeting);
+        addMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText description = (EditText) findViewById(R.id.description);
+                addMeeting(userId, description.getText().toString());
+            }
+        });
+
 
         DatabaseReference ref = dbh.getReference();
         ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
@@ -120,6 +162,17 @@ public class PublicProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void addMeeting(String userId, String description) {
+        Meeting meeting = new Meeting();
+        meeting.addParticipant(currentUser);
+        meeting.addParticipant(userId);
+        meeting.addDescription(description);
+       // meeting.setLatitudeLocation(sLocationMeeting.getLatitude());
+       // meeting.setLongitudeLocation(sLocationMeeting.getLongitude());
+        dbh.addMeeting(meeting);
     }
 
     private void setSubjectButtons(boolean isMathsTeacher,

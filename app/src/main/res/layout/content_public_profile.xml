@@ -260,15 +260,57 @@
             android:text="@string/large_text"
             android:textSize="18sp"
             android:visibility="gone"
-            android:id="@+id/commentsView"
-            />
+            android:id="@+id/commentsView" />
 
         <Button
             android:id="@+id/createMeetingButton"
             android:text="Request meeting"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/addMeetingLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="createMeeting"/>
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/date_location_meeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/pickDate"
+                    android:text="Choose date"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/pickLocation"
+                    android:text="Choose location"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/description"
+                android:hint="Description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/addMeeting"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

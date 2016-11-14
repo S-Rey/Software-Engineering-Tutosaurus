@@ -55,11 +55,6 @@
         <activity
             android:name=".ChatActivity">
         </activity>
-        <activity
-            android:name=".CreateMeetingActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
