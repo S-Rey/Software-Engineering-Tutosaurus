@@ -78,17 +78,9 @@ public class PublicProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                LinearLayout addMeetingLayout = (LinearLayout) findViewById(R.id.addMeetingLayout);
-                addMeetingLayout.setVisibility(View.VISIBLE);
-            }
-        });
-
-        final Button addMeeting = (Button) findViewById(R.id.addMeeting);
-        addMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText description = (EditText) findViewById(R.id.description);
-                addMeeting(userId, description.getText().toString());
+                Intent createMeetingIntent = new Intent(getBaseContext(), CreateMeetingActivity.class);
+                createMeetingIntent.putExtra("TEACHER", userId);
+                startActivity(createMeetingIntent);
             }
         });
 
@@ -144,21 +136,6 @@ public class PublicProfileActivity extends AppCompatActivity {
 
     }
 
-
-    private void addMeeting(String userId, String description) {
-        Meeting meeting = new Meeting();
-        meeting.addParticipant(currentUser);
-        meeting.addParticipant(userId);
-        meeting.addDescription(description);
-       // meeting.setLatitudeLocation(sLocationMeeting.getLatitude());
-       // meeting.setLongitudeLocation(sLocationMeeting.getLongitude());
-        dbh.addMeeting(meeting);
-    }
-
-    public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getFragmentManager(), "timePicker");
-    }
 
     private void setSubjectButtons(boolean isMathsTeacher,
                                    boolean isPhysicsTeacher,
