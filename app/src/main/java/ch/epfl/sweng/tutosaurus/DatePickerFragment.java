@@ -17,6 +17,11 @@ import static android.app.DatePickerDialog.*;
 public class DatePickerFragment extends DialogFragment
         implements OnDateSetListener {
 
+    private int meetingYear;
+    private int meetingMonth;
+    private int meetingDay;
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
@@ -29,7 +34,26 @@ public class DatePickerFragment extends DialogFragment
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
-    public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the user
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        meetingYear = year;
+        meetingDay = dayOfMonth;
+        meetingMonth = month;
+    }
+
+
+    public int getMeetingYear() {
+        return meetingYear;
+    }
+
+
+    public int getMeetingMonth() {
+        return meetingMonth;
+    }
+
+
+    public int getMeetingDay() {
+        return meetingDay;
     }
 }

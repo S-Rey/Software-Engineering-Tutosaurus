@@ -22,26 +22,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/pickTime"
-                android:text="Time"
-                android:layout_weight="0.7"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:onClick="showTimePickerDialog"/>
 
             <Button
-                android:id="@+id/pickDate"
+                android:id="@+id/pickDateTime"
                 android:text="Date"
-                android:layout_weight="0.7"
+                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:onClick="showDatePickerDialog"/>
+                android:onClick="showDateTimePickerDialog"/>
 
             <Button
                 android:id="@+id/pickLocation"
                 android:text="Location"
-                android:layout_weight="0.7"
+                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:onClick="showLocationPickerDialog"/>
