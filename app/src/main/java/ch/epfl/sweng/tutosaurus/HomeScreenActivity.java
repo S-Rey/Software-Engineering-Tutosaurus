@@ -27,6 +27,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -133,7 +135,7 @@ public class HomeScreenActivity extends AppCompatActivity
                     .setContentTitle("Meeting Notification")
                     .setContentText("Click Here To Test The Notification")
                     .setAutoCancel(true)
-                    .setColor(getResources().getColor(R.color.colorPrimaryDark));
+                    .setColor(getResources().getColor(R.color.colorPrimary));
 
             Intent resultIntent = new Intent(this, HomeScreenActivity.class);
             resultIntent.setAction("OPEN_TAB_MEETINGS");
@@ -166,7 +168,7 @@ public class HomeScreenActivity extends AppCompatActivity
     public void sendMessageForEmail(View view) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setData(Uri.parse("mailto:")).setType("text/plain");
-        intent.putExtra(Intent.EXTRA_EMAIL, "android.studio@epfl.ch");
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { "android.studio@epfl.ch" });
         startActivity(intent);
     }
 
@@ -238,6 +240,83 @@ public class HomeScreenActivity extends AppCompatActivity
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
+    }
+
+    public void changePassword(View view) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        EditText newPasswordChoosed = (EditText) findViewById(R.id.chooseNewPass);
+        EditText newPasswordConfirmed = (EditText) findViewById(R.id.confirmNewPass);
+
+        if (newPasswordChoosed.getText().toString().equals("") || newPasswordConfirmed.getText().toString().equals("")) {
+            Toast.makeText(this, "Please fill both boxes above", Toast.LENGTH_SHORT).show();
+        } else if (!newPasswordChoosed.getText().toString().equals(newPasswordConfirmed.getText().toString())) {
+            Toast.makeText(this, "Passwords must match", Toast.LENGTH_SHORT).show();
+        } else {
+            user.updatePassword(newPasswordChoosed.getText().toString());
+            Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show();
+            closePassword();
+        }
+    }
+
+    private void openPassword() {
+        EditText changePassField = (EditText) findViewById(R.id.chooseNewPass);
+        EditText changePassFieldConfirm = (EditText) findViewById(R.id.confirmNewPass);
+        changePassField.setHint("Choose New Password");
+        changePassField.setVisibility(View.VISIBLE);
+        changePassFieldConfirm.setHint("Confirm New Password");
+        changePassFieldConfirm.setVisibility(View.VISIBLE);
+
+        Button sendNewPassInfo = (Button) findViewById(R.id.changeNewPass);
+        sendNewPassInfo.setVisibility(View.VISIBLE);
+
+        Button changePasswordButton = (Button) findViewById(R.id.changePassword);
+        View.OnClickListener changePassClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closePassword();
+            }
+        };
+        changePasswordButton.setOnClickListener(changePassClick);
+    }
+
+    private void closePassword() {
+        EditText changePassField = (EditText) findViewById(R.id.chooseNewPass);
+        EditText changePassFieldConfirm = (EditText) findViewById(R.id.confirmNewPass);
+        Button sendNewPassInfo = (Button) findViewById(R.id.changeNewPass);
+        changePassField.setVisibility(View.GONE);
+        changePassField.setText("");
+        changePassFieldConfirm.setVisibility(View.GONE);
+        changePassFieldConfirm.setText("");
+        sendNewPassInfo.setVisibility(View.GONE);
+
+        Button changePasswordButton = (Button) findViewById(R.id.changePassword);
+        View.OnClickListener changePassClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPassword();
+            }
+        };
+        changePasswordButton.setOnClickListener(changePassClick);
+    }
+
+
+
+    protected void setPassTabToOpen(View v){
+        EditText changePassField = (EditText) v.findViewById(R.id.chooseNewPass);
+        EditText changePassFieldConfirm = (EditText) v.findViewById(R.id.confirmNewPass);
+        Button sendNewPassInfo = (Button) v.findViewById(R.id.changeNewPass);
+        changePassField.setVisibility(View.GONE);
+        changePassFieldConfirm.setVisibility(View.GONE);
+        sendNewPassInfo.setVisibility(View.GONE);
+
+        Button changePasswordButton = (Button) v.findViewById(R.id.changePassword);
+        View.OnClickListener changePassClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPassword();
+            }
+        };
+        changePasswordButton.setOnClickListener(changePassClick);
     }
 
     public void loadImageFromGallery(View view) {
@@ -325,7 +404,8 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ((ImageView) findViewById(R.id.picture_view)).setImageBitmap(imageBitmap);
+            pictureView = (ImageView) findViewById(R.id.picture_view);
+            pictureView.setImageBitmap(imageBitmap);
             saveToInternalStorage(imageBitmap);
         }
     }

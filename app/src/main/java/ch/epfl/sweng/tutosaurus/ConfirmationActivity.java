@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +38,9 @@ public class ConfirmationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
 
+        android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener(){
             @Override
@@ -67,8 +71,12 @@ public class ConfirmationActivity extends AppCompatActivity {
         email_address_text.setText("Email address : " + email);
         TextView sciper_text = (TextView) findViewById(R.id.sciperProvided);
         sciper_text.setText("Sciper : " + sciper);
+    }
 
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myIntent = new Intent(getApplicationContext(), RegisterScreenActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 
     @Override
@@ -89,7 +97,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         String pw1 = ((EditText)findViewById(R.id.confirmation_password1)).getText().toString();
         String pw2 = ((EditText)findViewById(R.id.confirmation_password2)).getText().toString();
         if(!pw1.equals(pw2)) {
-            Toast.makeText(this, "Passwords must match", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Passwords must match", Toast.LENGTH_SHORT).show();
         } else {
 
             mAuth.createUserWithEmailAndPassword(email, pw1).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
