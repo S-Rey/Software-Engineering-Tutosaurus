@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -132,14 +131,12 @@ public class HomeScreenActivity extends AppCompatActivity
     public void onRestart() {
         Log.d(TAG, "Restarted!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
-        pictureView.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     @Override
     public void onResume() {
         Log.d(TAG, "Resumed!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
-        pictureView.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     public void meetingsNotification(View view) {
@@ -330,9 +327,9 @@ public class HomeScreenActivity extends AppCompatActivity
                 try {
                     inputStream = getContentResolver().openInputStream(imageSelectedUri);
                     Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
-                    imageSelected = resizeAndCompressBitmap(imageSelected);
+                    imageSelected = resizeBitmap(imageSelected);
                     pictureView.setImageBitmap(imageSelected);
-                    pictureView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     saveToInternalStorage(imageSelected);
                     inputStream.close();
                 } catch (IOException e) {
@@ -345,14 +342,17 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageBitmap = resizeAndCompressBitmap(imageBitmap);
+            imageBitmap = resizeBitmap(imageBitmap);
             pictureView.setImageBitmap(imageBitmap);
-            pictureView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             saveToInternalStorage(imageBitmap);
         }
     }
 
-    protected Bitmap resizeAndCompressBitmap(Bitmap img) {
-        return Bitmap.createScaledBitmap(img, PROFILE_PICTURE_WIDTH, PROFILE_PICTURE_HEIGHT, true);
+    protected Bitmap resizeBitmap(Bitmap img) {
+        int width = img.getWidth();
+        double scale = ((double)PROFILE_PICTURE_WIDTH) / width;
+        int newHeight = (int) Math.round(img.getHeight() * scale);
+        return Bitmap.createScaledBitmap(img, PROFILE_PICTURE_WIDTH, newHeight, true);
     }
 }
