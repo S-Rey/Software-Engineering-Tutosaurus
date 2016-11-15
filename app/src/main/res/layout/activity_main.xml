@@ -8,18 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ch.epfl.sweng.tutosaurus.MainActivity">
-
-    <TextView
-        android:text="@string/welcoming_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/welcomingMessage"
-        android:textSize="24sp"
-        android:textStyle="normal|bold|italic"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true" />
+    tools:context="ch.epfl.sweng.tutosaurus.MainActivity"
+    android:focusableInTouchMode="true">
 
     <ImageView
         android:layout_height="wrap_content"
@@ -42,7 +32,7 @@
         android:textColor="@color/colorAccent"
         android:textAllCaps="false"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="230dp" />
+        android:layout_marginTop="240dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -94,19 +84,31 @@
         android:layout_below="@+id/main_password"
         android:layout_alignLeft="@+id/imageView"
         android:layout_alignStart="@+id/imageView"
-        android:layout_marginTop="13dp" />
+        android:layout_marginTop="15dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/main_email"
         android:hint="@string/email_ask"
         android:textAlignment="center"
         android:background="@android:drawable/editbox_background"
         android:layout_below="@+id/instructionsMessage"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/welcoming_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomingMessage"
+        android:textSize="24sp"
+        android:textStyle="normal|bold|italic"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
