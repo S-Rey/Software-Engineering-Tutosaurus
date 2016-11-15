@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -52,6 +53,10 @@ public class HomeScreenActivity extends AppCompatActivity
 
     public static final int GALLERY_REQUEST = 1;
     public static final int REQUEST_IMAGE_CAPTURE = 2;
+
+    private final int PROFILE_PICTURE_HEIGHT = 300;
+    private final int PROFILE_PICTURE_WIDTH = 300;
+
     private ImageView pictureView;
     private CircleImageView circleView;
     private TextView nameView;
@@ -121,6 +126,20 @@ public class HomeScreenActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
             }
         }
+    }
+
+    @Override
+    public void onRestart() {
+        Log.d(TAG, "Restarted!");
+        pictureView = (ImageView) findViewById(R.id.picture_view);
+        pictureView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "Resumed!");
+        pictureView = (ImageView) findViewById(R.id.picture_view);
+        pictureView.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     public void meetingsNotification(View view) {
@@ -311,8 +330,9 @@ public class HomeScreenActivity extends AppCompatActivity
                 try {
                     inputStream = getContentResolver().openInputStream(imageSelectedUri);
                     Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
-                    pictureView = (ImageView) findViewById(R.id.picture_view);
+                    imageSelected = resizeAndCompressBitmap(imageSelected);
                     pictureView.setImageBitmap(imageSelected);
+                    pictureView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     saveToInternalStorage(imageSelected);
                     inputStream.close();
                 } catch (IOException e) {
@@ -325,9 +345,14 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ((ImageView) findViewById(R.id.picture_view)).setImageBitmap(imageBitmap);
+            imageBitmap = resizeAndCompressBitmap(imageBitmap);
+            pictureView.setImageBitmap(imageBitmap);
+            pictureView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             saveToInternalStorage(imageBitmap);
         }
     }
 
+    protected Bitmap resizeAndCompressBitmap(Bitmap img) {
+        return Bitmap.createScaledBitmap(img, PROFILE_PICTURE_WIDTH, PROFILE_PICTURE_HEIGHT, true);
+    }
 }
