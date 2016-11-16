@@ -129,12 +129,14 @@ public class HomeScreenActivity extends AppCompatActivity
 
     @Override
     public void onRestart() {
+        super.onRestart();
         Log.d(TAG, "Restarted!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
 
     @Override
     public void onResume() {
+        super.onResume();
         Log.d(TAG, "Resumed!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
