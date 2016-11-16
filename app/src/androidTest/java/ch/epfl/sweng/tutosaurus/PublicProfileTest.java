@@ -48,7 +48,13 @@ public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActi
 
     public void testCanSearchBySubject() throws InterruptedException{
         getActivity();
-        onView(withId(R.id.mainBypassLoginButton)).perform(click());
+        //onView(withId(R.id.mainBypassLoginButton)).perform(click());
+        onView(withId(R.id.main_email)).perform(typeText("albert.einstein@epfl.ch"));
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.main_password)).perform(typeText("tototo"));
+        Espresso.closeSoftKeyboard();
+        onView(withText("Log in")).perform(click());
+        Thread.sleep(8000);
         getActivity();
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
@@ -69,8 +75,6 @@ public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActi
         onView(withId(R.id.subjectName)).check(matches(not(isDisplayed())));
         Espresso.pressBack();
         Espresso.pressBack();
-        Thread.sleep(1000);
-        onView(withId(R.id.bySubject)).perform(click());
         Thread.sleep(1000);
         onView(withId(R.id.physicsButton)).perform(click());
         onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());

@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 public class FindTutorsFragment extends Fragment {
     View myView;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,24 +43,10 @@ public class FindTutorsFragment extends Fragment {
 
 
         // Display search by name listener
-        Button displayByName = (Button) myView.findViewById(R.id.byName);
-        displayByName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout nameLayout=(LinearLayout) getView().findViewById(R.id.nameLayout);
-                nameLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        setDisplayByNameListener((Button) myView.findViewById(R.id.byName));
 
         // Display search by subject listener
-        Button displayBySubject = (Button) myView.findViewById(R.id.bySubject);
-        displayBySubject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout subjectLayout=(LinearLayout) getView().findViewById(R.id.subjectLayout);
-                subjectLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        setDisplayBySubjectListener((Button) myView.findViewById(R.id.bySubject));
 
         // Search by subject listener
         setSubjectListener(R.id.mathsButton, R.id.mathsText, "findMathsTutor");
@@ -103,5 +88,48 @@ public class FindTutorsFragment extends Fragment {
         searchButton.setOnClickListener(listenerToSet);
         TextView subjectTextView = (TextView) myView.findViewById(textId);
         subjectTextView.setOnClickListener(listenerToSet);
+    }
+
+    void setDisplayByNameListener(final Button byNameButton) {
+        byNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideEverything();
+                setDisplayBySubjectListener((Button) myView.findViewById(R.id.bySubject));
+                LinearLayout nameLayout = (LinearLayout) getView().findViewById(R.id.nameLayout);
+                nameLayout.setVisibility(View.VISIBLE);
+                setShowFullListListener(byNameButton);
+            }
+        });
+    }
+    void setDisplayBySubjectListener(final Button bySubjectButton) {
+        bySubjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideEverything();
+                setDisplayByNameListener((Button) myView.findViewById(R.id.byName));
+                LinearLayout subjectLayout = (LinearLayout) getView().findViewById(R.id.subjectLayout);
+                subjectLayout.setVisibility(View.VISIBLE);
+                setShowFullListListener(bySubjectButton);
+            }
+        });
+    }
+    void setShowFullListListener(Button button){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideEverything();
+                myView.findViewById(R.id.showFullList).setVisibility(View.VISIBLE);
+                setDisplayByNameListener((Button) myView.findViewById(R.id.byName));
+                setDisplayBySubjectListener((Button) myView.findViewById(R.id.bySubject));
+
+            }
+        });
+    }
+
+    void hideEverything(){
+        myView.findViewById(R.id.subjectLayout).setVisibility(View.GONE);
+        myView.findViewById(R.id.nameLayout).setVisibility(View.GONE);
+        myView.findViewById(R.id.showFullList).setVisibility(View.GONE);
     }
 }
