@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import ch.epfl.sweng.tutosaurus.Tequila.MyAppVariables;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,8 +76,25 @@ public class MainActivity extends AppCompatActivity {
         database = dbHelper.getWritableDatabase();
         Toast.makeText(getBaseContext(),database.toString(),Toast.LENGTH_LONG).show();
 
-        ContentValues values = new ContentValues();
-        values.put(LocalDatabaseHelper.COLUMN_USER_ID, "jdskjflksajf");
+        User profileTwo = new User("223415");
+        profileTwo.setUsername("Albert");
+        profileTwo.setFullName("Albert Einstein");
+        profileTwo.setEmail("albert.einstein@epfl.ch");
+        profileTwo.setPicture(R.drawable.einstein);
+
+        profileTwo.addLanguage("German");
+        profileTwo.addLanguage("English");
+
+        profileTwo.addStudying("French");
+        profileTwo.addTeaching("Physics");
+
+        profileTwo.setCourseRating("Physics", 1.0);
+        profileTwo.addHoursTaught("Physics", 4);
+
+        LocalDatabaseHelper.insertUser(profileTwo, database);
+        User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+        Toast.makeText(getBaseContext(),user.getUsername(),Toast.LENGTH_LONG).show();
+
 
 
         login = (Button) findViewById(R.id.connectionButton);
