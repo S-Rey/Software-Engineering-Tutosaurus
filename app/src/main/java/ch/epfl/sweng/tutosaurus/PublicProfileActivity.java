@@ -48,14 +48,6 @@ public class PublicProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
         createMeeting.setOnClickListener(new View.OnClickListener()
@@ -75,7 +67,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User matchingTutor = dataSnapshot.getValue(User.class);
+                final User matchingTutor = dataSnapshot.getValue(User.class);
 
                 // Set profile name
                 TextView profileName= (TextView) findViewById(R.id.profileName);
@@ -90,7 +82,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                 TextView email = (TextView) findViewById(R.id.emailView);
                 email.setText(matchingTutor.getEmail());
 
-                // Set the ratings TODO: get ratings from database
+                // Set the ratings
                 RatingBar professorRate=(RatingBar) findViewById(R.id.ratingBarProfessor);
                 professorRate.setRating((float) matchingTutor.getGlobalRating());
                 professorRate.setVisibility(View.VISIBLE);
@@ -104,7 +96,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                 ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
                 level.setProgress(88);
 
-                // Set the thaught subjects.
+                // Set the taught subjects.
                 // TODO: get subject list from database
                 boolean isMathsTeacher=matchingTutor.isTeacher("Maths");
                 boolean isPhysicsTeacher=matchingTutor.isTeacher("Physics");
@@ -112,6 +104,18 @@ public class PublicProfileActivity extends AppCompatActivity {
                 boolean isComputerTeacher=matchingTutor.isTeacher("Computer");
                 setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacher,isComputerTeacher);
 
+                // Set the floating button to send an email
+                FloatingActionButton sendEmailButton = (FloatingActionButton) findViewById(R.id.fab);
+                sendEmailButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("plain/text");
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{matchingTutor.getEmail()});
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Hi! I'm looking for a tutor");
+                        startActivity(Intent.createChooser(intent, ""));
+                    }
+                });
             }
 
             @Override
