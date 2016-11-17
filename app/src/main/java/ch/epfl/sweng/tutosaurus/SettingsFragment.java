@@ -43,7 +43,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
     DatabaseHelper dbh = DatabaseHelper.getInstance();
-    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();;
+    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override

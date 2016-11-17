@@ -260,15 +260,13 @@
             android:text="@string/large_text"
             android:textSize="18sp"
             android:visibility="gone"
-            android:id="@+id/commentsView"
-            />
+            android:id="@+id/commentsView" />
 
         <Button
             android:id="@+id/createMeetingButton"
             android:text="Request meeting"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="createMeeting"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

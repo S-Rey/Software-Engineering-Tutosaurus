@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco-android'
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 24
@@ -20,6 +20,12 @@ android {
         debug {
             testCoverageEnabled true
         }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        disable 'GoogleAppIndexingWarning', 'GradleDependency'
     }
 }
 
@@ -43,8 +49,10 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.google.android.gms:play-services-maps:9.6.1'
     compile 'com.google.android.gms:play-services-location:9.6.1'
+    compile 'com.google.android.gms:play-services-places:9.6.1'
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.google.code.gson:gson:2.4'
+    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
@@ -52,7 +60,33 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
+}
 
+jacoco {
+    toolVersion = "0.7.7.201606060606"
+}
+
+task jacocoReport(type: JacocoReport, dependsOn: "connectedAndroidTest") {
+    sourceDirectories = files(['**/src/main/java'])
+
+    classDirectories = fileTree(
+            dir: '**/classes',
+            excludes: [
+                    '**/R.class',
+                    '**/R$*.class',
+                    '**/BuildConfig.*',
+                    '**/Manifest*.*',
+                    '**/*Test*.*',
+                    '**/android/**/*.*'
+            ]
+    )
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/jacoco.xml"
+    }
+    executionData = files('build/outputs/code-coverage/connected/coverage.ec')
 }
 
 apply plugin: 'com.google.gms.google-services'
+

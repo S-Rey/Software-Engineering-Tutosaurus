@@ -90,12 +90,14 @@ public class MeetingsFragment extends Fragment {
                         long startMillis = 0;
                         long endMillis = 0;
                         Calendar beginTime = Calendar.getInstance();
-                        beginTime.setTime(meeting.getDate());
-                        startMillis = beginTime.getTimeInMillis();
                         Calendar endTime = Calendar.getInstance();
-                        endTime.setTime(meeting.getDate());
-                        endTime.add(Calendar.HOUR, meeting.getDuration());
-                        endMillis = endTime.getTimeInMillis();
+                        if (meeting.getDate() != null) {
+                            beginTime.setTime(meeting.getDate());
+                            startMillis = beginTime.getTimeInMillis();
+                            endTime.setTime(meeting.getDate());
+                            endTime.add(Calendar.HOUR, meeting.getDuration());
+                            endMillis = endTime.getTimeInMillis();
+                        }
 
                         long calID;
                         ContentResolver contentResolver = getActivity().getContentResolver();
@@ -110,9 +112,15 @@ public class MeetingsFragment extends Fragment {
                         values.put(CalendarContract.Events.DTSTART, startMillis);
                         values.put(CalendarContract.Events.DTEND, endMillis);
                         values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                        values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                        values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
-                        values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
+                        if (meeting.getCourse() != null) {
+                            values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
+                        }
+                        if (meeting.getDescription() != null) {
+                            values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
+                        }
+                        if (meeting.getNameLocation() != null) {
+                            values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
+                        }
                         values.put(CalendarContract.Events.CALENDAR_ID, calID);
                         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
                             return;

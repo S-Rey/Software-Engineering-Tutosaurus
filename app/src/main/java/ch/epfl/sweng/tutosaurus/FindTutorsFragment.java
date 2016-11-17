@@ -45,6 +45,7 @@ public class FindTutorsFragment extends Fragment {
         // Display search by name listener
         setDisplayByNameListener((Button) myView.findViewById(R.id.byName));
 
+
         // Display search by subject listener
         setDisplayBySubjectListener((Button) myView.findViewById(R.id.bySubject));
 
