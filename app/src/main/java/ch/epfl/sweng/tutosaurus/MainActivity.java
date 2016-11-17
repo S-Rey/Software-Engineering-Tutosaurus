@@ -72,28 +72,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        dbHelper = new LocalDatabaseHelper(this);
-        database = dbHelper.getWritableDatabase();
-        Toast.makeText(getBaseContext(),database.toString(),Toast.LENGTH_LONG).show();
-
-        User profileTwo = new User("223415");
-        profileTwo.setUsername("Albert");
-        profileTwo.setFullName("Albert Einstein");
-        profileTwo.setEmail("albert.einstein@epfl.ch");
-        profileTwo.setPicture(R.drawable.einstein);
-
-        profileTwo.addLanguage("German");
-        profileTwo.addLanguage("English");
-
-        profileTwo.addStudying("French");
-        profileTwo.addTeaching("Physics");
-
-        profileTwo.setCourseRating("Physics", 1.0);
-        profileTwo.addHoursTaught("Physics", 4);
-
-        LocalDatabaseHelper.insertUser(profileTwo, database);
-        User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
-        Toast.makeText(getBaseContext(),user.getUsername(),Toast.LENGTH_LONG).show();
+        testDB();
 
 
 
@@ -215,5 +194,30 @@ public class MainActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+    public void testDB () {
+        dbHelper = new LocalDatabaseHelper(this);
+        database = dbHelper.getWritableDatabase();
+        Toast.makeText(getBaseContext(),database.toString(),Toast.LENGTH_LONG).show();
+
+        User profileTwo = new User("223415");
+        profileTwo.setUsername("Albert");
+        profileTwo.setFullName("Albert Einstein");
+        profileTwo.setEmail("albert.einstein@epfl.ch");
+        profileTwo.setPicture(R.drawable.einstein);
+
+        profileTwo.addLanguage("German");
+        profileTwo.addLanguage("English");
+
+        profileTwo.addStudying("French");
+        profileTwo.addTeaching("Physics");
+
+        profileTwo.setCourseRating("Physics", 1.0);
+        profileTwo.addHoursTaught("Physics", 4);
+
+        LocalDatabaseHelper.insertUser(profileTwo, database);
+        User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+        Toast.makeText(getBaseContext(),user.getUsername(),Toast.LENGTH_LONG).show();
     }
 }

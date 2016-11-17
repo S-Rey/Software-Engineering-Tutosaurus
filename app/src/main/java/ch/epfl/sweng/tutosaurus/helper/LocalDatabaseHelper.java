@@ -152,7 +152,6 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
 
     public static void insertCourseTable(User user, SQLiteDatabase db) {
-        ContentValues courseValues = new ContentValues();
 
         // COURSE TABLE
         Set<String> courseNames = new HashSet();
@@ -160,6 +159,8 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         courseNames.addAll(user.getTeaching().keySet());
 
         for(String key : courseNames) {
+            ContentValues courseValues = new ContentValues();
+
             courseValues.put(COLUMN_COURSE_NAME, key);
 
             if (user.getStudying().containsKey(key)) {
@@ -185,10 +186,10 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
 
     public static void insertLanguageTable(User user, SQLiteDatabase db) {
-        ContentValues languageValues = new ContentValues();
 
         // LANGUAGE TABLE
         for(String key : user.getLanguages().keySet()) {
+            ContentValues languageValues = new ContentValues();
             languageValues.put(COLUMN_LANGUAGE_NAME, key);
             db.insert(TABLE_LANGUAGE, null, languageValues);
         }
@@ -229,7 +230,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         }
         String query = "SELECT * FROM " + TABLE_COURSE;
         Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToNext()){
+        while (cursor.moveToNext()){
             // if course is teached
             if(cursor.getInt(1) != 0) {
                 user.addTeaching(cursor.getString(0));
