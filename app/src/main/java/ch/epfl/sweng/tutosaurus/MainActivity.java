@@ -1,6 +1,13 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +24,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import ch.epfl.sweng.tutosaurus.Tequila.MyAppVariables;
+import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.User;
+
 public class MainActivity extends AppCompatActivity {
 
     public final static String TAG = "MainActivity";
@@ -27,13 +38,16 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    SQLiteOpenHelper dbHelper;
+    SQLiteDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -44,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+
 
         login = (Button) findViewById(R.id.connectionButton);
         bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
@@ -66,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 //}
             }
         });
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,4 +122,47 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openLocation(View view) {
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
+    }
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+
+
+    public void testDB () {
+        dbHelper = new LocalDatabaseHelper(this);
+        database = dbHelper.getWritableDatabase();
+        Toast.makeText(getBaseContext(),database.toString(),Toast.LENGTH_LONG).show();
+
+        User profileTwo = new User("223415");
+        profileTwo.setUsername("Albert");
+        profileTwo.setFullName("Albert Einstein");
+        profileTwo.setEmail("albert.einstein@epfl.ch");
+        profileTwo.setPicture(R.drawable.einstein);
+
+        profileTwo.addLanguage("German");
+        profileTwo.addLanguage("English");
+
+        profileTwo.addStudying("French");
+        profileTwo.addTeaching("Physics");
+
+        profileTwo.setCourseRating("Physics", 1.0);
+        profileTwo.addHoursTaught("Physics", 4);
+
+        LocalDatabaseHelper.insertUser(profileTwo, database);
+        User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+        Toast.makeText(getBaseContext(),user.getUsername(),Toast.LENGTH_LONG).show();
+    }
 }
