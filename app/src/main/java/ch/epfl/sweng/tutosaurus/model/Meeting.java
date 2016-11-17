@@ -103,6 +103,8 @@ public class Meeting {
         this.participants.add(key);
     }
 
+    public void addDescription(String description) { this.description = description; }
+
 
     public List<String> getParticipants(){
         return this.participants;
@@ -156,4 +158,5 @@ public class Meeting {
     public void setLongitudeLocation(double longitudeLocation) {
         this.longitudeLocation = longitudeLocation;
     }
+
 }

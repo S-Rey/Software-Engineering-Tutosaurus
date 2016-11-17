@@ -2,79 +2,68 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.epfl.sweng.tutosaurus">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/philosoraptor"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".HomeScreenActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".RegisterScreenActivity"
-            android:label="@string/activity_register_name">
-        </activity>
-        <activity
-            android:name=".ConfirmationActivity"
-            android:label="@string/activity_register_name">
-        </activity>
-        <activity
-            android:name=".PublicProfileActivity"
-            android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".LocationActivity"
-            android:label="@string/nameLocation"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".FindTutorResult"
-            android:label="List of matches"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".ChatActivity">
-        </activity>
-        <activity
-            android:name=".CreateMeetingActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-    </application>
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <service
         android:name=".FetchAddressIntentService"
-        android:exported="false"/>
+        android:exported="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/philosoraptor_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".HomeScreenActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".RegisterScreenActivity"
+            android:label="@string/activity_register_name"></activity>
+        <activity
+            android:name=".ConfirmationActivity"
+            android:label="@string/activity_confirmation_name">
+        </activity>
+        <activity
+            android:name=".PublicProfileActivity"
+            android:label="Profile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".LocationActivity"
+            android:label="@string/nameLocation"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".FindTutorResult"
+            android:label="List of matches"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".CreateMeetingActivity"></activity>
+    </application>
+
 </manifest>

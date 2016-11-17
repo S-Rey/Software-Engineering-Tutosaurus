@@ -63,7 +63,7 @@ public class FindTutorsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 LinearLayout nameLayout=(LinearLayout) getView().findViewById(R.id.nameLayout);
-                nameLayout.setVisibility(View.VISIBLE);
+                nameLayout.setVisibility(View.INVISIBLE);
             }
         });
 
