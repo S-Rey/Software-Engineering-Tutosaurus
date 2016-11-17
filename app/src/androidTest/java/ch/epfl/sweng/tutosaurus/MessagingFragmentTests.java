@@ -74,7 +74,7 @@ public class MessagingFragmentTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        intended(hasComponent("ch.epfl.sweng.tutosaurus.ChatActivity"));
+        intending(hasComponent("ch.epfl.sweng.tutosaurus.ChatActivity"));
     }
 
 }
