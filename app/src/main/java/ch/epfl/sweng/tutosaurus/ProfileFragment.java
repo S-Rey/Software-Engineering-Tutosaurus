@@ -29,13 +29,9 @@ import java.io.IOException;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 
-public class ProfileFragment extends Fragment implements View.OnClickListener {
+public class ProfileFragment extends Fragment {
 
     View myView;
-    CheckBox computer_science;
-    CheckBox mathematics;
-    CheckBox chemistry;
-    CheckBox physics;
 
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     DatabaseHelper dbh = DatabaseHelper.getInstance();
@@ -47,114 +43,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Profile");
         loadImageFromStorage();
 
-        SharedPreferences pref;
-        final SharedPreferences.Editor editor;
-        final String MY_SHARED_PREF = "checkbox_pref";
-        pref = this.getActivity().getSharedPreferences(MY_SHARED_PREF, Context.MODE_PRIVATE);
-
-        mathematics = (CheckBox) myView.findViewById(R.id.mathematics_checkbox);
-        mathematics.setChecked(pref.getBoolean("mathematics_checkbox", false));
-        physics = (CheckBox) myView.findViewById(R.id.physics_checkbox);
-        physics.setChecked(pref.getBoolean("physics_checkbox", false));
-        chemistry = (CheckBox) myView.findViewById(R.id.chemistry_checkbox);
-        chemistry.setChecked(pref.getBoolean("chemistry_checkbox", false));
-        computer_science = (CheckBox) myView.findViewById(R.id.computer_science_checkbox);
-        computer_science.setChecked(pref.getBoolean("computer_science_checkbox", false));
-        Button buttonSavePic = (Button) myView.findViewById(R.id.button_save_picture);
-        buttonSavePic.setOnClickListener(this);
-        Button buttonLoadPic = (Button) myView.findViewById(R.id.button_load_picture);
-        buttonLoadPic.setOnClickListener(this);
-
-        editor = pref.edit();
-
-        CheckBox mathematics_check = (CheckBox) myView.findViewById(R.id.mathematics_checkbox);
-        mathematics_check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((CheckBox) v).isChecked()){
-                    editor.putBoolean("mathematics_checkbox", true);
-                    editor.commit();
-                    dbh.addTeacherToCourse(currentUser, "Maths");
-                } else {
-                    editor.putBoolean("mathematics_checkbox", false);
-                    editor.commit();
-                    dbh.removeTeacherFromCourse(currentUser, "Maths");
-                }
-            }
-        });
-
-        CheckBox physics_check = (CheckBox) myView.findViewById(R.id.physics_checkbox);
-        physics_check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((CheckBox) v).isChecked()){
-                    editor.putBoolean("physics_checkbox", true);
-                    editor.commit();
-                    dbh.addTeacherToCourse(currentUser, "Physics");
-                } else {
-                    editor.putBoolean("physics_checkbox", false);
-                    editor.commit();
-                    dbh.removeTeacherFromCourse(currentUser, "Physics");
-                }
-            }
-        });
-
-        CheckBox chemistry_check = (CheckBox) myView.findViewById(R.id.chemistry_checkbox);
-        chemistry_check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((CheckBox) v).isChecked()){
-                    editor.putBoolean("chemistry_checkbox", true);
-                    editor.commit();
-                    dbh.addTeacherToCourse(currentUser, "Chemistry");
-                } else {
-                    editor.putBoolean("chemistry_checkbox", false);
-                    editor.commit();
-                    dbh.removeTeacherFromCourse(currentUser, "Chemistry");
-                }
-            }
-        });
-
-        CheckBox computer_science_check = (CheckBox) myView.findViewById(R.id.computer_science_checkbox);
-        computer_science_check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(((CheckBox) v).isChecked()){
-                    editor.putBoolean("computer_science_checkbox", true);
-                    editor.commit();
-                    dbh.addTeacherToCourse(currentUser, "Computer");
-                } else {
-                    editor.putBoolean("computer_science_checkbox", false);
-                    editor.commit();
-                    dbh.removeTeacherFromCourse(currentUser, "Computer");
-                }
-            }
-        });
+        ((HomeScreenActivity) getActivity()).setPassTabToOpen(myView);
 
         return myView;
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_save_picture:
-                Bitmap pic = BitmapFactory.decodeResource(getActivity().getApplicationContext().getResources(),
-                        R.drawable.dino_logo);
-                PictureHelper.savePicture(getActivity(), "profile", pic);
-                break;
-            case R.id.button_load_picture:
-                try {
-                    PictureHelper.storeProfilePic(getActivity(), "111111");
-                    getImage("profile", "111111");
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-        }
-    }
-
 
     private void loadImageFromStorage() {
         FileInputStream in = null;
@@ -170,7 +62,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Download a picture from the sciper/ folder from the storage of Firebase

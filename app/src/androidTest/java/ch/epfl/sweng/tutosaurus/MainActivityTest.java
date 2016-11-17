@@ -39,7 +39,6 @@ public class MainActivityTest {
     @Test
     public void testSignUp() {
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.confirmButton)).perform(click());
         onView(withId(R.id.firstNameProvided)).check(matches(withText("First name : Vincent")));
         onView(withId(R.id.lastNameProvided)).check(matches(withText("Last name : Rinaldi")));
         onView(withId(R.id.emailAddressProvided)).check(matches(withText("Email address : vincent.rinaldi@epfl.ch")));

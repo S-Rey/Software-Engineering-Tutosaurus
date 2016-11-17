@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="checkbox_preference_mathematics"
+        android:id="@+id/checkbox_mathematics"
+        android:title="@string/mathematics_enabled"
+        android:icon="@drawable/calculator"
+        android:layout="@layout/preference_checkbox_and_image" />
+
+    <PreferenceScreen
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
+    </PreferenceScreen>
+
+    <CheckBoxPreference
+        android:key="checkbox_preference_physics"
+        android:id="@+id/checkbox_physics"
+        android:title="@string/physics_enabled"
+        android:icon="@drawable/flask"
+        android:layout="@layout/preference_checkbox_and_image" />
+
+    <PreferenceScreen
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
+    </PreferenceScreen>
+
+    <CheckBoxPreference
+        android:key="checkbox_preference_chemistry"
+        android:id="@+id/checkbox_chemistry"
+        android:title="@string/chemistry_enabled"
+        android:icon="@drawable/molecule"
+        android:layout="@layout/preference_checkbox_and_image" />
+
+    <PreferenceScreen
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
+    </PreferenceScreen>
+
+    <CheckBoxPreference
+        android:key="checkbox_preference_computer_science"
+        android:id="@+id/checkbox_computer_science"
+        android:title="@string/computer_science_enabled"
+        android:icon="@drawable/computer"
+        android:layout="@layout/preference_checkbox_and_image" />
+
+    <PreferenceScreen
+        android:layout="@layout/preference_divider"
+        android:selectable="false">
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:layout="@layout/preference_blank"
+        android:selectable="false">
+    </PreferenceScreen>
+
+</PreferenceScreen>

@@ -1,5 +1,7 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -13,33 +15,38 @@ import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
-
-import ch.epfl.sweng.tutosaurus.findTutor.FirebaseTutorAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
-import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
+
 
 public class PublicProfileActivity extends AppCompatActivity {
 
     DatabaseHelper dbh = DatabaseHelper.getInstance();
+    public String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,34 +55,29 @@ public class PublicProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
-        Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
+
+        Intent intent = getIntent();
+        final String userId = intent.getStringExtra("USER_ID");
+
+        final Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
         createMeeting.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onClick(View view)
             {
-                Intent intent = new Intent(getApplicationContext(), CreateMeetingActivity.class);
-                startActivity(intent);
+                Intent createMeetingIntent = new Intent(getBaseContext(), CreateMeetingActivity.class);
+                createMeetingIntent.putExtra("TEACHER", userId);
+                startActivity(createMeetingIntent);
             }
         });
 
-        Intent intent = getIntent();
-        String userId = intent.getStringExtra("USER_ID");
 
         DatabaseReference ref = dbh.getReference();
         ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User matchingTutor = dataSnapshot.getValue(User.class);
+                final User matchingTutor = dataSnapshot.getValue(User.class);
 
                 // Set profile name
                 TextView profileName= (TextView) findViewById(R.id.profileName);
@@ -90,7 +92,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                 TextView email = (TextView) findViewById(R.id.emailView);
                 email.setText(matchingTutor.getEmail());
 
-                // Set the ratings TODO: get ratings from database
+                // Set the ratings
                 RatingBar professorRate=(RatingBar) findViewById(R.id.ratingBarProfessor);
                 professorRate.setRating((float) matchingTutor.getGlobalRating());
                 professorRate.setVisibility(View.VISIBLE);
@@ -104,7 +106,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                 ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
                 level.setProgress(88);
 
-                // Set the thaught subjects.
+                // Set the taught subjects.
                 // TODO: get subject list from database
                 boolean isMathsTeacher=matchingTutor.isTeacher("Maths");
                 boolean isPhysicsTeacher=matchingTutor.isTeacher("Physics");
@@ -112,6 +114,18 @@ public class PublicProfileActivity extends AppCompatActivity {
                 boolean isComputerTeacher=matchingTutor.isTeacher("Computer");
                 setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacher,isComputerTeacher);
 
+                // Set the floating button to send an email
+                FloatingActionButton sendEmailButton = (FloatingActionButton) findViewById(R.id.fab);
+                sendEmailButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("plain/text");
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{matchingTutor.getEmail()});
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Hi! I'm looking for a tutor");
+                        startActivity(Intent.createChooser(intent, ""));
+                    }
+                });
             }
 
             @Override
@@ -121,6 +135,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void setSubjectButtons(boolean isMathsTeacher,
                                    boolean isPhysicsTeacher,

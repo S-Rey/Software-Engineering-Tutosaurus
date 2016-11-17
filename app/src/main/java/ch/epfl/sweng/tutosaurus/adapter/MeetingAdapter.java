@@ -32,8 +32,10 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     @Override
     protected void populateView(final View mainView, Meeting meeting, int position) {
 
-        TextView subject = (TextView) mainView.findViewById(R.id.subjectMeeting);
-        subject.setText(meeting.getCourse().getName());
+        if (meeting.getCourse() != null) {
+            TextView subject = (TextView) mainView.findViewById(R.id.subjectMeeting);
+            subject.setText(meeting.getCourse().getName());
+        }
 
         TextView otherParticipantView = (TextView) mainView.findViewById(R.id.otherParticipantMeeting);
         List<String> participants = meeting.getParticipants();
@@ -51,15 +53,21 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         otherParticipantView.setText(content);
 
         TextView date = (TextView) mainView.findViewById(R.id.dateMeeting);
-        date.setText(meeting.getDate().toString());
+        if (meeting.getDate() != null) {
+            date.setText(meeting.getDate().toString());
+        }
 
         TextView descriptionMeeting = (TextView) mainView.findViewById(R.id.descriptionMeeting);
-        descriptionMeeting.setText(meeting.getDescription());
+        if (meeting.getDescription() != null) {
+            descriptionMeeting.setText(meeting.getDescription());
+        }
 
         final double latitudeMeeting = meeting.getLatitudeLocation();
         final double longitudeMeeting = meeting.getLongitudeLocation();
         TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
-        locationMeeting.setText(meeting.getNameLocation());
+        if (meeting.getNameLocation() != null) {
+            locationMeeting.setText(meeting.getNameLocation());
+        }
 
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
         showLocationMeeting.setOnClickListener(new View.OnClickListener() {
