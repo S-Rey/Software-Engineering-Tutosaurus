@@ -5,6 +5,7 @@ import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.runner.intent.IntentStubber;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -48,16 +49,12 @@ public class MessagingFragmentTests {
             MainActivity.class
     );
 
-    @Rule
-    public IntentsTestRule<HomeScreenActivity> homeScreenActivityIntentsTestRule = new IntentsTestRule<HomeScreenActivity>(
-            HomeScreenActivity.class
-    );
-
     @Before
     public void logInWithAlbert(){
         onView(withId(R.id.mainBypassLoginButton)).perform(click());
         try {
             Thread.sleep(5000);
+            Intents.release();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -65,6 +62,7 @@ public class MessagingFragmentTests {
 
     @Test
     public void testChatWithAlbert() {
+        Intents.init();
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
         onData(anything())
@@ -76,7 +74,7 @@ public class MessagingFragmentTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        intended(hasComponent("ch.epfl.sweng.tutosaurus.Chat"));
+        intended(hasComponent("ch.epfl.sweng.tutosaurus.ChatActivity"));
     }
 
 }
