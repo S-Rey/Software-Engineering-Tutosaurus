@@ -88,6 +88,57 @@ public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActi
         onView(withId(R.id.subjectName)).check(matches(withText("Physics")));
         onView(withId(R.id.physicsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         onView(withId(R.id.subjectName)).check(matches(not(isDisplayed())));
+        Espresso.pressBack();
+        Espresso.pressBack();
+        Thread.sleep(1000);
+        onView(withId(R.id.chemistryButton)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+        onView(withId(R.id.profileName)).check(matches(isDisplayed()));
+        Thread.sleep(1000);
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.commentsView)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.commentsView)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.chemistryButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.subjectName)).check(matches(withText("Chemistry")));
+        onView(withId(R.id.chemistryButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.subjectName)).check(matches(not(isDisplayed())));
+        Espresso.pressBack();
+        Espresso.pressBack();
+        Thread.sleep(1000);
+        onView(withId(R.id.computerButton)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+        onView(withId(R.id.profileName)).check(matches(isDisplayed()));
+        Thread.sleep(1000);
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.commentsView)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.commentsView)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.computerButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.subjectName)).check(matches(withText("Computer Science")));
+        onView(withId(R.id.computerButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.subjectName)).check(matches(not(isDisplayed())));
+        Espresso.pressBack();
+        Espresso.pressBack();
+        Thread.sleep(1000);
+        onView(withId(R.id.bySubject)).perform(click());
+        onView(withId(R.id.showFullList)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+        onView(withId(R.id.profileName)).check(matches(isDisplayed()));
+        Thread.sleep(1000);
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.commentsView)).check(matches(isDisplayed()));
+        onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        onView(withId(R.id.commentsView)).check(matches(not(isDisplayed())));
+        Espresso.pressBack();
+        Espresso.pressBack();
+        Thread.sleep(1000);
+        onView(withId(R.id.byName)).perform(click());
+        onView(withId(R.id.nameToSearch)).perform(typeText("Albert Einstein"));
+        onView(withId(R.id.searchByName)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+        onView(withId(R.id.profileName)).check(matches(withText("Albert Einstein")));
+
     }
 
 }
