@@ -76,10 +76,22 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog signUpAlert = signUpAlertB.create();
                     signUpAlert.show();
                 } else {*/
-                Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
-                intent.setAction("OPEN_TAB_PROFILE");
-                startActivity(intent);
-                //}
+                String email = "basile.thullen@epfl.ch";
+                String password = "tototo";
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
+                                    intent.setAction("OPEN_TAB_PROFILE");
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT);
+                                }
+                            }
+                        });
             }
         });
 
