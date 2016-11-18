@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog signUpAlert = signUpAlertB.create();
                     signUpAlert.show();
                 } else {*/
-                String email = "basile.thullen@epfl.ch";
+                String email = "albert.einstein@epfl.ch";
                 String password = "tototo";
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
