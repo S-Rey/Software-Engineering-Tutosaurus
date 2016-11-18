@@ -7,6 +7,7 @@ import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
@@ -128,6 +129,8 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             EditTextPreference ed_mathematics_edit = (EditTextPreference) getPreferenceManager().findPreference("edit_text_preference_mathematics");
             if (!ed_mathematics_edit.getText().equals("")) {
                 ed_mathematics_edit.setTitle(ed_mathematics_edit.getText());
+                dbh.addSubjectDescription(ed_mathematics_edit.getText().toString(), currentUser, "Maths");
+
             } else {
                 ed_mathematics_edit.setTitle("Enter Your Description");
             }
@@ -159,6 +162,8 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             EditTextPreference ed_physics_edit = (EditTextPreference) getPreferenceManager().findPreference("edit_text_preference_physics");
             if (!ed_physics_edit.getText().equals("")) {
                 ed_physics_edit.setTitle(ed_physics_edit.getText());
+                dbh.addSubjectDescription(ed_physics_edit.getText().toString(), currentUser, "Physics");
+
             } else {
                 ed_physics_edit.setTitle("Enter Your Description");
             }
@@ -190,6 +195,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             EditTextPreference ed_chemistry_edit = (EditTextPreference) getPreferenceManager().findPreference("edit_text_preference_chemistry");
             if (!ed_chemistry_edit.getText().equals("")) {
                 ed_chemistry_edit.setTitle(ed_chemistry_edit.getText());
+                dbh.addSubjectDescription(ed_chemistry_edit.getText().toString(), currentUser, "Chemistry");
             } else {
                 ed_chemistry_edit.setTitle("Enter Your Description");
             }
@@ -221,6 +227,8 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             EditTextPreference ed_computer_science_edit = (EditTextPreference) getPreferenceManager().findPreference("edit_text_preference_computer_science");
             if (!ed_computer_science_edit.getText().equals("")) {
                 ed_computer_science_edit.setTitle(ed_computer_science_edit.getText());
+                dbh.addSubjectDescription(ed_computer_science_edit.getText().toString(), currentUser, "Computer");
+
             } else {
                 ed_computer_science_edit.setTitle("Enter Your Description");
             }
