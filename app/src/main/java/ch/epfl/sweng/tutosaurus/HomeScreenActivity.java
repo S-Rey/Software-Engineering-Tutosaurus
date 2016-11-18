@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -409,6 +410,7 @@ public class HomeScreenActivity extends AppCompatActivity
                     inputStream = getContentResolver().openInputStream(imageSelectedUri);
                     Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
                     imageSelected = resizeBitmap(imageSelected);
+                    pictureView = (ImageView) findViewById(R.id.picture_view);
                     pictureView.setImageBitmap(imageSelected);
                     pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     saveToInternalStorage(imageSelected);
