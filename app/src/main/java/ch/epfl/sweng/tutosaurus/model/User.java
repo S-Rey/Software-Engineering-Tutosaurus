@@ -216,6 +216,9 @@ public class User implements Identifiable {
      * @param hours the number of hours by which to increase the number of hours taught
      */
     public void addHoursTaught(String courseId, int hours) {
+        if(!totalHoursTaught.containsKey(courseId)) {
+            totalHoursTaught.put(courseId, 0);
+        }
         totalHoursTaught.put(courseId, totalHoursTaught.get(courseId) + hours);
     }
 
@@ -238,7 +241,11 @@ public class User implements Identifiable {
      * @return the number of hours taught
      */
     public int getHoursTaught(String courseId) {
-        return totalHoursTaught.get(courseId);
+        if(totalHoursTaught.containsKey(courseId)) {
+            return totalHoursTaught.get(courseId);
+        } else {
+            return  0;
+        }
     }
 
     /**
@@ -254,7 +261,7 @@ public class User implements Identifiable {
      * @param courseId the unique id of the course
      * @return the globalRating for this course
      */
-    public double getCourseRating(int courseId) {
+    public double getCourseRating(String courseId) {
         return ratings.get(courseId);
     }
 

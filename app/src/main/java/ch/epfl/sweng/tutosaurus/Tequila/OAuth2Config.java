@@ -36,10 +36,24 @@ public final class OAuth2Config {
      */
     public final String redirectUri;
 
+    /**
+     * Creating the configuartion for the OAuth2 authenfication service for Tequila
+     * @param scopes
+     * @param clientId
+     * @param clientSecret
+     * @param redirectUri
+     */
     public OAuth2Config(String[] scopes, String clientId, String clientSecret, String redirectUri) {
         this.scopes = scopes;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-        this.redirectUri = redirectUri;
+
+        if(clientId.isEmpty() || clientSecret.isEmpty()){
+            throw new IllegalArgumentException("Need valid Client credentials for configuring the authentification");
+        }else if(redirectUri.isEmpty()){
+            throw new IllegalArgumentException("Need redirect back to application uri");
+        }else {
+            this.clientId = clientId;
+            this.clientSecret = clientSecret;
+            this.redirectUri = redirectUri;
+        }
     }
 }

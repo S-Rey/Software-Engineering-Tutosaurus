@@ -54,6 +54,10 @@ public class HomeScreenActivity extends AppCompatActivity
 
     public static final int GALLERY_REQUEST = 1;
     public static final int REQUEST_IMAGE_CAPTURE = 2;
+
+    private final int PROFILE_PICTURE_HEIGHT = 300;
+    private final int PROFILE_PICTURE_WIDTH = 300;
+
     private ImageView pictureView;
     private CircleImageView circleView;
     private TextView nameView;
@@ -123,6 +127,20 @@ public class HomeScreenActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
             }
         }
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "Restarted!");
+        pictureView = (ImageView) findViewById(R.id.picture_view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "Resumed!");
+        pictureView = (ImageView) findViewById(R.id.picture_view);
     }
 
     public void meetingsNotification(View view) {
@@ -390,8 +408,9 @@ public class HomeScreenActivity extends AppCompatActivity
                 try {
                     inputStream = getContentResolver().openInputStream(imageSelectedUri);
                     Bitmap imageSelected = BitmapFactory.decodeStream(inputStream);
-                    pictureView = (ImageView) findViewById(R.id.picture_view);
+                    imageSelected = resizeBitmap(imageSelected);
                     pictureView.setImageBitmap(imageSelected);
+                    pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     saveToInternalStorage(imageSelected);
                     inputStream.close();
                 } catch (IOException e) {
@@ -404,10 +423,17 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            pictureView = (ImageView) findViewById(R.id.picture_view);
+            imageBitmap = resizeBitmap(imageBitmap);
             pictureView.setImageBitmap(imageBitmap);
+            pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             saveToInternalStorage(imageBitmap);
         }
     }
 
+    protected Bitmap resizeBitmap(Bitmap img) {
+        int width = img.getWidth();
+        double scale = ((double)PROFILE_PICTURE_WIDTH) / width;
+        int newHeight = (int) Math.round(img.getHeight() * scale);
+        return Bitmap.createScaledBitmap(img, PROFILE_PICTURE_WIDTH, newHeight, true);
+    }
 }

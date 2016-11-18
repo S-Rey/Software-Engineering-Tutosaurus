@@ -137,8 +137,8 @@ public class DatabaseHelper {
         userLearnCourseRef.setValue(description);
     }
 
-    public DatabaseReference getMeetingsRefForUser(String sciper) {
-        return dbf.child(MEETING_PER_USER_PATH + sciper);
+    public DatabaseReference getMeetingsRefForUser(String key) {
+        return dbf.child(MEETING_PER_USER_PATH + key);
     }
 
     public DatabaseReference getUserRef() {
