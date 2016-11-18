@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by Vincent on 05/10/2016.
@@ -18,7 +19,6 @@ import android.widget.LinearLayout;
 
 public class FindTutorsFragment extends Fragment {
     View myView;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,102 +41,23 @@ public class FindTutorsFragment extends Fragment {
                 }
         });
 
-        // Search by sciper listener
-        Button searchBySciper = (Button) myView.findViewById(R.id.searchBySciper);
-        searchBySciper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),FindTutorResult.class);
-                EditText sciperToSearch=(EditText) getView().findViewById(R.id.sciperToSearch);
-                String sciper=sciperToSearch.getText().toString();
-                Bundle extras = new Bundle();
-                extras.putString("SCIPER_TO_SEARCH",sciper);
-                extras.putString("METHOD_TO_CALL","findTutorBySciper");
-                intent.putExtras(extras);
-                startActivity(intent);
-            }
-        });
 
         // Display search by name listener
-        Button displayByName = (Button) myView.findViewById(R.id.byName);
-        displayByName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout nameLayout=(LinearLayout) getView().findViewById(R.id.nameLayout);
-                nameLayout.setVisibility(View.INVISIBLE);
-            }
-        });
+        setDisplayByNameListener((Button) myView.findViewById(R.id.byName));
+
 
         // Display search by subject listener
-        Button displayBySubject = (Button) myView.findViewById(R.id.bySubject);
-        displayBySubject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout subjectLayout=(LinearLayout) getView().findViewById(R.id.subjectLayout);
-                subjectLayout.setVisibility(View.VISIBLE);
-            }
-        });
-
-        // Display search by sciper listener
-        Button displayBySciper = (Button) myView.findViewById(R.id.bySciper);
-        displayBySciper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout nameLayout=(LinearLayout) getView().findViewById(R.id.sciperLayout);
-                nameLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        setDisplayBySubjectListener((Button) myView.findViewById(R.id.bySubject));
 
         // Search by subject listener
+        setSubjectListener(R.id.mathsButton, R.id.mathsText, "findMathsTutor");
+        setSubjectListener(R.id.physicsButton, R.id.physicsText, "findPhysicsTutor");
+        setSubjectListener(R.id.chemistryButton, R.id.chemistryText, "findChemistryTutor");
+        setSubjectListener(R.id.computerButton, R.id.computerText, "findComputerTutor");
 
-        ImageButton searchMathsButton = (ImageButton) myView.findViewById(R.id.mathsButton);
-        searchMathsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),FindTutorResult.class);
-                Bundle extras = new Bundle();
-                extras.putString("METHOD_TO_CALL","findMathsTutor");
-                intent.putExtras(extras);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton searchPhysicsButton = (ImageButton) myView.findViewById(R.id.physicsButton);
-        searchPhysicsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),FindTutorResult.class);
-                Bundle extras = new Bundle();
-                extras.putString("METHOD_TO_CALL","findPhysicsTutor");
-                intent.putExtras(extras);
-                startActivity(intent);
-            }
-        });
-        ImageButton searchChemistryButton = (ImageButton) myView.findViewById(R.id.chemistryButton);
-        searchChemistryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),FindTutorResult.class);
-                Bundle extras = new Bundle();
-                extras.putString("METHOD_TO_CALL","findChemistryTutor");
-                intent.putExtras(extras);
-                startActivity(intent);
-            }
-        });
-        ImageButton searchComputerButton = (ImageButton) myView.findViewById(R.id.computerButton);
-        searchComputerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),FindTutorResult.class);
-                Bundle extras = new Bundle();
-                extras.putString("METHOD_TO_CALL","findComputerTutor");
-                intent.putExtras(extras);
-                startActivity(intent);
-            }
-        });
 
         // Show full list
-        Button showFullList = (Button) myView.findViewById(R.id.showFullList);
+        TextView showFullList = (TextView) myView.findViewById(R.id.showFullList);
         showFullList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,4 +72,65 @@ public class FindTutorsFragment extends Fragment {
         return myView;
     }
 
+    void setSubjectListener(int buttonId, int textId, final String methodName){
+
+        View.OnClickListener listenerToSet =new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(),FindTutorResult.class);
+            Bundle extras = new Bundle();
+            extras.putString("METHOD_TO_CALL",methodName);
+            intent.putExtras(extras);
+            startActivity(intent);
+            }
+        };
+
+        ImageButton searchButton = (ImageButton) myView.findViewById(buttonId);
+        searchButton.setOnClickListener(listenerToSet);
+        TextView subjectTextView = (TextView) myView.findViewById(textId);
+        subjectTextView.setOnClickListener(listenerToSet);
+    }
+
+    void setDisplayByNameListener(final Button byNameButton) {
+        byNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideEverything();
+                setDisplayBySubjectListener((Button) myView.findViewById(R.id.bySubject));
+                LinearLayout nameLayout = (LinearLayout) getView().findViewById(R.id.nameLayout);
+                nameLayout.setVisibility(View.VISIBLE);
+                setShowFullListListener(byNameButton);
+            }
+        });
+    }
+    void setDisplayBySubjectListener(final Button bySubjectButton) {
+        bySubjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideEverything();
+                setDisplayByNameListener((Button) myView.findViewById(R.id.byName));
+                LinearLayout subjectLayout = (LinearLayout) getView().findViewById(R.id.subjectLayout);
+                subjectLayout.setVisibility(View.VISIBLE);
+                setShowFullListListener(bySubjectButton);
+            }
+        });
+    }
+    void setShowFullListListener(Button button){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideEverything();
+                myView.findViewById(R.id.showFullList).setVisibility(View.VISIBLE);
+                setDisplayByNameListener((Button) myView.findViewById(R.id.byName));
+                setDisplayBySubjectListener((Button) myView.findViewById(R.id.bySubject));
+
+            }
+        });
+    }
+
+    void hideEverything(){
+        myView.findViewById(R.id.subjectLayout).setVisibility(View.GONE);
+        myView.findViewById(R.id.nameLayout).setVisibility(View.GONE);
+        myView.findViewById(R.id.showFullList).setVisibility(View.GONE);
+    }
 }
