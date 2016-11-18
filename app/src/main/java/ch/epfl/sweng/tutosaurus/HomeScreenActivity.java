@@ -43,6 +43,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static ch.epfl.sweng.tutosaurus.RegisterScreenActivity.PROFILE_INFOS;
@@ -394,6 +395,11 @@ public class HomeScreenActivity extends AppCompatActivity
                     pictureView.setImageBitmap(imageSelected);
                     saveToInternalStorage(imageSelected);
                     inputStream.close();
+
+
+                    //String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    //PictureHelper.storePicOnline(imageSelectedUri.getPath(), currentUser);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();
