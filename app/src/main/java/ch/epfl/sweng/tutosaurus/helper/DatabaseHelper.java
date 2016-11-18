@@ -132,8 +132,13 @@ public class DatabaseHelper {
         messageToRef.child(key).setValue(message);
     }
 
-    public DatabaseReference getMeetingsRefForUser(String sciper) {
-        return dbf.child(MEETING_PER_USER_PATH + sciper);
+    public void addSubjectDescription(String description, String userId, String courseId){
+        DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + userId + "/coursePresentation/" + courseId);
+        userLearnCourseRef.setValue(description);
+    }
+
+    public DatabaseReference getMeetingsRefForUser(String key) {
+        return dbf.child(MEETING_PER_USER_PATH + key);
     }
 
     public DatabaseReference getUserRef() {

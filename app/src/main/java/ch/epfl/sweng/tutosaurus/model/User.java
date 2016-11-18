@@ -18,6 +18,7 @@ public class User implements Identifiable {
 
     private Map<String, Boolean> teaching = new HashMap<>();
     private Map<String, Boolean> studying = new HashMap<>();
+    private Map<String, String> coursePresentation = new HashMap<>();
 
     private Map<String, Double> ratings = new HashMap<>(); /* (course id -> globalRating) */
     private Map<String, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
@@ -200,6 +201,13 @@ public class User implements Identifiable {
             ls.put(c, true);
         }
         return ls;
+    }
+
+    public String getCourseDescriprion(String courseId){
+        return coursePresentation.get(courseId);
+    }
+    public Map<String, String> getCoursePresentation(){
+        return this.coursePresentation;
     }
 
     /**

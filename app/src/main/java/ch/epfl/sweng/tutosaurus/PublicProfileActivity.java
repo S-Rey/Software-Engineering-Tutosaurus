@@ -20,6 +20,7 @@ import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +47,6 @@ public class PublicProfileActivity extends AppCompatActivity {
 
     DatabaseHelper dbh = DatabaseHelper.getInstance();
     public String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                 boolean isPhysicsTeacher=matchingTutor.isTeacher("Physics");
                 boolean isChemistryTeacher=matchingTutor.isTeacher("Chemistry");
                 boolean isComputerTeacher=matchingTutor.isTeacher("Computer");
-                setSubjectButtons(isMathsTeacher,isPhysicsTeacher,isChemistryTeacher,isComputerTeacher);
+                setSubjectButtons(matchingTutor, isMathsTeacher,isPhysicsTeacher,isChemistryTeacher,isComputerTeacher);
 
                 // Set the floating button to send an email
                 FloatingActionButton sendEmailButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -137,7 +137,8 @@ public class PublicProfileActivity extends AppCompatActivity {
     }
 
 
-    private void setSubjectButtons(boolean isMathsTeacher,
+    private void setSubjectButtons(final User matchingTutor,
+                                   boolean isMathsTeacher,
                                    boolean isPhysicsTeacher,
                                    boolean isChemistryTeacher,
                                    boolean isComputerTeacher){
@@ -149,7 +150,7 @@ public class PublicProfileActivity extends AppCompatActivity {
             View.OnClickListener mathsClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openMathsProfile(v);
+                    openMathsProfile(v, matchingTutor);
                 }
             };
             mathsButton.setOnClickListener(mathsClick);
@@ -164,7 +165,7 @@ public class PublicProfileActivity extends AppCompatActivity {
             View.OnClickListener physicsClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openPhysicsProfile(v);
+                    openPhysicsProfile(v, matchingTutor);
                 }
             };
             physicsButton.setOnClickListener(physicsClick);
@@ -178,7 +179,7 @@ public class PublicProfileActivity extends AppCompatActivity {
             View.OnClickListener chemistryClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openChemistryProfile(v);
+                    openChemistryProfile(v, matchingTutor);
                 }
             };
             chemistryButton.setOnClickListener(chemistryClick);
@@ -191,7 +192,7 @@ public class PublicProfileActivity extends AppCompatActivity {
             View.OnClickListener computerClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openComputerProfile(v);
+                    openComputerProfile(v, matchingTutor);
                 }
             };
             computerButton.setOnClickListener(computerClick);
@@ -200,66 +201,67 @@ public class PublicProfileActivity extends AppCompatActivity {
 
     }
 
-    private void openMathsProfile(@SuppressWarnings("UnusedParameters") View view) {
-        openPresentation("Mathematics",getResources().getString(R.string.mathsPresExample));
-        setButtonsToOpen();
+
+    private void openMathsProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
+        openPresentation("Mathematics",matchingTutor.getCourseDescriprion("Maths"));
+        setButtonsToOpen(matchingTutor);
         ImageButton thisButton=(ImageButton) findViewById(R.id.mathsButton);
         View.OnClickListener closeMathsClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closePresentation();
+                closePresentation(matchingTutor);
             }
         };
         thisButton.setOnClickListener(closeMathsClick);
     }
 
-    private void openPhysicsProfile(@SuppressWarnings("UnusedParameters") View view) {
-        openPresentation("Physics",getResources().getString(R.string.physicsPresExample));
-        setButtonsToOpen();
+    private void openPhysicsProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
+        openPresentation("Physics", matchingTutor.getCourseDescriprion("Physics"));
+        setButtonsToOpen(matchingTutor);
         ImageButton thisButton=(ImageButton) findViewById(R.id.physicsButton);
         View.OnClickListener closePhysicsClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closePresentation();
+                closePresentation(matchingTutor);
             }
         };
         thisButton.setOnClickListener(closePhysicsClick);
     }
 
-    private void openChemistryProfile(@SuppressWarnings("UnusedParameters") View view) {
-        openPresentation("Chemistry",getResources().getString(R.string.chemistryPresExample));
-        setButtonsToOpen();
+    private void openChemistryProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
+        openPresentation("Chemistry",matchingTutor.getCourseDescriprion("Chemistry"));
+        setButtonsToOpen(matchingTutor);
         ImageButton thisButton=(ImageButton) findViewById(R.id.chemistryButton);
         View.OnClickListener closeChemistryClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closePresentation();
+                closePresentation(matchingTutor);
             }
         };
         thisButton.setOnClickListener(closeChemistryClick);
     }
 
-    private void openComputerProfile(@SuppressWarnings("UnusedParameters") View view) {
-        openPresentation("Computer Science",getResources().getString(R.string.computerPresExample));
-        setButtonsToOpen();
+    private void openComputerProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
+        openPresentation("Computer Science",matchingTutor.getCourseDescriprion("Computer"));
+        setButtonsToOpen(matchingTutor);
 
         ImageButton thisButton=(ImageButton) findViewById(R.id.computerButton);
         View.OnClickListener closeComputerClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closePresentation();
+                closePresentation(matchingTutor);
             }
         };
         thisButton.setOnClickListener(closeComputerClick);
     }
 
-    private void setButtonsToOpen(){
+    private void setButtonsToOpen(final User matchingTutor){
         // Set Maths
         ImageButton button=(ImageButton) findViewById(R.id.mathsButton);
         View.OnClickListener openMathsClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMathsProfile(v);
+                openMathsProfile(v, matchingTutor);
             }
         };
         button.setOnClickListener(openMathsClick);
@@ -270,7 +272,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         View.OnClickListener openPhysicsClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPhysicsProfile(v);
+                openPhysicsProfile(v, matchingTutor);
             }
         };
         button.setOnClickListener(openPhysicsClick);
@@ -281,7 +283,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         View.OnClickListener openChemistryClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openChemistryProfile(v);
+                openChemistryProfile(v, matchingTutor);
             }
         };
         button.setOnClickListener(openChemistryClick);
@@ -292,7 +294,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         View.OnClickListener openComputerClick=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openComputerProfile(v);
+                openComputerProfile(v, matchingTutor);
             }
         };
         button.setOnClickListener(openComputerClick);
@@ -306,12 +308,12 @@ public class PublicProfileActivity extends AppCompatActivity {
         subjectPresentation.setText(presentation);
         subjectPresentation.setVisibility(View.VISIBLE);
     }
-    private void closePresentation() {
+    private void closePresentation(User matchingTutor) {
         TextView subjectName=(TextView) findViewById(R.id.subjectName);
         subjectName.setVisibility(View.GONE);
         TextView subjectPresentation=(TextView) findViewById(R.id.subjectPresentation);
         subjectPresentation.setVisibility(View.GONE);
-        setButtonsToOpen();
+        setButtonsToOpen(matchingTutor);
     }
 
     public void showComments(@SuppressWarnings("UnusedParameters") View view){
@@ -340,7 +342,4 @@ public class PublicProfileActivity extends AppCompatActivity {
         };
         thisButton.setOnClickListener(hideCommentsClick);
     }
-
-
-
 }
