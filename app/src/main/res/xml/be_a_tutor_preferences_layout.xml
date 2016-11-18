@@ -9,6 +9,12 @@
         android:icon="@drawable/calculator"
         android:layout="@layout/preference_checkbox_and_image" />
 
+    <EditTextPreference
+        android:defaultValue="Enter your description."
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:key="edit_text_preference_mathematics" />
+
     <PreferenceScreen
         android:layout="@layout/preference_divider"
         android:selectable="false">
@@ -20,6 +26,12 @@
         android:title="@string/physics_enabled"
         android:icon="@drawable/flask"
         android:layout="@layout/preference_checkbox_and_image" />
+
+    <EditTextPreference
+        android:defaultValue="Enter your description."
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:key="edit_text_preference_physics" />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
@@ -33,6 +45,12 @@
         android:icon="@drawable/molecule"
         android:layout="@layout/preference_checkbox_and_image" />
 
+    <EditTextPreference
+        android:defaultValue="Enter your description."
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:key="edit_text_preference_chemistry" />
+
     <PreferenceScreen
         android:layout="@layout/preference_divider"
         android:selectable="false">
@@ -44,6 +62,12 @@
         android:title="@string/computer_science_enabled"
         android:icon="@drawable/computer"
         android:layout="@layout/preference_checkbox_and_image" />
+
+    <EditTextPreference
+        android:defaultValue="Enter your description."
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:key="edit_text_preference_computer_science" />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
