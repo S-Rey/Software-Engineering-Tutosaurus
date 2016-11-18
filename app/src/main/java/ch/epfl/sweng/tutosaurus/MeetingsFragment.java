@@ -62,8 +62,6 @@ public class MeetingsFragment extends Fragment {
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
 
-
-
         return myView;
     }
 
@@ -73,8 +71,7 @@ public class MeetingsFragment extends Fragment {
         adapter.cleanup();
     }
 
-//    CheckBoxPreference calendar = (CheckBoxPreference) findPreference("checkbox_preference_calendar");
-//    if (calendar.isChecked()) {
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
