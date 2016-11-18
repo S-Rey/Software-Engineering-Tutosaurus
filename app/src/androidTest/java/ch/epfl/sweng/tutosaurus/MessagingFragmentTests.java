@@ -6,6 +6,7 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.intent.IntentStubber;
+import android.widget.AdapterView;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,6 +24,8 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.close;
 import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -34,6 +37,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -66,7 +70,10 @@ public class MessagingFragmentTests {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
         onData(anything())
-                .inAdapterView(withId(R.id.message_list))
+                .inAdapterView(allOf(
+                        isAssignableFrom(AdapterView.class),
+                        isDisplayed()
+                ))
                 .atPosition(1)
                 .perform(click());
         try {

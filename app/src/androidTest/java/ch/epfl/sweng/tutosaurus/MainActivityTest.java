@@ -37,7 +37,7 @@ public class MainActivityTest {
         onView(withId(R.id.main_password)).perform(typeText("mrstvm95"));
         closeSoftKeyboard();
         onView(withId(R.id.connectionButton)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getTargetContext());
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
