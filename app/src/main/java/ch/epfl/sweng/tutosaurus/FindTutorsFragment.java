@@ -91,6 +91,7 @@ public class FindTutorsFragment extends Fragment {
         subjectTextView.setOnClickListener(listenerToSet);
     }
 
+
     void setDisplayByNameListener(final Button byNameButton) {
         byNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +104,8 @@ public class FindTutorsFragment extends Fragment {
             }
         });
     }
+
+
     void setDisplayBySubjectListener(final Button bySubjectButton) {
         bySubjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +118,8 @@ public class FindTutorsFragment extends Fragment {
             }
         });
     }
+
+
     void setShowFullListListener(Button button){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +132,7 @@ public class FindTutorsFragment extends Fragment {
             }
         });
     }
+
 
     void hideEverything(){
         myView.findViewById(R.id.subjectLayout).setVisibility(View.GONE);

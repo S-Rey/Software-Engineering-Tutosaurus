@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import ch.epfl.sweng.tutosaurus.PublicProfileActivity;
 import ch.epfl.sweng.tutosaurus.R;
-import ch.epfl.sweng.tutosaurus.model.Tutor;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 /**
