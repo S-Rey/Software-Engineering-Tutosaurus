@@ -27,7 +27,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -42,28 +41,31 @@
         <activity
             android:name=".HomeScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterScreenActivity"
-            android:label="@string/activity_register_name"></activity>
+            android:label="@string/activity_register_name" />
         <activity
             android:name=".ConfirmationActivity"
-            android:label="@string/activity_confirmation_name">
-        </activity>
+            android:label="@string/activity_confirmation_name"></activity>
         <activity
             android:name=".PublicProfileActivity"
             android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LocationActivity"
             android:label="@string/nameLocation"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FindTutorResult"
             android:label="List of matches"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".CreateMeetingActivity" />
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ChatActivity"></activity>
-        <activity android:name=".CreateMeetingActivity"></activity>
     </application>
 
 </manifest>

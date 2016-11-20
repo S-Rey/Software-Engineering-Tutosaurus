@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name_title">TUTOSAURUS</string>
     <string name="app_name">TutoSaurus</string>
     <string name="welcoming_message">Welcome to TutoSaurus !</string>
     <string name="instructions_message">Do not forget to sign up before logging in to the application.</string>
@@ -6,6 +7,13 @@
     <string name="password_ask">Enter Password</string>
     <string name="connection_button">Log in</string>
     <string name="register_button">Sign up</string>
+    <string name="password_reset_title">Forgot Password?</string>
+    <string name="password_forgot_btn">Forgot your Password?</string>
+    <string name="reset_password_btn">RESET PASSWORD</string>
+    <string name="request_email_password_reset">No worries! We just need the email you registered with and we\'ll send you
+    the instructions.</string>
+
+    <string name="btn_back"><![CDATA[<< Back]]></string>
 
     <string name="gaspar">Gaspar</string>
     <string name="password">Password</string>
@@ -240,4 +248,5 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_public_profile">Profile</string>
     <string name="nameLocation">Location</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
 </resources>
