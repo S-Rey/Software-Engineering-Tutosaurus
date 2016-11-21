@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -32,14 +33,35 @@ public class PictureHelper {
     static final long MAX_SIZE = 1024 * 1024; // One MB
 
 
+
+
+
+
+    /**
+     * Store the profile picture in the local folder storage in a folder which the name is the sciper
+     * @param activity
+     * @param sciper
+     * @throws FileNotFoundException
+     */
+    static public void storeProfilePicOnline (Activity activity, String sciper) throws FileNotFoundException {
+        String pathPic =  activity.getFilesDir().getAbsolutePath() + File.separator + "pictures/profile.jpg";
+        File file = new File(pathPic);
+        if(file.exists()) {
+            storePicOnline(pathPic, sciper);
+        } else {
+            throw new FileNotFoundException("There is no picture : " + pathPic);
+        }
+    }
+
     /**
      * Upload a picture (located at picPath) under sciper/ folder in the storage of Firebase.
+     * Called by storePicOnline
      * @param picPath
-     * @param sciper
+     * @param key
      */
-    static public void putImage(String picPath, String sciper) {
+    static public void storePicOnline(String picPath, String key) {
         Uri file = Uri.fromFile(new File(picPath));
-        StorageReference riversRef = storageRef.child(sciper + "/"+file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child("profilePictures/"+key+".jpg"); //file.getLastPathSegment()
         UploadTask uploadTask = riversRef.putFile(file);
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -57,21 +79,28 @@ public class PictureHelper {
     }
 
 
-
     /**
-     * Store the profile picture in Firebase storage in a folder which the name is the sciper
-     * @param activity
-     * @param sciper
-     * @throws FileNotFoundException
+     *  Store a picture store at localPicPath to the onlinePicPath (don't forget the extension jpg
+     *  or png)
+     * @param localPicPath
+     * @param onlinePicPath
      */
-    static public void storeProfilePic (Activity activity, String sciper) throws FileNotFoundException {
-        String pathPic =  activity.getFilesDir().getAbsolutePath() + File.separator + "pictures/profile.jpg";
-        File file = new File(pathPic);
-        if(file.exists()) {
-            putImage(pathPic, sciper);
-        } else {
-            throw new FileNotFoundException("There is no picture : " + pathPic);
-        }
+    static public void storePictureOnline(String localPicPath, String onlinePicPath) {
+        Uri file = Uri.fromFile(new File(localPicPath));
+        StorageReference storeRef = storageRef.child(onlinePicPath);
+        UploadTask uploadTask = storeRef.putFile(file);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
     }
 
 
@@ -80,9 +109,10 @@ public class PictureHelper {
      * @param activity
      * @param name
      */
-    static public void savePicture (final Activity activity, String name, Bitmap pic) {
+    static public void storePicLocal (final Activity activity, String name, Bitmap pic) {
         String dirPath = activity.getFilesDir().getAbsolutePath() + File.separator + "pictures";
         File projDir = new File(dirPath);
+
         if(!projDir.exists()) {
             projDir.mkdirs();
         }
@@ -112,7 +142,7 @@ public class PictureHelper {
      * @return bitmap
      */
     @Nullable
-    static public Bitmap loadPicture(final Activity activity, String name) {
+    static public Bitmap loadPictureLocal(final Activity activity, String name) {
         String filePath = activity.getFilesDir().getAbsolutePath() + File.separator +
                 "pictures/" + name + ".jpg";
         try {
@@ -126,17 +156,4 @@ public class PictureHelper {
         }
         return null;
     }
-
-
-    /*
-    public static String encodeToString(String pathToImage) {
-
-        Bitmap bm = BitmapFactory.decodeFile(pathToImage);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-        byte[] byteArrayImage = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-        return encodedImage;
-    }
-    */
 }

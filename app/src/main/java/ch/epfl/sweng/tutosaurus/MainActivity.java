@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import ch.epfl.sweng.tutosaurus.Tequila.MyAppVariables;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
+import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -59,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+
+        testStorage();
 
 
         login = (Button) findViewById(R.id.connectionButton);
@@ -176,5 +180,13 @@ public class MainActivity extends AppCompatActivity {
         LocalDatabaseHelper.insertUser(profileTwo, database);
         User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
         Toast.makeText(getBaseContext(),user.getUsername(),Toast.LENGTH_LONG).show();
+    }
+
+    public void testStorage() {
+        String localPicPath = "/storage/emulated/0/Pictures/android.png";
+        String onlinePicPath = "logo/android.png";
+
+        PictureHelper.storePictureOnline(localPicPath,onlinePicPath);
+
     }
 }
