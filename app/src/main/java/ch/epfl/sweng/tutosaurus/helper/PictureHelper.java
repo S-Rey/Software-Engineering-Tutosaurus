@@ -80,6 +80,31 @@ public class PictureHelper {
 
 
     /**
+     *  Store a picture store at localPicPath to the onlinePicPath (don't forget the extension jpg
+     *  or png)
+     * @param localPicPath
+     * @param onlinePicPath
+     */
+    static public void storePictureOnline(String localPicPath, String onlinePicPath) {
+        Uri file = Uri.fromFile(new File(localPicPath));
+        StorageReference storeRef = storageRef.child(onlinePicPath);
+        UploadTask uploadTask = storeRef.putFile(file);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
+    }
+
+
+    /**
      * Write a picture (in JPEG format) to the internal storage at pictures/
      * @param activity
      * @param name

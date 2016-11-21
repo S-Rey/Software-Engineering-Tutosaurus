@@ -415,9 +415,8 @@ public class HomeScreenActivity extends AppCompatActivity
                     saveToInternalStorage(imageSelected);
                     inputStream.close();
 
-
-                    //String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    //PictureHelper.storePicOnline(imageSelectedUri.getPath(), currentUser);
+                    String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    PictureHelper.storePicOnline(imageSelectedUri.getPath(), currentUser);
 
                 } catch (IOException e) {
                     e.printStackTrace();
