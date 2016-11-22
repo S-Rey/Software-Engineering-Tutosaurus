@@ -4,125 +4,132 @@
     android:layout_height="fill_parent">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="2">
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
 
-            <TextView
-                android:text="Albert Einstein"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:textSize="24sp"
-                android:id="@+id/textView"
-                android:textAlignment="center"
-                android:gravity="center_vertical"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="2">
 
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                <TextView
+                    android:text="Albert Einstein"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    android:id="@+id/textView"
+                    android:textAlignment="center"
+                    android:gravity="center_vertical"/>
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:numStars="5"
+                    android:stepSize="0.1"
+                    android:isIndicator="true"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/ratingBar"
-                style="?android:attr/ratingBarStyleIndicator"
-                android:numStars="5"
-                android:stepSize="0.1"
-                android:isIndicator="true"
-                android:layout_gravity="center_horizontal"/>
+                android:id="@+id/relativeLayout"
+                android:layout_marginTop="19dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:onClick="showChangePictureDialog">
+
+                <ImageView
+                    android:id="@+id/picture_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/relativeLayout"
-            android:layout_marginTop="19dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:onClick="showChangePictureDialog">
 
-            <ImageView
-                android:id="@+id/picture_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true" />
+        <Button
+            android:text="@string/change_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/changePassword"
+            android:layout_centerHorizontal="true"
+            />
 
-        </RelativeLayout>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:layout_below="@+id/changePassword"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/chooseNewPass"
+            android:background="@android:drawable/editbox_background"
+            android:textAlignment="center" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:layout_below="@+id/chooseNewPass"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/confirmNewPass"
+            android:background="@android:drawable/editbox_background"
+            android:textAlignment="center" />
+
+        <Button
+            android:text="@string/send_new_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/confirmNewPass"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/changeNewPass"
+            android:background="@android:drawable/editbox_background"
+            android:textSize="18sp"
+            android:textStyle="normal|bold|italic"
+            android:textColor="@color/colorAccent"
+            android:onClick="changePassword" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meetings in the last week"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/meetingToBeRated"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meetings in the next week"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/meetingToBeAttended"/>
+
     </LinearLayout>
-
-
-    <Button
-        android:text="@string/change_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/changePassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_below="@+id/changePassword"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/chooseNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textAlignment="center" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_below="@+id/chooseNewPass"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/confirmNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textAlignment="center" />
-
-    <Button
-        android:text="@string/send_new_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/confirmNewPass"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/changeNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textSize="18sp"
-        android:textStyle="normal|bold|italic"
-        android:textColor="@color/colorAccent"
-        android:onClick="changePassword" />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Meetings in the last week"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/meetingToBeRated"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Meetings in the next week"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/meetingToBeAttended"/>
 
 
 </RelativeLayout>
