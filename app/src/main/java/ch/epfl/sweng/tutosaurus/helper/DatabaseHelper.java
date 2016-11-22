@@ -19,6 +19,7 @@ public class DatabaseHelper {
     public static final String MEETING_PATH = "meeting/";
     public static final String USER_PATH = "user/";
     public static final String COURSE_PATH = "course/";
+    public static final String MEETING_REQUEST_PATH = "meetingRequests";
     public static final String MEETING_PER_USER_PATH = "meetingsPerUser/";
 
     private FirebaseDatabase db;
@@ -77,7 +78,7 @@ public class DatabaseHelper {
     public String addMeeting(Meeting meeting) {
         String key = dbf.child(MEETING_PATH).push().getKey();
         meeting.setId(key);
-        DatabaseReference meetingRef = dbf.child(MEETING_PATH + key);
+        DatabaseReference meetingRef = dbf.child(MEETING_PATH).child(key);
         DatabaseReference userRef = dbf.child(USER_PATH);
         DatabaseReference meetingsPerUserRef = dbf.child(MEETING_PER_USER_PATH);
         for (String userKey: meeting.getParticipants()) {
@@ -92,6 +93,24 @@ public class DatabaseHelper {
             courseMeetingRef.setValue(true);
         }
         return key;
+    }
+
+    public void requestMeeting(Meeting meeting, String teacher, String student) {
+        String key = dbf.child(MEETING_REQUEST_PATH).child(student).push().getKey();
+        meeting.setId(key);
+        DatabaseReference teacherMeetingRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("meeting");
+        DatabaseReference teacherTypeRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("type");
+        DatabaseReference teacherAcceptedRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("accepted");
+        DatabaseReference studentMeetingRef = dbf.child(MEETING_REQUEST_PATH).child(student).child(key).child("meeting");
+        DatabaseReference studentTypeRef = dbf.child(MEETING_REQUEST_PATH).child(student).child(key).child("type");
+        DatabaseReference studentAcceptedRef = dbf.child(MEETING_REQUEST_PATH).child(student).child(key).child("accepted");
+
+        teacherMeetingRef.setValue(meeting);
+        teacherTypeRef.setValue("received");
+        teacherAcceptedRef.setValue(false);
+        studentMeetingRef.setValue(meeting);
+        studentTypeRef.setValue("sent");
+        studentAcceptedRef.setValue(false);
     }
 
     public void getMeeting(String key) {
