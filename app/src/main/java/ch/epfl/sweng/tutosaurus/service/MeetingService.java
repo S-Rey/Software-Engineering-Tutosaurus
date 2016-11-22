@@ -30,8 +30,8 @@ public class MeetingService extends Service {
     private int numNewRequests = 0;
     private Map<String, String> requests = new LinkedHashMap<>();
     private NotificationManager mNotificationManager;
-
-    DatabaseReference meetingReqRef;
+    private MeetingEventListener mListener;
+    private DatabaseReference meetingReqRef;
 
     @Nullable
     @Override
@@ -44,15 +44,22 @@ public class MeetingService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if(currentUser == null || currentEmail == null) {
+            Log.d(TAG, "user must be logged in, stopping service");
+            stopSelf();
+        }
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         meetingReqRef = DatabaseHelper.getInstance().getReference().child(DatabaseHelper.MEETING_REQUEST_PATH).child(currentUser);
-        meetingReqRef.addChildEventListener(new MeetingEventListener());
+        mListener = new MeetingEventListener();
+        meetingReqRef.addChildEventListener(mListener);
         Log.d(TAG, "Service started on path: " + meetingReqRef.toString());
         return START_STICKY;
     }
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
+        meetingReqRef.removeEventListener(mListener);
         mNotificationManager.cancel(5555);
         Log.d(TAG, "service stopped");
     }
