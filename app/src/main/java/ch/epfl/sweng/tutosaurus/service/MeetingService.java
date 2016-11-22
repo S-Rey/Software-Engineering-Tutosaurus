@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ public class MeetingService extends Service {
 
     public static final String TAG = "MeetingService";
 
+    private final String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
     private int numNewRequests = 0;
     private Map<String, String> requests = new LinkedHashMap<>();
     private NotificationManager mNotificationManager;
@@ -50,14 +52,16 @@ public class MeetingService extends Service {
     private void notifyNewRequest() {
         NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setSummaryText("New meeting requests");
+        inboxStyle.setSummaryText(currentEmail);
+        inboxStyle.setBigContentTitle(requests.size() + " new meeting requests");
         for(Map.Entry<String, String> req : requests.entrySet()) {
             inboxStyle.addLine(req.getValue());
         }
-        notBuilder.setContentTitle("Tutosaurus")
+        notBuilder.setContentTitle(requests.size() + " new meeting requests")
                 .setSmallIcon(R.drawable.philosoraptor)
                 .setNumber(numNewRequests ++)
                 .setStyle(inboxStyle)
+                .setContentText(currentEmail)
                 .setNumber(requests.size());
 
         synchronized (mNotificationManager) {
