@@ -3,49 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <Button
-        android:text="@string/change_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/changePassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_below="@+id/changePassword"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/chooseNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textAlignment="center" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_below="@+id/chooseNewPass"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/confirmNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textAlignment="center" />
-
-    <Button
-        android:text="@string/send_new_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/confirmNewPass"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/changeNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textSize="18sp"
-        android:textStyle="normal|bold|italic"
-        android:textColor="@color/colorAccent"
-        android:onClick="changePassword" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -93,13 +50,79 @@
             android:onClick="showChangePictureDialog">
 
             <ImageView
-            android:id="@+id/picture_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
+                android:id="@+id/picture_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
 
         </RelativeLayout>
     </LinearLayout>
+
+
+    <Button
+        android:text="@string/change_password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/changePassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_below="@+id/changePassword"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/chooseNewPass"
+        android:background="@android:drawable/editbox_background"
+        android:textAlignment="center" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_below="@+id/chooseNewPass"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/confirmNewPass"
+        android:background="@android:drawable/editbox_background"
+        android:textAlignment="center" />
+
+    <Button
+        android:text="@string/send_new_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/confirmNewPass"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/changeNewPass"
+        android:background="@android:drawable/editbox_background"
+        android:textSize="18sp"
+        android:textStyle="normal|bold|italic"
+        android:textColor="@color/colorAccent"
+        android:onClick="changePassword" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Meetings in the last week"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meetingToBeRated"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Meetings in the next week"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meetingToBeAttended"/>
+
 
 </RelativeLayout>
