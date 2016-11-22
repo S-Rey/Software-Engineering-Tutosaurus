@@ -101,16 +101,12 @@ public class DatabaseHelper {
         DatabaseReference teacherMeetingRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("meeting");
         DatabaseReference teacherTypeRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("type");
         DatabaseReference teacherAcceptedRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("accepted");
-        DatabaseReference studentMeetingRef = dbf.child(MEETING_REQUEST_PATH).child(student).child(key).child("meeting");
-        DatabaseReference studentTypeRef = dbf.child(MEETING_REQUEST_PATH).child(student).child(key).child("type");
-        DatabaseReference studentAcceptedRef = dbf.child(MEETING_REQUEST_PATH).child(student).child(key).child("accepted");
+        DatabaseReference teacherFromRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("from");
 
         teacherMeetingRef.setValue(meeting);
         teacherTypeRef.setValue("received");
         teacherAcceptedRef.setValue(false);
-        studentMeetingRef.setValue(meeting);
-        studentTypeRef.setValue("sent");
-        studentAcceptedRef.setValue(false);
+        teacherFromRef.setValue(student);
     }
 
     public void getMeeting(String key) {

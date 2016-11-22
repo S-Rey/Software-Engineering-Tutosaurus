@@ -2,6 +2,7 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +45,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.epfl.sweng.tutosaurus.service.MeetingService;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static ch.epfl.sweng.tutosaurus.RegisterScreenActivity.PROFILE_INFOS;
@@ -87,6 +89,11 @@ public class HomeScreenActivity extends AppCompatActivity
                 }
             }
         };
+
+        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Intent serviceIntent = new Intent(this, MeetingService.class);
+        serviceIntent.putExtra("uid", currentUser);
+        getApplicationContext().startService(serviceIntent);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
