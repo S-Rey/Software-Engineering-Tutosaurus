@@ -29,6 +29,7 @@ public class MeetingService extends Service {
     private NotificationManager mNotificationManager;
 
     DatabaseReference meetingReqRef;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
