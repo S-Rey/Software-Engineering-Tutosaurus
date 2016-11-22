@@ -13,7 +13,9 @@
         android:defaultValue="Enter your description."
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:key="edit_text_preference_mathematics" />
+        android:key="edit_text_preference_mathematics"
+        android:enabled="true"
+        />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
@@ -31,7 +33,9 @@
         android:defaultValue="Enter your description."
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:key="edit_text_preference_physics" />
+        android:key="edit_text_preference_physics"
+        android:enabled="true"
+        />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
@@ -49,7 +53,9 @@
         android:defaultValue="Enter your description."
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:key="edit_text_preference_chemistry" />
+        android:key="edit_text_preference_chemistry"
+        android:enabled="true"
+        />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
@@ -67,7 +73,9 @@
         android:defaultValue="Enter your description."
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:key="edit_text_preference_computer_science" />
+        android:key="edit_text_preference_computer_science"
+        android:enabled="true"
+        />
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"

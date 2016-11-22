@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        testStorage();
-
 
         login = (Button) findViewById(R.id.connectionButton);
         bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
@@ -138,13 +136,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openLocation(View view) {
-        Intent intent = new Intent(this, LocationActivity.class);
-        startActivity(intent);
-    }
-
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -182,11 +173,11 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getBaseContext(),user.getUsername(),Toast.LENGTH_LONG).show();
     }
 
-    public void testStorage() {
-        String localPicPath = "/storage/emulated/0/Pictures/android.png";
-        String onlinePicPath = "logo/android.png";
-
-        PictureHelper.storePictureOnline(localPicPath,onlinePicPath);
-
-    }
+//    public void testStorage() {
+//        String localPicPath = "/storage/emulated/0/Pictures/android.png";
+//        String onlinePicPath = "logo/android.png";
+//
+//        PictureHelper.storePictureOnline(localPicPath,onlinePicPath);
+//
+//    }
 }
