@@ -34,20 +34,22 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".StartActivity"
+            android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".HomeScreenActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterScreenActivity"
-            android:label="@string/activity_register_name"></activity>
+            android:label="@string/activity_register_name" />
         <activity
             android:name=".ConfirmationActivity"
             android:label="@string/activity_confirmation_name">
@@ -55,17 +57,17 @@
         <activity
             android:name=".PublicProfileActivity"
             android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LocationActivity"
             android:label="@string/nameLocation"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FindTutorResult"
             android:label="List of matches"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ChatActivity"></activity>
-        <activity android:name=".CreateMeetingActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".CreateMeetingActivity" />
     </application>
 
 </manifest>

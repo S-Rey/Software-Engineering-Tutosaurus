@@ -92,7 +92,6 @@ public class HomeScreenActivity extends AppCompatActivity
 
         String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Intent serviceIntent = new Intent(this, MeetingService.class);
-        serviceIntent.putExtra("uid", currentUser);
         getApplicationContext().startService(serviceIntent);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -225,6 +224,9 @@ public class HomeScreenActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logOutButton) {
             mAuth.signOut();
+            Intent logInIntent = new Intent(this, MainActivity.class);
+            logInIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logInIntent);
             finish();
             return true;
         }

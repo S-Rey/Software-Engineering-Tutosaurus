@@ -25,7 +25,8 @@ public class MeetingService extends Service {
 
     public static final String TAG = "MeetingService";
 
-    private final String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private String currentEmail;
+    private String currentUser;
     private int numNewRequests = 0;
     private Map<String, String> requests = new LinkedHashMap<>();
     private NotificationManager mNotificationManager;
@@ -41,12 +42,19 @@ public class MeetingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        String user = intent.getStringExtra("uid");
-        meetingReqRef = DatabaseHelper.getInstance().getReference().child(DatabaseHelper.MEETING_REQUEST_PATH).child(user);
+        meetingReqRef = DatabaseHelper.getInstance().getReference().child(DatabaseHelper.MEETING_REQUEST_PATH).child(currentUser);
         meetingReqRef.addChildEventListener(new MeetingEventListener());
         Log.d(TAG, "Service started on path: " + meetingReqRef.toString());
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy(){
+        mNotificationManager.cancel(5555);
+        Log.d(TAG, "service stopped");
     }
 
     private void notifyNewRequest() {
