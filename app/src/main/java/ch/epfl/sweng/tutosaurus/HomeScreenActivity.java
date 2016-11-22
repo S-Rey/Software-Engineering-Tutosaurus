@@ -3,6 +3,7 @@ package ch.epfl.sweng.tutosaurus;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -21,12 +22,14 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -435,5 +438,40 @@ public class HomeScreenActivity extends AppCompatActivity
         double scale = ((double)PROFILE_PICTURE_WIDTH) / width;
         int newHeight = (int) Math.round(img.getHeight() * scale);
         return Bitmap.createScaledBitmap(img, PROFILE_PICTURE_WIDTH, newHeight, true);
+    }
+
+    public void showChangePictureDialog(final View view){
+        AlertDialog.Builder changePictureDialog = new AlertDialog.Builder(this);
+        //changePictureDialog.setTitle("New profile picture");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item);
+
+        arrayAdapter.add("Take picture with camera");
+        arrayAdapter.add("Load picture from gallery");
+
+        changePictureDialog.setNegativeButton(
+                "cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        changePictureDialog.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = arrayAdapter.getItem(which);
+                        if(strName.equals("Take picture with camera")){
+                            dispatchTakePictureIntent(view);
+                        }
+                        else if(strName.equals("Load picture from gallery")){
+                            loadImageFromGallery(view);
+                        }
+                    }
+                });
+        changePictureDialog.show();
     }
 }
