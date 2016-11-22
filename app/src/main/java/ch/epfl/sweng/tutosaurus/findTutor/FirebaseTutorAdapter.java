@@ -32,7 +32,7 @@ public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
 
         // Set the OnClickListener on each name of the list
         final Intent intent = new Intent(view.getContext(), PublicProfileActivity.class);
-        intent.putExtra("USER_ID",tutor.getUid());
+        intent.putExtra("USER_ID", tutor.getUid());
 
         profileName.setOnClickListener(new View.OnClickListener(){
             @Override
