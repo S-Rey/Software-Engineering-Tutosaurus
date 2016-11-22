@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/confirmNewPass"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:id="@+id/changeNewPass"
             android:background="@android:drawable/editbox_background"
             android:textSize="18sp"
@@ -117,7 +117,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/meetingToBeRated"/>
+            android:id="@+id/meetingLastWeek"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -127,7 +127,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/meetingToBeAttended"/>
+            android:id="@+id/meetingNextWeek"/>
 
     </LinearLayout>
 
