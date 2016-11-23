@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +27,6 @@ public class MeetingService extends Service {
     public static final String TAG = "MeetingService";
 
     private String currentEmail;
-    private String currentUser;
     private int numNewRequests = 0;
     private Map<String, String> requests = new LinkedHashMap<>();
     private NotificationManager mNotificationManager;
@@ -42,17 +42,18 @@ public class MeetingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        if(currentUser == null || currentEmail == null) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser == null) {
             Log.d(TAG, "user must be logged in, stopping service");
             stopSelf();
+        } else {
+            currentEmail = currentUser.getEmail();
+            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            meetingReqRef = DatabaseHelper.getInstance().getReference().child(DatabaseHelper.MEETING_REQUEST_PATH).child(currentUser.getUid());
+            mListener = new MeetingEventListener();
+            meetingReqRef.addChildEventListener(mListener);
+            Log.d(TAG, "Service started on path: " + meetingReqRef.toString());
         }
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        meetingReqRef = DatabaseHelper.getInstance().getReference().child(DatabaseHelper.MEETING_REQUEST_PATH).child(currentUser);
-        mListener = new MeetingEventListener();
-        meetingReqRef.addChildEventListener(mListener);
-        Log.d(TAG, "Service started on path: " + meetingReqRef.toString());
         return START_STICKY;
     }
 
