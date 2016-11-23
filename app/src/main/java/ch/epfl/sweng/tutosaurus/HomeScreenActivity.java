@@ -227,6 +227,8 @@ public class HomeScreenActivity extends AppCompatActivity
             Intent logInIntent = new Intent(this, MainActivity.class);
             logInIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(logInIntent);
+            Intent serviceIntent = new Intent(this, MeetingService.class);
+            stopService(serviceIntent);
             finish();
             return true;
         }
