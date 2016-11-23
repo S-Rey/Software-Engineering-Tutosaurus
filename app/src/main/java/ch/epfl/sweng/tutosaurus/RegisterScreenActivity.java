@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -182,18 +184,19 @@ public class RegisterScreenActivity extends AppCompatActivity {
         webViewOauth.clearCache(true);
         webViewOauth.loadUrl(codeRequestUrl);
 
-        /**CookieManager cookieManager = CookieManager.getInstance();
-         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-         cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
-         // a callback which is executed when the cookies have been removed
-         @Override
-         public void onReceiveValue(Boolean aBoolean) {
-         }
-         });
-         }
-         else {
-         cookieManager.removeAllCookie();
-         }*/
+        /* remove all cookies from webview */
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+                // a callback which is executed when the cookies have been removed
+                @Override
+                public void onReceiveValue(Boolean aBoolean) {
+                }
+            });
+        }
+        else {
+            cookieManager.removeAllCookie();
+        }
 
         webViewOauth.setWebViewClient(new WebViewClient() {
             boolean authComplete = false;

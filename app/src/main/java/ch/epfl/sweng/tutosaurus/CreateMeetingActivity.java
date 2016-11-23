@@ -58,7 +58,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
                 meeting.setDate(dateMeeting);
 
-                dbh.addMeeting(meeting);
+                dbh.requestMeeting(meeting, teacherId, currentUser);
             }
         });
 

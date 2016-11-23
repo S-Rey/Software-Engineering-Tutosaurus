@@ -2,6 +2,7 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
+import ch.epfl.sweng.tutosaurus.service.MeetingService;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static ch.epfl.sweng.tutosaurus.RegisterScreenActivity.PROFILE_INFOS;
@@ -91,6 +93,10 @@ public class HomeScreenActivity extends AppCompatActivity
                 }
             }
         };
+
+        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Intent serviceIntent = new Intent(this, MeetingService.class);
+        getApplicationContext().startService(serviceIntent);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -222,6 +228,9 @@ public class HomeScreenActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logOutButton) {
             mAuth.signOut();
+            Intent logInIntent = new Intent(this, MainActivity.class);
+            logInIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logInIntent);
             finish();
             return true;
         }
