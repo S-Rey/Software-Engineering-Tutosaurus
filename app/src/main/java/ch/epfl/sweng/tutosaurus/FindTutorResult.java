@@ -14,6 +14,8 @@ public class FindTutorResult extends AppCompatActivity {
 
     private String tutorName;
     private String tutorSciper;
+    private String courseId;
+
     DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Override
@@ -36,19 +38,9 @@ public class FindTutorResult extends AppCompatActivity {
             tutorSciper=extras.getString("SCIPER_TO_SEARCH");
             ref = ref.orderByChild("sciper").equalTo(tutorSciper);
         }
-        else if (methodToCall.equals("findMathsTutor")) {
-            ref=findTutorBySubject("Maths",ref);
-        }
-        else if (methodToCall.equals("findPhysicsTutor")) {
-            ref=findTutorBySubject("Physics",ref);
-        }
-        else if (methodToCall.equals("findChemistryTutor")) {
-            ref=findTutorBySubject("Chemistry", ref);
-        }
-        else if (methodToCall.equals("findComputerTutor")) {
-            ref=findTutorBySubject("Computer",ref);
-        }
-        else if (methodToCall.equals("showFullList")){
+        else if (methodToCall.equals("findTutorByCourse")) {
+            courseId=extras.getString("COURSE_ID");
+            ref = findTutorBySubject(courseId, ref);
         }
 
         FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);

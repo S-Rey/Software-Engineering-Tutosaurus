@@ -4,7 +4,7 @@ public class Course {
 
     private String name;
     private String id;
-
+    private int pictureId;
     /**
      * Constructor with no arguments for Course (required for firebase deserialization)
      */
@@ -31,6 +31,17 @@ public class Course {
     }
 
     /**
+     * Constructor for the Course class.
+     * @param id the unique id of this course
+     * @param name the name of this course
+     * @param pictureId the id of the symbol of the course
+     */
+    public Course(String id, String name, int pictureId) {
+        this.id = id;
+        this.name = name;
+        this.pictureId=pictureId;
+    }
+    /**
      * Sets this course's name.
      *
      * @param name the name of the course
@@ -54,6 +65,15 @@ public class Course {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Returns this course's picture.
+     *
+     * @return the name of the course
+     */
+    public int getPictureId() {
+        return this.pictureId;
     }
 
 }
