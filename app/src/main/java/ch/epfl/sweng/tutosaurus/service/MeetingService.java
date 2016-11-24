@@ -4,9 +4,12 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +36,10 @@ public class MeetingService extends Service {
     private MeetingEventListener mListener;
     private DatabaseReference meetingReqRef;
 
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor prefEditor;
+    private boolean shouldNotify;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -42,6 +49,9 @@ public class MeetingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        // if the service crashed, we should not notify
+        shouldNotify = !sharedPref.getBoolean("serviceCrashed", false);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser == null) {
             Log.d(TAG, "user must be logged in, stopping service");
@@ -54,6 +64,10 @@ public class MeetingService extends Service {
             meetingReqRef.addChildEventListener(mListener);
             Log.d(TAG, "Service started on path: " + meetingReqRef.toString());
         }
+        prefEditor = sharedPref.edit();
+        // we assume the service crashed as long as onDestroy is not called
+        prefEditor.putBoolean("serviceCrashed", true);
+        prefEditor.apply();
         return START_STICKY;
     }
 
@@ -62,26 +76,34 @@ public class MeetingService extends Service {
         super.onDestroy();
         meetingReqRef.removeEventListener(mListener);
         mNotificationManager.cancel(5555);
+        // if the service was terminated normally, it did not crash
+        prefEditor.putBoolean("serviceCrashed", false);
+        prefEditor.apply();
         Log.d(TAG, "service stopped");
     }
 
     private void notifyNewRequest() {
-        NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setSummaryText(currentEmail);
-        inboxStyle.setBigContentTitle(requests.size() + " new meeting requests");
-        for(Map.Entry<String, String> req : requests.entrySet()) {
-            inboxStyle.addLine(req.getValue());
-        }
-        notBuilder.setContentTitle(requests.size() + " new meeting requests")
-                .setSmallIcon(R.drawable.philosoraptor)
-                .setNumber(numNewRequests ++)
-                .setStyle(inboxStyle)
-                .setContentText(currentEmail)
-                .setNumber(requests.size());
+        if(shouldNotify) {
+            NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+            inboxStyle.setSummaryText(currentEmail);
+            inboxStyle.setBigContentTitle(requests.size() + " new meeting requests");
+            for (Map.Entry<String, String> req : requests.entrySet()) {
+                inboxStyle.addLine(req.getValue());
+            }
+            notBuilder.setContentTitle(requests.size() + " new meeting requests")
+                    .setSmallIcon(R.drawable.philosoraptor)
+                    .setNumber(numNewRequests++)
+                    .setStyle(inboxStyle)
+                    .setContentText(currentEmail)
+                    .setNumber(requests.size());
 
-        synchronized (mNotificationManager) {
-            mNotificationManager.notify(5555, notBuilder.build());
+            synchronized (mNotificationManager) {
+                mNotificationManager.notify(5555, notBuilder.build());
+            }
+        } else {
+            Log.d(TAG, "Service just crashed, no need to notify");
+            shouldNotify = true;
         }
     }
 
