@@ -65,15 +65,14 @@ public class ProfileFragment extends Fragment {
 
     /**
      * Download a picture from the sciper/ folder from the storage of Firebase
-     * @param namePic
-     * @param sciper
+     * @param key
      * @return
      */
-     private void getImage(String namePic, String sciper) throws IOException {
+     private void getImage(String key) throws IOException {
         StorageReference storageRef = FirebaseStorage.getInstance().
                 getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
         final long MAX_SIZE = 2048 * 2048;
-         storageRef.child(sciper + "/" + namePic + ".jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+         storageRef.child("profilePictures/" + key + ".jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
              @Override
              public void onSuccess(byte[] bytes) {
                  Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();

@@ -11,7 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import ch.epfl.sweng.tutosaurus.adapter.ClassicCourseAdapter;
+import ch.epfl.sweng.tutosaurus.model.Course;
+import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
 /**
  * Created by Vincent on 05/10/2016.
@@ -19,6 +26,7 @@ import android.widget.TextView;
 
 public class FindTutorsFragment extends Fragment {
     View myView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,12 +57,14 @@ public class FindTutorsFragment extends Fragment {
         // Display search by subject listener
         setDisplayBySubjectListener((Button) myView.findViewById(R.id.bySubject));
 
-        // Search by subject listener
-        setSubjectListener(R.id.mathsButton, R.id.mathsText, "findMathsTutor");
-        setSubjectListener(R.id.physicsButton, R.id.physicsText, "findPhysicsTutor");
-        setSubjectListener(R.id.chemistryButton, R.id.chemistryText, "findChemistryTutor");
-        setSubjectListener(R.id.computerButton, R.id.computerText, "findComputerTutor");
+        // Populate list of subjects with search methods
+        ArrayList<Course> courses = FullCourseList.getInstance().getListOfCourses();
+        ClassicCourseAdapter courseAdapter = new ClassicCourseAdapter(  getActivity().getBaseContext(),
+                                                                        R.layout.listview_course_row,
+                                                                        courses);
 
+        ListView courseList= (ListView) myView.findViewById(R.id.courseList);
+        courseList.setAdapter(courseAdapter);
 
         // Show full list
         TextView showFullList = (TextView) myView.findViewById(R.id.showFullList);
@@ -72,25 +82,6 @@ public class FindTutorsFragment extends Fragment {
         return myView;
     }
 
-    void setSubjectListener(int buttonId, int textId, final String methodName){
-
-        View.OnClickListener listenerToSet =new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(),FindTutorResult.class);
-            Bundle extras = new Bundle();
-            extras.putString("METHOD_TO_CALL",methodName);
-            intent.putExtras(extras);
-            startActivity(intent);
-            }
-        };
-
-        ImageButton searchButton = (ImageButton) myView.findViewById(buttonId);
-        searchButton.setOnClickListener(listenerToSet);
-        TextView subjectTextView = (TextView) myView.findViewById(textId);
-        subjectTextView.setOnClickListener(listenerToSet);
-    }
-
     void setDisplayByNameListener(final Button byNameButton) {
         byNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,18 +94,21 @@ public class FindTutorsFragment extends Fragment {
             }
         });
     }
+
     void setDisplayBySubjectListener(final Button bySubjectButton) {
         bySubjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hideEverything();
                 setDisplayByNameListener((Button) myView.findViewById(R.id.byName));
-                LinearLayout subjectLayout = (LinearLayout) getView().findViewById(R.id.subjectLayout);
-                subjectLayout.setVisibility(View.VISIBLE);
+                ListView subjectList = (ListView) getView().findViewById(R.id.courseList);
+                subjectList.setVisibility(View.VISIBLE);
                 setShowFullListListener(bySubjectButton);
             }
         });
     }
+
+
     void setShowFullListListener(Button button){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +122,9 @@ public class FindTutorsFragment extends Fragment {
         });
     }
 
+
     void hideEverything(){
-        myView.findViewById(R.id.subjectLayout).setVisibility(View.GONE);
+        myView.findViewById(R.id.courseList).setVisibility(View.GONE);
         myView.findViewById(R.id.nameLayout).setVisibility(View.GONE);
         myView.findViewById(R.id.showFullList).setVisibility(View.GONE);
     }

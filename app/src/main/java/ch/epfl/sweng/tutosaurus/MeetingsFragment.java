@@ -1,9 +1,10 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.*;
+import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,8 +17,6 @@ import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,12 +28,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
+import ch.epfl.sweng.tutosaurus.adapter.CourseAdapter;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class MeetingsFragment extends Fragment {
 
+    private static final int MY_PERMISSIONS_REQUEST_CALENDAR = 100;
     View myView;
     private MeetingAdapter adapter;
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -86,6 +87,24 @@ public class MeetingsFragment extends Fragment {
                         Meeting meeting = meetingSnapshot.getValue(Meeting.class);
                         long startMillis = 0;
                         long endMillis = 0;
+
+                        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                                    Manifest.permission.WRITE_CALENDAR)) {
+
+                                // Show an explanation to the user *asynchronously* -- don't block
+                                // this thread waiting for the user's response! After the user
+                                // sees the explanation, try again to request the permission.
+
+                            } else {
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        new String[]{android.Manifest.permission.WRITE_CALENDAR},
+                                        MY_PERMISSIONS_REQUEST_CALENDAR);
+                            }
+
+                        }
+
                         Calendar beginTime = Calendar.getInstance();
                         Calendar endTime = Calendar.getInstance();
                         if (meeting.getDate() != null) {
@@ -100,29 +119,24 @@ public class MeetingsFragment extends Fragment {
                         ContentResolver contentResolver = getActivity().getContentResolver();
                         Uri uri = CalendarContract.Calendars.CONTENT_URI;
                         Cursor cursorCalendarID = contentResolver.query(uri, EVENT_PROJECTION, null, null, null);
-                        if (cursorCalendarID != null) {
-                            cursorCalendarID.moveToFirst();
+                        while (cursorCalendarID.moveToNext()) {
+                            calID = cursorCalendarID.getLong(PROJECTION_ID_INDEX);
+                            ContentValues values = new ContentValues();
+                            values.put(CalendarContract.Events.DTSTART, startMillis);
+                            values.put(CalendarContract.Events.DTEND, endMillis);
+                            values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
+                            if (meeting.getCourse() != null) {
+                                values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
+                            }
+                            if (meeting.getDescription() != null) {
+                                values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
+                            }
+                            if (meeting.getNameLocation() != null) {
+                                values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
+                            }
+                            values.put(CalendarContract.Events.CALENDAR_ID, calID);
+                            Uri newEvent = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
                         }
-                        calID = cursorCalendarID.getLong(PROJECTION_ID_INDEX);
-
-                        ContentValues values = new ContentValues();
-                        values.put(CalendarContract.Events.DTSTART, startMillis);
-                        values.put(CalendarContract.Events.DTEND, endMillis);
-                        values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                        if (meeting.getCourse() != null) {
-                            values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                        }
-                        if (meeting.getDescription() != null) {
-                            values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
-                        }
-                        if (meeting.getNameLocation() != null) {
-                            values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
-                        }
-                        values.put(CalendarContract.Events.CALENDAR_ID, calID);
-                        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                            return;
-                        }
-                        Uri newEvent = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
                     }
                 }
             }

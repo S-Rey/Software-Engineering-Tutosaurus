@@ -11,7 +11,6 @@ package ch.epfl.sweng.tutosaurus.findTutor;
 
         import ch.epfl.sweng.tutosaurus.PublicProfileActivity;
         import ch.epfl.sweng.tutosaurus.R;
-        import ch.epfl.sweng.tutosaurus.model.Tutor;
         import ch.epfl.sweng.tutosaurus.model.User;
 
 /**
@@ -33,7 +32,7 @@ public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
 
         // Set the OnClickListener on each name of the list
         final Intent intent = new Intent(view.getContext(), PublicProfileActivity.class);
-        intent.putExtra("USER_ID",tutor.getUid());
+        intent.putExtra("USER_ID", tutor.getUid());
 
         profileName.setOnClickListener(new View.OnClickListener(){
             @Override

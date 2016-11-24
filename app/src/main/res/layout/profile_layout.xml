@@ -3,81 +3,133 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
-
-    <ImageView
-        android:id="@+id/picture_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:orientation="vertical">
 
-    </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
 
-    <Button
-        android:id="@+id/buttonLoadPicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="loadImageFromGallery"
-        android:text="@string/load_picture"
-        android:layout_marginTop="270dp"
-        android:layout_alignParentEnd="true">
-    </Button>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="2">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonTakePicture"
-        android:text="@string/take_picture"
-        android:onClick="dispatchTakePictureIntent"
-        android:layout_marginTop="270dp"
-        android:layout_alignParentStart="true" />
+                <TextView
+                    android:text="Albert Einstein"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:textSize="24sp"
+                    android:id="@+id/textView"
+                    android:textAlignment="center"
+                    android:gravity="center_vertical"/>
 
-    <Button
-        android:text="@string/change_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/changePassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/ratingBar"
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:numStars="5"
+                    android:stepSize="0.1"
+                    android:isIndicator="true"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_below="@+id/changePassword"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/chooseNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textAlignment="center" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/relativeLayout"
+                android:layout_marginTop="19dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:onClick="showChangePictureDialog">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_below="@+id/chooseNewPass"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/confirmNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textAlignment="center" />
+                <ImageView
+                    android:id="@+id/picture_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true" />
 
-    <Button
-        android:text="@string/send_new_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/confirmNewPass"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/changeNewPass"
-        android:background="@android:drawable/editbox_background"
-        android:textSize="18sp"
-        android:textStyle="normal|bold|italic"
-        android:textColor="@color/colorAccent"
-        android:onClick="changePassword" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <Button
+            android:text="@string/change_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/changePassword"
+            android:layout_centerHorizontal="true"
+            />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:layout_below="@+id/changePassword"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/chooseNewPass"
+            android:background="@android:drawable/editbox_background"
+            android:textAlignment="center" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:layout_below="@+id/chooseNewPass"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/confirmNewPass"
+            android:background="@android:drawable/editbox_background"
+            android:textAlignment="center" />
+
+        <Button
+            android:text="@string/send_new_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/confirmNewPass"
+            android:layout_gravity="center"
+            android:id="@+id/changeNewPass"
+            android:background="@android:drawable/editbox_background"
+            android:textSize="18sp"
+            android:textStyle="normal|bold|italic"
+            android:textColor="@color/colorAccent"
+            android:onClick="changePassword" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meetings in the last week"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/meetingLastWeek"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meetings in the next week"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/meetingNextWeek"/>
+
+    </LinearLayout>
+
 
 </RelativeLayout>

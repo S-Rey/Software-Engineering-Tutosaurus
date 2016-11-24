@@ -57,7 +57,7 @@
                     style="?android:attr/ratingBarStyleIndicator"
                     android:numStars="5"
                     android:stepSize="0.1"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:isIndicator="true" />
                 <TextView
                     android:text="Student"

@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import ch.epfl.sweng.tutosaurus.Tequila.MyAppVariables;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
+import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -113,9 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
                                     if (task.isSuccessful()) {
-                                        Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
-                                        intent.setAction("OPEN_TAB_PROFILE");
-                                        startActivity(intent);
+                                        dispatchHomeScreenIntent();
                                     } else {
                                         Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT);
                                         loginAlertB.setMessage("Login failed");
@@ -134,8 +134,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openLocation(View view) {
-        Intent intent = new Intent(this, LocationActivity.class);
+
+    private void dispatchHomeScreenIntent() {
+        Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
+        intent.setAction("OPEN_TAB_PROFILE");
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        finish();
         startActivity(intent);
     }
 
@@ -177,4 +181,12 @@ public class MainActivity extends AppCompatActivity {
         User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
         Toast.makeText(getBaseContext(),user.getUsername(),Toast.LENGTH_LONG).show();
     }
+
+//    public void testStorage() {
+//        String localPicPath = "/storage/emulated/0/Pictures/android.png";
+//        String onlinePicPath = "logo/android.png";
+//
+//        PictureHelper.storePictureOnline(localPicPath,onlinePicPath);
+//
+//    }
 }

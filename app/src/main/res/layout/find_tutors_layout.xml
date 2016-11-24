@@ -37,129 +37,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/subjectLayout"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:visibility="visible">
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxWidth="42dp"
-                android:maxHeight="42dp"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                android:background="@null"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/school"
-                android:id="@+id/mathsButton" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="Mathematics"
-                android:textSize="20dp"
-                android:id="@+id/mathsText"
-                android:gravity="center_vertical"
-                android:layout_weight="2" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:visibility="visible">
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxWidth="42dp"
-                android:maxHeight="42dp"
-                android:padding="2dp"
-                android:scaleType="fitCenter"
-                android:background="@null"
-                app:srcCompat="@drawable/molecule"
-                android:id="@+id/physicsButton" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="Physics"
-                android:textSize="20dp"
-                android:id="@+id/physicsText"
-                android:gravity="center_vertical"
-                android:layout_weight="2" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:visibility="visible">
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxWidth="42dp"
-                android:maxHeight="42dp"
-                android:scaleType="fitCenter"
-                android:padding="2dp"
-                android:background="@null"
-                app:srcCompat="@drawable/flask"
-                android:id="@+id/chemistryButton" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="Chemistry"
-                android:textSize="20dp"
-                android:id="@+id/chemistryText"
-                android:gravity="center_vertical"
-                android:layout_weight="2" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:visibility="visible">
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:maxWidth="42dp"
-                android:maxHeight="42dp"
-                android:scaleType="fitCenter"
-                android:padding="2dp"
-
-                android:background="@null"
-                app:srcCompat="@drawable/computer"
-                android:id="@+id/computerButton" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="Computer Science"
-                android:textSize="20dp"
-                android:id="@+id/computerText"
-                android:gravity="center_vertical"
-                android:layout_weight="2" />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
 
     <LinearLayout
         android:orientation="vertical"
@@ -185,6 +62,12 @@
             android:id="@+id/searchByName" />
     </LinearLayout>
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/courseList"/>
+
     <TextView
         android:text="Show full list"
         android:layout_width="wrap_content"
@@ -196,4 +79,5 @@
         android:id="@+id/showFullList"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="normal|bold|italic" />
+
 </LinearLayout>

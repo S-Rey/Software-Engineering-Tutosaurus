@@ -90,6 +90,7 @@
             android:defaultValue="Enter your description."
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:enabled="true"
             android:id="@+id/edit_text_mathematics"
             android:key="edit_text_preference_mathematics" />
         <PreferenceScreen
@@ -107,6 +108,7 @@
             android:defaultValue="Enter your description."
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:enabled="true"
             android:id="@+id/edit_text_physics"
             android:key="edit_text_preference_physics" />
         <PreferenceScreen
@@ -124,6 +126,7 @@
             android:defaultValue="Enter your description."
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:enabled="true"
             android:id="@+id/edit_text_chemistry"
             android:key="edit_text_preference_chemistry" />
         <PreferenceScreen
@@ -141,6 +144,7 @@
             android:defaultValue="Enter your description."
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:enabled="true"
             android:id="@+id/edit_text_computer_science"
             android:key="edit_text_preference_computer_science" />
 
