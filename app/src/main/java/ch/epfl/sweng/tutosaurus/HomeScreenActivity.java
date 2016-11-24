@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -58,8 +59,8 @@ public class HomeScreenActivity extends AppCompatActivity
     public static final int GALLERY_REQUEST = 1;
     public static final int REQUEST_IMAGE_CAPTURE = 2;
 
-    private final int PROFILE_PICTURE_HEIGHT = 300;
-    private final int PROFILE_PICTURE_WIDTH = 300;
+    private final int PROFILE_PICTURE_HEIGHT = 600;
+    private final int PROFILE_PICTURE_WIDTH = 600;
 
     private ImageView pictureView;
     private CircleImageView circleView;
@@ -90,7 +91,6 @@ public class HomeScreenActivity extends AppCompatActivity
             }
         };
 
-        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Intent serviceIntent = new Intent(this, MeetingService.class);
         getApplicationContext().startService(serviceIntent);
 
@@ -444,9 +444,7 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     protected Bitmap resizeBitmap(Bitmap img) {
-        int width = img.getWidth();
-        double scale = ((double)PROFILE_PICTURE_WIDTH) / width;
-        int newHeight = (int) Math.round(img.getHeight() * scale);
-        return Bitmap.createScaledBitmap(img, PROFILE_PICTURE_WIDTH, newHeight, true);
+        Bitmap scaledBitmap = ThumbnailUtils.extractThumbnail(img, PROFILE_PICTURE_WIDTH, PROFILE_PICTURE_HEIGHT);
+        return scaledBitmap;
     }
 }
