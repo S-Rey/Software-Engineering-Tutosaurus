@@ -426,6 +426,7 @@ public class HomeScreenActivity extends AppCompatActivity
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageBitmap = resizeBitmap(imageBitmap);
+            pictureView = (ImageView) findViewById(R.id.picture_view);
             pictureView.setImageBitmap(imageBitmap);
             pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             saveToInternalStorage(imageBitmap);

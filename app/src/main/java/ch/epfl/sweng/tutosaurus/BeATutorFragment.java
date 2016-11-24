@@ -34,12 +34,6 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
         View rootView = getView();
         ListView list = (ListView) rootView.findViewById(android.R.id.list);
         list.setDividerHeight(0);
-        list.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
-        list.setVerticalScrollBarEnabled(false);
 
         EditTextPreference ed_mathematics = (EditTextPreference) getPreferenceManager().findPreference("edit_text_preference_mathematics");
         if (!((CheckBoxPreference) findPreference("checkbox_preference_mathematics")).isChecked()) {
@@ -103,6 +97,23 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key) {
+            case "checkbox_preference_english":
+                break;
+            case "checkbox_preference_french":
+                break;
+            case "checkbox_preference_german":
+                break;
+            case "checkbox_preference_italian":
+                break;
+            case "checkbox_preference_chinese":
+                break;
+            case "checkbox_preference_russian":
+                break;
+            default:
+                break;
+        }
+
         if (key.equals("checkbox_preference_mathematics")) {
             boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_mathematics", true);
             if (isEnable) {
