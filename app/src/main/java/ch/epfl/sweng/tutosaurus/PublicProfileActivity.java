@@ -39,7 +39,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import ch.epfl.sweng.tutosaurus.adapter.PublicProfileCourseAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.Course;
+import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 
@@ -54,8 +61,6 @@ public class PublicProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_public_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         Intent intent = getIntent();
         final String userId = intent.getStringExtra("USER_ID");
@@ -107,12 +112,13 @@ public class PublicProfileActivity extends AppCompatActivity {
                 level.setProgress(88);
 
                 // Set the taught subjects.
-                // TODO: get subject list from database
-                boolean isMathsTeacher=matchingTutor.isTeacher("Maths");
+                /*boolean isMathsTeacher=matchingTutor.isTeacher("Maths");
                 boolean isPhysicsTeacher=matchingTutor.isTeacher("Physics");
                 boolean isChemistryTeacher=matchingTutor.isTeacher("Chemistry");
                 boolean isComputerTeacher=matchingTutor.isTeacher("Computer");
                 setSubjectButtons(matchingTutor, isMathsTeacher,isPhysicsTeacher,isChemistryTeacher,isComputerTeacher);
+*/
+                setSubjectButtons(matchingTutor);
 
                 // Set the floating button to send an email
                 FloatingActionButton sendEmailButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -137,12 +143,27 @@ public class PublicProfileActivity extends AppCompatActivity {
     }
 
 
-    private void setSubjectButtons(final User matchingTutor,
-                                   boolean isMathsTeacher,
-                                   boolean isPhysicsTeacher,
-                                   boolean isChemistryTeacher,
-                                   boolean isComputerTeacher){
-        // Maths button
+    private void setSubjectButtons(final User matchingTutor){
+        ArrayList<Course> taughtCourses = new ArrayList<>();
+        Map<String, Boolean> teaching = matchingTutor.getTeaching();
+        ArrayList<Course> allCourses = FullCourseList.getInstance().getListOfCourses();
+        for(String taughtCourseId : teaching.keySet()){
+            if(teaching.get(taughtCourseId)){
+                for(Course course : allCourses){
+                    if(course.getId().equals(taughtCourseId)){
+                        taughtCourses.add(course);
+                    }
+                }
+            }
+        }
+        PublicProfileCourseAdapter courseAdapter = new PublicProfileCourseAdapter(this,
+                                                                                R.layout.listview_descripted_course_row,
+                                                                                taughtCourses);
+
+        ListView courseList= (ListView) findViewById(R.id.courseList);
+        courseList.setAdapter(courseAdapter);
+
+        /*// Maths button
         if(isMathsTeacher) {
             ImageButton mathsButton = (ImageButton) findViewById(R.id.mathsButton);
             mathsButton.setImageResource(R.drawable.school);
@@ -197,11 +218,11 @@ public class PublicProfileActivity extends AppCompatActivity {
             };
             computerButton.setOnClickListener(computerClick);
 
-        }
+        }*/
 
     }
 
-
+/*
     private void openMathsProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
         openPresentation("Mathematics",matchingTutor.getCourseDescriprion("Maths"));
         setButtonsToOpen(matchingTutor);
@@ -315,7 +336,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         subjectPresentation.setVisibility(View.GONE);
         setButtonsToOpen(matchingTutor);
     }
-
+*/
     public void showComments(@SuppressWarnings("UnusedParameters") View view){
         TextView comments=(TextView) findViewById(R.id.commentsView);
         comments.setVisibility(View.VISIBLE);

@@ -5,6 +5,7 @@ public class Course {
     private String name;
     private String id;
     private int pictureId;
+    private String description;
     /**
      * Constructor with no arguments for Course (required for firebase deserialization)
      */
@@ -76,4 +77,19 @@ public class Course {
         return this.pictureId;
     }
 
+    /**
+     * Returns this course's description.
+     *
+     * @return the description
+     */
+    public String getDescription() {
+        return this.description;
+    }
+    /**
+     * Sets this course's description.
+     *
+     */
+    public void setDescription(String description) {
+        this.description=description;
+    }
 }

@@ -150,12 +150,18 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp" />
 
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/courseList"/>
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:visibility="gone">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -251,7 +257,8 @@
             android:layout_gravity="center"
             android:textColor="@color/colorPrimary"
             android:paddingTop="16dp"
-            android:onClick="showComments"/>
+            android:onClick="showComments"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -268,7 +275,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
 
+
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
