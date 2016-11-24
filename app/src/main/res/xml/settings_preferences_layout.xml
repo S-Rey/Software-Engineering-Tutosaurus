@@ -28,6 +28,7 @@
 
     <PreferenceScreen
         android:title="@string/rate_app"
+        android:key="intent_preference_rating"
         android:layout="@layout/preference_intent">
         <intent android:action="android.intent.action.VIEW"
             android:data="http://google.com/" />
