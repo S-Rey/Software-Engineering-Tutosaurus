@@ -113,6 +113,8 @@ public class PublicProfileActivity extends AppCompatActivity {
 
 
                 // Set "expert in" listview
+                LinearLayout courseList = (LinearLayout) findViewById(R.id.courseListLayout);
+                courseList.removeAllViews();
                 setSubjectButtons(matchingTutor);
 
                 // Set the floating button to send an email
