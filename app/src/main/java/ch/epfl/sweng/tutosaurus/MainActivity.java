@@ -13,9 +13,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button login;
     private Button bypassLogin;
+    private Button resetPasswordButton;
+    private EditText passwordEditText;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -47,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        resetPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
+
+        resetPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ResetPasswordActivity.class));
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -95,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Have the login executed directly after pressing Done on keypad
+        passwordEditText = (EditText) findViewById(R.id.main_password);
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)
+                        || actionId == EditorInfo.IME_ACTION_NEXT) {
+                    login.performClick();
+                }
+                return false;
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

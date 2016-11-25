@@ -42,7 +42,9 @@ public class FindTutorResult extends AppCompatActivity {
             courseId=extras.getString("COURSE_ID");
             ref = findTutorBySubject(courseId, ref);
         }
-
+        else if (methodToCall.equals("showFullList")) {
+            ref = ref.orderByChild("fullName");
+        }
         FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
         tutorList.setAdapter(adapter);
     }

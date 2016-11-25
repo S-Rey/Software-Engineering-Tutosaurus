@@ -29,7 +29,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -52,8 +51,7 @@
             android:label="@string/activity_register_name" />
         <activity
             android:name=".ConfirmationActivity"
-            android:label="@string/activity_confirmation_name">
-        </activity>
+            android:label="@string/activity_confirmation_name"></activity>
         <activity
             android:name=".PublicProfileActivity"
             android:label="Profile"
@@ -68,6 +66,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".CreateMeetingActivity" />
+        <activity
+            android:name=".ResetPasswordActivity"
+            android:label="@string/title_activity_reset_password"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

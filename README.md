@@ -1,10 +1,8 @@
 # sweng-team-no-clue
 
-At the dawn of sprint 4 (21/10/16 - 28/01/16) :
+At the dawn of sprint 8 :
 
 Backlog
-
--> Storing user's datas and implementing functionalities : [Tasks given to Vincent]
 
 - Implement "My appoint results" tab
 - Manage notifications
@@ -14,24 +12,21 @@ Backlog
 - (2)Link these entries to the profile information of this user in the navigation header of the "Burger Menu" of the app
 - (3)Save the information in a JSON file to be able to retrieve it directly after the next log in
 - Redesign the layout of the app
-- Add to the help desk the phone call and the email writter
 
+-> Refine picture resizing and persistent login : [Tasks given to Basile]
 
--> Integrate calendar synchronisation [Task given to Santo]
+-> Push Notifications feature : [Task given to Basile and Vincent]
 
+-> Implement a Ratings bar and have a course definitive list [Tasks given to Santo and Alberto]
 
--> Advanced implementation of the database interface : [Task given to Samuel and Basile]
+-> Finishing up Wall features [Task given to Alberto]
 
+-> Advanced implementation of the local database interface and synchronization : [Task given to Samuel]
 
--> Work on the "Find Tutors" tab and the integrated searching : [Tasks given to Alberto]
+-> Improve sign-in functionality and reset password : [Tasks given to Stephan]
 
-- Write the "Search By Name" algorithm 
-- Make the fake profiles appear in the search results
+-> Implement a Preference category for languages : [Tasks given to Vincent]
 
-
--> Dealing with the Tequila server : [Tasks given to Stephan]
-
-- Implement the "redirect back to app" event after the Tequila authentification
 - Add credential storing for Tequila server
 
 

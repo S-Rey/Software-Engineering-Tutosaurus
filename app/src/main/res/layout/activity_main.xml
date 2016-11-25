@@ -106,6 +106,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/mainBypassLoginButton"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="@string/password_forgot_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="@null"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/forgotPasswordButton"
+        android:textSize="14sp"
+        android:textStyle="normal|italic"
+        android:textAllCaps="false"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/main_password"
         android:layout_centerHorizontal="true" />
