@@ -39,7 +39,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import ch.epfl.sweng.tutosaurus.adapter.PublicProfileCourseAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.Course;
+import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 
@@ -54,8 +61,6 @@ public class PublicProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_public_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         Intent intent = getIntent();
         final String userId = intent.getStringExtra("USER_ID");
@@ -106,13 +111,11 @@ public class PublicProfileActivity extends AppCompatActivity {
                 ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
                 level.setProgress(88);
 
-                // Set the taught subjects.
-                // TODO: get subject list from database
-                boolean isMathsTeacher=matchingTutor.isTeacher("Maths");
-                boolean isPhysicsTeacher=matchingTutor.isTeacher("Physics");
-                boolean isChemistryTeacher=matchingTutor.isTeacher("Chemistry");
-                boolean isComputerTeacher=matchingTutor.isTeacher("Computer");
-                setSubjectButtons(matchingTutor, isMathsTeacher,isPhysicsTeacher,isChemistryTeacher,isComputerTeacher);
+
+                // Set "expert in" listview
+                LinearLayout courseList = (LinearLayout) findViewById(R.id.courseListLayout);
+                courseList.removeAllViews();
+                setSubjectButtons(matchingTutor);
 
                 // Set the floating button to send an email
                 FloatingActionButton sendEmailButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -137,185 +140,73 @@ public class PublicProfileActivity extends AppCompatActivity {
     }
 
 
-    private void setSubjectButtons(final User matchingTutor,
-                                   boolean isMathsTeacher,
-                                   boolean isPhysicsTeacher,
-                                   boolean isChemistryTeacher,
-                                   boolean isComputerTeacher){
-        // Maths button
-        if(isMathsTeacher) {
-            ImageButton mathsButton = (ImageButton) findViewById(R.id.mathsButton);
-            mathsButton.setImageResource(R.drawable.school);
-            mathsButton.setVisibility(View.VISIBLE);
-            View.OnClickListener mathsClick = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openMathsProfile(v, matchingTutor);
+    private void setSubjectButtons(final User matchingTutor){
+
+        // Find the taught courses
+        ArrayList<Course> taughtCourses = new ArrayList<>();
+        Map<String, Boolean> teaching = matchingTutor.getTeaching();
+        ArrayList<Course> allCourses = FullCourseList.getInstance().getListOfCourses();
+        for(String taughtCourseId : teaching.keySet()){
+            if(teaching.get(taughtCourseId)){
+                for(Course course : allCourses){
+                    if(course.getId().equals(taughtCourseId)){
+                        taughtCourses.add(course);
+                    }
                 }
-            };
-            mathsButton.setOnClickListener(mathsClick);
+            }
         }
 
-        // Physics button
-        if(isPhysicsTeacher) {
-            ImageButton physicsButton = (ImageButton) findViewById(R.id.physicsButton);
-            physicsButton.setImageResource(R.drawable.molecule);
-            physicsButton.setVisibility(View.VISIBLE);
+        // Fills the linear layout
+        LinearLayout courseLayout = (LinearLayout) findViewById(R.id.courseListLayout);
+        for(Course course : taughtCourses ) {
+            View courseRow = getLayoutInflater().inflate(R.layout.listview_descripted_course_row, null);
+            TextView courseName = (TextView) courseRow.findViewById(R.id.courseName);
+            courseName.setText(course.getName());
+            ImageView coursePicture = (ImageView) courseRow.findViewById(R.id.coursePicture);
+            coursePicture.setImageResource(course.getPictureId());
+            TextView courseDescriptionView = (TextView) courseRow.findViewById(R.id.courseDescription);
+            String courseDescriprion = matchingTutor.getCourseDescriprion(course.getId());
 
-            View.OnClickListener physicsClick = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openPhysicsProfile(v, matchingTutor);
-                }
-            };
-            physicsButton.setOnClickListener(physicsClick);
+            if(courseDescriprion!=null){
+                courseDescriptionView.setText(matchingTutor.getCourseDescriprion(course.getId()));
+                setOpenDescriptionListener(courseRow);
+            }
+
+            courseLayout.addView(courseRow);
         }
-
-        // Chemistry button
-        if(isChemistryTeacher) {
-            ImageButton chemistryButton = (ImageButton) findViewById(R.id.chemistryButton);
-            chemistryButton.setImageResource(R.drawable.flask);
-            chemistryButton.setVisibility(View.VISIBLE);
-            View.OnClickListener chemistryClick = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openChemistryProfile(v, matchingTutor);
-                }
-            };
-            chemistryButton.setOnClickListener(chemistryClick);
-        }
-        // Computer button
-        if(isComputerTeacher) {
-            ImageButton computerButton = (ImageButton) findViewById(R.id.computerButton);
-            computerButton.setImageResource(R.drawable.computer);
-            computerButton.setVisibility(View.VISIBLE);
-            View.OnClickListener computerClick = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openComputerProfile(v, matchingTutor);
-                }
-            };
-            computerButton.setOnClickListener(computerClick);
-
-        }
-
     }
 
-
-    private void openMathsProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
-        openPresentation("Mathematics",matchingTutor.getCourseDescriprion("Maths"));
-        setButtonsToOpen(matchingTutor);
-        ImageButton thisButton=(ImageButton) findViewById(R.id.mathsButton);
-        View.OnClickListener closeMathsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closePresentation(matchingTutor);
-            }
-        };
-        thisButton.setOnClickListener(closeMathsClick);
+    static private void openDescription(final View row){
+        row.findViewById(R.id.courseDescription).setVisibility(View.VISIBLE);
+        setCloseDescriptionListener(row);
     }
 
-    private void openPhysicsProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
-        openPresentation("Physics", matchingTutor.getCourseDescriprion("Physics"));
-        setButtonsToOpen(matchingTutor);
-        ImageButton thisButton=(ImageButton) findViewById(R.id.physicsButton);
-        View.OnClickListener closePhysicsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closePresentation(matchingTutor);
-            }
-        };
-        thisButton.setOnClickListener(closePhysicsClick);
+    static private void closeDescription(final View row){
+        row.findViewById(R.id.courseDescription).setVisibility(View.GONE);
+        setOpenDescriptionListener(row);
     }
 
-    private void openChemistryProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
-        openPresentation("Chemistry",matchingTutor.getCourseDescriprion("Chemistry"));
-        setButtonsToOpen(matchingTutor);
-        ImageButton thisButton=(ImageButton) findViewById(R.id.chemistryButton);
-        View.OnClickListener closeChemistryClick=new View.OnClickListener() {
+    static private void setCloseDescriptionListener(final View row) {
+        final View.OnClickListener closeDescriptionListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closePresentation(matchingTutor);
+                closeDescription(row);
             }
         };
-        thisButton.setOnClickListener(closeChemistryClick);
+        row.findViewById(R.id.courseName).setOnClickListener(closeDescriptionListener);
+        row.findViewById(R.id.coursePicture).setOnClickListener(closeDescriptionListener);
     }
 
-    private void openComputerProfile(@SuppressWarnings("UnusedParameters") View view, final User matchingTutor) {
-        openPresentation("Computer Science",matchingTutor.getCourseDescriprion("Computer"));
-        setButtonsToOpen(matchingTutor);
-
-        ImageButton thisButton=(ImageButton) findViewById(R.id.computerButton);
-        View.OnClickListener closeComputerClick=new View.OnClickListener() {
+    static private void setOpenDescriptionListener(final View row) {
+        final View.OnClickListener openDescriptionListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closePresentation(matchingTutor);
+                openDescription(row);
             }
         };
-        thisButton.setOnClickListener(closeComputerClick);
+        row.findViewById(R.id.courseName).setOnClickListener(openDescriptionListener);
+        row.findViewById(R.id.coursePicture).setOnClickListener(openDescriptionListener);
     }
-
-    private void setButtonsToOpen(final User matchingTutor){
-        // Set Maths
-        ImageButton button=(ImageButton) findViewById(R.id.mathsButton);
-        View.OnClickListener openMathsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMathsProfile(v, matchingTutor);
-            }
-        };
-        button.setOnClickListener(openMathsClick);
-
-        // Set Physics
-        button=(ImageButton) findViewById(R.id.physicsButton);
-
-        View.OnClickListener openPhysicsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPhysicsProfile(v, matchingTutor);
-            }
-        };
-        button.setOnClickListener(openPhysicsClick);
-
-        // Set Chemistry
-        button=(ImageButton) findViewById(R.id.chemistryButton);
-
-        View.OnClickListener openChemistryClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openChemistryProfile(v, matchingTutor);
-            }
-        };
-        button.setOnClickListener(openChemistryClick);
-
-        // Set Computer Science
-        button=(ImageButton) findViewById(R.id.computerButton);
-
-        View.OnClickListener openComputerClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openComputerProfile(v, matchingTutor);
-            }
-        };
-        button.setOnClickListener(openComputerClick);
-    }
-
-    private void openPresentation(String name, String presentation) {
-        TextView subjectName=(TextView) findViewById(R.id.subjectName);
-        subjectName.setText(name);
-        subjectName.setVisibility(View.VISIBLE);
-        TextView subjectPresentation=(TextView) findViewById(R.id.subjectPresentation);
-        subjectPresentation.setText(presentation);
-        subjectPresentation.setVisibility(View.VISIBLE);
-    }
-    private void closePresentation(User matchingTutor) {
-        TextView subjectName=(TextView) findViewById(R.id.subjectName);
-        subjectName.setVisibility(View.GONE);
-        TextView subjectPresentation=(TextView) findViewById(R.id.subjectPresentation);
-        subjectPresentation.setVisibility(View.GONE);
-        setButtonsToOpen(matchingTutor);
-    }
-
     public void showComments(@SuppressWarnings("UnusedParameters") View view){
         TextView comments=(TextView) findViewById(R.id.commentsView);
         comments.setVisibility(View.VISIBLE);

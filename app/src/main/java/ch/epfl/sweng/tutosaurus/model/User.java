@@ -184,11 +184,7 @@ public class User implements Identifiable {
      * @return a map of courses mapped to the true boolean value
      */
     public Map<String, Boolean> getTeaching() {
-        Map<String, Boolean> ls = new HashMap<>();
-        for(String c : teaching.keySet()) {
-            ls.put(c, true);
-        }
-        return ls;
+        return this.teaching;
     }
 
     /**
@@ -196,11 +192,7 @@ public class User implements Identifiable {
      * @return a map of courses mapped to the true boolean value
      */
     public Map<String, Boolean> getStudying() {
-        Map<String, Boolean> ls = new HashMap<>();
-        for(String c : studying.keySet()) {
-            ls.put(c, true);
-        }
-        return ls;
+        return this.studying;
     }
 
     public String getCourseDescriprion(String courseId){
