@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class SettingsFragmentTest {
 
     @Rule
     public IntentsTestRule<MainActivity> mainActivityRule = new IntentsTestRule<MainActivity>(
@@ -67,12 +67,10 @@ public class MainActivityTest {
             assertThat(sharedPreferences.getBoolean("checkbox_preference_calendar", true), equalTo(true));
         }
 
-        mainActivityRule.launchActivity(new Intent());
         Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("http://google.com/"));
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_rating")).perform(click());
         intended(expectedIntent);
-        Intents.release();
 
         onView(withId(R.id.action_logOutButton)).perform(click());
     }

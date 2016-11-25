@@ -55,6 +55,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
 
             if (!((CheckBoxPreference) findPreference("checkbox_preference_" + course)).isChecked()) {
                 descriptionPreference.setEnabled(false);
+                descriptionPreference.setSelectable(false);
             }
         }
     }
@@ -83,9 +84,9 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             if (key.equals("checkbox_preference_" + language)) {
                 boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + language, true);
                 if (isEnable) {
-                    ///???.addLanguage(language);
+                    dbh.addLanguageToUser(currentUser, language);
                 } else {
-                    ///???.removeLanguage(language);
+                    dbh.removeLanguageFromUser(currentUser, language);
                 }
             }
         }
@@ -98,6 +99,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 if (isEnable) {
                     dbh.addTeacherToCourse(currentUser, course);
                     descriptionPreference.setEnabled(true);
+                    descriptionPreference.setSelectable(true);
                     EditText editText = descriptionPreference.getEditText();
                     editText.setSelectAllOnFocus(true);
                     editText.setSingleLine(true);
@@ -108,6 +110,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                     }
                 } else {
                     descriptionPreference.setEnabled(false);
+                    descriptionPreference.setSelectable(false);
                     dbh.removeTeacherFromCourse(currentUser, course);
                 }
             }
