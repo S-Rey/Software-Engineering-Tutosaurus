@@ -2,7 +2,6 @@ package ch.epfl.sweng.tutosaurus.adapter;
 
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;

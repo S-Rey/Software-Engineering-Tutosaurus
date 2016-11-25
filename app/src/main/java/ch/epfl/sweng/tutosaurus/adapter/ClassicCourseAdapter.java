@@ -61,8 +61,8 @@ public class ClassicCourseAdapter extends ArrayAdapter<Course> {
         // Set the OnClickListener on each name of the list
         final Intent intent = new Intent(context,FindTutorResult.class);
         Bundle extras = new Bundle();
-        extras.putString("METHOD_TO_CALL","findTutorByCourse");
-        extras.putString("COURSE_ID",course.getId());
+        extras.putString("METHOD_TO_CALL", "findTutorByCourse");
+        extras.putString("COURSE_ID", course.getId());
         intent.putExtras(extras);
 
         holder.courseName.setOnClickListener(new View.OnClickListener(){

@@ -1,56 +1,70 @@
 package ch.epfl.sweng.tutosaurus.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseListAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
+import java.util.ArrayList;
 
-import ch.epfl.sweng.tutosaurus.PublicProfileActivity;
+import ch.epfl.sweng.tutosaurus.FindTutorResult;
 import ch.epfl.sweng.tutosaurus.R;
-import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 
 /**
- * Created by santo on 22/11/16.
+ * Created by albertochiappa on 24/11/16.
  */
 
-public class CourseAdapter extends FirebaseListAdapter<Course> {
+public class CourseAdapter extends ArrayAdapter<Course> {
+    Context context;
+    int layoutResourceId;
+    ArrayList<Course> courses = null;
 
-    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
-
-    public CourseAdapter(Activity activity, java.lang.Class<Course> modelClass, int modelLayout, Query ref) {
-        super(activity, modelClass, modelLayout, ref);
+    public CourseAdapter(Context context, int layoutResourceId, ArrayList<Course> courses){
+        super(context,layoutResourceId,courses);
+        this.layoutResourceId=layoutResourceId;
+        this.context=context;
+        this.courses=courses;
     }
 
     @Override
-    protected void populateView(final View mainView, final Course course, int position) {
+    public View getView(int position, View convertView, ViewGroup parent){
+        View row=convertView;
+        CourseHolder holder;
 
-        TextView profileName = (TextView) mainView.findViewById(R.id.courseName);
-        profileName.setText(course.getName());
-        //ImageView profilePicture = (ImageView) mainView.findViewById(R.id.coursePicture);
-        //profilePicture.setImageResource(course.getPicture());
+        if(row==null){
+            LayoutInflater inflater=(LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row=inflater.inflate(layoutResourceId, parent, false);
 
-        // Set the OnClickListener on each name of the list
-        final Intent intent = new Intent(mainView.getContext(), PublicProfileActivity.class);
-        intent.putExtra("COURSE_ID", course.getId());
+            holder=new CourseHolder();
+            holder.courseSymbol = (ImageView) row.findViewById(R.id.coursePicture);
+            holder.courseName = (TextView) row.findViewById(R.id.courseName);
+            row.setTag(holder);
+        }
+        else{
+            holder=(CourseHolder) row.getTag();
+        }
 
-        profileName.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                v.getContext().startActivity(intent);
-            }
-        });
+        Course course = courses.get(position);
+        holder.courseName.setText(course.getName());
+        holder.courseSymbol.setImageResource(course.getPictureId());
 
+        return row;
+    }
+
+
+    static private class CourseHolder{
+        ImageView courseSymbol;
+        TextView courseName;
+    }
+
+    public Course getItemAtPosition(int position){
+        return courses.get(position);
     }
 
 }

@@ -86,9 +86,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
-                                    intent.setAction("OPEN_TAB_PROFILE");
-                                    startActivity(intent);
+                                   dispatchHomeScreenIntent();
                                 } else {
                                     Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT);
                                 }

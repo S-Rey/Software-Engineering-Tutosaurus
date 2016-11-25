@@ -21,8 +21,8 @@ public class FullCourseList {
         listOfCourses.add(new Course("physics", "Physics", R.drawable.molecule));
         listOfCourses.add(new Course("chemistry", "Chemistry", R.drawable.flask));
         listOfCourses.add(new Course("computer_science", "Computer Science", R.drawable.computer));
-        listOfCourses.add(new Course("quantum_mechanics", "Quantum Mechanics", R.drawable.music));
-        listOfCourses.add(new Course("dynamics", "Dynamics", R.drawable.shapes));
+        //listOfCourses.add(new Course("quantum_mechanics", "Quantum Mechanics", R.drawable.music));
+        //listOfCourses.add(new Course("dynamics", "Dynamics", R.drawable.shapes));
         this.listOfCourses = listOfCourses;
     }
 
