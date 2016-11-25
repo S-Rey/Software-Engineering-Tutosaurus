@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -96,6 +97,9 @@ public class CreateMeetingActivity extends AppCompatActivity {
                 meeting.setCourse(courseMeeting);
 
                 dbh.requestMeeting(meeting, teacherId, currentUser);
+                Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getBaseContext(), StartActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -140,7 +144,6 @@ public class CreateMeetingActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
