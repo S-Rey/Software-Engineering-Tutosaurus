@@ -1,37 +1,17 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,10 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
-import ch.epfl.sweng.tutosaurus.adapter.PublicProfileCourseAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
@@ -64,7 +42,6 @@ public class PublicProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String userId = intent.getStringExtra("USER_ID");
-        final String courseId = intent.getStringExtra("COURSE_ID");
 
         final Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
         createMeeting.setOnClickListener(new View.OnClickListener()
@@ -74,7 +51,6 @@ public class PublicProfileActivity extends AppCompatActivity {
             {
                 Intent createMeetingIntent = new Intent(getBaseContext(), CreateMeetingActivity.class);
                 createMeetingIntent.putExtra("TEACHER", userId);
-                createMeetingIntent.putExtra("COURSE", courseId);
                 startActivity(createMeetingIntent);
             }
         });
