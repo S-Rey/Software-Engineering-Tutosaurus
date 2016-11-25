@@ -64,6 +64,7 @@ public class PublicProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String userId = intent.getStringExtra("USER_ID");
+        final String courseId = intent.getStringExtra("COURSE_ID");
 
         final Button createMeeting = (Button) findViewById(R.id.createMeetingButton);
         createMeeting.setOnClickListener(new View.OnClickListener()
@@ -73,6 +74,7 @@ public class PublicProfileActivity extends AppCompatActivity {
             {
                 Intent createMeetingIntent = new Intent(getBaseContext(), CreateMeetingActivity.class);
                 createMeetingIntent.putExtra("TEACHER", userId);
+                createMeetingIntent.putExtra("COURSE", courseId);
                 startActivity(createMeetingIntent);
             }
         });

@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Date;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class CreateMeetingActivity extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String teacherId = intent.getStringExtra("TEACHER");
+        final String courseId = intent.getStringExtra("COURSE_ID");
         meeting.addParticipant(teacherId);
         meeting.addParticipant(currentUser);
 
@@ -48,6 +50,8 @@ public class CreateMeetingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText description = (EditText) findViewById(R.id.description);
                 meeting.addDescription(description.getText().toString());
+                Course course = new Course(courseId);
+                meeting.setCourse(course);
 
                 Date dateMeeting = new Date();
                 dateMeeting.setMinutes(timePicker.getMeetingMinutes());
