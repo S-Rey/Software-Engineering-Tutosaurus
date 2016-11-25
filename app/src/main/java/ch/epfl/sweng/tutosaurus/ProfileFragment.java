@@ -14,11 +14,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,6 +33,7 @@ import java.io.IOException;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
+import ch.epfl.sweng.tutosaurus.model.User;
 
 public class ProfileFragment extends Fragment {
 
@@ -44,6 +50,31 @@ public class ProfileFragment extends Fragment {
         loadImageFromStorage();
 
         ((HomeScreenActivity) getActivity()).setPassTabToOpen(myView);
+        DatabaseHelper dbh = DatabaseHelper.getInstance();
+
+        final String userId = currentUser;
+
+        DatabaseReference ref = dbh.getReference();
+        ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final User thisUser = dataSnapshot.getValue(User.class);
+
+                // Set profile name
+                TextView profileName = (TextView) myView.findViewById(R.id.profileName);
+                profileName.setText(thisUser.getFullName());
+                /*
+                // Set profile picture
+                ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
+                profilePicture.setImageResource(user.getPicture());
+                */
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
 
         return myView;
     }
