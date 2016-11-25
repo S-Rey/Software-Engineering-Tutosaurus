@@ -7,6 +7,7 @@ import ch.epfl.sweng.tutosaurus.R;
 /**
  * Created by albertochiappa on 23/11/16.
  */
+
 public class FullCourseList {
     private static FullCourseList ourInstance = new FullCourseList();
     private ArrayList<Course> listOfCourses;
@@ -28,5 +29,14 @@ public class FullCourseList {
 
     public ArrayList<Course> getListOfCourses(){
         return listOfCourses;
+    }
+
+    public Course getCourse(String courseId) {
+        for (Course course: listOfCourses) {
+            if (course.getId().equals(courseId)) {
+                return  course;
+            }
+        }
+        return null;
     }
 }
