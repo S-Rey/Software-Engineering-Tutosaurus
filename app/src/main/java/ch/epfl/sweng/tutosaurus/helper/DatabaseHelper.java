@@ -19,7 +19,6 @@ public class DatabaseHelper {
     public static final String MEETING_PATH = "meeting/";
     public static final String USER_PATH = "user/";
     public static final String COURSE_PATH = "course/";
-    public static final String LANGUAGE_PATH = "language/";
     public static final String MEETING_REQUEST_PATH = "meetingRequests";
     public static final String MEETING_PER_USER_PATH = "meetingsPerUser/";
 
@@ -55,18 +54,14 @@ public class DatabaseHelper {
         ref.setValue(course);
     }
 
-    public void addLanguageToUser(String userId, String languageId) {
-        DatabaseReference languageRef = dbf.child(LANGUAGE_PATH + languageId + "/speaking/" + userId);
-        DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
+    public void addLanguageToUser(String languageId) {
+        DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + languageId);
         userSpeakLanguageRef.setValue(true);
-        languageRef.setValue(true);
     }
 
-    public void removeLanguageFromUser(String userId, String languageId) {
-        DatabaseReference languageRef = dbf.child(LANGUAGE_PATH + languageId + "/speaking/" + userId);
-        DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
+    public void removeLanguageFromUser(String languageId) {
+        DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + languageId);
         userSpeakLanguageRef.setValue(false);
-        languageRef.setValue(false);
     }
 
     public void addTeacherToCourse(String userId, String courseId) {
