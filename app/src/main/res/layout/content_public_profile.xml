@@ -11,7 +11,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -135,115 +135,24 @@
             android:gravity="center_horizontal|center_vertical"
             android:layout_gravity="bottom"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
+        <TextView
                 android:text="Expert in:"
                 android:layout_height="40dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:layout_width="match_parent"
                 android:id="@+id/textView9"
-                android:textSize="24sp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp" />
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/courseList"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="70dp">
-
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:maxWidth="42dp"
-                    android:maxHeight="42dp"
-                    android:scaleType="fitCenter"
-                    android:background="@null"
-                    android:visibility="gone"
-                    android:layout_gravity="center"
-                    android:adjustViewBounds="true"
-                    android:id="@+id/mathsButton" />
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:maxWidth="42dp"
-                    android:maxHeight="42dp"
-                    android:scaleType="fitCenter"
-                    android:background="@null"
-                    android:visibility="gone"
-                    android:id="@+id/physicsButton" />
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:maxWidth="42dp"
-                    android:maxHeight="42dp"
-                    android:scaleType="fitCenter"
-                    android:background="@null"
-                    android:visibility="gone"
-                    android:id="@+id/chemistryButton" />
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:maxWidth="42dp"
-                    android:maxHeight="42dp"
-                    android:scaleType="fitCenter"
-                    android:background="@null"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/computer"
-                    android:id="@+id/computerButton" />
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:maxWidth="42dp"
-                    android:maxHeight="42dp"
-                    android:scaleType="fitCenter"
-                    android:background="@null"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/shapes"
-                    android:id="@+id/mechanicsButton" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/subjectName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="28sp"
-                android:paddingTop="8dp"
-                android:gravity="center_horizontal"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:visibility="gone"/>
-            <TextView
-                android:id="@+id/subjectPresentation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:visibility="gone"/>
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="0dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/courseListLayout">
 
 
-
-        </LinearLayout>
+    </LinearLayout>
 
 
         <Button
