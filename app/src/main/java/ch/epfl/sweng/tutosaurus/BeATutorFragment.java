@@ -90,9 +90,9 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             if (key.equals("checkbox_preference_" + language)) {
                 boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + language, true);
                 if (isEnable) {
-                    dbh.addLanguageToUser(language);
+                    dbh.addLanguageToUser(currentUser, language);
                 } else {
-                    dbh.removeLanguageFromUser(language);
+                    dbh.removeLanguageFromUser(currentUser, language);
                 }
             }
         }

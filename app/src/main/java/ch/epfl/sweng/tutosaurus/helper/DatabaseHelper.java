@@ -54,13 +54,13 @@ public class DatabaseHelper {
         ref.setValue(course);
     }
 
-    public void addLanguageToUser(String languageId) {
-        DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + languageId);
+    public void addLanguageToUser(String userId, String languageId) {
+        DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
         userSpeakLanguageRef.setValue(true);
     }
 
-    public void removeLanguageFromUser(String languageId) {
-        DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + languageId);
+    public void removeLanguageFromUser(String userId, String languageId) {
+        DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
         userSpeakLanguageRef.setValue(false);
     }
 
