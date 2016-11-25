@@ -84,11 +84,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("checkbox_preference_notification")) {
-            //Do Something
-        }
-        if (key.equals("checkbox_preference_calendar")) {
-            //Do Something
+        switch (key) {
+            case "checkbox_preference_notification":
+                break;
+            case "checkbox_preference_calendar":
+                break;
+            default:
+                break;
         }
     }
 
@@ -144,42 +146,4 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         });
     }
-
-
-//-----------------------
-//UNUSED METHODS BELOW
-//-----------------------
-//THE FOLLOWING METHODS ARE FOR CLICKING AUTOMATICALLY ON A PREFERENCE IN THE LIST DEPENDING ON THE KEY
-//RESERVED FOR TESTS !!!!!!
-    public PreferenceScreen findPreferenceScreenForPreference(String key, PreferenceScreen screen ) {
-        if( screen == null ) {
-            screen = getPreferenceScreen();
-        }
-
-        PreferenceScreen result = null;
-
-        android.widget.Adapter ada = screen.getRootAdapter();
-        for( int i = 0; i < ada.getCount(); i++ ) {
-            String prefKey = ((Preference)ada.getItem(i)).getKey();
-            if( prefKey != null && prefKey.equals( key ) ) {
-                return screen;
-            }
-            if( ada.getItem(i).getClass().equals(android.preference.PreferenceScreen.class) ) {
-                result = findPreferenceScreenForPreference( key, (PreferenceScreen) ada.getItem(i) );
-                if( result != null ) {
-                    return result;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public void openPreference( String key ) {
-        PreferenceScreen screen = findPreferenceScreenForPreference( key, null );
-        if( screen != null ) {
-            screen.onItemClick(null, null, findPreference(key).getOrder(), 0);
-        }
-    }
-
 }

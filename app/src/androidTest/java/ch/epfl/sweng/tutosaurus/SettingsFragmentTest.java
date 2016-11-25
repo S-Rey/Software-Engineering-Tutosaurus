@@ -1,12 +1,16 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.Instrumentation;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.PreferenceMatchers;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,12 +22,17 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.contrib.DrawerActions.open;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class SettingsFragmentTest {
 
     @Rule
     public IntentsTestRule<MainActivity> mainActivityRule = new IntentsTestRule<MainActivity>(
@@ -58,5 +67,11 @@ public class MainActivityTest {
             assertThat(sharedPreferences.getBoolean("checkbox_preference_calendar", true), equalTo(true));
         }
 
+        Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("http://google.com/"));
+        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
+        onData(PreferenceMatchers.withKey("intent_preference_rating")).perform(click());
+        intended(expectedIntent);
+
+        onView(withId(R.id.action_logOutButton)).perform(click());
     }
 }

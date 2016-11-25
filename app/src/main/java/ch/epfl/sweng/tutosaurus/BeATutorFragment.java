@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +33,8 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
     DatabaseHelper dbh = DatabaseHelper.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     ArrayList<Course> courses;
+    List<String> languages = asList("english", "french", "german", "italian", "chinese", "russian");
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -43,12 +46,6 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
         View rootView = getView();
         ListView list = (ListView) rootView.findViewById(android.R.id.list);
         list.setDividerHeight(0);
-        list.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
-        list.setVerticalScrollBarEnabled(false);
 
         courses = FullCourseList.getInstance().getListOfCourses();
         for (Course course: courses) {
@@ -64,6 +61,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
 
             if (!((CheckBoxPreference) findPreference("checkbox_preference_" + courseName)).isChecked()) {
                 descriptionPreference.setEnabled(false);
+                descriptionPreference.setSelectable(false);
             }
         }
     }
@@ -86,11 +84,21 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
-
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        for (Course course : courses) {
+        for (String language : languages) {
+            if (key.equals("checkbox_preference_" + language)) {
+                boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + language, true);
+                if (isEnable) {
+                    dbh.addLanguageToUser(language);
+                } else {
+                    dbh.removeLanguageFromUser(language);
+                }
+            }
+        }
 
+
+        for (Course course : courses) {
             String courseName = course.getId();
             EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceScreen().findPreference("edit_text_preference_" + courseName);
 
@@ -99,6 +107,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 if (isEnable) {
                     dbh.addTeacherToCourse(currentUser, courseName);
                     descriptionPreference.setEnabled(true);
+                    descriptionPreference.setSelectable(true);
                     EditText editText = descriptionPreference.getEditText();
                     editText.setSelectAllOnFocus(true);
                     editText.setSingleLine(true);
@@ -110,6 +119,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 } else {
                     descriptionPreference.setEnabled(false);
                     dbh.removeTeacherFromCourse(currentUser, courseName);
+                    descriptionPreference.setSelectable(false);
                 }
             }
 
@@ -117,7 +127,6 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 if (!descriptionPreference.getText().equals("")) {
                     descriptionPreference.setTitle(descriptionPreference.getText());
                     dbh.addSubjectDescription(descriptionPreference.getText().toString(), currentUser, courseName);
-
                 } else {
                     descriptionPreference.setTitle("Enter Your Description");
                 }
