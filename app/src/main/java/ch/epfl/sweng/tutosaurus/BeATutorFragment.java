@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.Course;
+import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
 import static java.util.Arrays.*;
 
@@ -29,7 +31,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
 
     DatabaseHelper dbh = DatabaseHelper.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    List<String> courses = asList("mathematics", "physics", "chemistry", "computer_science");
+    ArrayList<Course> courses;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -48,8 +50,11 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
         });
         list.setVerticalScrollBarEnabled(false);
 
-        for (String course: courses) {
-            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceManager().findPreference("edit_text_preference_" + course);
+        courses = FullCourseList.getInstance().getListOfCourses();
+        for (Course course: courses) {
+
+            String courseName = course.getId();
+            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceManager().findPreference("edit_text_preference_" + courseName);
 
             if (descriptionPreference.getText().equals("")) {
                 descriptionPreference.setTitle("Enter Your Description.");
@@ -57,7 +62,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 descriptionPreference.setTitle(descriptionPreference.getText());
             }
 
-            if (!((CheckBoxPreference) findPreference("checkbox_preference_" + course)).isChecked()) {
+            if (!((CheckBoxPreference) findPreference("checkbox_preference_" + courseName)).isChecked()) {
                 descriptionPreference.setEnabled(false);
             }
         }
@@ -84,13 +89,15 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        for (String course : courses) {
-            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceScreen().findPreference("edit_text_preference_" + course);
+        for (Course course : courses) {
 
-            if (key.equals("checkbox_preference_" + course)) {
-                boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + course, true);
+            String courseName = course.getId();
+            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceScreen().findPreference("edit_text_preference_" + courseName);
+
+            if (key.equals("checkbox_preference_" + courseName)) {
+                boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + courseName, true);
                 if (isEnable) {
-                    dbh.addTeacherToCourse(currentUser, course);
+                    dbh.addTeacherToCourse(currentUser, courseName);
                     descriptionPreference.setEnabled(true);
                     EditText editText = descriptionPreference.getEditText();
                     editText.setSelectAllOnFocus(true);
@@ -102,14 +109,14 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                     }
                 } else {
                     descriptionPreference.setEnabled(false);
-                    dbh.removeTeacherFromCourse(currentUser, course);
+                    dbh.removeTeacherFromCourse(currentUser, courseName);
                 }
             }
 
-            if (key.equals("edit_text_preference_" + course)) {
+            if (key.equals("edit_text_preference_" + courseName)) {
                 if (!descriptionPreference.getText().equals("")) {
                     descriptionPreference.setTitle(descriptionPreference.getText());
-                    dbh.addSubjectDescription(descriptionPreference.getText().toString(), currentUser, course);
+                    dbh.addSubjectDescription(descriptionPreference.getText().toString(), currentUser, courseName);
 
                 } else {
                     descriptionPreference.setTitle("Enter Your Description");
