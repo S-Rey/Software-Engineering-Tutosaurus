@@ -114,6 +114,7 @@ public class LocationActivity extends FragmentActivity implements
         }
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -136,6 +137,7 @@ public class LocationActivity extends FragmentActivity implements
                 break;
         }
     }
+
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -165,7 +167,6 @@ public class LocationActivity extends FragmentActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-
         this.location = location;
     }
 
