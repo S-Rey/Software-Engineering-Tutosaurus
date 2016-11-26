@@ -1,5 +1,6 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -44,6 +46,8 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
     DatabaseHelper dbh = DatabaseHelper.getInstance();
     public String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+    public String dateTime;
 
     TimePickerFragment timePicker = new TimePickerFragment();
     DatePickerFragment datePicker = new DatePickerFragment();
@@ -96,16 +100,23 @@ public class CreateMeetingActivity extends AppCompatActivity {
                 meeting.setCourse(courseMeeting);
 
                 dbh.requestMeeting(meeting, teacherId, currentUser);
+                Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getBaseContext(), StartActivity.class);
+                startActivity(intent);
             }
         });
-
 
     }
 
 
-    public void showDateTimePickerDialog(View v) {
+    public void showDateTimePickerDialog(View v) throws InterruptedException {
         timePicker.show(getFragmentManager(), "timePicker");
         datePicker.show(getFragmentManager(), "datePicker");
+
+        TextView dateTimeView = (TextView) findViewById(R.id.dateTime);
+        dateTimeView.setVisibility(View.VISIBLE);
+        String date = datePicker.getDate() + " h " + timePicker.getTime();
+        dateTimeView.setText(date);
     }
 
 
@@ -142,12 +153,17 @@ public class CreateMeetingActivity extends AppCompatActivity {
     }
 
 
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                meeting.setNameLocation(place.getName().toString());
+                String placeName = place.getName().toString();
+
+                TextView placeNameView = (TextView) findViewById(R.id.placeName);
+                placeNameView.setText(placeName);
+                placeNameView.setVisibility(View.VISIBLE);
+
+                meeting.setNameLocation(placeName);
                 meeting.setLatitudeLocation(place.getLatLng().latitude);
                 meeting.setLongitudeLocation(place.getLatLng().longitude);
             }

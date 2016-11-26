@@ -3,6 +3,7 @@ package ch.epfl.sweng.tutosaurus;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -43,9 +44,15 @@ public class TimePickerFragment extends DialogFragment
     }
 
 
+    public String getTime() {
+        return meetingHour + ":" + meetingMinutes;
+    }
+
+
     public int getMeetingHour() {
         return meetingHour;
     }
+
 
     public int getMeetingMinutes() {
         return meetingMinutes;
