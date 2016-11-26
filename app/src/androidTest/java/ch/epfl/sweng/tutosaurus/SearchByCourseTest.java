@@ -63,7 +63,7 @@ public class SearchByCourseTest extends ActivityInstrumentationTestCase2<MainAct
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
-        Thread.sleep(4000);
+        Thread.sleep(5000);
         getActivity();
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
