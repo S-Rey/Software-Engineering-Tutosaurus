@@ -12,6 +12,8 @@
     <string name="reset_password_btn">RESET PASSWORD</string>
     <string name="request_email_password_reset">No worries! We just need the email you registered with and we\'ll send you
     the instructions.</string>
+    <string name="reset_request_fail">Failed to send reset!</string>
+    <string name="reset_password_sent">"Instructions sent to your email!"</string>
 
     <string name="btn_back"><![CDATA[<< Back]]></string>
 
