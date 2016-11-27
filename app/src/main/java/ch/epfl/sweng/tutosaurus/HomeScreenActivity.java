@@ -140,6 +140,8 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
+
+
     @Override
     public void onRestart() {
         super.onRestart();

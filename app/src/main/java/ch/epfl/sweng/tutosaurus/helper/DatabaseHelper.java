@@ -169,4 +169,8 @@ public class DatabaseHelper {
     public DatabaseReference getUserRef() {
         return dbf.child(USER_PATH);
     }
+
+    public DatabaseReference getMeetingRequestsRef() {
+        return dbf.child(MEETING_REQUEST_PATH);
+    }
 }

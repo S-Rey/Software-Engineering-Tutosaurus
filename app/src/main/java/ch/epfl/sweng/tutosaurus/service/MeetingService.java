@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus.service;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import ch.epfl.sweng.tutosaurus.MeetingConfirmationActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
@@ -97,6 +99,16 @@ public class MeetingService extends Service {
                     .setStyle(inboxStyle)
                     .setContentText(currentEmail)
                     .setNumber(requests.size());
+            notBuilder.setAutoCancel(true);
+
+            Intent resultIntent = new Intent(this, MeetingConfirmationActivity.class);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(
+                    this,
+                    1,
+                    resultIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            notBuilder.setContentIntent(resultPendingIntent);
 
             synchronized (mNotificationManager) {
                 mNotificationManager.notify(5555, notBuilder.build());
