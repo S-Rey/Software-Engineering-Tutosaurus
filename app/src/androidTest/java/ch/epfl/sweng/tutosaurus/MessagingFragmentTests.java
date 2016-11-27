@@ -1,5 +1,6 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.content.Intent;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
@@ -8,9 +9,19 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.intent.IntentStubber;
 import android.widget.AdapterView;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import ch.epfl.sweng.tutosaurus.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
@@ -41,32 +52,34 @@ import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
-/**
- * Created by ubervison on 16.11.16.
- */
-
+@RunWith(MockitoJUnitRunner.class)
 public class MessagingFragmentTests {
 
     @Rule
-    public IntentsTestRule<MainActivity> mainActivityIntentsTestRule = new IntentsTestRule<MainActivity>(
-            MainActivity.class
+    public IntentsTestRule<StartActivity> mainActivityIntentsTestRule = new IntentsTestRule<StartActivity>(
+            StartActivity.class
     );
 
+    @Mock FirebaseUser mockFirebaseUser;
+    @Mock FirebaseAuth mockFirebaseAuth;
+    @Mock Task<AuthResult> mockTask;
+
+
     @Before
-    public void logInWithAlbert(){
-        onView(withId(R.id.mainBypassLoginButton)).perform(click());
-        try {
-            Thread.sleep(5000);
-            Intents.release();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void setup(){
+        Intents.init();
+        MockitoAnnotations.initMocks(this);
+        when(mockTask.isSuccessful()).thenReturn(true);
+        when(mockFirebaseAuth.signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo")).thenReturn(mockTask);
+        when(mockFirebaseUser.getEmail()).thenReturn("albert.einstein@epfl.ch");
+        when(mockFirebaseUser.getUid()).thenReturn("TLL2vWfIytQUDidJbIy1hFv0mqC3");
+        when(mockFirebaseAuth.getCurrentUser()).thenReturn(mockFirebaseUser);
     }
 
     @Test
     public void testChatWithAlbert() {
-        Intents.init();
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
         onData(anything())
@@ -81,7 +94,8 @@ public class MessagingFragmentTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        intending(hasComponent("ch.epfl.sweng.tutosaurus.ChatActivity"));
+        intended(hasComponent(ChatActivity.class.getName()));
+        Intents.release();
     }
 
 }

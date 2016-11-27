@@ -1,5 +1,7 @@
 package ch.epfl.sweng.tutosaurus.helper;
 
+import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -11,10 +13,13 @@ import java.util.Date;
 import ch.epfl.sweng.tutosaurus.model.Chat;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
+import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.Message;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class DatabaseHelper {
+
+    public final static String TAG = "DatabaseHelper";
 
     public static final String MEETING_PATH = "meeting/";
     public static final String USER_PATH = "user/";
@@ -105,10 +110,12 @@ public class DatabaseHelper {
         return key;
     }
 
+    // the 'teacher' String is the teacher uid
     public void requestMeeting(Meeting meeting, String teacher, String student) {
         String key = dbf.child(MEETING_REQUEST_PATH).child(student).push().getKey();
         meeting.setId(key);
         DatabaseReference teacherMeetingRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("meeting");
+        DatabaseReference teacherUidRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("uid");
         DatabaseReference teacherTypeRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("type");
         DatabaseReference teacherAcceptedRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("accepted");
         DatabaseReference teacherFromRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("from");
@@ -117,6 +124,7 @@ public class DatabaseHelper {
         teacherTypeRef.setValue("received");
         teacherAcceptedRef.setValue(false);
         teacherFromRef.setValue(student);
+        teacherUidRef.setValue(key);
     }
 
     public void getMeeting(String key) {
@@ -168,5 +176,17 @@ public class DatabaseHelper {
 
     public DatabaseReference getUserRef() {
         return dbf.child(USER_PATH);
+    }
+
+    public DatabaseReference getMeetingRequestsRef() {
+        return dbf.child(MEETING_REQUEST_PATH);
+    }
+
+    public void confirmMeeting(String currentUserUid, MeetingRequest request) {
+        DatabaseReference meetingRequestRef = dbf.child(MEETING_REQUEST_PATH).child(currentUserUid).child(request.getUid());
+        Meeting meeting = request.getMeeting();
+        addMeeting(meeting);
+        Log.d(TAG, "meeting added: " + meeting.getId());
+        meetingRequestRef.removeValue();
     }
 }
