@@ -3,7 +3,11 @@ package ch.epfl.sweng.tutosaurus;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.v4.app.FragmentManager;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.TimePicker;
+
+import java.sql.Time;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 
@@ -15,7 +19,6 @@ import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
-
 /**
  * Created by albertochiappa on 27/11/16.
  */
@@ -50,5 +53,10 @@ public class RequestMeetingTest extends ActivityInstrumentationTestCase2<MainAct
         onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
         Thread.sleep(1000);
         onView(withId(R.id.createMeetingButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+    }
+
+    public static class MockTimePickerFragment extends TimePickerFragment{
+
+
     }
 }
