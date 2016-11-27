@@ -1,8 +1,12 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
+import android.support.test.runner.AndroidJUnit4;
+import android.support.test.runner.AndroidJUnitRunner;
 import android.widget.AdapterView;
 
 import com.google.android.gms.tasks.Task;
@@ -31,7 +35,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class MessagingFragmentTests {
 
     @Rule
@@ -65,11 +69,6 @@ public class MessagingFragmentTests {
                 ))
                 .atPosition(1)
                 .perform(click());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         intended(hasComponent(hasClassName(ChatActivity.class.getName())));
     }
 
