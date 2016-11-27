@@ -115,7 +115,7 @@ public class ConfirmationActivity extends AppCompatActivity {
                         user.setFullName(fullName);
                         user.setUid(uid);
                         dbh.signUp(user);
-                        finish();
+                        startActivity(new Intent(ConfirmationActivity.this, MainActivity.class));
                     }
                 }
             });
