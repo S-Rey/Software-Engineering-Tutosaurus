@@ -3,6 +3,8 @@ package ch.epfl.sweng.tutosaurus;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +22,7 @@ public class MeetingConfirmationActivity extends AppCompatActivity{
 
     private String currentUserUid;
     private DatabaseHelper dbh;
+    private ListView reqList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class MeetingConfirmationActivity extends AppCompatActivity{
         Query meetingRequestsRef = dbh.getMeetingRequestsRef().child(currentUserUid);
         MeetingConfirmationAdapter adapter = new MeetingConfirmationAdapter(this, MeetingRequest.class, R.layout.meeting_confirmation_row, meetingRequestsRef);
 
-        ListView reqList = (ListView)findViewById(R.id.meeting_request_list);
+        reqList = (ListView)findViewById(R.id.meeting_request_list);
         reqList.setAdapter(adapter);
     }
 

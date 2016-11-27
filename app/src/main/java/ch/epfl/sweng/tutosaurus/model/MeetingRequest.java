@@ -1,11 +1,5 @@
 package ch.epfl.sweng.tutosaurus.model;
 
-import static android.R.attr.type;
-
-/**
- * Created by ubervison on 27.11.16.
- */
-
 public class MeetingRequest implements Identifiable{
 
     private String uid;
