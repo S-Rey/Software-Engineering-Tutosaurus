@@ -1,12 +1,8 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.content.Intent;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.runner.intent.IntentStubber;
 import android.widget.AdapterView;
 
 import com.google.android.gms.tasks.Task;
@@ -19,47 +15,28 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import ch.epfl.sweng.tutosaurus.HomeScreenActivity;
-import ch.epfl.sweng.tutosaurus.R;
-
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.DrawerActions.close;
-import static android.support.test.espresso.contrib.DrawerActions.open;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MessagingFragmentTests {
 
     @Rule
-    public IntentsTestRule<StartActivity> mainActivityIntentsTestRule = new IntentsTestRule<StartActivity>(
-            StartActivity.class
+    public IntentsTestRule<HomeScreenActivity> mainActivityIntentsTestRule = new IntentsTestRule<HomeScreenActivity>(
+            HomeScreenActivity.class
     );
 
     @Mock FirebaseUser mockFirebaseUser;
@@ -69,7 +46,6 @@ public class MessagingFragmentTests {
 
     @Before
     public void setup(){
-        Intents.init();
         MockitoAnnotations.initMocks(this);
         when(mockTask.isSuccessful()).thenReturn(true);
         when(mockFirebaseAuth.signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo")).thenReturn(mockTask);
@@ -94,8 +70,7 @@ public class MessagingFragmentTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        intended(hasComponent(ChatActivity.class.getName()));
-        Intents.release();
+        intended(hasComponent(hasClassName(ChatActivity.class.getName())));
     }
 
 }
