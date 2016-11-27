@@ -134,7 +134,9 @@ public class MeetingService extends Service {
             String key = dataSnapshot.getKey();
             String details = (String) dataSnapshot.child("meeting").child("description").getValue();
             requests.put(key, details);
-            notifyNewRequest();
+            if(PreferenceManager.getDefaultSharedPreferences(MeetingService.this).getBoolean("checkbox_preference_notification", true)){
+                notifyNewRequest();
+            }
         }
 
         @Override
