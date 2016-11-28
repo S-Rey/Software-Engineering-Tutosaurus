@@ -2,6 +2,7 @@
     <string name="app_name_title">TUTOSAURUS</string>
     <string name="app_name">TutoSaurus</string>
     <string name="welcoming_message">Welcome to TutoSaurus !</string>
+    <string name="welcome_message_description">Dino welcome</string>
     <string name="instructions_message">Do not forget to sign up before logging in to the application.</string>
     <string name="email_ask">Enter Email</string>
     <string name="password_ask">Enter Password</string>
