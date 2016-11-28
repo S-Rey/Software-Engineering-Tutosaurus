@@ -12,8 +12,8 @@ import static org.junit.Assert.assertThat;
  */
 
 public class HttpUtilsTest {
-    final String urlSample = "https://www.epfl.ch/";
-    final String urlEncoded = "https%3A%2F%2Fwww.epfl.ch%2F";
+    private final String urlSample = "https://www.epfl.ch/";
+    private final String urlEncoded = "https%3A%2F%2Fwww.epfl.ch%2F";
     @Test
     public void encodingUrlUtf_8Works(){
         assertThat(HttpUtils.urlEncode(urlSample), is(urlEncoded));

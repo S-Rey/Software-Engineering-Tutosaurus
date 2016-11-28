@@ -9,9 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -33,7 +31,7 @@ import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public static final String[] EVENT_PROJECTION = new String[] {
+    private static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
             CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
@@ -42,7 +40,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @RequiresApi(api = Build.VERSION_CODES.M)

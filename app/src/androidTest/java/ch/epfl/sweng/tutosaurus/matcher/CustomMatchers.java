@@ -8,7 +8,7 @@ import org.hamcrest.Matcher;
  * Created by ubervison on 10/14/16.
  */
 
-public class CustomMatchers {
+class CustomMatchers {
 
     public static Matcher<View> withDrawable(final int resourceId){
         return new DrawableMatcher(resourceId);

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.PreferenceMatchers;
 import android.support.test.runner.AndroidJUnit4;
@@ -35,7 +34,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class SettingsFragmentTest {
 
     @Rule
-    public IntentsTestRule<MainActivity> mainActivityRule = new IntentsTestRule<MainActivity>(
+    public IntentsTestRule<MainActivity> mainActivityRule = new IntentsTestRule<>(
             MainActivity.class
     );
 

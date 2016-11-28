@@ -3,6 +3,7 @@ package ch.epfl.sweng.tutosaurus.findTutor;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,10 @@ import ch.epfl.sweng.tutosaurus.model.User;
  * Created by albertochiappa on 21/10/16.
  */
 
-public class TutorAdapter extends ArrayAdapter<User> {
-    Context context;
-    int layoutResourceId;
-    ArrayList<User> tutorList = null;
+class TutorAdapter extends ArrayAdapter<User> {
+    private Context context;
+    private int layoutResourceId;
+    private ArrayList<User> tutorList = null;
 
     public TutorAdapter(Context context, int layoutResourceId, ArrayList<User> tutorList){
         super(context,layoutResourceId,tutorList);
@@ -32,8 +33,9 @@ public class TutorAdapter extends ArrayAdapter<User> {
         this.tutorList=tutorList;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, @NonNull ViewGroup parent){
         View row=convertView;
         TutorHolder holder;
         if(row==null){

@@ -62,10 +62,9 @@ public class MockupDatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_NAME, null, SCIPER + "=?", sciperString, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        ProfileMockup contact = new ProfileMockup(Integer.parseInt(cursor.getString(0)),
+        return new ProfileMockup(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)),
                 Float.parseFloat(cursor.getString(4)));
-        return contact;
     }
 
     public void deleteProfile (ProfileMockup profile) {

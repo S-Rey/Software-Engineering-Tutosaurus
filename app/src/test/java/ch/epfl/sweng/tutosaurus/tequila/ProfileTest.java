@@ -1,7 +1,5 @@
 package ch.epfl.sweng.tutosaurus.tequila;
 
-import android.util.Log;
-
 import org.junit.Test;
 
 import ch.epfl.sweng.tutosaurus.Tequila.Profile;

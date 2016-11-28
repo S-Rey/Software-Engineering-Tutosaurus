@@ -22,13 +22,12 @@ public class DatabaseHelper {
     public static final String MEETING_REQUEST_PATH = "meetingRequests";
     public static final String MEETING_PER_USER_PATH = "meetingsPerUser/";
 
-    private FirebaseDatabase db;
     private DatabaseReference dbf;
 
     private static DatabaseHelper instance = null;
 
     private DatabaseHelper(){
-        db = FirebaseDatabase.getInstance();
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
         db.setPersistenceEnabled(true);
         dbf = db.getReference();
     }
