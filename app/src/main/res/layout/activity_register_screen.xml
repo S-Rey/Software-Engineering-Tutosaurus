@@ -23,7 +23,8 @@
         android:scaleType="fitCenter"
         android:layout_marginTop="140dp"
         android:layout_marginBottom="15dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:contentDescription="Dino register"/>
 
     <EditText
         android:layout_width="wrap_content"

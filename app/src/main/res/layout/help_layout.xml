@@ -21,7 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:clickable="true"
-        android:onClick="sendMessageForCall" />
+        android:onClick="sendMessageForCall"
+        android:contentDescription="Phone logo"/>
 
     <TextView
         android:text="@string/phone_number_help"
@@ -69,7 +70,8 @@
         android:layout_alignLeft="@+id/imageView3"
         android:layout_alignStart="@+id/imageView3"
         android:clickable="true"
-        android:onClick="sendMessageForEmail" />
+        android:onClick="sendMessageForEmail"
+        android:contentDescription="Email logo"/>
 
     <TextView
         android:text="@string/email_address_help"

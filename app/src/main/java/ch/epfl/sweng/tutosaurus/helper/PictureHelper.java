@@ -1,14 +1,11 @@
 package ch.epfl.sweng.tutosaurus.helper;
 
 import android.app.Activity;
-import android.app.VoiceInteractor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Base64;
-import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -19,12 +16,9 @@ import java.io.IOException;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import ch.epfl.sweng.tutosaurus.R;
 
 
 public class PictureHelper {

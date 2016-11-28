@@ -62,6 +62,11 @@ public class MessagingFragmentTests {
     public void testChatWithAlbert() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onData(anything())
                 .inAdapterView(allOf(
                         isAssignableFrom(AdapterView.class),

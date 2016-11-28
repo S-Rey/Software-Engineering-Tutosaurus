@@ -1,8 +1,6 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,8 +9,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +28,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
-import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class ProfileFragment extends Fragment {
@@ -80,7 +75,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void loadImageFromStorage() {
-        FileInputStream in = null;
+        FileInputStream in;
         try {
             in = getActivity().getApplicationContext().openFileInput("user_profile_pic.bmp");
             Bitmap b = BitmapFactory.decodeStream(in);
@@ -99,7 +94,7 @@ public class ProfileFragment extends Fragment {
      * @param key
      * @return
      */
-     private void getImage(String key) throws IOException {
+     private void getImage(String key) {
         StorageReference storageRef = FirebaseStorage.getInstance().
                 getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
         final long MAX_SIZE = 2048 * 2048;

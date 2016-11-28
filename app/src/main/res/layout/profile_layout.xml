@@ -11,7 +11,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="120dp">
+            android:layout_height="120dp"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -59,7 +60,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:contentDescription="Profile Picture"/>
 
             </RelativeLayout>
         </LinearLayout>

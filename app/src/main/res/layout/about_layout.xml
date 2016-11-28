@@ -34,7 +34,8 @@
         android:scaleType="fitCenter"
         android:layout_marginTop="14dp"
         android:layout_below="@+id/aboutDescription"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:contentDescription="EPFL logo"/>
 
     <TextView
         android:layout_width="wrap_content"

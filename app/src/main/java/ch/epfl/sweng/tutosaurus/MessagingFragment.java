@@ -26,10 +26,6 @@ public class MessagingFragment extends Fragment {
     private static final String TAG = "MessagingFragment";
 
     View myView;
-    private ChatListAdapter chatListAdapter;
-    private UserListAdapter userListAdapter;
-    private DatabaseHelper dbh;
-    private String currentUser;
     private ListView listView;
 
     public static final String EXTRA_MESSAGE_USER_ID = "ch.epfl.sweng.tutosaurus.USER_ID";
@@ -40,15 +36,15 @@ public class MessagingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.messaging_fragment, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Messages");
-        dbh = DatabaseHelper.getInstance();
+        DatabaseHelper dbh = DatabaseHelper.getInstance();
         listView = (ListView) myView.findViewById(R.id.message_list);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Query chatRef = dbh.getReference().child("chats").child(currentUser);
         Log.d(TAG, "chatRef: " + chatRef.toString());
         Query userRef = dbh.getReference().child("user");
 
-        chatListAdapter = new ChatListAdapter(getActivity(), Chat.class, R.layout.message_chat_row, chatRef);
-        userListAdapter = new UserListAdapter(getActivity(), User.class, R.layout.message_user_row, userRef);
+        ChatListAdapter chatListAdapter = new ChatListAdapter(getActivity(), Chat.class, R.layout.message_chat_row, chatRef);
+        UserListAdapter userListAdapter = new UserListAdapter(getActivity(), User.class, R.layout.message_user_row, userRef);
 
         listView.setAdapter(userListAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

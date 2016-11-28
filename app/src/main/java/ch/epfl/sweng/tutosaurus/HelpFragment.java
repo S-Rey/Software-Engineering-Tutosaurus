@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 public class HelpFragment extends Fragment {
 
-    View myView;
+    private View myView;
 
     @Nullable
     @Override

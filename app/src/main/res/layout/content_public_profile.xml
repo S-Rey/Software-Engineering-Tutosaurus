@@ -90,7 +90,8 @@
                 android:maxHeight="42dp"
                 android:scaleType="fitCenter"
                 android:layout_weight="0.5"
-                android:layout_marginLeft="0dp" />
+                android:layout_marginLeft="0dp"
+                android:contentDescription="Dino register"/>
         </LinearLayout>
 
         <LinearLayout
