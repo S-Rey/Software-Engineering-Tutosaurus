@@ -17,7 +17,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static android.support.test.espresso.intent.Intents.intended;import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
 import static org.mockito.Mockito.mock;
@@ -51,13 +53,13 @@ public class StartActivityTest {
     @Test
     public void mainActivityWhenNotLoggedIn() {
         when(mockFirebaseAuth.getCurrentUser()).thenReturn(null);
-        intended(hasComponent(hasClassName(MainActivity.class.getName())));
+        intending(hasComponent(hasClassName(MainActivity.class.getName())));
     }
 
     @Test
     public void HomeScreenActivityWhenLoggedIn() {
         when(mockFirebaseAuth.getCurrentUser()).thenReturn(mockFirebaseUser);
-        intended(hasComponent(hasClassName(HomeScreenActivity.class.getName())));
+        intending(hasComponent(hasClassName(HomeScreenActivity.class.getName())));
     }
 
 }
