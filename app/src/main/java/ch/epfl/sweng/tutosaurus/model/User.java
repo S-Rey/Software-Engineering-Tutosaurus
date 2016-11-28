@@ -1,8 +1,6 @@
 package ch.epfl.sweng.tutosaurus.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class User implements Identifiable {
@@ -18,6 +16,8 @@ public class User implements Identifiable {
 
     private Map<String, Boolean> teaching = new HashMap<>();
     private Map<String, Boolean> studying = new HashMap<>();
+    private Map<String, Boolean> speaking = new HashMap<>();
+    private Map<String, Boolean> meetings = new HashMap<>();
     private Map<String, String> coursePresentation = new HashMap<>();
 
     private Map<String, Double> ratings = new HashMap<>(); /* (course id -> globalRating) */
@@ -276,4 +276,19 @@ public class User implements Identifiable {
         }
     }
 
+    public Map<String, Boolean> getSpeaking() {
+        return speaking;
+    }
+
+    public void setSpeaking(Map<String, Boolean> speaking) {
+        this.speaking = speaking;
+    }
+
+    public Map<String, Boolean> getMeetings() {
+        return meetings;
+    }
+
+    public void setMeetings(Map<String, Boolean> meetings) {
+        this.meetings = meetings;
+    }
 }

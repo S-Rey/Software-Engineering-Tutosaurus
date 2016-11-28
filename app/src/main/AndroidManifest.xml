@@ -14,9 +14,6 @@
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
-    <service
-        android:name=".FetchAddressIntentService"
-        android:exported="false" />
 
     <application
         android:allowBackup="true"
@@ -51,7 +48,7 @@
             android:label="@string/activity_register_name" />
         <activity
             android:name=".ConfirmationActivity"
-            android:label="@string/activity_confirmation_name"></activity>
+            android:label="@string/activity_confirmation_name" />
         <activity
             android:name=".PublicProfileActivity"
             android:label="Profile"
@@ -69,7 +66,7 @@
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

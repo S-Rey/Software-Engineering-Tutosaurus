@@ -21,7 +21,8 @@
             android:maxWidth="42dp"
             android:scaleType="fitCenter"
             android:layout_weight="1"
-            android:background="@null" />
+            android:background="@null"
+            android:contentDescription="Course Picture"/>
 
         <TextView android:id="@+id/courseName"
             android:layout_width="fill_parent"

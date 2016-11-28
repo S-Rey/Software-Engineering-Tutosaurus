@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -154,7 +152,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
     public static void insertCourseTable(User user, SQLiteDatabase db) {
 
         // COURSE TABLE
-        Set<String> courseNames = new HashSet();
+        Set<String> courseNames = new HashSet<>();
         courseNames.addAll(user.getStudying().keySet());
         courseNames.addAll(user.getTeaching().keySet());
 
@@ -218,8 +216,10 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
             user.setUid(cursor.getString(0));
             user.setPicture(cursor.getInt(5));
             user.setGlobalRating(cursor.getDouble(6));
+            cursor.close();
             return user;
         } else {
+            cursor.close();
             return null;
         }
     }
@@ -242,6 +242,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
                 user.addStudying(cursor.getString(0));
             }
         }
+        cursor.close();
     }
 
     public static void getLanguage(User user, SQLiteDatabase db) {
@@ -256,6 +257,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
                 user.addLanguage(cursor.getString(0));
             }
         }
+        cursor.close();
     }
 }
 

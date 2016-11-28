@@ -1,35 +1,22 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.v4.view.NestedScrollingChild;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.core.StringContains.containsString;
 
 /**
  * Created by albertochiappa on 14/10/16.

@@ -40,7 +40,7 @@ import ch.epfl.sweng.tutosaurus.Tequila.Profile;
  */
 public class RegisterScreenActivity extends AppCompatActivity {
 
-    public final static String TAG = "RegisterScreenActivity";
+    private final static String TAG = "RegisterScreenActivity";
 
     public final static String EXTRA_MESSAGE_FIRST_NAME = "com.example.myfirstapp.FIRSTNAME";
     public final static String EXTRA_MESSAGE_LAST_NAME = "com.example.myfirstapp.LASTNAME";
@@ -52,14 +52,14 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private static final String CLIENT_KEY = "97fb52cdc30384634c5eeb8cdc684baf";
     private static final String REDIRECT_URI = "tutosaurus://login";
 
-    Dialog authDialog;
-    WebView webViewOauth;
+    private Dialog authDialog;
+    private WebView webViewOauth;
     Button sendButton;
 
     private static OAuth2Config config;
     private static Map<String, String> tokens;
     private static Profile profile;
-    String codeRequestUrl;
+    private String codeRequestUrl;
 
     private String gaspar;
     private String password;
@@ -73,8 +73,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
-
-        Intent intent = getIntent();
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -83,7 +81,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         return true;
     }
 
-    public void sendMessageForAccess(View view) {
+    private void sendMessageForAccess(View view) {
         if(MyAppVariables.getRegistered()){
             Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
 
@@ -113,7 +111,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         try {
             config = readConfig();
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -121,7 +119,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         try {
             tokens = AuthServer.fetchTokens(config, code);
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -129,7 +127,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         try {
             profile = AuthServer.fetchProfile(tokens.get("Tequila.profile"));
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 
