@@ -1,5 +1,6 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -216,7 +217,9 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
                 if (url.contains("requestkey")) {
                     Log.d(TAG, "TRIGGERED");
-                    view.evaluateJavascript(js_g + js_pw, null);
+                    if(Build.VERSION.SDK_INT > 18) {
+                        view.evaluateJavascript(js_g + js_pw, null);
+                    }
                 }
 
                 else if (url.contains("?code=") && !authComplete) {
