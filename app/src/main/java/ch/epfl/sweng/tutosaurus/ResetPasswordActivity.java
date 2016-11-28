@@ -49,7 +49,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 String email = emailInput.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.request_registered_email, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
