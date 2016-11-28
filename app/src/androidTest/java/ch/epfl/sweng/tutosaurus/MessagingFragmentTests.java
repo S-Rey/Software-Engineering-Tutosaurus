@@ -50,6 +50,11 @@ public class MessagingFragmentTests {
     public void testChatWithAlbert() {
         Intents.init();
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
         onData(anything())
                 .inAdapterView(allOf(
