@@ -217,9 +217,10 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
                 if (url.contains("requestkey")) {
                     Log.d(TAG, "TRIGGERED");
-                    if(Build.VERSION.SDK_INT > 18) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         view.evaluateJavascript(js_g + js_pw, null);
                     }
+
                 }
 
                 else if (url.contains("?code=") && !authComplete) {
