@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -26,8 +28,11 @@ import com.google.firebase.storage.StorageReference;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 
+import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class ProfileFragment extends Fragment {
@@ -36,6 +41,7 @@ public class ProfileFragment extends Fragment {
 
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private MeetingAdapter adapter;
 
     @Nullable
     @Override
@@ -70,6 +76,23 @@ public class ProfileFragment extends Fragment {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+
+
+        Query refNextMeeting = dbh.getMeetingsRefForUser(currentUser);
+        ListView meetingLastWeek = (ListView) myView.findViewById(R.id.meetingNextWeek);
+        long nextWeekInMillis = System.currentTimeMillis() + (86400 * 7 * 1000);
+        Date nextWeek = new Date(nextWeekInMillis);
+        refNextMeeting = refNextMeeting.orderByChild("date").startAt(System.currentTimeMillis()).endAt(nextWeekInMillis);
+        adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refNextMeeting);
+        meetingLastWeek.setAdapter(adapter);
+
+        Query refLastMeeting = dbh.getMeetingsRefForUser(currentUser);
+        ListView meetingNextWeek = (ListView) myView.findViewById(R.id.meetingLastWeek);
+        long lastWeekInMillis = System.currentTimeMillis() - (86400 * 7 * 1000);
+        Date lastWeek = new Date(lastWeekInMillis);
+        refLastMeeting = refLastMeeting.orderByChild("date").startAt(System.currentTimeMillis()).endAt(lastWeekInMillis);
+        adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refLastMeeting);
+        meetingNextWeek.setAdapter(adapter);
 
         return myView;
     }
@@ -112,23 +135,6 @@ public class ProfileFragment extends Fragment {
              }
          });
 
-       /* StorageReference picRef = storageRef.child(sciper + "/" + namePic + ".jpg");
-        picRef.getBytes(MAX_SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
-                Bitmap pic = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                ImageView img = (ImageView) myView.findViewById(R.id.picture_view);
-                img.setImageBitmap(pic);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                Toast.makeText( getActivity().getBaseContext(),"Erreur ma gueule !",Toast.LENGTH_LONG).show();
-
-            }
-        });*/
 
     }
 
