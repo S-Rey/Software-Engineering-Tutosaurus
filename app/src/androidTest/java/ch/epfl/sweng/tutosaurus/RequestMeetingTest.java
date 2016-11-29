@@ -55,8 +55,5 @@ public class RequestMeetingTest extends ActivityInstrumentationTestCase2<MainAct
         onView(withId(R.id.createMeetingButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
     }
 
-    public static class MockTimePickerFragment extends TimePickerFragment{
 
-
-    }
 }
