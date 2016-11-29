@@ -23,6 +23,7 @@ public class ResetPasswordActivityTest {
 
     private Solo solo;
     private String invalid_email;
+    private String valid_email;
 
     @Rule
     public ActivityTestRule<ResetPasswordActivity> mActivityRule = new ActivityTestRule<>(
@@ -35,6 +36,7 @@ public class ResetPasswordActivityTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),
                 mActivityRule.getActivity());
         invalid_email = "HolyMolly@wow.com";
+        valid_email = "albert.einstein@epfl.ch";
     }
 
     @After
@@ -61,6 +63,16 @@ public class ResetPasswordActivityTest {
         solo.typeText(0, invalid_email);
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
         boolean toastMsg = solo.searchText("Failed to send reset!");
+        assertTrue(toastMsg);
+    }
+
+    @Test
+    public void correctSuccessToastDisplayed() throws Exception{
+        solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
+        solo.clickOnView(solo.getView(R.id.resetPasswordEmailInput));
+        solo.typeText(0, valid_email);
+        solo.clickOnView(solo.getView(R.id.rstPasswordButton));
+        boolean toastMsg = solo.searchText("Instructions sent to your email!");
         assertTrue(toastMsg);
     }
 
