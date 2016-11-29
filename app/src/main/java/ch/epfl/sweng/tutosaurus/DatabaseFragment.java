@@ -20,8 +20,8 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class DatabaseFragment extends Fragment implements View.OnClickListener {
 
-    View myView;
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private View myView;
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Nullable
     @Override

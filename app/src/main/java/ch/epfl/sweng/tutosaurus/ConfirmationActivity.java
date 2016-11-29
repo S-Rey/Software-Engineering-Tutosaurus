@@ -23,7 +23,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class ConfirmationActivity extends AppCompatActivity {
 
-    public static final String TAG = "ConfirmationActivity";
+    private static final String TAG = "ConfirmationActivity";
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -109,7 +109,6 @@ public class ConfirmationActivity extends AppCompatActivity {
                     } else {
                         String uid = user.getUid();
                         DatabaseHelper dbh = DatabaseHelper.getInstance();
-                        DatabaseReference userRef = dbh.getReference().child(DatabaseHelper.USER_PATH).child(uid);
                         User user = new User(sciper, gaspar);
                         user.setEmail(email);
                         user.setFullName(fullName);

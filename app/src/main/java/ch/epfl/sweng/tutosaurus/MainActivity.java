@@ -1,12 +1,8 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -23,22 +19,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import ch.epfl.sweng.tutosaurus.Tequila.MyAppVariables;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
-import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
     public final static String TAG = "MainActivity";
 
-    private Button login;
-    private Button bypassLogin;
-    private Button resetPasswordButton;
     private EditText passwordEditText;
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     SQLiteOpenHelper dbHelper;
     SQLiteDatabase database;
@@ -48,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        resetPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
+        Button resetPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
 
         resetPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -71,9 +61,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-
-        login = (Button) findViewById(R.id.connectionButton);
-        bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
+        Button login = (Button) findViewById(R.id.connectionButton);
+        Button bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
 
         bypassLogin.setOnClickListener(new View.OnClickListener() {
             @Override

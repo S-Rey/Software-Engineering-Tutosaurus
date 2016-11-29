@@ -27,7 +27,7 @@ package ch.epfl.sweng.tutosaurus.findTutor;
 
 public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
 
-    public static final String TAG = "FirebaseTutorAdapter";
+    private static final String TAG = "FirebaseTutorAdapter";
 
     public FirebaseTutorAdapter(Activity activity, java.lang.Class<User> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);

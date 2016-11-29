@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,8 +29,6 @@ import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by ubervison on 10/28/16.
@@ -74,7 +71,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 List<String> participants = meeting.getParticipants();
-                String displayParticipant = new String();
+                String displayParticipant = "";
                 for (String participant: participants) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         if (!userSnapshot.getKey().equals(currentUser) && userSnapshot.getKey().equals(participant)) {

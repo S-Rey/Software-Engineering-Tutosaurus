@@ -20,7 +20,8 @@
         android:maxWidth="120dp"
         android:maxHeight="200dp"
         android:layout_marginTop="80dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:contentDescription="Dino logo"/>
 
     <TextView
         android:text="@string/instructions_message"

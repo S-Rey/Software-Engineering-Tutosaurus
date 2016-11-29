@@ -7,10 +7,8 @@ import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.view.View;
 import android.widget.TimePicker;
 
-import java.sql.Time;
 import java.util.Calendar;
 
 /**

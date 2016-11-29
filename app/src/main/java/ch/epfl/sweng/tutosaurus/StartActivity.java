@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class StartActivity extends AppCompatActivity {
 
-    public static final String TAG = "StartActivity";
+    private static final String TAG = "StartActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState){
