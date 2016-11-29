@@ -1,8 +1,7 @@
 package ch.epfl.sweng.tutosaurus.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ch.epfl.sweng.tutosaurus.FindTutorResult;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 
@@ -21,9 +19,9 @@ import ch.epfl.sweng.tutosaurus.model.Course;
  */
 
 public class CourseAdapter extends ArrayAdapter<Course> {
-    Context context;
-    int layoutResourceId;
-    ArrayList<Course> courses = null;
+    private Context context;
+    private int layoutResourceId;
+    private ArrayList<Course> courses = null;
 
     public CourseAdapter(Context context, int layoutResourceId, ArrayList<Course> courses){
         super(context,layoutResourceId,courses);
@@ -32,8 +30,9 @@ public class CourseAdapter extends ArrayAdapter<Course> {
         this.courses=courses;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, @NonNull ViewGroup parent){
         View row=convertView;
         CourseHolder holder;
 

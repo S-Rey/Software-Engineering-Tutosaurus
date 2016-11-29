@@ -5,21 +5,13 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceGroup;
-import android.preference.PreferenceScreen;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
@@ -30,10 +22,10 @@ import static java.util.Arrays.*;
 
 public class BeATutorFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    ArrayList<Course> courses;
-    List<String> languages = asList("english", "french", "german", "italian", "chinese", "russian");
+    private ArrayList<Course> courses;
+    private List<String> languages = asList("english", "french", "german", "italian", "chinese", "russian");
 
 
     @Override
@@ -126,7 +118,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             if (key.equals("edit_text_preference_" + courseName)) {
                 if (!descriptionPreference.getText().equals("")) {
                     descriptionPreference.setTitle(descriptionPreference.getText());
-                    dbh.addSubjectDescription(descriptionPreference.getText().toString(), currentUser, courseName);
+                    dbh.addSubjectDescription(descriptionPreference.getText(), currentUser, courseName);
                 } else {
                     descriptionPreference.setTitle("Enter Your Description");
                 }

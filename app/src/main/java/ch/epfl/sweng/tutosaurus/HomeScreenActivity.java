@@ -2,7 +2,6 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,12 +66,8 @@ public class HomeScreenActivity extends AppCompatActivity
 
     private ImageView pictureView;
     private CircleImageView circleView;
-    private TextView nameView;
-    private TextView addressView;
-    private TextView sciperView;
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +77,7 @@ public class HomeScreenActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
+        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -101,7 +95,7 @@ public class HomeScreenActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -119,13 +113,13 @@ public class HomeScreenActivity extends AppCompatActivity
         String email_address = settings.getString("email", "");
         String sciper = settings.getString("sciper", "");
 
-        nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
+        TextView nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
         nameView.setText(first_name + " " + last_name);
 
-        addressView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.mailAddress);
+        TextView addressView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.mailAddress);
         addressView.setText(email_address);
 
-        sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
+        TextView sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
         sciperView.setText(sciper);
 
         if (intent.getAction() != null) {
@@ -188,7 +182,6 @@ public class HomeScreenActivity extends AppCompatActivity
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.CALL_PHONE},   //request specific permission from user
                     10);
-            return;
         } else {
             startActivity(intent);
         }
@@ -242,7 +235,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -335,7 +328,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
 
 
-    protected void setPassTabToOpen(View v){
+    void setPassTabToOpen(View v){
         EditText changePassField = (EditText) v.findViewById(R.id.chooseNewPass);
         EditText changePassFieldConfirm = (EditText) v.findViewById(R.id.confirmNewPass);
         Button sendNewPassInfo = (Button) v.findViewById(R.id.changeNewPass);
@@ -353,7 +346,7 @@ public class HomeScreenActivity extends AppCompatActivity
         changePasswordButton.setOnClickListener(changePassClick);
     }
 
-    public void loadImageFromGallery(View view) {
+    private void loadImageFromGallery(View view) {
         Intent imageGalleryIntent = new Intent(Intent.ACTION_PICK);
         File picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String picturesDirectoryPath = picturesDirectory.getPath();
@@ -363,7 +356,7 @@ public class HomeScreenActivity extends AppCompatActivity
         startActivityForResult(imageGalleryIntent, GALLERY_REQUEST);
     }
 
-    public void dispatchTakePictureIntent(View v) {
+    private void dispatchTakePictureIntent(View v) {
         if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             Toast toast = Toast.makeText(HomeScreenActivity.this, "No camera", Toast.LENGTH_SHORT);
             toast.show();
@@ -400,7 +393,7 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     private void linkProfilePictureToNavView(CircleImageView item) {
-        FileInputStream in = null;
+        FileInputStream in;
         try {
             in = getApplicationContext().openFileInput("user_profile_pic.bmp");
             Bitmap b = BitmapFactory.decodeStream(in);
@@ -452,9 +445,8 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-    protected Bitmap resizeBitmap(Bitmap img) {
-        Bitmap scaledBitmap = ThumbnailUtils.extractThumbnail(img, PROFILE_PICTURE_WIDTH, PROFILE_PICTURE_HEIGHT);
-        return scaledBitmap;
+    private Bitmap resizeBitmap(Bitmap img) {
+        return ThumbnailUtils.extractThumbnail(img, PROFILE_PICTURE_WIDTH, PROFILE_PICTURE_HEIGHT);
     }
 
     public void showChangePictureDialog(final View view){

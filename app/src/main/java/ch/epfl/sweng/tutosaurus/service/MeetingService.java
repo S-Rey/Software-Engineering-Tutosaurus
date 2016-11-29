@@ -9,7 +9,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.SharedPreferencesCompat;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +35,6 @@ public class MeetingService extends Service {
     private MeetingEventListener mListener;
     private DatabaseReference meetingReqRef;
 
-    private SharedPreferences sharedPref;
     private SharedPreferences.Editor prefEditor;
     private boolean shouldNotify;
 
@@ -49,7 +47,7 @@ public class MeetingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         // if the service crashed, we should not notify
         shouldNotify = !sharedPref.getBoolean("serviceCrashed", false);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();

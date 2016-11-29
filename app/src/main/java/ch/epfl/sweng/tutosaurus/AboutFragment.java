@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 public class AboutFragment extends Fragment {
 
-    View myView;
+    private View myView;
 
     @Nullable
     @Override

@@ -43,7 +43,6 @@ public class LocationActivity extends FragmentActivity implements
 
     private GoogleMap mMap;
     private FusedLocationProviderApi locationProvider = LocationServices.FusedLocationApi;
-    private PendingResult<LocationSettingsResult> result;
     private Location location;
     private LatLng locationMeeting;
 
@@ -78,12 +77,12 @@ public class LocationActivity extends FragmentActivity implements
                 .addLocationRequest(locationRequest);
 
         builder.setAlwaysShow(true);
-        result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
 
         if (result != null) {
             result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
                 @Override
-                public void onResult(LocationSettingsResult locationSettingsResult) {
+                public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
                     final Status status = locationSettingsResult.getStatus();
                     switch (status.getStatusCode()) {
                         case LocationSettingsStatusCodes.SUCCESS:

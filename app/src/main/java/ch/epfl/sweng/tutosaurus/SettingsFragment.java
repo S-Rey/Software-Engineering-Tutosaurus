@@ -1,5 +1,6 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.*;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -9,9 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -33,7 +32,7 @@ import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public static final String[] EVENT_PROJECTION = new String[] {
+    private static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
             CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
@@ -42,7 +41,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private static final int MY_PERMISSIONS_REQUEST_CALENDAR = 101;
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -116,6 +116,23 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
                         long calID;
                         ContentResolver contentResolver = getActivity().getContentResolver();
+                        if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                                    android.Manifest.permission.WRITE_CALENDAR)) {
+
+                                // Show an explanation to the user *asynchronously* -- don't block
+                                // this thread waiting for the user's response! After the user
+                                // sees the explanation, try again to request the permission.
+
+                            } else {
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        new String[]{android.Manifest.permission.WRITE_CALENDAR},
+                                        MY_PERMISSIONS_REQUEST_CALENDAR);
+                            }
+
+                        }
+
                         Uri uri = CalendarContract.Calendars.CONTENT_URI;
                         Cursor cursorCalendarID = contentResolver.query(uri, EVENT_PROJECTION, null, null, null);
                         if (cursorCalendarID != null) {

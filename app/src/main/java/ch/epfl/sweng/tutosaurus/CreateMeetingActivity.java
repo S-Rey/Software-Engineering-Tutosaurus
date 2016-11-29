@@ -2,20 +2,18 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -28,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -44,16 +41,18 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
     private static final int PLACE_PICKER_REQUEST = 1;
 
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
-    public String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
     private String teacherId;
 
-    TimePickerFragment timePicker = new TimePickerFragment();
-    DatePickerFragment datePicker = new DatePickerFragment();
+    private TimePickerFragment timePicker = new TimePickerFragment();
+    private DatePickerFragment datePicker = new DatePickerFragment();
 
-    Course courseMeeting;
-    Meeting meeting = new Meeting();
+    private Course courseMeeting;
+
+    private Meeting meeting = new Meeting();
 
 
     @Override

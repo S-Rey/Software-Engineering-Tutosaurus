@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,7 +24,7 @@ import ch.epfl.sweng.tutosaurus.model.FullCourseList;
  */
 
 public class FindTutorsFragment extends Fragment {
-    View myView;
+    private View myView;
 
     @Nullable
     @Override
@@ -82,7 +81,7 @@ public class FindTutorsFragment extends Fragment {
         return myView;
     }
 
-    void setDisplayByNameListener(final Button byNameButton) {
+    private void setDisplayByNameListener(final Button byNameButton) {
         byNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +94,7 @@ public class FindTutorsFragment extends Fragment {
         });
     }
 
-    void setDisplayBySubjectListener(final Button bySubjectButton) {
+    private void setDisplayBySubjectListener(final Button bySubjectButton) {
         bySubjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +108,7 @@ public class FindTutorsFragment extends Fragment {
     }
 
 
-    void setShowFullListListener(Button button){
+    private void setShowFullListListener(Button button){
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +122,7 @@ public class FindTutorsFragment extends Fragment {
     }
 
 
-    void hideEverything(){
+    private void hideEverything(){
         myView.findViewById(R.id.courseList).setVisibility(View.GONE);
         myView.findViewById(R.id.nameLayout).setVisibility(View.GONE);
         myView.findViewById(R.id.showFullList).setVisibility(View.GONE);

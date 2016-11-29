@@ -3,13 +3,14 @@ apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "ch.epfl.sweng.tutosaurus"
         minSdkVersion 18
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

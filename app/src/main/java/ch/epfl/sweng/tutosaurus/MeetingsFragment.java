@@ -1,6 +1,5 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.*;
 import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentResolver;
@@ -28,7 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
-import ch.epfl.sweng.tutosaurus.adapter.CourseAdapter;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
