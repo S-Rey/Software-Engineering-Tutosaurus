@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -93,10 +94,14 @@ public class CreateMeetingActivity extends AppCompatActivity {
                 meeting.setDate(dateMeeting);
                 meeting.setCourse(courseMeeting);
 
-                dbh.requestMeeting(meeting, teacherId, currentUser);
-                Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getBaseContext(), StartActivity.class);
-                startActivity(intent);
+                if (dateMeeting.getYear() == -1) {
+                    Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
+                } else {
+                    dbh.requestMeeting(meeting, teacherId, currentUser);
+                    Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getBaseContext(), StartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
