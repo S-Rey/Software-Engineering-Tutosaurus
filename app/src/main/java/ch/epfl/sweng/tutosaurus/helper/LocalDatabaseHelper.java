@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,7 +62,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     // create table of user
     private static final String CREATE_TABLE_USER = " CREATE TABLE " + TABLE_USER + "(" +
-            COLUMN_USER_ID + " INTEGER PRIMARY KEY, " +
+            COLUMN_USER_ID + " STRING PRIMARY KEY, " +
             COLUMN_USER_SCIPER + " TEXT, " +
             COLUMN_USER_USERNAME + " TEXT, " +
             COLUMN_USER_FULLNAME + " TEXT, " +
@@ -68,7 +70,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_USER_PICTURE + " INTEGER, " +
             COLUMN_USER_GLOBAL_RATING + " REAL " + ")";
 
-    // table course
+    // table courseé
     public static final String TABLE_COURSE = "course";
     public static final String COLUMN_COURSE_NAME = "course_name";
     public static final String COLUMN_COURSE_IS_TEACHED = "course_is_teached";
@@ -113,7 +115,14 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_COURSE);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_LANGUAGE);
         onCreate(db);
+    }
+
+    public static void clear(SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_COURSE);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_LANGUAGE);
     }
 
 
@@ -126,6 +135,13 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
      * @param db
      */
     public static void insertUser(User user,SQLiteDatabase db) {
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_COURSE);
+        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_LANGUAGE);
+        db.execSQL(CREATE_TABLE_USER);
+        db.execSQL(CREATE_TABLE_COURSE);
+        db.execSQL(CREATE_TABLE_LANGUAGE);
+
         insertUserTable(user,db);
         insertCourseTable(user,db);
         insertLanguageTable(user,db);
@@ -133,7 +149,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public static void insertUserTable(User user, SQLiteDatabase db) {
+    private static void insertUserTable(User user, SQLiteDatabase db) {
         ContentValues userValues = new ContentValues();
 
         // USER TABLE
@@ -149,10 +165,10 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public static void insertCourseTable(User user, SQLiteDatabase db) {
+    private static void insertCourseTable(User user, SQLiteDatabase db) {
 
         // COURSE TABLE
-        Set<String> courseNames = new HashSet<>();
+        Set<String> courseNames = new HashSet();
         courseNames.addAll(user.getStudying().keySet());
         courseNames.addAll(user.getTeaching().keySet());
 
@@ -183,7 +199,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public static void insertLanguageTable(User user, SQLiteDatabase db) {
+    private static void insertLanguageTable(User user, SQLiteDatabase db) {
 
         // LANGUAGE TABLE
         for(String key : user.getLanguages().keySet()) {
@@ -204,7 +220,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Nullable
-    public static User getUserTable(SQLiteDatabase db) {
+    private static User getUserTable(SQLiteDatabase db) {
         String query = "SELECT * FROM " + TABLE_USER;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.getCount() > 0) {
@@ -216,36 +232,36 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
             user.setUid(cursor.getString(0));
             user.setPicture(cursor.getInt(5));
             user.setGlobalRating(cursor.getDouble(6));
-            cursor.close();
             return user;
         } else {
-            cursor.close();
             return null;
         }
     }
 
-    public static void getCourse(User user, SQLiteDatabase db) {
+    private static void getCourse(User user, SQLiteDatabase db) {
         if(user == null) {
             return;
         }
         String query = "SELECT * FROM " + TABLE_COURSE;
         Cursor cursor = db.rawQuery(query, null);
-        while (cursor.moveToNext()){
-            // if course is teached
-            if(cursor.getInt(1) != 0) {
-                user.addTeaching(cursor.getString(0));
-                user.setCourseRating(cursor.getString(0), cursor.getDouble(3));
-                user.addHoursTaught(cursor.getString(0), cursor.getInt(4));
-            }
-            // if course is studied
-            if (cursor.getInt(2) != 0) {
-                user.addStudying(cursor.getString(0));
+
+        if(cursor.getCount() > 0) {
+            while (cursor.moveToNext()){
+                // if course is teached
+                if(cursor.getInt(1) != 0) {
+                    user.addTeaching(cursor.getString(0));
+                    user.setCourseRating(cursor.getString(0), cursor.getDouble(3));
+                    user.addHoursTaught(cursor.getString(0), cursor.getInt(4));
+                }
+                // if course is studied
+                if (cursor.getInt(2) != 0) {
+                    user.addStudying(cursor.getString(0));
+                }
             }
         }
-        cursor.close();
     }
 
-    public static void getLanguage(User user, SQLiteDatabase db) {
+    private static void getLanguage(User user, SQLiteDatabase db) {
         if (user == null) {
             return;
         }
@@ -257,9 +273,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
                 user.addLanguage(cursor.getString(0));
             }
         }
-        cursor.close();
     }
 }
-
 
 
