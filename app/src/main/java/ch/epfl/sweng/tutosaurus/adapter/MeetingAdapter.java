@@ -36,9 +36,9 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    private DatabaseHelper dbh = DatabaseHelper.getInstance();
-    private Context context;
+    protected String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    protected DatabaseHelper dbh = DatabaseHelper.getInstance();
+    protected Context context;
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);

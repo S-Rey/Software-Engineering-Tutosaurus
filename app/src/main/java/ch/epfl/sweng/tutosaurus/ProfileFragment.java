@@ -29,9 +29,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
+import ch.epfl.sweng.tutosaurus.adapter.MeetingConfirmationAdapter;
+import ch.epfl.sweng.tutosaurus.adapter.MeetingRatingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
+import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
+
+import static android.view.View.GONE;
 
 public class ProfileFragment extends Fragment {
 
@@ -79,17 +84,21 @@ public class ProfileFragment extends Fragment {
         Query refLastMeeting = dbh.getMeetingsRefForUser(currentUser);
         ListView meetingNextWeek = (ListView) myView.findViewById(R.id.meetingtoRate);
         long lastWeekInMillis = System.currentTimeMillis() + 59958140730000L - (86400 * 7 * 1000);
-        refLastMeeting = refLastMeeting.orderByChild("date/time").startAt(lastWeekInMillis);
-        adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refLastMeeting);
+        //refLastMeeting = refLastMeeting.orderByChild("date/time").startAt(lastWeekInMillis);
+        refLastMeeting = refLastMeeting.orderByChild("rated").equalTo(false);
+        adapter = new MeetingRatingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refLastMeeting);
         meetingNextWeek.setAdapter(adapter);
+        //setMeetingsToRateListeners();
+        //meetingNextWeek.setVisibility(GONE);
 
 
-        Query refNextMeeting = dbh.getMeetingsRefForUser(currentUser);
-        ListView meetingLastWeek = (ListView) myView.findViewById(R.id.meetingRequests);
-        long nextWeekInMillis = System.currentTimeMillis() + (86400 * 7 * 1000);
-        refNextMeeting = refNextMeeting.orderByChild("date/time").startAt(System.currentTimeMillis()).endAt(nextWeekInMillis);
-        adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refNextMeeting);
-        meetingLastWeek.setAdapter(adapter);
+        Query refRequestedMeeting = dbh.getMeetingRequestsRef().child(currentUser);
+        ListView meetingRequested = (ListView) myView.findViewById(R.id.meetingRequests);
+        MeetingConfirmationAdapter requestedMeetingAdapter = new MeetingConfirmationAdapter(getActivity(),
+                                                                                            MeetingRequest.class,
+                                                                                            R.layout.meeting_confirmation_row,
+                                                                                            refRequestedMeeting);
+        meetingRequested.setAdapter(requestedMeetingAdapter);
         return myView;
     }
 
@@ -133,6 +142,7 @@ public class ProfileFragment extends Fragment {
 
 
     }
+
 
 }
 
