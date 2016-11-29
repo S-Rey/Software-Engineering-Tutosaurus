@@ -43,7 +43,8 @@ public class MeetingConfirmationAdapter extends FirebaseListAdapter<MeetingReque
         final TextView name = (TextView) mainView.findViewById(R.id.meeting_confirmation_row_name);
         TextView location = (TextView) mainView.findViewById(R.id.meeting_confirmation_row_location);
         TextView date = (TextView) mainView.findViewById(R.id.meeting_confirmation_row_date);
-        DatabaseReference fullNameRef = DatabaseHelper.getInstance().getUserRef().child(currentUserUid).child("fullName");
+        String fromUid = request.getFrom();
+        DatabaseReference fullNameRef = DatabaseHelper.getInstance().getUserRef().child(fromUid).child("fullName");
         fullNameRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
