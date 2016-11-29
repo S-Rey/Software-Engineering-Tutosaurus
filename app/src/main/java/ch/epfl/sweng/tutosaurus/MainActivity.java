@@ -3,6 +3,7 @@ package ch.epfl.sweng.tutosaurus;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -13,11 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.locks.Lock;
 
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        Button login = (Button) findViewById(R.id.connectionButton);
+        final Button login = (Button) findViewById(R.id.connectionButton);
         Button bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
 
         bypassLogin.setOnClickListener(new View.OnClickListener() {
@@ -78,18 +84,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {*/
                 String email = "albert.einstein@epfl.ch";
                 String password = "tototo";
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
-                                if (task.isSuccessful()) {
-                                   dispatchHomeScreenIntent();
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT);
-                                }
-                            }
-                        });
+                LoginAsyncTask loginTask = new LoginAsyncTask();
+                loginTask.execute(email, password);
+                Log.d(TAG, "3");
             }
         });
 
@@ -101,10 +98,10 @@ public class MainActivity extends AppCompatActivity {
                 loginAlertB.setTitle("Login").setPositiveButton("Ok", null).setIcon(R.drawable.dino_logo);
                 String email = ((EditText) findViewById(R.id.main_email)).getText().toString();
                 String password = ((EditText) findViewById(R.id.main_password)).getText().toString();
-                if(email.isEmpty() || password.isEmpty()){
+                if (email.isEmpty() || password.isEmpty()) {
                     loginAlertB.setMessage("Please type in your email and password");
                     loginAlertB.create().show();
-                }else {
+                } else {
                     mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -140,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -152,11 +148,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    public void testDB () {
+    public void testDB() {
         dbHelper = new LocalDatabaseHelper(this);
         database = dbHelper.getWritableDatabase();
-        Toast.makeText(getBaseContext(),database.toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), database.toString(), Toast.LENGTH_LONG).show();
 
         User profileTwo = new User("223415");
         profileTwo.setUsername("Albert");
@@ -175,8 +170,43 @@ public class MainActivity extends AppCompatActivity {
 
         LocalDatabaseHelper.insertUser(profileTwo, database);
         User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
-        Toast.makeText(getBaseContext(),user.getUsername(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), user.getUsername(), Toast.LENGTH_LONG).show();
     }
+
+    private class LoginAsyncTask extends AsyncTask<String, String, Task> {
+
+        @Override
+        protected Task doInBackground(String... params) {
+            String email = params[0];
+            String password = params[1];
+            Task<AuthResult> task = mAuth.signInWithEmailAndPassword(email, password);
+            task.addOnCompleteListener(new LoginOnCompleteListener());
+            try {
+                Tasks.await(task);
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d(TAG, "1");
+            return task;
+        }
+
+        @Override
+        protected void onPostExecute(Task task) {
+            Log.d(TAG, "2");
+        }
+    }
+
+    private class LoginOnCompleteListener implements OnCompleteListener<AuthResult> {
+        @Override
+        public void onComplete(@NonNull Task task) {
+            Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
+            if (task.isSuccessful()) {
+                dispatchHomeScreenIntent();
+            } else {
+                Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
 //    public void testStorage() {
 //        String localPicPath = "/storage/emulated/0/Pictures/android.png";
@@ -185,4 +215,5 @@ public class MainActivity extends AppCompatActivity {
 //        PictureHelper.storePictureOnline(localPicPath,onlinePicPath);
 //
 //    }
+    }
 }
