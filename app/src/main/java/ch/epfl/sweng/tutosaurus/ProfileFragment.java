@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class ProfileFragment extends Fragment {
                 profileName.setText(thisUser.getFullName());
                 /*
                 // Set profile picture
-                ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
+                    ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
                 profilePicture.setImageResource(user.getPicture());
                 */
             }
@@ -78,22 +79,23 @@ public class ProfileFragment extends Fragment {
         });
 
 
+        Query refLastMeeting = dbh.getMeetingsRefForUser(currentUser);
+        ListView meetingNextWeek = (ListView) myView.findViewById(R.id.meetingLastWeek);
+        long lastWeekInMillis = System.currentTimeMillis() + 59958140730000L - (86400 * 7 * 1000);
+        Log.d("ProfileFragment", Long.toString(System.currentTimeMillis()));
+        Date lastWeek = new Date(lastWeekInMillis);
+        refLastMeeting = refLastMeeting.orderByChild("date/time").startAt(lastWeekInMillis);
+        adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refLastMeeting);
+        meetingNextWeek.setAdapter(adapter);
+
+
         Query refNextMeeting = dbh.getMeetingsRefForUser(currentUser);
         ListView meetingLastWeek = (ListView) myView.findViewById(R.id.meetingNextWeek);
         long nextWeekInMillis = System.currentTimeMillis() + (86400 * 7 * 1000);
         Date nextWeek = new Date(nextWeekInMillis);
-        refNextMeeting = refNextMeeting.orderByChild("date").startAt(System.currentTimeMillis()).endAt(nextWeekInMillis);
+        refNextMeeting = refNextMeeting.orderByChild("date/time").startAt(System.currentTimeMillis()).endAt(nextWeekInMillis);
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refNextMeeting);
         meetingLastWeek.setAdapter(adapter);
-
-        Query refLastMeeting = dbh.getMeetingsRefForUser(currentUser);
-        ListView meetingNextWeek = (ListView) myView.findViewById(R.id.meetingLastWeek);
-        long lastWeekInMillis = System.currentTimeMillis() - (86400 * 7 * 1000);
-        Date lastWeek = new Date(lastWeekInMillis);
-        refLastMeeting = refLastMeeting.orderByChild("date").startAt(System.currentTimeMillis()).endAt(lastWeekInMillis);
-        adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refLastMeeting);
-        meetingNextWeek.setAdapter(adapter);
-
         return myView;
     }
 
