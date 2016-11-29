@@ -1,10 +1,12 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.content.Intent;
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
+import android.support.test.runner.AndroidJUnit4;
+import android.support.test.runner.AndroidJUnitRunner;
 import android.widget.AdapterView;
 
 import com.google.android.gms.tasks.Task;
@@ -17,35 +19,28 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ch.epfl.sweng.tutosaurus.R;
-
-
 import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class MessagingFragmentTests {
 
     @Rule
-
-    public IntentsTestRule<MainActivity> mainActivityIntentsTestRule = new IntentsTestRule<>(
-            MainActivity.class
+    public IntentsTestRule<HomeScreenActivity> mainActivityIntentsTestRule = new IntentsTestRule<HomeScreenActivity>(
+            HomeScreenActivity.class
     );
 
     @Mock FirebaseUser mockFirebaseUser;
@@ -55,7 +50,6 @@ public class MessagingFragmentTests {
 
     @Before
     public void setup(){
-        Intents.init();
         MockitoAnnotations.initMocks(this);
         when(mockTask.isSuccessful()).thenReturn(true);
         when(mockFirebaseAuth.signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo")).thenReturn(mockTask);
@@ -67,12 +61,12 @@ public class MessagingFragmentTests {
     @Test
     public void testChatWithAlbert() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
         onData(anything())
                 .inAdapterView(allOf(
                         isAssignableFrom(AdapterView.class),
@@ -80,13 +74,7 @@ public class MessagingFragmentTests {
                 ))
                 .atPosition(1)
                 .perform(click());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        intended(hasComponent(ChatActivity.class.getName()));
-        Intents.release();
+        intended(hasComponent(hasClassName(ChatActivity.class.getName())));
     }
 
 }

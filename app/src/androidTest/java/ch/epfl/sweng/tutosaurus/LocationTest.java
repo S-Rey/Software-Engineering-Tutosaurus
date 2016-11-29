@@ -48,6 +48,7 @@ import static org.hamcrest.core.StringContains.containsString;
  */
 
 
+@RunWith(AndroidJUnit4.class)
 public class LocationTest{
 
     private MockLocationProvider mock;

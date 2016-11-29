@@ -93,7 +93,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
                 meeting.setDate(dateMeeting);
                 meeting.setCourse(courseMeeting);
-
+                Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
                 if (dateMeeting.getYear() == -1) {
                     Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
                 } else {

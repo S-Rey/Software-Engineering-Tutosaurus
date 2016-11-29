@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +27,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Date;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
@@ -80,19 +77,16 @@ public class ProfileFragment extends Fragment {
 
 
         Query refLastMeeting = dbh.getMeetingsRefForUser(currentUser);
-        ListView meetingNextWeek = (ListView) myView.findViewById(R.id.meetingLastWeek);
+        ListView meetingNextWeek = (ListView) myView.findViewById(R.id.meetingtoRate);
         long lastWeekInMillis = System.currentTimeMillis() + 59958140730000L - (86400 * 7 * 1000);
-        Log.d("ProfileFragment", Long.toString(System.currentTimeMillis()));
-        Date lastWeek = new Date(lastWeekInMillis);
         refLastMeeting = refLastMeeting.orderByChild("date/time").startAt(lastWeekInMillis);
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refLastMeeting);
         meetingNextWeek.setAdapter(adapter);
 
 
         Query refNextMeeting = dbh.getMeetingsRefForUser(currentUser);
-        ListView meetingLastWeek = (ListView) myView.findViewById(R.id.meetingNextWeek);
+        ListView meetingLastWeek = (ListView) myView.findViewById(R.id.meetingRequests);
         long nextWeekInMillis = System.currentTimeMillis() + (86400 * 7 * 1000);
-        Date nextWeek = new Date(nextWeekInMillis);
         refNextMeeting = refNextMeeting.orderByChild("date/time").startAt(System.currentTimeMillis()).endAt(nextWeekInMillis);
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refNextMeeting);
         meetingLastWeek.setAdapter(adapter);
