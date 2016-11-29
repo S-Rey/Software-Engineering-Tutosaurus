@@ -61,7 +61,7 @@ public class LocationTest{
 
 
     @Before
-    public void logInWithAlbert() throws InterruptedException {
+    public void setUp() throws InterruptedException {
         //onView(withId(R.id.mainBypassLoginButton)).perform(click());
         onView(withId(R.id.main_email)).perform(typeText("albert.einstein@epfl.ch"));
         Espresso.closeSoftKeyboard();
@@ -80,7 +80,6 @@ public class LocationTest{
 
     @Test
     public void testLocation() {
-
 
         //Set test location
         mock.pushLocation(-12.34, 23.45);
