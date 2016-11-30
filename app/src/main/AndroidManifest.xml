@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/tutosaurus_icon_launcher"
@@ -67,6 +66,7 @@
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
