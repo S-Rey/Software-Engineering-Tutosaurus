@@ -42,11 +42,11 @@ public class ConfirmationActivity extends AppCompatActivity {
         mActionBar.setDisplayHomeAsUpEnabled(true);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
-                if(user != null){
+                if (user != null) {
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -80,31 +80,32 @@ public class ConfirmationActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
-        if(mAuthListener != null) {
+        if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
     public void confirmRegistration(View view) {
-        String pw1 = ((EditText)findViewById(R.id.confirmation_password1)).getText().toString();
-        String pw2 = ((EditText)findViewById(R.id.confirmation_password2)).getText().toString();
-        if(!pw1.equals(pw2)) {
+        String pw1 = ((EditText) findViewById(R.id.confirmation_password1)).getText().toString();
+        String pw2 = ((EditText) findViewById(R.id.confirmation_password2)).getText().toString();
+        if (pw1.isEmpty() || pw2.isEmpty()) {
+            Toast.makeText(this, "Password missing ", Toast.LENGTH_SHORT).show();
+        } else if (!pw1.equals(pw2)) {
             Toast.makeText(this, "Passwords must match", Toast.LENGTH_SHORT).show();
         } else {
-
             mAuth.createUserWithEmailAndPassword(email, pw1).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     Log.d(TAG, "createUserWithEmailAndPassword:onComplete:" + task.isSuccessful());
-                    if(!task.isSuccessful()) {
+                    if (!task.isSuccessful()) {
                         Toast.makeText(ConfirmationActivity.this, "Auth failed", Toast.LENGTH_SHORT).show();
                     } else {
                         String uid = user.getUid();
