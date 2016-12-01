@@ -38,7 +38,7 @@ public class MessagingFragmentTests {
 
     @Rule
     public ActivityTestRule<HomeScreenActivity> rule = new ActivityTestRule<>(
-            HomeScreenActivity .class,
+            HomeScreenActivity.class,
             true,
             false
     );
@@ -57,9 +57,9 @@ public class MessagingFragmentTests {
     @Test
     public void testOpenChat() {
         Intents.init();
-        rule.launchActivity(new Intent());
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
+        rule.launchActivity(new Intent().setAction("OPEN_TAB_MESSAGES"));
+        //onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        //onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
