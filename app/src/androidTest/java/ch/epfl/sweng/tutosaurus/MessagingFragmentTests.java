@@ -39,7 +39,7 @@ public class MessagingFragmentTests {
             true,
             false
     );
-;
+
     @Before
     public void logIn(){
         Task<AuthResult> logintask = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
@@ -53,9 +53,14 @@ public class MessagingFragmentTests {
     @Test
     public void testOpenChat() {
         Intents.init();
-        rule.launchActivity(new Intent().setAction("OPEN_TAB_MESSAGES"));
-       onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        rule.launchActivity(new Intent());
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onData(anything())
                 .inAdapterView(allOf(
                         isAssignableFrom(AdapterView.class),
