@@ -87,7 +87,9 @@ public class MeetingService extends Service {
     }
 
     private void notifyNewRequest() {
-        if(shouldNotify) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean areNotifEnabled = sharedPreferences.getBoolean("checkbox_preferences_notifications", true);
+        if(shouldNotify && areNotifEnabled) {
             NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
             inboxStyle.setSummaryText(currentEmail);
@@ -100,8 +102,9 @@ public class MeetingService extends Service {
                     .setNumber(numNewRequests++)
                     .setStyle(inboxStyle)
                     .setContentText(currentEmail)
-                    .setNumber(requests.size());
-            notBuilder.setAutoCancel(true);
+                    .setColor(getResources().getColor(R.color.colorPrimary))
+                    .setNumber(requests.size())
+                    .setAutoCancel(true);
 
             Intent resultIntent = new Intent(this, MeetingConfirmationActivity.class);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(
