@@ -144,33 +144,6 @@ public class HomeScreenActivity extends AppCompatActivity
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
 
-    public void meetingsNotification(View view) {
-        SharedPreferences notif = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean areNotifEnable = notif.getBoolean("checkbox_preference_notification", true);
-
-        if (areNotifEnable) {
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.philosoraptor)
-                    .setContentTitle("Meeting Notification")
-                    .setContentText("Click Here To Test The Notification")
-                    .setAutoCancel(true)
-                    .setColor(getResources().getColor(R.color.colorPrimary));
-
-            Intent resultIntent = new Intent(this, HomeScreenActivity.class);
-            resultIntent.setAction("OPEN_TAB_MEETINGS");
-
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-            stackBuilder.addParentStack(HomeScreenActivity.class);
-            stackBuilder.addNextIntent(resultIntent);
-
-            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-            mBuilder.setContentIntent(resultPendingIntent);
-
-            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(9999, mBuilder.build());
-        }
-    }
-
     public void sendMessageForCall(View view) {
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: (+41)210000000"));
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
