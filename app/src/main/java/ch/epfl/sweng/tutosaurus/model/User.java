@@ -267,11 +267,10 @@ public class User implements Identifiable {
         return this.fullName;
     }
 
-    public boolean isTeacher(String courseId){
+    public boolean isTeacher(String courseId) {
         if(teaching.containsKey(courseId)){
             return teaching.get(courseId);
-        }
-        else{
+        } else {
             return false;
         }
     }
@@ -291,4 +290,6 @@ public class User implements Identifiable {
     public void setMeetings(Map<String, Boolean> meetings) {
         this.meetings = meetings;
     }
+
+    public void setCoursePresentation(Map<String, String> coursePresentation) {this.coursePresentation = coursePresentation;}
 }
