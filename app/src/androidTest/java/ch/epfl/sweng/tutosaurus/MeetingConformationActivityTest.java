@@ -66,7 +66,7 @@ public class MeetingConformationActivityTest {
     }
 
     @Test
-    public void emptyTest(){
+    public void requestDisappearsAfterConfirmation(){
         rule.launchActivity(new Intent());
         try {
             Thread.sleep(5000);
