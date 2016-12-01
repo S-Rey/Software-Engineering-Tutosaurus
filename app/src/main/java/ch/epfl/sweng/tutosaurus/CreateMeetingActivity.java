@@ -29,6 +29,7 @@ import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
+import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class CreateMeetingActivity extends AppCompatActivity {
@@ -56,7 +57,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
         meeting.addParticipant(teacherId);
         meeting.addParticipant(currentUser);
 
-        DatabaseReference ref = dbh.getReference();
+        final DatabaseReference ref = dbh.getReference();
         ref.child("user/" + teacherId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -88,7 +89,13 @@ public class CreateMeetingActivity extends AppCompatActivity {
                 meeting.setDate(dateMeeting);
                 meeting.setCourse(courseMeeting);
 
-                dbh.requestMeeting(meeting, teacherId, currentUser);
+                MeetingRequest request = new MeetingRequest();
+                request.setFrom(currentUser);
+                request.setAccepted(false);
+                request.setMeeting(meeting);
+                request.setType("received");
+
+                dbh.requestMeeting(request, teacherId);
             }
         });
 
