@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
@@ -48,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
+import ch.epfl.sweng.tutosaurus.model.Chat;
 import ch.epfl.sweng.tutosaurus.service.MeetingService;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -130,6 +132,11 @@ public class HomeScreenActivity extends AppCompatActivity
             if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
+            }
+
+            if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
             }
         }
     }
@@ -370,6 +377,14 @@ public class HomeScreenActivity extends AppCompatActivity
             } else {
                 Toast.makeText(HomeScreenActivity.this, "Camera is busy", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    protected void dispatchChatIntent(Intent chatIntent) {
+        if(chatIntent.getComponent().getClassName().equals(ChatActivity.class.getName())) {
+            startActivity(chatIntent);
+        } else {
+            Log.d(TAG, "not a chat intent");
         }
     }
 

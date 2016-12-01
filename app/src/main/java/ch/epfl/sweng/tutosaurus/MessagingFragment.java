@@ -55,7 +55,7 @@ public class MessagingFragment extends Fragment {
                 intent.putExtra(EXTRA_MESSAGE_USER_ID, item.getUid());
                 intent.putExtra(EXTRA_MESSAGE_FULL_NAME, item.getFullName());
                 Log.d(TAG, "fullName: " + item.getFullName());
-                startActivity(intent);
+                ((HomeScreenActivity) getActivity()).dispatchChatIntent(intent);
             }
         });
         return myView;

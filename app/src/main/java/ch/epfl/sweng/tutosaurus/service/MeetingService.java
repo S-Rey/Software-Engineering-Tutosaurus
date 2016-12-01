@@ -74,8 +74,12 @@ public class MeetingService extends Service {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        meetingReqRef.removeEventListener(mListener);
-        mNotificationManager.cancel(5555);
+        if(meetingReqRef != null) {
+            meetingReqRef.removeEventListener(mListener);
+        }
+        if(mNotificationManager != null) {
+            mNotificationManager.cancel(5555);
+        }
         // if the service was terminated normally, it did not crash
         prefEditor.putBoolean("serviceCrashed", false);
         prefEditor.apply();
