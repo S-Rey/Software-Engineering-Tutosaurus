@@ -74,8 +74,12 @@ public class MeetingService extends Service {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        meetingReqRef.removeEventListener(mListener);
-        mNotificationManager.cancel(5555);
+        if (meetingReqRef != null) {
+            meetingReqRef.removeEventListener(mListener);
+        }
+        if (mNotificationManager != null) {
+            mNotificationManager.cancel(5555);
+        }
         // if the service was terminated normally, it did not crash
         prefEditor.putBoolean("serviceCrashed", false);
         prefEditor.apply();
@@ -83,7 +87,9 @@ public class MeetingService extends Service {
     }
 
     private void notifyNewRequest() {
-        if(shouldNotify) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean areNotifEnabled = sharedPreferences.getBoolean("checkbox_preferences_notifications", true);
+        if(shouldNotify && areNotifEnabled) {
             NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
             inboxStyle.setSummaryText(currentEmail);
@@ -96,8 +102,9 @@ public class MeetingService extends Service {
                     .setNumber(numNewRequests++)
                     .setStyle(inboxStyle)
                     .setContentText(currentEmail)
-                    .setNumber(requests.size());
-            notBuilder.setAutoCancel(true);
+                    .setColor(getResources().getColor(R.color.colorPrimary))
+                    .setNumber(requests.size())
+                    .setAutoCancel(true);
 
             Intent resultIntent = new Intent(this, MeetingConfirmationActivity.class);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(
@@ -132,9 +139,7 @@ public class MeetingService extends Service {
             String key = dataSnapshot.getKey();
             String details = (String) dataSnapshot.child("meeting").child("description").getValue();
             requests.put(key, details);
-            if(PreferenceManager.getDefaultSharedPreferences(MeetingService.this).getBoolean("checkbox_preference_notification", true)){
-                notifyNewRequest();
-            }
+            notifyNewRequest();
         }
 
         @Override

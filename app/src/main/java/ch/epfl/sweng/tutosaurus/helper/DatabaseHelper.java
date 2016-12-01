@@ -111,20 +111,23 @@ public class DatabaseHelper {
     }
 
     // the 'teacher' String is the teacher uid
-    public void requestMeeting(Meeting meeting, String teacher, String student) {
-        String key = dbf.child(MEETING_REQUEST_PATH).child(student).push().getKey();
-        meeting.setId(key);
-        DatabaseReference teacherMeetingRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("meeting");
+    public String requestMeeting(MeetingRequest request, String teacher) {
+        String key = dbf.child(MEETING_REQUEST_PATH).child(request.getFrom()).push().getKey();
+        request.setUid(key);
+        DatabaseReference requestRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key);
+        requestRef.setValue(request);
+        /*DatabaseReference teacherMeetingRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("meeting");
         DatabaseReference teacherUidRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("uid");
         DatabaseReference teacherTypeRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("type");
         DatabaseReference teacherAcceptedRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("accepted");
         DatabaseReference teacherFromRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("from");
 
-        teacherMeetingRef.setValue(meeting);
+        teacherMeetingRef.setValue(request);
         teacherTypeRef.setValue("received");
         teacherAcceptedRef.setValue(false);
-        teacherFromRef.setValue(student);
-        teacherUidRef.setValue(key);
+        teacherFromRef.setValue(request.getFrom());
+        teacherUidRef.setValue(key);*/
+        return key; // return the key of this request
     }
 
     public void getMeeting(String key) {
@@ -182,12 +185,14 @@ public class DatabaseHelper {
         return dbf.child(MEETING_REQUEST_PATH);
     }
 
-    public void confirmMeeting(String currentUserUid, MeetingRequest request) {
+    public String confirmMeeting(String currentUserUid, MeetingRequest request) {
+        String meetingId;
         DatabaseReference meetingRequestRef = dbf.child(MEETING_REQUEST_PATH).child(currentUserUid).child(request.getUid());
         Meeting meeting = request.getMeeting();
-        addMeeting(meeting);
+        meetingId = addMeeting(meeting);
         Log.d(TAG, "meeting added: " + meeting.getId());
         meetingRequestRef.removeValue();
+        return meetingId;
     }
 
 }

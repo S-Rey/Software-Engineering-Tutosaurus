@@ -3,6 +3,7 @@ package ch.epfl.sweng.tutosaurus;
 import android.*;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -29,6 +30,7 @@ import java.util.Calendar;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
+import ch.epfl.sweng.tutosaurus.service.MeetingService;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -86,6 +88,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
             case "checkbox_preference_notification":
+                boolean isChecked = sharedPreferences.getBoolean(key, true);
+                Intent serviceIntent = new Intent(getActivity(), MeetingService.class);
+                if(isChecked) {
+                    getActivity().startService(serviceIntent);
+                }
                 break;
             case "checkbox_preference_calendar":
                 break;
