@@ -5,6 +5,7 @@ import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
+import android.util.Log;
 import android.widget.AdapterView;
 
 import com.google.android.gms.tasks.Task;
@@ -33,6 +34,8 @@ import static org.hamcrest.Matchers.anything;
 
 public class MessagingFragmentTests {
 
+    private static final String TAG = "MessagingFragmentTests";
+
     @Rule
     public ActivityTestRule<HomeScreenActivity> rule = new ActivityTestRule<>(
             HomeScreenActivity .class,
@@ -44,6 +47,7 @@ public class MessagingFragmentTests {
     public void logIn(){
         Task<AuthResult> logintask = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
+            Log.d(TAG, "logging in...");
             Tasks.await(logintask);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
@@ -57,7 +61,7 @@ public class MessagingFragmentTests {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
         try {
-            Thread.sleep(500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
