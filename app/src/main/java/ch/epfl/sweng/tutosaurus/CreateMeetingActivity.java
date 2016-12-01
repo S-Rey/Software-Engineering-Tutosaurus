@@ -10,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +42,9 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
+    private String teacherId;
+
     private TimePickerFragment timePicker = new TimePickerFragment();
     private DatePickerFragment datePicker = new DatePickerFragment();
 
@@ -58,7 +59,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_meeting);
 
         Intent intent = getIntent();
-        final String teacherId = intent.getStringExtra("TEACHER");
+        teacherId = intent.getStringExtra("TEACHER");
         meeting.addParticipant(teacherId);
         meeting.addParticipant(currentUser);
 
@@ -78,6 +79,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
 
         final Button addMeeting = (Button) findViewById(R.id.addMeeting);
+        setAddMeetingListener(addMeeting);
         addMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +149,31 @@ public class CreateMeetingActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 courseMeeting = courseAdapter.getItemAtPosition(position);
+            }
+        });
+    }
+
+    private void setAddMeetingListener(final Button addMeetingButton){
+        addMeetingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+        EditText description = (EditText) findViewById(R.id.description);
+        meeting.addDescription(description.getText().toString());
+
+        Date dateMeeting = new Date();
+        dateMeeting.setMinutes(timePicker.getMeetingMinutes());
+        dateMeeting.setHours(timePicker.getMeetingHour());
+        dateMeeting.setYear(datePicker.getMeetingYear());
+        dateMeeting.setMonth(datePicker.getMeetingMonth());
+        dateMeeting.setDate(datePicker.getMeetingDay());
+
+        meeting.setDate(dateMeeting);
+        meeting.setCourse(courseMeeting);
+
+        dbh.requestMeeting(meeting, teacherId, currentUser);
+        Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getBaseContext(), StartActivity.class);
+        startActivity(intent);
             }
         });
     }

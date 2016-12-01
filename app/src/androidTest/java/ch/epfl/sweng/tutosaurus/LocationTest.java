@@ -70,7 +70,7 @@ public class LocationTest{
         onView(withText("Log in")).perform(click());
         Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
         Thread.sleep(1000);
         mainActivity = mainActivityTestRule.getActivity();
         mock = new MockLocationProvider(LocationManager.NETWORK_PROVIDER, mainActivity);
