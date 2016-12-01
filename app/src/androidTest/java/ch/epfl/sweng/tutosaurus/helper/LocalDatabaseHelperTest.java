@@ -94,6 +94,7 @@ public class LocalDatabaseHelperTest {
         LocalDatabaseHelper.insertUser(user,database);
     }
 
+    // Compare basic attribute of albert and dbAlbert
     @Test
     public void basicAttributeTest() {
         LocalDatabaseHelper.insertUser(albert,database);
@@ -108,6 +109,7 @@ public class LocalDatabaseHelperTest {
         assertEquals(albert.getPicture(), dbAlbert.getPicture());
     }
 
+    // Compare the language Hashmap of albert and dbAlbert
     @Test
     public void userLanguagesTest() {
         LocalDatabaseHelper.insertUser(albert,database);
@@ -117,12 +119,48 @@ public class LocalDatabaseHelperTest {
     }
 
 
+    // Compare the teaching Hashmap of albert and dbAlbert
+    @Test
+    public void userCourseTeachingTest() {
+        LocalDatabaseHelper.insertUser(albert,database);
+        User dbAlbert = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+
+        assertTrue(albert.getTeaching().equals(albert.getTeaching()));
+    }
 
     @Test
+    public void userCourseStudyingTest() {
+        LocalDatabaseHelper.insertUser(albert,database);
+        User dbAlbert = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+
+        assertTrue(albert.getStudying().equals(dbAlbert.getStudying()));
+    }
+
+    @Test
+    public void userCourseRatingTest() {
+        LocalDatabaseHelper.insertUser(albert,database);
+        User dbAlbert = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+
+        assertEquals(albert.getCourseRating("Physics"), dbAlbert.getCourseRating("Physics"));
+        assertEquals(albert.getCourseRating("French"), dbAlbert.getCourseRating("French"));
+    }
+
+
+    @Test
+    public void userCourseHourTaughtTest() {
+        LocalDatabaseHelper.insertUser(albert,database);
+        User dbAlbert = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+
+        assertEquals(albert.getCourseRating("Physics"), dbAlbert.getCourseRating("Physics"));
+        assertEquals(albert.getCourseRating("French"), dbAlbert.getCourseRating("French"));
+    }
+/*    @Test
     public void userMeetingTest() {
         LocalDatabaseHelper.insertUser(albert,database);
         User dbAlbert = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
         Map dbMeeting = dbAlbert.getMeetings();
         assertTrue(albert.getMeetings().equals(dbAlbert.getMeetings()));
-    }
+    }*/
+
+
 }
