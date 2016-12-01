@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus.service;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import ch.epfl.sweng.tutosaurus.MeetingConfirmationActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
@@ -72,8 +74,12 @@ public class MeetingService extends Service {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        meetingReqRef.removeEventListener(mListener);
-        mNotificationManager.cancel(5555);
+        if(meetingReqRef != null) {
+            meetingReqRef.removeEventListener(mListener);
+        }
+        if(mNotificationManager != null) {
+            mNotificationManager.cancel(5555);
+        }
         // if the service was terminated normally, it did not crash
         prefEditor.putBoolean("serviceCrashed", false);
         prefEditor.apply();
@@ -81,7 +87,9 @@ public class MeetingService extends Service {
     }
 
     private void notifyNewRequest() {
-        if(shouldNotify) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean areNotifEnabled = sharedPreferences.getBoolean("checkbox_preferences_notifications", true);
+        if(shouldNotify && areNotifEnabled) {
             NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
             inboxStyle.setSummaryText(currentEmail);
@@ -94,7 +102,18 @@ public class MeetingService extends Service {
                     .setNumber(numNewRequests++)
                     .setStyle(inboxStyle)
                     .setContentText(currentEmail)
-                    .setNumber(requests.size());
+                    .setColor(getResources().getColor(R.color.colorPrimary))
+                    .setNumber(requests.size())
+                    .setAutoCancel(true);
+
+            Intent resultIntent = new Intent(this, MeetingConfirmationActivity.class);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(
+                    this,
+                    1,
+                    resultIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            notBuilder.setContentIntent(resultPendingIntent);
 
             synchronized (mNotificationManager) {
                 mNotificationManager.notify(5555, notBuilder.build());
@@ -120,7 +139,9 @@ public class MeetingService extends Service {
             String key = dataSnapshot.getKey();
             String details = (String) dataSnapshot.child("meeting").child("description").getValue();
             requests.put(key, details);
-            notifyNewRequest();
+            if(PreferenceManager.getDefaultSharedPreferences(MeetingService.this).getBoolean("checkbox_preference_notification", true)){
+                notifyNewRequest();
+            }
         }
 
         @Override

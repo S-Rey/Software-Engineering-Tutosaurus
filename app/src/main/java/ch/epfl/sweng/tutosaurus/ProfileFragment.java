@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +35,7 @@ public class ProfileFragment extends Fragment {
 
     View myView;
 
-    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private String currentUser;
     DatabaseHelper dbh = DatabaseHelper.getInstance();
 
     @Nullable
@@ -46,6 +47,11 @@ public class ProfileFragment extends Fragment {
 
         ((HomeScreenActivity) getActivity()).setPassTabToOpen(myView);
         DatabaseHelper dbh = DatabaseHelper.getInstance();
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentFirebaseUser != null) {
+            currentUser = currentFirebaseUser.getUid();
+        }
 
         final String userId = currentUser;
 
