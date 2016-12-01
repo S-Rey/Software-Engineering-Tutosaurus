@@ -86,6 +86,8 @@ public class LocalDatabaseHelperTest {
     public void testGetDatabase() {
         dbHelper.getReadableDatabase();
         dbHelper.getWritableDatabase();
+        dbHelper.onUpgrade(database,1,1);
+        LocalDatabaseHelper.clear(database);
     }
 
     @Test(expected = NullPointerException.class)
@@ -154,6 +156,27 @@ public class LocalDatabaseHelperTest {
         assertEquals(albert.getCourseRating("Physics"), dbAlbert.getCourseRating("Physics"));
         assertEquals(albert.getCourseRating("French"), dbAlbert.getCourseRating("French"));
     }
+
+    @Test
+    public void emptyLanguageTest() {
+        User userNoLanguage = new User("111111");
+        LocalDatabaseHelper.insertUser(userNoLanguage, database);
+        User dbUserNoLanguage = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+
+        assertTrue(dbUserNoLanguage.getLanguages().isEmpty());
+    }
+
+    @Test
+    public void emptyCourseTest() {
+        User userNoLanguage = new User("111111");
+        LocalDatabaseHelper.insertUser(userNoLanguage, database);
+        User dbUserNoLanguage = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
+
+        assertTrue(dbUserNoLanguage.getTeaching().isEmpty());
+        assertTrue(dbUserNoLanguage.getStudying().isEmpty());
+    }
+
+
 /*    @Test
     public void userMeetingTest() {
         LocalDatabaseHelper.insertUser(albert,database);
