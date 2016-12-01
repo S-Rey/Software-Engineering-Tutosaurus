@@ -63,7 +63,6 @@ public class LocationTest{
 
     @Before
     public void setUp() throws InterruptedException {
-        //onView(withId(R.id.mainBypassLoginButton)).perform(click());
         onView(withId(R.id.main_email)).perform(typeText("albert.einstein@epfl.ch"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
@@ -73,41 +72,18 @@ public class LocationTest{
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
         Thread.sleep(1000);
-
         mainActivity = mainActivityTestRule.getActivity();
         mock = new MockLocationProvider(LocationManager.NETWORK_PROVIDER, mainActivity);
     }
 
 
-    @Test(timeout=10000)
+    @Test
     public void testLocation() {
 
         //Set test location
         mock.pushLocation(-12.34, 23.45);
 
-        LocationListener lis = new LocationListener() {
 
-            @Override
-            public void onLocationChanged(Location location) {
-                //onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0)
-                       // .check(matches(hasDescendant(allOf(withId(R.id.map), withText(containsString(courseArrayList.get(i).getName()))))));
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
     }
 
 }
