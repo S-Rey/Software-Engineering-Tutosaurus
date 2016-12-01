@@ -85,6 +85,7 @@
             android:id="@+id/checkbox_mathematics"
             android:title="@string/mathematics_enabled"
             android:icon="@drawable/calculator"
+            android:defaultValue="false"
             android:layout="@layout/preference_checkbox_and_image" />
         <EditTextPreference
             android:defaultValue="Enter your description."
@@ -104,6 +105,7 @@
             android:id="@+id/checkbox_physics"
             android:title="@string/physics_enabled"
             android:icon="@drawable/flask"
+            android:defaultValue="false"
             android:layout="@layout/preference_checkbox_and_image" />
         <EditTextPreference
             android:defaultValue="Enter your description."
@@ -123,6 +125,7 @@
             android:id="@+id/checkbox_chemistry"
             android:title="@string/chemistry_enabled"
             android:icon="@drawable/molecule"
+            android:defaultValue="false"
             android:layout="@layout/preference_checkbox_and_image" />
         <EditTextPreference
             android:defaultValue="Enter your description."
@@ -142,6 +145,7 @@
             android:id="@+id/checkbox_computer_science"
             android:title="@string/computer_science_enabled"
             android:icon="@drawable/computer"
+            android:defaultValue="false"
             android:layout="@layout/preference_checkbox_and_image" />
         <EditTextPreference
             android:defaultValue="Enter your description."
