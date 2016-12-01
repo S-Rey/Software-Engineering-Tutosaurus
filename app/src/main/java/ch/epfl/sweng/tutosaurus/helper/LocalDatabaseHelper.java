@@ -21,28 +21,6 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
-    /*
-    private String sciper;
-    private String username;
-    private String fullName;
-    private String email;
-    private String uid;
-    private int profilePicture;
-
-    private Map<String, Boolean> languages = new HashMap<>();
-
-    private Map<String, Boolean> teaching = new HashMap<>();
-    private Map<String, Boolean> studying = new HashMap<>();
-
-    private Map<String, Double> ratings = new HashMap<>(); */
-/* (course id -> globalRating) *//*
-
-    private Map<String, Integer> totalHoursTaught = new HashMap<>(); */
-/* (course id -> hours taught *//*
-
-
-    private double globalRating;
-*/
 
 
     private static final String LOGCAT = "LOGCATDB";
@@ -128,23 +106,25 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Save an User object into the database.
-     * TODO check if already exist
      *
      * also check for the profile picture (user = int, db = string)
      * @param user
      * @param db
      */
     public static void insertUser(User user,SQLiteDatabase db) {
-        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_COURSE);
-        db.execSQL("DROP TABLE IF EXISTS "+ TABLE_LANGUAGE);
-        db.execSQL(CREATE_TABLE_USER);
-        db.execSQL(CREATE_TABLE_COURSE);
-        db.execSQL(CREATE_TABLE_LANGUAGE);
+        if (user == null) {
+            throw new NullPointerException();
+        } else {db.execSQL("DROP TABLE IF EXISTS "+ TABLE_USER);
+            db.execSQL("DROP TABLE IF EXISTS "+ TABLE_COURSE);
+            db.execSQL("DROP TABLE IF EXISTS "+ TABLE_LANGUAGE);
+            db.execSQL(CREATE_TABLE_USER);
+            db.execSQL(CREATE_TABLE_COURSE);
+            db.execSQL(CREATE_TABLE_LANGUAGE);
 
-        insertUserTable(user,db);
-        insertCourseTable(user,db);
-        insertLanguageTable(user,db);
+            insertUserTable(user,db);
+            insertCourseTable(user,db);
+            insertLanguageTable(user,db);
+        }
     }
 
 
