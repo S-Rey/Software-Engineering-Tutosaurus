@@ -69,7 +69,7 @@ public class LocationTest{
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
-        Thread.sleep(4000);
+        Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
         Thread.sleep(1000);
@@ -79,7 +79,7 @@ public class LocationTest{
     }
 
 
-    @Test
+    @Test(timeout=10000)
     public void testLocation() {
 
         //Set test location

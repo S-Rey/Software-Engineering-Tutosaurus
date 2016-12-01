@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
+import ch.epfl.sweng.tutosaurus.adapter.MeetingRatingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
@@ -57,7 +58,8 @@ public class MeetingsFragment extends Fragment {
 
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
         Query ref = dbh.getMeetingsRefForUser(currentUser);
-        ref = ref.orderByChild("date");
+        long lastWeekInMillis = System.currentTimeMillis() + 59958140730000L - (86400 * 7 * 1000);
+        ref = ref.orderByChild("date/time").startAt(lastWeekInMillis);
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
 

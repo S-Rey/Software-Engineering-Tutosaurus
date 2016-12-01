@@ -81,16 +81,6 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        Query refLastMeeting = dbh.getMeetingsRefForUser(currentUser);
-        ListView meetingNextWeek = (ListView) myView.findViewById(R.id.meetingtoRate);
-        long lastWeekInMillis = System.currentTimeMillis() + 59958140730000L - (86400 * 7 * 1000);
-        //refLastMeeting = refLastMeeting.orderByChild("date/time").startAt(lastWeekInMillis);
-        refLastMeeting = refLastMeeting.orderByChild("rated").equalTo(false);
-        adapter = new MeetingRatingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, refLastMeeting);
-        meetingNextWeek.setAdapter(adapter);
-        //setMeetingsToRateListeners();
-        //meetingNextWeek.setVisibility(GONE);
-
 
         Query refRequestedMeeting = dbh.getMeetingRequestsRef().child(currentUser);
         ListView meetingRequested = (ListView) myView.findViewById(R.id.meetingRequests);
