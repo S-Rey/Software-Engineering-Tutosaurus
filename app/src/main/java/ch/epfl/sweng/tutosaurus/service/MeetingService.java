@@ -74,10 +74,10 @@ public class MeetingService extends Service {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        if(meetingReqRef != null) {
+        if (meetingReqRef != null) {
             meetingReqRef.removeEventListener(mListener);
         }
-        if(mNotificationManager != null) {
+        if (mNotificationManager != null) {
             mNotificationManager.cancel(5555);
         }
         // if the service was terminated normally, it did not crash
@@ -139,9 +139,7 @@ public class MeetingService extends Service {
             String key = dataSnapshot.getKey();
             String details = (String) dataSnapshot.child("meeting").child("description").getValue();
             requests.put(key, details);
-            if(PreferenceManager.getDefaultSharedPreferences(MeetingService.this).getBoolean("checkbox_preference_notification", true)){
-                notifyNewRequest();
-            }
+            notifyNewRequest();
         }
 
         @Override
