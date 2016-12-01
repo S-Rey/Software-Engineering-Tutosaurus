@@ -21,6 +21,13 @@ import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.anything;
+
 public class MeetingConformationActivityTest {
 
     String currentUserUid;
@@ -41,8 +48,9 @@ public class MeetingConformationActivityTest {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
         currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        removeAllMeetings();
+
         Date date = new Date();
 
         Meeting meeting = new Meeting();
@@ -65,6 +73,13 @@ public class MeetingConformationActivityTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        onView(withId(R.id.meeting_confirmation_row_confirm)).perform(click());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.meeting_confirmation_row_confirm)).check(doesNotExist());
     }
 
     @After
