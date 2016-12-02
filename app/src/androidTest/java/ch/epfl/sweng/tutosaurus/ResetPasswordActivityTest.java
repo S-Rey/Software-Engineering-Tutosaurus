@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -12,6 +13,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -82,6 +85,24 @@ public class ResetPasswordActivityTest {
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
         boolean toastMsg = solo.searchText("Enter your registered email id");
         assertTrue(toastMsg);
+    }
+
+    /**@Test
+    public void activityFinishCorrectly() throws Exception {
+        solo.assertCurrentActivity("correct activity", ResetPasswordActivity.class);
+        solo.clickOnView(solo.getView(R.id.backButton));
+        //Not a good test
+        Thread.sleep(2000);
+        assertTrue(mActivityRule.getActivity().isFinishing());
+    }*/
+
+    @Test
+    public void goToMainActivityOnBackButton() throws Exception {
+        solo.assertCurrentActivity("correct activity", ResetPasswordActivity.class);
+        Intents.init();
+        solo.clickOnView(solo.getView(R.id.backButton));
+        intended(hasComponent(MainActivity.class.getName()));
+        Intents.release();
     }
 
     /**@Test

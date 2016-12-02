@@ -25,20 +25,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+import static ch.epfl.sweng.tutosaurus.NetworkChangeReceiver.LOG_TAG;
+
 public class MainActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = "CheckNetworkStatus";
     private NetworkChangeReceiver receiver;
-    private boolean isConnected = false;
     private TextView networkStatus;
-
-    private Button resetPasswordButton;
-    private Button login;
-    private Button bypassLogin;
-    private Button registerButton;
 
     public final static String TAG = "MainActivity";
 
@@ -58,9 +55,23 @@ public class MainActivity extends AppCompatActivity {
         receiver = new NetworkChangeReceiver();
         registerReceiver(receiver, filter);
 
-        networkStatus = (TextView) findViewById(R.id.networkStatus);
+        receiver.setActivity(MainActivity.this);
 
-        resetPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
+        networkStatus = (TextView) findViewById(R.id.networkStatus);
+        receiver.setNetStatuTextView(networkStatus);
+
+        Button resetPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
+        Button registerButton = (Button) findViewById(R.id.registerButton);
+        Button login = (Button) findViewById(R.id.connectionButton);
+        Button bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
+
+        ArrayList<Button> buttons = new ArrayList<Button>();
+        buttons.add(resetPasswordButton);
+        buttons.add(registerButton);
+        buttons.add(login);
+        buttons.add(bypassLogin);
+
+        receiver.setButtonsToManage(buttons);
 
         resetPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        registerButton = (Button) findViewById(R.id.registerButton);
-        login = (Button) findViewById(R.id.connectionButton);
-        bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
 
         bypassLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,48 +151,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-    }
-
-    public class NetworkChangeReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(final Context context, final Intent intent) {
-            Log.v(LOG_TAG, "Receieved notification about network status");
-            isNetworkAvailable(context);
-        }
-
-        private boolean isNetworkAvailable(Context context) {
-            ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (connectivity != null) {
-                NetworkInfo info = connectivity.getActiveNetworkInfo();
-                if (info != null) {
-                    if (info.isConnectedOrConnecting()) {
-                        if (!isConnected) {
-                            Log.v(LOG_TAG, "Now you are connected to Internet!");
-                            Toast.makeText(MainActivity.this, "You got internet!", Toast.LENGTH_SHORT).show();
-                            isConnected = true;
-                            //do your processing here ---
-                            //if you need to post any data to the server or get status
-                            //update from the server
-                            registerButton.setEnabled(true);
-                            login.setEnabled(true);
-                            bypassLogin.setEnabled(true);
-                            resetPasswordButton.setEnabled(true);
-                        }
-                        return true;
-                    }
-                }
-            }
-            Log.v(LOG_TAG, "You are not connected to Internet!");
-            networkStatus.setText(R.string.status_not_connected);
-            Toast.makeText(MainActivity.this, "You got no internet", Toast.LENGTH_SHORT).show();
-            registerButton.setEnabled(false);
-            login.setEnabled(false);
-            bypassLogin.setEnabled(false);
-            resetPasswordButton.setEnabled(false);
-            isConnected = false;
-            return false;
-            }
 
     }
 
