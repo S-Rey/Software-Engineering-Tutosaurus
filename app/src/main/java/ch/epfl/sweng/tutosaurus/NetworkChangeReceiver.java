@@ -17,6 +17,9 @@ import java.util.ArrayList;
  * Created by Stephane on 12/2/2016.
  */
 
+/**
+ * Class to be instantiated only once in MainActivity thus preferable to be Singleton
+ */
 public class NetworkChangeReceiver extends BroadcastReceiver {
     private Activity activity;
     public static final String LOG_TAG = "CheckNetworkStatus";
