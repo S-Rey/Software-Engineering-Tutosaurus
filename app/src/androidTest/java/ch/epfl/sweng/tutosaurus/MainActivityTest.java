@@ -25,6 +25,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Stephane on 11/29/2016.
@@ -35,6 +36,11 @@ public class MainActivityTest {
     private WifiManager wifi;
     private Solo solo;
     private NetworkChangeReceiver receiver;
+    private String valid_email;
+    private String valid_password;
+    private String invalid_email;
+    private String nonsense;
+
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
@@ -46,6 +52,10 @@ public class MainActivityTest {
                 mActivityRule.getActivity());
         /**wifi = (WifiManager) mActivityRule.getActivity().getSystemService(Context.WIFI_SERVICE);
         wifi.setWifiEnabled(false);*/
+        valid_email = "albert.einstein@epfl.ch";
+        valid_password = "tototo";
+        invalid_email = "HollyMolly@wow.com";
+        nonsense = "blabla";
 
     }
 
@@ -75,6 +85,46 @@ public class MainActivityTest {
 
     }
 
+    @Test
+    public void signUpButtonGoesToCorrectActivity() {
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        Intents.init();
+        solo.clickOnView(solo.getView(R.id.registerButton));
+        intended(hasComponent(RegisterScreenActivity.class.getName()));
+        Intents.release();
 
+    }
+
+    @Test
+    public void LogInWithoutPasswordDisplaysWarning(){
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.main_email));
+        solo.typeText(0, valid_email);
+        solo.clickOnView(solo.getView(R.id.connectionButton));
+        boolean warningDisplayed = solo.searchText("Please type in your email and password");
+        assertTrue(warningDisplayed);
+    }
+
+    @Test
+    public void LogInWithoutEmailDisplaysWarning(){
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.main_password));
+        solo.typeText(0, "blabla");
+        solo.clickOnView(solo.getView(R.id.connectionButton));
+        boolean warningDisplayed = solo.searchText("Please type in your email and password");
+        assertTrue(warningDisplayed);
+    }
+
+    @Test
+    public void logInWithInvalidCredentialsShouldDisplayFail(){
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.main_email));
+        solo.typeText(1, invalid_email);
+        solo.clickOnView(solo.getView(R.id.main_password));
+        solo.typeText(0, nonsense);
+        solo.clickOnView(solo.getView(R.id.connectionButton));
+        boolean warningDisplayed = solo.searchText("Login failed");
+        assertTrue(warningDisplayed);
+    }
 
 }

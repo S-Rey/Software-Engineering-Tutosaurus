@@ -97,15 +97,6 @@ public class MainActivity extends AppCompatActivity {
         bypassLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                /*if (MyAppVariables.getRegistered() == false) {
-                    AlertDialog.Builder signUpAlertB = new AlertDialog.Builder(MainActivity.this);
-                    signUpAlertB.setMessage("Sign up First!");
-
-                    signUpAlertB.setPositiveButton("Ok", null);
-
-                    AlertDialog signUpAlert = signUpAlertB.create();
-                    signUpAlert.show();
-                } else {*/
                 String email = "albert.einstein@epfl.ch";
                 String password = "tototo";
                 LoginAsyncTask loginTask = new LoginAsyncTask();
@@ -126,7 +117,10 @@ public class MainActivity extends AppCompatActivity {
                     loginAlertB.setMessage("Please type in your email and password");
                     loginAlertB.create().show();
                 } else {
-                    mAuth.signInWithEmailAndPassword(email, password)
+                    LoginAsyncTask loginTask = new LoginAsyncTask();
+                    loginTask.execute(email, password);
+                    Log.d(TAG, "3");
+                    /**mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -139,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                                         loginAlertB.create().show();
                                     }
                                 }
-                            });
+                            });*/
                 }
             }
         });
@@ -148,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.v(LOG_TAG, "onDestory");
+        Log.v(LOG_TAG, "onDestroy");
         super.onDestroy();
 
         unregisterReceiver(receiver);
