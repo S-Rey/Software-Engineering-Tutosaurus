@@ -126,20 +126,8 @@ public class MainActivity extends AppCompatActivity {
                     loginAlertB.setMessage("Please type in your email and password");
                     loginAlertB.create().show();
                 } else {
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
-                                    if (task.isSuccessful()) {
-                                        dispatchHomeScreenIntent();
-                                    } else {
-                                        Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-                                        loginAlertB.setMessage("Login failed");
-                                        loginAlertB.create().show();
-                                    }
-                                }
-                            });
+                    LoginAsyncTask loginTask = new LoginAsyncTask();
+                    loginTask.execute(email, password);
                 }
             }
         });

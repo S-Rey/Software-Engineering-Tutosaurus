@@ -26,9 +26,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.not;
 
-/**
- * Created by Stephane on 11/29/2016.
- */
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
