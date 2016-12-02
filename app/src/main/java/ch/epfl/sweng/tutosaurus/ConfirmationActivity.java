@@ -1,6 +1,8 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 public class ConfirmationActivity extends AppCompatActivity {
@@ -32,6 +35,9 @@ public class ConfirmationActivity extends AppCompatActivity {
     private String fullName;
     private String sciper;
     private String gaspar;
+
+    SQLiteOpenHelper dbHelper;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,10 +121,17 @@ public class ConfirmationActivity extends AppCompatActivity {
                         user.setFullName(fullName);
                         user.setUid(uid);
                         dbh.signUp(user);
+                        saveUserLocalDB(user);
                         startActivity(new Intent(ConfirmationActivity.this, MainActivity.class));
                     }
                 }
             });
         }
+    }
+
+    private void saveUserLocalDB(User user) {
+        dbHelper = new LocalDatabaseHelper(this);
+        database = dbHelper.getWritableDatabase();
+        LocalDatabaseHelper.insertUser(user, database);
     }
 }

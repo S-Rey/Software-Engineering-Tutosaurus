@@ -8,6 +8,7 @@ import android.preference.PreferenceFragment;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -43,10 +44,12 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
         for (Course course: courses) {
 
             String courseName = course.getId();
-            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceManager().findPreference("edit_text_preference_" + courseName);
+            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceManager().findPreference(
+                    "edit_text_preference_" + courseName);
 
             if (descriptionPreference.getText().equals("")) {
-                descriptionPreference.setTitle("Enter Your Description.");
+                descriptionPreference.setTitle("Enter your description.");
+                descriptionPreference.setText("Enter your description.");
             } else {
                 descriptionPreference.setTitle(descriptionPreference.getText());
             }
@@ -92,7 +95,8 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
 
         for (Course course : courses) {
             String courseName = course.getId();
-            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceScreen().findPreference("edit_text_preference_" + courseName);
+            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceScreen().findPreference(
+                    "edit_text_preference_" + courseName);
 
             if (key.equals("checkbox_preference_" + courseName)) {
                 boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + courseName, true);
@@ -100,14 +104,6 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                     dbh.addTeacherToCourse(currentUser, courseName);
                     descriptionPreference.setEnabled(true);
                     descriptionPreference.setSelectable(true);
-                    EditText editText = descriptionPreference.getEditText();
-                    editText.setSelectAllOnFocus(true);
-                    editText.setSingleLine(true);
-                    if (!descriptionPreference.getText().equals("")) {
-                        descriptionPreference.setTitle(descriptionPreference.getText());
-                    } else {
-                        descriptionPreference.setTitle("Enter Your Description.");
-                    }
                 } else {
                     descriptionPreference.setEnabled(false);
                     dbh.removeTeacherFromCourse(currentUser, courseName);
@@ -116,11 +112,12 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             }
 
             if (key.equals("edit_text_preference_" + courseName)) {
-                if (!descriptionPreference.getText().equals("")) {
+                if (!(descriptionPreference.getText().equals("") || descriptionPreference.getText().equals("Enter your description."))) {
                     descriptionPreference.setTitle(descriptionPreference.getText());
                     dbh.addSubjectDescription(descriptionPreference.getText(), currentUser, courseName);
                 } else {
-                    descriptionPreference.setTitle("Enter Your Description");
+                    descriptionPreference.setTitle("Enter your description.");
+                    descriptionPreference.setText("Enter your description.");
                 }
             }
         }

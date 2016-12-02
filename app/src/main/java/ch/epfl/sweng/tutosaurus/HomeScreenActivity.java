@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
@@ -48,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
+import ch.epfl.sweng.tutosaurus.model.Chat;
 import ch.epfl.sweng.tutosaurus.service.MeetingService;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -131,8 +133,15 @@ public class HomeScreenActivity extends AppCompatActivity
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
             }
+
+            if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
+            }
         }
     }
+
+
 
     @Override
     public void onRestart() {
@@ -146,33 +155,6 @@ public class HomeScreenActivity extends AppCompatActivity
         super.onResume();
         Log.d(TAG, "Resumed!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
-    }
-
-    public void meetingsNotification(View view) {
-        SharedPreferences notif = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean areNotifEnable = notif.getBoolean("checkbox_preference_notification", true);
-
-        if (areNotifEnable) {
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.philosoraptor)
-                    .setContentTitle("Meeting Notification")
-                    .setContentText("Click Here To Test The Notification")
-                    .setAutoCancel(true)
-                    .setColor(getResources().getColor(R.color.colorPrimary));
-
-            Intent resultIntent = new Intent(this, HomeScreenActivity.class);
-            resultIntent.setAction("OPEN_TAB_MEETINGS");
-
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-            stackBuilder.addParentStack(HomeScreenActivity.class);
-            stackBuilder.addNextIntent(resultIntent);
-
-            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-            mBuilder.setContentIntent(resultPendingIntent);
-
-            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(9999, mBuilder.build());
-        }
     }
 
     public void sendMessageForCall(View view) {
@@ -368,6 +350,14 @@ public class HomeScreenActivity extends AppCompatActivity
             } else {
                 Toast.makeText(HomeScreenActivity.this, "Camera is busy", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    protected void dispatchChatIntent(Intent chatIntent) {
+        if(chatIntent.getComponent().getClassName().equals(ChatActivity.class.getName())) {
+            startActivity(chatIntent);
+        } else {
+            Log.d(TAG, "not a chat intent");
         }
     }
 
