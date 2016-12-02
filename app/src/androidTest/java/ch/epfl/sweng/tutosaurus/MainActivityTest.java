@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -18,6 +19,8 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -31,6 +34,7 @@ import static org.hamcrest.CoreMatchers.not;
 public class MainActivityTest {
     private WifiManager wifi;
     private Solo solo;
+    private NetworkChangeReceiver receiver;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
@@ -60,5 +64,17 @@ public class MainActivityTest {
         //onView(withId(R.id.connectionButton)).check(matches(not(isClickable())));
         solo.clickOnView(solo.getView(R.id.connectionButton));
     }
+
+    @Test
+    public void forgotPasswordButtonGoesToCorrectActivity() {
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        Intents.init();
+        solo.clickOnView(solo.getView(R.id.forgotPasswordButton));
+        intended(hasComponent(ResetPasswordActivity.class.getName()));
+        Intents.release();
+
+    }
+
+
 
 }

@@ -24,8 +24,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     private Activity activity;
     public static final String LOG_TAG = "CheckNetworkStatus";
     private boolean isConnected;
+    private boolean broadcastToastEnabled = false;
     private ArrayList<Button> buttonsToManage;
-    private TextView netStatuTextView;
+    private TextView netStatusTextView;
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
@@ -41,7 +42,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                 if (info.isConnectedOrConnecting()) {
                     if (!isConnected()) {
                         Log.v(LOG_TAG, "Now you are connected to Internet!");
-                        Toast.makeText(activity, "You got internet!", Toast.LENGTH_SHORT).show();
+                        if (broadcastToastEnabled) {
+                            Toast.makeText(activity, "You got internet!", Toast.LENGTH_SHORT).show();
+                        }
                         isConnected = true;
                         //do your processing here ---
                         //if you need to post any data to the server or get status
@@ -54,7 +57,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
             }
         }
         Log.v(LOG_TAG, "You are not connected to Internet!");
-        Toast.makeText(activity, "You got no internet", Toast.LENGTH_SHORT).show();
+        if (broadcastToastEnabled) {
+            Toast.makeText(activity, "You got no internet", Toast.LENGTH_SHORT).show();
+        }
         setDisabledWhenNotConnected();
         showNotConnectedStatus();
         isConnected = false;
@@ -96,23 +101,30 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         this.activity = activity;
     }
 
-    public void setNetStatuTextView(TextView textView) {
+    public void setNetStatusTextView(TextView textView) {
         if (textView == null) {
             throw new IllegalArgumentException("Null reference to net status textView");
         }
-        netStatuTextView = textView;
+        netStatusTextView = textView;
     }
 
     private void showConnectedStatus() {
-        if (netStatuTextView != null) {
-            netStatuTextView.setText(R.string.status_connected);
+        if (netStatusTextView != null) {
+            netStatusTextView.setText(R.string.status_connected);
         }
     }
 
     private void showNotConnectedStatus() {
-        if (netStatuTextView != null) {
-            netStatuTextView.setText(R.string.status_not_connected);
+        if (netStatusTextView != null) {
+            netStatusTextView.setText(R.string.status_not_connected);
         }
+    }
+
+    /**
+     * If enabled, network receiver will post a toast to notify every time connection status changes
+     */
+    public void setBroadcastToastEnabled() {
+        broadcastToastEnabled = true;
     }
 
 }

@@ -56,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, filter);
 
         receiver.setActivity(MainActivity.this);
+        receiver.setBroadcastToastEnabled();
 
         networkStatus = (TextView) findViewById(R.id.networkStatus);
-        receiver.setNetStatuTextView(networkStatus);
+        receiver.setNetStatusTextView(networkStatus);
 
         Button resetPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
         Button registerButton = (Button) findViewById(R.id.registerButton);

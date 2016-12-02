@@ -49,16 +49,6 @@ public class ResetPasswordActivityTest {
         solo.finishOpenedActivities();
     }
 
-    /**@Test
-    public void ProgressDialogDisplayedWithEmailInput() throws Exception{
-        solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
-        solo.clickOnView(solo.getView(R.id.resetPasswordEmailInput));
-        solo.typeText(0, invalid_email);
-        solo.clickOnView(solo.getView(R.id.rstPasswordButton));
-        boolean dialogMsg = solo.searchText("Sending request...");
-        assertTrue(dialogMsg);
-    }*/
-
     @Test
     public void correctFailToastDisplayed() throws Exception{
         solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
@@ -104,15 +94,5 @@ public class ResetPasswordActivityTest {
         intended(hasComponent(MainActivity.class.getName()));
         Intents.release();
     }
-
-    /**@Test
-    public void noRequestSentForInvalidEmail(){
-        onView(withId(R.id.resetPasswordEmailInput))
-                .perform(typeText(invalid_email), closeSoftKeyboard());
-        onView(withId(R.id.rstPasswordButton))
-                .perform(click());
-        //onView(withText(R.string.reset_request_fail)).inRoot(new ToastMatcher())
-                //.check(matches(isDisplayed()));
-    }*/
 
 }
