@@ -231,19 +231,19 @@ public class BeATutorFragmentTest {
         }
     }
 
-    @Test
-    public void testBeATutorTabChemistryEditTextDefault() throws InterruptedException {
-        if (sharedPreferences.getBoolean("checkbox_preference_chemistry", false)) {
-            onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).check(matches(isEnabled()));
-            onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).perform(click());
-            onView(withId(16908291)).perform(clearText());
-            onView(withId(16908313)).perform(click());
-            assertThat(sharedPreferences.getString("edit_text_preference_chemistry", "Enter your description."),
-                    equalTo("Enter your description."));
-        } else {
-            onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).check(matches(not(isEnabled())));
-        }
-    }
+//    @Test
+//    public void testBeATutorTabChemistryEditTextDefault() throws InterruptedException {
+//        if (sharedPreferences.getBoolean("checkbox_preference_chemistry", false)) {
+//            onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).check(matches(isEnabled()));
+//            onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).perform(click());
+//            onView(withId(16908291)).perform(clearText());
+//            onView(withId(16908313)).perform(click());
+//            assertThat(sharedPreferences.getString("edit_text_preference_chemistry", "Enter your description."),
+//                    equalTo("Enter your description."));
+//        } else {
+//            onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).check(matches(not(isEnabled())));
+//        }
+//    }
 
     @Test
     public void testBeATutorTabComputerScienceCheckbox() throws InterruptedException {
@@ -282,5 +282,10 @@ public class BeATutorFragmentTest {
         } else {
             onData(PreferenceMatchers.withKey("edit_text_preference_computer_science")).check(matches(not(isEnabled())));
         }
+    }
+
+    @After
+    public void logOut() {
+        FirebaseAuth.getInstance().signOut();
     }
 }

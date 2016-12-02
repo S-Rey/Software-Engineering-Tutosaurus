@@ -56,11 +56,15 @@ public class MeetingConfirmationAdapter extends FirebaseListAdapter<MeetingReque
 
             }
         });
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy hh:mm");
-        location.setText(request.getMeeting().getNameLocation());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm");
+        if (request.getMeeting().getNameLocation() != null) {
+            location.setText(request.getMeeting().getNameLocation());
+        }
         date.setText(dateFormat.format(request.getMeeting().getDate()));
         name.setText(request.getFrom());
-        description.setText(request.getMeeting().getDescription());
+        if (request.getMeeting().getDescription() != null) {
+            description.setText(request.getMeeting().getDescription());
+        }
         Button confirmMeetingButton = (Button) mainView.findViewById(R.id.meeting_confirmation_row_confirm);
         confirmMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override

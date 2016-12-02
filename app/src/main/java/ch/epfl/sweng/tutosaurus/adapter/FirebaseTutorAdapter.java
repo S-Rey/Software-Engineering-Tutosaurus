@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus.findTutor;
+package ch.epfl.sweng.tutosaurus.adapter;
 
         import android.app.Activity;
         import android.content.Intent;

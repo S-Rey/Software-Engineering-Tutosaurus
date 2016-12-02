@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
@@ -66,6 +67,12 @@ public class DatabaseHelper {
     public void removeLanguageFromUser(String userId, String languageId) {
         DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
         userSpeakLanguageRef.setValue(false);
+    }
+
+    public void setRating(String userId, float globalRating) {
+        DatabaseReference userRatingRef = dbf.child(USER_PATH + userId + "/globalRating/");
+        //TODO: add the numRating, by now globalRating is the last rating
+        userRatingRef.setValue(globalRating);
     }
 
     public void addTeacherToCourse(String userId, String courseId) {
@@ -193,4 +200,5 @@ public class DatabaseHelper {
         meetingRequestRef.removeValue();
         return meetingId;
     }
+
 }

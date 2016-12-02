@@ -28,7 +28,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.anything;
 
-public class MeetingConformationActivityTest {
+public class MeetingConfirmationActivityTest {
 
     String currentUserUid;
     String studentUid = "RandomTestUser-0000000";

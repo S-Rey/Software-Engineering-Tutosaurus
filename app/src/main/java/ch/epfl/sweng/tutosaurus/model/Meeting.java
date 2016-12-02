@@ -15,6 +15,7 @@ public class Meeting {
     private String description;
     private List<String> participants = new ArrayList<>();
     private Course course;
+    private boolean rated = false;
 
 
     /**
@@ -159,4 +160,11 @@ public class Meeting {
         this.longitudeLocation = longitudeLocation;
     }
 
+    public boolean isRated() {
+        return rated;
+    }
+
+    public void setRated(boolean rated) {
+        this.rated = rated;
+    }
 }

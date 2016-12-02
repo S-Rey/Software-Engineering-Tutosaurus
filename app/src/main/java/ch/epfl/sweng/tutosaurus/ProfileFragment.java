@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,16 +21,23 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
+import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
+import ch.epfl.sweng.tutosaurus.adapter.MeetingConfirmationAdapter;
+import ch.epfl.sweng.tutosaurus.adapter.MeetingRatingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.Meeting;
+import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
+
+import static android.view.View.GONE;
 
 public class ProfileFragment extends Fragment {
 
@@ -37,6 +45,7 @@ public class ProfileFragment extends Fragment {
 
     private String currentUser;
     DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private MeetingAdapter adapter;
 
     @Nullable
     @Override
@@ -66,7 +75,7 @@ public class ProfileFragment extends Fragment {
                 profileName.setText(thisUser.getFullName());
                 /*
                 // Set profile picture
-                ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
+                    ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
                 profilePicture.setImageResource(user.getPicture());
                 */
             }
@@ -77,6 +86,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+
+        Query refRequestedMeeting = dbh.getMeetingRequestsRef().child(currentUser);
+        ListView meetingRequested = (ListView) myView.findViewById(R.id.meetingRequests);
+        MeetingConfirmationAdapter requestedMeetingAdapter = new MeetingConfirmationAdapter(getActivity(),
+                                                                                            MeetingRequest.class,
+                                                                                            R.layout.meeting_confirmation_row,
+                                                                                            refRequestedMeeting);
+        meetingRequested.setAdapter(requestedMeetingAdapter);
         return myView;
     }
 
@@ -118,25 +136,9 @@ public class ProfileFragment extends Fragment {
              }
          });
 
-       /* StorageReference picRef = storageRef.child(sciper + "/" + namePic + ".jpg");
-        picRef.getBytes(MAX_SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
-                Bitmap pic = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                ImageView img = (ImageView) myView.findViewById(R.id.picture_view);
-                img.setImageBitmap(pic);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-                Toast.makeText( getActivity().getBaseContext(),"Erreur ma gueule !",Toast.LENGTH_LONG).show();
-
-            }
-        });*/
 
     }
+
 
 }
 

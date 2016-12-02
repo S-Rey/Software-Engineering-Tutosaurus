@@ -2,9 +2,13 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -19,7 +23,7 @@ public class TimePickerFragment extends DialogFragment
 
     private int meetingHour;
     private int meetingMinutes;
-
+    //TODO: setArgument to change the textview (date-time picker)
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -40,9 +44,15 @@ public class TimePickerFragment extends DialogFragment
     }
 
 
+    public String getTime() {
+        return meetingHour + ":" + meetingMinutes;
+    }
+
+
     public int getMeetingHour() {
         return meetingHour;
     }
+
 
     public int getMeetingMinutes() {
         return meetingMinutes;

@@ -72,7 +72,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/changePassword"
-            android:layout_centerHorizontal="true"
             />
 
         <EditText
@@ -114,22 +113,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Meetings in the last week"/>
+            android:text="Meetings to be confirmed"
+            android:textSize="18dp"
+            android:gravity="center_horizontal|center_vertical"/>
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/meetingLastWeek"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Meetings in the next week"/>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/meetingNextWeek"/>
+            android:id="@+id/meetingRequests"/>
 
     </LinearLayout>
 

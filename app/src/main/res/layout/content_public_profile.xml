@@ -157,29 +157,6 @@
 
 
         <Button
-            android:text="Show comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/commentsButton"
-            android:background="@null"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="24sp"
-            android:layout_gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:paddingTop="16dp"
-            android:onClick="showComments"
-            android:visibility="gone"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/large_text"
-            android:textSize="18sp"
-            android:visibility="gone"
-            android:id="@+id/commentsView" />
-
-        <Button
             android:id="@+id/createMeetingButton"
             android:text="Request meeting"
             android:layout_width="match_parent"

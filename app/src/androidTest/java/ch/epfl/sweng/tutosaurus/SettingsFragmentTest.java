@@ -15,6 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.hamcrest.Matcher;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -91,5 +92,10 @@ public class SettingsFragmentTest {
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_rating")).perform(click());
         intended(expectedIntent);
+    }
+
+    @After
+    public void logOut() {
+        FirebaseAuth.getInstance().signOut();
     }
 }

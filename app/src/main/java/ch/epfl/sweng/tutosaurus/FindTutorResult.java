@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import com.google.firebase.database.Query;
 
-import ch.epfl.sweng.tutosaurus.findTutor.FirebaseTutorAdapter;
+import ch.epfl.sweng.tutosaurus.adapter.FirebaseTutorAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 

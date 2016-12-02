@@ -13,10 +13,12 @@ import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
+import ch.epfl.sweng.tutosaurus.adapter.MeetingRatingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
@@ -57,7 +60,8 @@ public class MeetingsFragment extends Fragment {
 
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
         Query ref = dbh.getMeetingsRefForUser(currentUser);
-        ref = ref.orderByChild("date");
+        long lastWeekInMillis = System.currentTimeMillis() + 59958140730000L - (86400 * 7 * 1000);
+        ref = ref.orderByChild("date/time").startAt(lastWeekInMillis);
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
         meetingList.setAdapter(adapter);
 
@@ -90,11 +94,9 @@ public class MeetingsFragment extends Fragment {
 
                             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                                     Manifest.permission.WRITE_CALENDAR)) {
-
                                 // Show an explanation to the user *asynchronously* -- don't block
                                 // this thread waiting for the user's response! After the user
                                 // sees the explanation, try again to request the permission.
-
                             } else {
                                 ActivityCompat.requestPermissions(getActivity(),
                                         new String[]{android.Manifest.permission.WRITE_CALENDAR},
@@ -102,14 +104,14 @@ public class MeetingsFragment extends Fragment {
                             }
 
                         }
-
+                        //Log.d("Meetings Fragment", "ciao");
                         Calendar beginTime = Calendar.getInstance();
                         Calendar endTime = Calendar.getInstance();
                         if (meeting.getDate() != null) {
                             beginTime.setTime(meeting.getDate());
                             startMillis = beginTime.getTimeInMillis();
                             endTime.setTime(meeting.getDate());
-                            endTime.add(Calendar.HOUR, meeting.getDuration());
+                            //endTime.add(Calendar.HOUR, 2); //TODO: fix duration and create a calendar
                             endMillis = endTime.getTimeInMillis();
                         }
 
