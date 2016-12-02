@@ -30,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
-import ch.epfl.sweng.tutosaurus.adapter.MeetingRatingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 

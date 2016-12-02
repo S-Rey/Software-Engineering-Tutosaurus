@@ -31,13 +31,10 @@ import java.io.FileNotFoundException;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingConfirmationAdapter;
-import ch.epfl.sweng.tutosaurus.adapter.MeetingRatingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
-import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-import static android.view.View.GONE;
 
 public class ProfileFragment extends Fragment {
 

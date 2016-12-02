@@ -57,19 +57,13 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     protected void populateView(final View mainView, final Meeting meeting, int position) {
 
         if (meeting.getCourse() != null) {
-            //TextView subject = (TextView) mainView.findViewById(R.id.subjectMeeting);
-            //subject.setText(meeting.getCourse().getName());
-            LinearLayout subjectMeeting = (LinearLayout) mainView.findViewById(R.id.subjectMeeting);
             FullCourseList allCourses = FullCourseList.getInstance();
             Course courseMeeting = allCourses.getCourse(meeting.getCourse().getId());
 
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View view  = inflater.inflate(R.layout.listview_course_row, subjectMeeting, false);
-            ImageView coursePicture = (ImageView) view.findViewById(R.id.coursePicture);
+            TextView subject = (TextView) mainView.findViewById(R.id.courseName);
+            subject.setText(meeting.getCourse().getName());
+            ImageView coursePicture = (ImageView) mainView.findViewById(R.id.coursePicture);
             coursePicture.setImageResource(courseMeeting.getPictureId());
-            TextView courseName = (TextView) view.findViewById(R.id.courseName);
-            courseName.setText(courseMeeting.getName());
-            subjectMeeting.addView(view);
         }
 
         final TextView otherParticipantView = (TextView) mainView.findViewById(R.id.otherParticipantMeeting);
