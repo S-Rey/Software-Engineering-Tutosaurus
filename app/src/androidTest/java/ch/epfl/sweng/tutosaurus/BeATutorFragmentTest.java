@@ -145,6 +145,7 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_mathematics")).check(matches(isEnabled()));
             onData(PreferenceMatchers.withKey("edit_text_preference_mathematics")).perform(click());
             onView(withId(16908291)).perform(clearText(), typeText("I love Mathematics"));
+            closeSoftKeyboard();
             onView(withId(16908313)).perform(click());
             assertThat(sharedPreferences.getString("edit_text_preference_mathematics", "Enter your description."),
                     equalTo("I love Mathematics"));
@@ -159,6 +160,7 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_mathematics")).check(matches(isEnabled()));
             onData(PreferenceMatchers.withKey("edit_text_preference_mathematics")).perform(click());
             onView(withId(16908291)).perform(clearText());
+            closeSoftKeyboard();
             onView(withId(16908313)).perform(click());
             assertThat(sharedPreferences.getString("edit_text_preference_mathematics", "Enter your description."),
                     equalTo("Enter your description."));
@@ -184,6 +186,7 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_physics")).check(matches(isEnabled()));
             onData(PreferenceMatchers.withKey("edit_text_preference_physics")).perform(click());
             onView(withId(16908291)).perform(clearText(), typeText("I love Physics"));
+            closeSoftKeyboard();
             onView(withId(16908313)).perform(click());
             assertThat(sharedPreferences.getString("edit_text_preference_physics", "Enter your description."),
                     equalTo("I love Physics"));
@@ -198,6 +201,7 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_physics")).check(matches(isEnabled()));
             onData(PreferenceMatchers.withKey("edit_text_preference_physics")).perform(click());
             onView(withId(16908291)).perform(clearText());
+            closeSoftKeyboard();
             onView(withId(16908313)).perform(click());
             assertThat(sharedPreferences.getString("edit_text_preference_physics", "Enter your description."),
                     equalTo("Enter your description."));
@@ -223,6 +227,7 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).check(matches(isEnabled()));
             onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).perform(click());
             onView(withId(16908291)).perform(clearText(), typeText("I love Chemistry"));
+            closeSoftKeyboard();
             onView(withId(16908313)).perform(click());
             assertThat(sharedPreferences.getString("edit_text_preference_chemistry", "Enter your description."),
                     equalTo("I love Chemistry"));
@@ -237,6 +242,7 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).check(matches(isEnabled()));
             onData(PreferenceMatchers.withKey("edit_text_preference_chemistry")).perform(click());
             onView(withId(16908291)).perform(clearText());
+            closeSoftKeyboard();
             onView(withId(16908313)).perform(click());
             assertThat(sharedPreferences.getString("edit_text_preference_chemistry", "Enter your description."),
                     equalTo("Enter your description."));
@@ -262,6 +268,7 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_computer_science")).check(matches(isEnabled()));
             onData(PreferenceMatchers.withKey("edit_text_preference_computer_science")).perform(click());
             onView(withId(16908291)).perform(clearText(), typeText("I love Computer Science"));
+            closeSoftKeyboard();
             onView(withId(16908313)).perform(click());
             assertThat(sharedPreferences.getString("edit_text_preference_computer_science", "Enter your description."),
                     equalTo("I love Computer Science"));
@@ -276,6 +283,7 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_computer_science")).check(matches(isEnabled()));
             onData(PreferenceMatchers.withKey("edit_text_preference_computer_science")).perform(click());
             onView(withId(16908291)).perform(clearText());
+            closeSoftKeyboard();
             onView(withId(16908313)).perform(click());
             assertThat(sharedPreferences.getString("edit_text_preference_computer_science", "Enter your description."),
                     equalTo("Enter your description."));
