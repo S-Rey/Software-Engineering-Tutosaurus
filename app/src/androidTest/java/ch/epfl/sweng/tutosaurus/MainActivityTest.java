@@ -27,9 +27,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Stephane on 11/29/2016.
- */
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
@@ -125,6 +122,19 @@ public class MainActivityTest {
         solo.clickOnView(solo.getView(R.id.connectionButton));
         boolean warningDisplayed = solo.searchText("Login failed");
         assertTrue(warningDisplayed);
+    }
+
+    @Test
+    public void loginInWithValidGoesToHome(){
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.main_email));
+        solo.typeText(1, valid_email);
+        solo.clickOnView(solo.getView(R.id.main_password));
+        solo.typeText(0, valid_password);
+        Intents.init();
+        solo.clickOnView(solo.getView(R.id.connectionButton));
+        intended(hasComponent(HomeScreenActivity.class.getName()));
+        Intents.release();
     }
 
 }
