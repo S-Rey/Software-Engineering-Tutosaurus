@@ -39,7 +39,7 @@ public class ResetPasswordActivityTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),
                 mActivityRule.getActivity());
         invalid_email = "HolyMolly@wow.com";
-        valid_email = "stephan.selim@epfl.ch";
+        valid_email = "albert.einstein@epfl.ch";
     }
 
     @After
