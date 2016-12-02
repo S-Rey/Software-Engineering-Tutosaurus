@@ -2,12 +2,19 @@ package ch.epfl.sweng.tutosaurus.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -20,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ch.epfl.sweng.tutosaurus.LocationActivity;
@@ -39,7 +47,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     protected String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     protected DatabaseHelper dbh = DatabaseHelper.getInstance();
     protected Context context;
-
+    protected float meetingRating;
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.context = activity.getBaseContext();
@@ -125,17 +133,68 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         });
 
         final Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
-        detailsMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LinearLayout detailsLayout = (LinearLayout) mainView.findViewById(R.id.detailsMeeting);
-                if (detailsLayout.getVisibility() == View.VISIBLE) {
-                    detailsLayout.setVisibility(View.GONE);
-                } else {
-                    detailsLayout.setVisibility(View.VISIBLE);
+        if(meeting.getDate().getTime() > new Date().getTime() + 59958140730000L) {
+            detailsMeeting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout detailsLayout = (LinearLayout) mainView.findViewById(R.id.detailsMeeting);
+                    if (detailsLayout.getVisibility() == View.VISIBLE) {
+                        detailsLayout.setVisibility(View.GONE);
+                    } else {
+                        detailsLayout.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-        });
+            });
+        }
+        else if(meeting.isRated()) {
+            detailsMeeting.setVisibility(View.GONE);
+            RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
+            ratingBar.setVisibility(View.VISIBLE);
+            ratingBar.setRating(meetingRating);
+        }
+        else {
+            detailsMeeting.setText("Rate");
+            detailsMeeting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final AlertDialog.Builder ratingDialog = new AlertDialog.Builder(mainView.getContext());
+                    final RatingBar rating = new RatingBar(mainView.getContext());
+                    rating.setNumStars(5);
+                    rating.setStepSize(1.0f);
+                    rating.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+                            ActionBar.LayoutParams.WRAP_CONTENT));
+                    LinearLayout parent = new LinearLayout(mainView.getContext());
+                    parent.setGravity(Gravity.CENTER);
+                    parent.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                            ActionBar.LayoutParams.MATCH_PARENT));
+                    parent.addView(rating);
+
+                    // popDialog.setIcon(android.R.drawable.btn_star_big_on);
+                    ratingDialog.setTitle("Rate this meeting");
+                    ratingDialog.setView(parent);
+
+                    // Button OK
+                    ratingDialog.setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    meetingRating = rating.getRating();
+                                    Log.d("Meeting Adapter", Float.toString(meetingRating));
+                                    meeting.setRated(true);
+                                    dbh.setRating(currentUser, meetingRating);
+                                    dialog.dismiss();
+                                }
+                            }).setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    ratingDialog.create();
+                    ratingDialog.show();
+                }
+            });
+        }
+
 
     }
 

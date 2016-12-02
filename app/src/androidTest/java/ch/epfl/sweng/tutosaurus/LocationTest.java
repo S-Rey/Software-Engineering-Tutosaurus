@@ -8,14 +8,18 @@ import android.os.Bundle;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.ActivityCompat;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,16 +27,20 @@ import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 import ch.epfl.sweng.tutosaurus.mockObjects.MockLocationProvider;
 
 import static android.content.Context.LOCATION_SERVICE;
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertEquals;
@@ -63,7 +71,6 @@ public class LocationTest{
 
     @Before
     public void setUp() throws InterruptedException {
-        //onView(withId(R.id.mainBypassLoginButton)).perform(click());
         onView(withId(R.id.main_email)).perform(typeText("albert.einstein@epfl.ch"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
@@ -71,43 +78,51 @@ public class LocationTest{
         onView(withText("Log in")).perform(click());
         Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
         Thread.sleep(1000);
-
         mainActivity = mainActivityTestRule.getActivity();
         mock = new MockLocationProvider(LocationManager.NETWORK_PROVIDER, mainActivity);
+        onView(withId(R.id.byName)).perform(click());
+        onView(withId(R.id.nameToSearch)).perform(typeText("Albert Einstein"));
+        onView(withId(R.id.searchByName)).perform(click());
+        Thread.sleep(1000);
+        onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+        Thread.sleep(1000);
     }
 
 
-    @Test(timeout=10000)
-    public void testLocation() {
+    @Test
+    public void testLocation() throws InterruptedException {
 
         //Set test location
         mock.pushLocation(-12.34, 23.45);
 
-        LocationListener lis = new LocationListener() {
+        onView(withId(R.id.createMeetingButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
 
-            @Override
-            public void onLocationChanged(Location location) {
-                //onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0)
-                       // .check(matches(hasDescendant(allOf(withId(R.id.map), withText(containsString(courseArrayList.get(i).getName()))))));
-            }
+        int year = 2020;
+        int month = 11;
+        int day = 15;
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
+        onView(withId(R.id.pickDateTime)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, month + 1, day));
+        onView(withId(android.R.id.button1)).perform(click());
 
-            }
+        int minutes = 50;
+        int hour = 10;
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(hour, minutes));
+        onView(withId(android.R.id.button1)).perform(click());
 
-            @Override
-            public void onProviderEnabled(String provider) {
+        //TODO: test the textview that displays the date and the time
+        onData(anything()).inAdapterView(withId(R.id.courseListView)).atPosition(0).perform(click());
 
-            }
+        closeSoftKeyboard();
+        onView(withId(R.id.description)).perform(typeText("Einstein, I love you"));
+        closeSoftKeyboard();
 
-            @Override
-            public void onProviderDisabled(String provider) {
+        onView(withId(R.id.addMeeting)).perform(click());
 
-            }
-        };
+
+
     }
 
 }

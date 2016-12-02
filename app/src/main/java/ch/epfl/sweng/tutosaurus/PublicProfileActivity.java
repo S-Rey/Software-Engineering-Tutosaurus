@@ -185,30 +185,5 @@ public class PublicProfileActivity extends AppCompatActivity {
         row.findViewById(R.id.courseName).setOnClickListener(openDescriptionListener);
         row.findViewById(R.id.coursePicture).setOnClickListener(openDescriptionListener);
     }
-    public void showComments(@SuppressWarnings("UnusedParameters") View view){
-        TextView comments=(TextView) findViewById(R.id.commentsView);
-        comments.setVisibility(View.VISIBLE);
-        Button thisButton=(Button) findViewById(R.id.commentsButton);
-        thisButton.setText("Hide comments");
-        View.OnClickListener showCommentsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideComments(v);
-            }
-        };
-        thisButton.setOnClickListener(showCommentsClick);
-    }
-    public void hideComments(@SuppressWarnings("UnusedParameters") View view){
-        TextView comments=(TextView) findViewById(R.id.commentsView);
-        comments.setVisibility(View.GONE);
-        Button thisButton=(Button) findViewById(R.id.commentsButton);
-        thisButton.setText("Show comments");
-        View.OnClickListener hideCommentsClick=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showComments(v);
-            }
-        };
-        thisButton.setOnClickListener(hideCommentsClick);
-    }
+
 }

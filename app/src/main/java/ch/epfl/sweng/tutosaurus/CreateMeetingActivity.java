@@ -1,17 +1,13 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +41,9 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
+    private String teacherId;
+
     private TimePickerFragment timePicker = new TimePickerFragment();
     private DatePickerFragment datePicker = new DatePickerFragment();
 
@@ -59,7 +58,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_meeting);
 
         Intent intent = getIntent();
-        final String teacherId = intent.getStringExtra("TEACHER");
+        teacherId = intent.getStringExtra("TEACHER");
         meeting.addParticipant(teacherId);
         meeting.addParticipant(currentUser);
 
@@ -79,39 +78,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
 
         final Button addMeeting = (Button) findViewById(R.id.addMeeting);
-        addMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText description = (EditText) findViewById(R.id.description);
-                meeting.addDescription(description.getText().toString());
-
-                Date dateMeeting = new Date();
-                dateMeeting.setMinutes(timePicker.getMeetingMinutes());
-                dateMeeting.setHours(timePicker.getMeetingHour());
-                dateMeeting.setYear(datePicker.getMeetingYear());
-                dateMeeting.setMonth(datePicker.getMeetingMonth());
-                dateMeeting.setDate(datePicker.getMeetingDay());
-
-                meeting.setDate(dateMeeting);
-                meeting.setCourse(courseMeeting);
-
-                MeetingRequest request = new MeetingRequest();
-                request.setFrom(currentUser);
-                request.setAccepted(false);
-                request.setMeeting(meeting);
-                request.setType("received");
-
-                Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
-                if (dateMeeting.getYear() == -1) {
-                    Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
-                } else {
-                    dbh.requestMeeting(request, teacherId);
-                    Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getBaseContext(), StartActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
+        setAddMeetingListener(addMeeting);
 
     }
 
@@ -155,6 +122,40 @@ public class CreateMeetingActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 courseMeeting = courseAdapter.getItemAtPosition(position);
+            }
+        });
+    }
+
+    private void setAddMeetingListener(final Button addMeetingButton){
+        addMeetingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText description = (EditText) findViewById(R.id.description);
+                meeting.addDescription(description.getText().toString());
+
+                Date dateMeeting = new Date();
+                dateMeeting.setMinutes(timePicker.getMeetingMinutes());
+                dateMeeting.setHours(timePicker.getMeetingHour());
+                dateMeeting.setYear(datePicker.getMeetingYear());
+                dateMeeting.setMonth(datePicker.getMeetingMonth());
+                dateMeeting.setDate(datePicker.getMeetingDay());
+
+                meeting.setDate(dateMeeting);
+                meeting.setCourse(courseMeeting);
+
+                MeetingRequest request = new MeetingRequest();
+                request.setFrom(currentUser);
+                request.setAccepted(false);
+                request.setMeeting(meeting);
+                request.setType("received");
+                dbh.requestMeeting(request, teacherId);
+                if (dateMeeting.getYear() == -1) {
+                    Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getBaseContext(), StartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

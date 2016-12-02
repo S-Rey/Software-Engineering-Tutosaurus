@@ -13,10 +13,12 @@ import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -92,11 +94,9 @@ public class MeetingsFragment extends Fragment {
 
                             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                                     Manifest.permission.WRITE_CALENDAR)) {
-
                                 // Show an explanation to the user *asynchronously* -- don't block
                                 // this thread waiting for the user's response! After the user
                                 // sees the explanation, try again to request the permission.
-
                             } else {
                                 ActivityCompat.requestPermissions(getActivity(),
                                         new String[]{android.Manifest.permission.WRITE_CALENDAR},
@@ -104,14 +104,14 @@ public class MeetingsFragment extends Fragment {
                             }
 
                         }
-
+                        //Log.d("Meetings Fragment", "ciao");
                         Calendar beginTime = Calendar.getInstance();
                         Calendar endTime = Calendar.getInstance();
                         if (meeting.getDate() != null) {
                             beginTime.setTime(meeting.getDate());
                             startMillis = beginTime.getTimeInMillis();
                             endTime.setTime(meeting.getDate());
-                            endTime.add(Calendar.HOUR, meeting.getDuration());
+                            //endTime.add(Calendar.HOUR, 2); //TODO: fix duration and create a calendar
                             endMillis = endTime.getTimeInMillis();
                         }
 
