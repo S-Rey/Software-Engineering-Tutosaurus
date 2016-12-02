@@ -283,4 +283,9 @@ public class BeATutorFragmentTest {
             onData(PreferenceMatchers.withKey("edit_text_preference_computer_science")).check(matches(not(isEnabled())));
         }
     }
+
+    @After
+    public void logOut() {
+        FirebaseAuth.getInstance().signOut();
+    }
 }

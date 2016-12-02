@@ -23,21 +23,48 @@
             android:orientation="horizontal">
 
 
-            <Button
-                android:id="@+id/pickDateTime"
-                android:text="Date"
+            <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:onClick="showDateTimePickerDialog"/>
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/pickLocation"
-                android:text="Location"
+                <Button
+                    android:id="@+id/pickDateTime"
+                    android:text="Date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="showDateTimePickerDialog"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dateTime"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:onClick="showLocationPickerDialog"/>
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/pickLocation"
+                    android:text="Location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="showLocationPickerDialog"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/placeName"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -57,7 +84,7 @@
 
         <Button
             android:id="@+id/addMeeting"
-            android:text="confirm"
+            android:text="Request"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 

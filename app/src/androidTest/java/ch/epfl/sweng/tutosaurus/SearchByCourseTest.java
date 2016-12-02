@@ -5,25 +5,37 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.test.ActivityInstrumentationTestCase2;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.model.Course;
+import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.core.IsNot.not;
 
 /**
  * Created by albertochiappa on 14/10/16.
+ *
+ * Tests that all the available courses are displayed and work when clicked.
  */
 
-public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActivity> {
-    public PublicProfileTest() {
+public class SearchByCourseTest extends ActivityInstrumentationTestCase2<MainActivity> {
+    public SearchByCourseTest() {
         super(MainActivity.class);
     }
 
@@ -41,27 +53,39 @@ public class PublicProfileTest extends ActivityInstrumentationTestCase2<MainActi
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
-        Thread.sleep(8000);
+        Thread.sleep(4000);
         getActivity();
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
         Thread.sleep(1000);
         onView(withId(R.id.bySubject)).perform(click());
+        onView(withId(R.id.courseList)).check(matches(isDisplayed()));
         Thread.sleep(1000);
-        onData(anything()).inAdapterView(withId(R.id.courseList)).atPosition(0).perform(click());
-        onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
-        onView(withId(R.id.profileName)).check(matches(isDisplayed()));
-        Thread.sleep(1000);
+        ArrayList<Course> courseArrayList = FullCourseList.getInstance().getListOfCourses();
+        for(int i=0; i<courseArrayList.size(); i++){
+            onData(anything()).inAdapterView(withId(R.id.courseList)).atPosition(i)
+                    .check(matches(hasDescendant(allOf(withId(R.id.courseName), withText(containsString(courseArrayList.get(i).getName()))))));
+            onData(anything()).inAdapterView(withId(R.id.courseList)).atPosition(i).perform(click());
+            onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+            onView(withText(courseArrayList.get(i).getName()))
+                    .perform(NestedScrollViewScrollToAction.scrollTo(), click());
+            Espresso.pressBack();
+            Espresso.pressBack();
+            Thread.sleep(1000);
+
+        }
+        onView(withId(R.id.bySubject)).perform(click());
+        onView(withId(R.id.courseList)).check(matches(not(isDisplayed())));
         //onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         //onView(withId(R.id.commentsView)).check(matches(isDisplayed()));
         //onView(withId(R.id.commentsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         //onView(withId(R.id.commentsView)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.courseListLayout)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
+        //onView(withId(R.id.courseListLayout)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         //onView(withId(R.id.subjectName)).check(matches(withText("Mathematics")));
         //onView(withId(R.id.mathsButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         //onView(withId(R.id.subjectName)).check(matches(not(isDisplayed())));
-        Espresso.pressBack();
-        Espresso.pressBack();
+        //Espresso.pressBack();
+        //Espresso.pressBack();
         /*Thread.sleep(1000);
         onView(withId(R.id.physicsButton)).perform(click());
         onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
