@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -46,9 +48,6 @@ public class MeetingsFragment extends Fragment {
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
             CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
     };
-
-    // The indices for the projection array above.
-    private static final int PROJECTION_ID_INDEX = 0;
 
 
     @Nullable
@@ -103,39 +102,34 @@ public class MeetingsFragment extends Fragment {
                             }
 
                         }
-                        //Log.d("Meetings Fragment", "ciao");
-                        Calendar beginTime = Calendar.getInstance();
-                        Calendar endTime = Calendar.getInstance();
-                        if (meeting.getDate() != null) {
-                            beginTime.setTime(meeting.getDate());
-                            startMillis = beginTime.getTimeInMillis();
-                            endTime.setTime(meeting.getDate());
-                            //endTime.add(Calendar.HOUR, 2); //TODO: fix duration and create a calendar
-                            endMillis = endTime.getTimeInMillis();
-                        }
+//                        Calendar beginTime = Calendar.getInstance();
+//                        Calendar endTime = Calendar.getInstance();
+//                        if (meeting.getDate() != null) {
+//                            beginTime.setTime(meeting.getDate());
+//                            startMillis = beginTime.getTimeInMillis();
+//                            endTime.setTime(meeting.getDate());
+//                            endTime.add(Calendar.HOUR, 2); //TODO: fix duration and create a calendar
+//                            endMillis = endTime.getTimeInMillis();
+// }
 
-                        long calID;
+                        long calID = 1;
                         ContentResolver contentResolver = getActivity().getContentResolver();
-                        Uri uri = CalendarContract.Calendars.CONTENT_URI;
-                        Cursor cursorCalendarID = contentResolver.query(uri, EVENT_PROJECTION, null, null, null);
-                        while (cursorCalendarID.moveToNext()) {
-                            calID = cursorCalendarID.getLong(PROJECTION_ID_INDEX);
-                            ContentValues values = new ContentValues();
-                            values.put(CalendarContract.Events.DTSTART, startMillis);
-                            values.put(CalendarContract.Events.DTEND, endMillis);
-                            values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                            if (meeting.getCourse() != null) {
-                                values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                            }
-                            if (meeting.getDescription() != null) {
-                                values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
-                            }
-                            if (meeting.getNameLocation() != null) {
-                                values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
-                            }
-                            values.put(CalendarContract.Events.CALENDAR_ID, calID);
-                            Uri newEvent = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+                        String eventUriString = "content://com.android.calendar/events";
+                        Calendar cal = Calendar.getInstance();
+                        ContentValues values = new ContentValues();
+                        //values.put(CalendarContract.Events.DTSTART, startMillis);
+                        //values.put(CalendarContract.Events.DTEND, endMillis);
+                        values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
+                        values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
+                        if (meeting.getDescription() != null) {
+                            values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
                         }
+                        if (meeting.getNameLocation() != null) {
+                            values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
+                        }
+                        values.put(CalendarContract.Events.CALENDAR_ID, calID);
+                        //contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+                        Uri eventUri = contentResolver.insert(Uri.parse(eventUriString), values);
                     }
                 }
             }
