@@ -24,6 +24,7 @@ public class User implements Identifiable {
     private Map<String, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
 
     private double globalRating;
+    private int numRatings;
 
     /**
      * Default constructor (for Firebase database)
@@ -96,8 +97,8 @@ public class User implements Identifiable {
      * @throws IllegalArgumentException if the globalRating is not comprised between 0 and 1
      */
     public void setGlobalRating(double globalRating){
-        if(globalRating > 1.0 || globalRating < 0) {
-            throw new IllegalArgumentException("The globalRating should be between 0 and 1");
+        if(globalRating > 5.0 || globalRating < 0) {
+            throw new IllegalArgumentException("The globalRating should be between 0 and 5");
         } else {
             this.globalRating = globalRating;
         }

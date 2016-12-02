@@ -180,6 +180,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                     meetingRating = rating.getRating();
                                     Log.d("Meeting Adapter", Float.toString(meetingRating));
                                     meeting.setRated(true);
+                                    dbh.setRating(currentUser, meetingRating);
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("Cancel",

@@ -69,6 +69,12 @@ public class DatabaseHelper {
         userSpeakLanguageRef.setValue(false);
     }
 
+    public void setRating(String userId, float globalRating) {
+        DatabaseReference userRatingRef = dbf.child(USER_PATH + userId + "/globalRating/");
+        //TODO: add the numRating, by now globalRating is the last rating
+        userRatingRef.setValue(globalRating);
+    }
+
     public void addTeacherToCourse(String userId, String courseId) {
         DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
         DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + userId + "/teaching/" + courseId);

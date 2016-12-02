@@ -85,7 +85,6 @@ public class MeetingsFragment extends Fragment {
                 SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
                 boolean syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
                 if (syncCalendar) {
-                    Log.d("Meetings Fragment", "ciao");
                     for (DataSnapshot meetingSnapshot : snapshot.getChildren()) {
                         Meeting meeting = meetingSnapshot.getValue(Meeting.class);
                         long startMillis = 0;
@@ -112,9 +111,8 @@ public class MeetingsFragment extends Fragment {
                             beginTime.setTime(meeting.getDate());
                             startMillis = beginTime.getTimeInMillis();
                             endTime.setTime(meeting.getDate());
-                            endTime.add(Calendar.HOUR, 2);
+                            //endTime.add(Calendar.HOUR, 2); //TODO: fix duration and create a calendar
                             endMillis = endTime.getTimeInMillis();
-                            Log.d("Meetings Fragment", "date");
                         }
 
                         long calID;
@@ -122,7 +120,6 @@ public class MeetingsFragment extends Fragment {
                         Uri uri = CalendarContract.Calendars.CONTENT_URI;
                         Cursor cursorCalendarID = contentResolver.query(uri, EVENT_PROJECTION, null, null, null);
                         while (cursorCalendarID.moveToNext()) {
-                            Log.d("Meetings Fragment", "calendar");
                             calID = cursorCalendarID.getLong(PROJECTION_ID_INDEX);
                             ContentValues values = new ContentValues();
                             values.put(CalendarContract.Events.DTSTART, startMillis);
