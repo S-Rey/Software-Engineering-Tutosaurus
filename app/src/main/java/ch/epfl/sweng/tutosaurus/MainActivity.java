@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void testDB() {
+    /**public void testDB() {
         dbHelper = new LocalDatabaseHelper(this);
         database = dbHelper.getWritableDatabase();
         Toast.makeText(getBaseContext(), database.toString(), Toast.LENGTH_LONG).show();
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         LocalDatabaseHelper.insertUser(profileTwo, database);
         User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
         Toast.makeText(getBaseContext(), user.getUsername(), Toast.LENGTH_LONG).show();
-    }
+    }*/
 
     private class LoginAsyncTask extends AsyncTask<String, String, Task> {
 
