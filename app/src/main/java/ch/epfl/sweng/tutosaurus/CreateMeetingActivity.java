@@ -145,7 +145,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
                 if (courseMeeting == null) {
                     Toast.makeText(getBaseContext(), "Course not selected", Toast.LENGTH_LONG).show();
-                } else if (dateMeeting.getYear() == -1) {
+                } else if (dateMeeting.getYear() == -1) {  //TODO: <= getCurrentDate
                     Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
                 } else {
                     MeetingRequest request = new MeetingRequest();

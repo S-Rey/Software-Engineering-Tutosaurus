@@ -6,11 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,9 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -165,7 +160,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                             ActionBar.LayoutParams.MATCH_PARENT));
                     parent.addView(rating);
 
-                    // popDialog.setIcon(android.R.drawable.btn_star_big_on);
                     ratingDialog.setTitle("Rate this meeting");
                     ratingDialog.setView(parent);
 
@@ -177,7 +171,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                     meeting.setRated(true);
                                     dbh.setMeetingRated(currentUser, otherUser.getUid(), meeting.getId());
                                     int numRatings = otherUser.getNumRatings();
-                                    Log.d("Meeting Adapter", Integer.toString(numRatings));
                                     float globalRating = otherUser.getGlobalRating();
                                     globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
                                     dbh.setRating(otherUser.getUid(), globalRating);
