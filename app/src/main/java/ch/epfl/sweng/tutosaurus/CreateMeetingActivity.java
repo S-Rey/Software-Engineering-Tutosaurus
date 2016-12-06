@@ -86,11 +86,6 @@ public class CreateMeetingActivity extends AppCompatActivity {
     public void showDateTimePickerDialog(View v) throws InterruptedException {
         timePicker.show(getFragmentManager(), "timePicker");
         datePicker.show(getFragmentManager(), "datePicker");
-
-        TextView dateTimeView = (TextView) findViewById(R.id.dateTime);
-        dateTimeView.setVisibility(View.VISIBLE);
-        String date = datePicker.getDate() + " h " + timePicker.getTime();
-        dateTimeView.setText(date);
     }
 
 
