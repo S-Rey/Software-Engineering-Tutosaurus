@@ -1,8 +1,10 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,9 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -22,13 +24,18 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.locks.Lock;
 
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+import static ch.epfl.sweng.tutosaurus.NetworkChangeReceiver.LOG_TAG;
+
 public class MainActivity extends AppCompatActivity {
+
+    private NetworkChangeReceiver receiver;
+    private TextView networkStatus;
 
     public final static String TAG = "MainActivity";
 
@@ -44,7 +51,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkChangeReceiver();
+        registerReceiver(receiver, filter);
+
+        receiver.setActivity(MainActivity.this);
+        receiver.setBroadcastToastEnabled();
+
+        networkStatus = (TextView) findViewById(R.id.networkStatus);
+        receiver.setNetStatusTextView(networkStatus);
+
         Button resetPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
+        Button registerButton = (Button) findViewById(R.id.registerButton);
+        Button login = (Button) findViewById(R.id.connectionButton);
+        Button bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
+
+        ArrayList<Button> buttons = new ArrayList<Button>();
+        buttons.add(resetPasswordButton);
+        buttons.add(registerButton);
+        buttons.add(login);
+        buttons.add(bypassLogin);
+
+        receiver.setButtonsToManage(buttons);
 
         resetPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,10 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-
-        final Button login = (Button) findViewById(R.id.connectionButton);
-        Button bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
 
         bypassLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,25 +126,23 @@ public class MainActivity extends AppCompatActivity {
                     loginAlertB.setMessage("Please type in your email and password");
                     loginAlertB.create().show();
                 } else {
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
-                                    if (task.isSuccessful()) {
-                                        dispatchHomeScreenIntent();
-                                    } else {
-                                        Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT);
-                                        loginAlertB.setMessage("Login failed");
-                                        loginAlertB.create().show();
-                                    }
-                                }
-                            });
+                    LoginAsyncTask loginTask = new LoginAsyncTask();
+                    loginTask.execute(email, password);
                 }
             }
         });
 
     }
+
+    @Override
+    protected void onDestroy() {
+        Log.v(LOG_TAG, "onDestory");
+        super.onDestroy();
+
+        unregisterReceiver(receiver);
+
+    }
+
 
     public void sendMessageForReg(View view) {
         Intent intent = new Intent(this, RegisterScreenActivity.class);

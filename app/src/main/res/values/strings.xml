@@ -2,6 +2,7 @@
     <string name="app_name_title">TUTOSAURUS</string>
     <string name="app_name">TutoSaurus</string>
     <string name="welcoming_message">Welcome to TutoSaurus !</string>
+    <string name="welcome_message_description">Dino welcome</string>
     <string name="instructions_message">Do not forget to sign up before logging in to the application.</string>
     <string name="email_ask">Enter Email</string>
     <string name="password_ask">Enter Password</string>
@@ -12,6 +13,13 @@
     <string name="reset_password_btn">RESET PASSWORD</string>
     <string name="request_email_password_reset">No worries! We just need the email you registered with and we\'ll send you
     the instructions.</string>
+    <string name="request_registered_email">"Enter your registered email id"</string>
+    <string name="reset_request_fail">Failed to send reset!</string>
+    <string name="reset_password_sent">"Instructions sent to your email!"</string>
+
+    <string name="check_connectivity">Check your internet connection</string>
+    <string name="status_not_connected">You are not connected to Internet!</string>
+    <string name="status_connected">No account yet? Sign up with Tequila!</string>
 
     <string name="btn_back"><![CDATA[<< Back]]></string>
 
@@ -20,8 +28,8 @@
     <string name="activity_register_name">Register</string>
     <string name="activity_confirmation_name">Confirmation</string>
     <string name="instructions_register">
-        Please fill the boxes below first then click on Register with Tequila.
-        You can finally click on Confirm if the login has been successfully done.</string>
+        Please fill the boxes below with your Gaspar account
+        and register with Tequila.</string>
     <string name="send_info_to_tequila">Confirm registration with Tequila</string>
 
     <string name="thanks_message1">Thank you for registering !</string>
