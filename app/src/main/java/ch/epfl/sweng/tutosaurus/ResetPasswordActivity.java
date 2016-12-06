@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(ResetPasswordActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
             }
         });
@@ -47,7 +51,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 String email = emailInput.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), R.string.request_registered_email, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -62,9 +66,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(ResetPasswordActivity.this, "Instructions sent to your email!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ResetPasswordActivity.this, R.string.reset_password_sent, Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(ResetPasswordActivity.this, "Failed to send reset!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ResetPasswordActivity.this, R.string.reset_request_fail, Toast.LENGTH_SHORT).show();
                         }
                         progressDialog.dismiss();
                     }
