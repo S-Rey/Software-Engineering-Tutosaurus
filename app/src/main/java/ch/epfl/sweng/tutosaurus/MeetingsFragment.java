@@ -132,8 +132,8 @@ public class MeetingsFragment extends Fragment {
                             Uri eventUri = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
 
                             // get the event ID that is the last element in the Uri
-                            long eventID = Long.parseLong(eventUri.getLastPathSegment());
-                            Log.d("Meetings Fragment", Long.toString(eventID));
+                            //long eventID = Long.parseLong(eventUri.getLastPathSegment());
+                            //Log.d("Meetings Fragment", Long.toString(eventID));
 
                         }
                         cursor.close();
