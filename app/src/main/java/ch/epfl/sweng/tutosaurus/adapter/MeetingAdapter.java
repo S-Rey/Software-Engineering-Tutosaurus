@@ -38,10 +38,10 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    protected String currentUserUid;
-    protected DatabaseHelper dbh = DatabaseHelper.getInstance();
-    protected Context context;
-    protected float meetingRating;
+    String currentUserUid;
+    DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private Context context;
+    private float meetingRating;
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.context = activity.getBaseContext();

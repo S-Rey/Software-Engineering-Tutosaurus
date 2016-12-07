@@ -51,8 +51,7 @@
             android:textSize="16sp"
             android:layout_marginTop="25dp"
             android:layout_below="@+id/recapMessage"
-            android:layout_marginStart="45dp"
-            android:layout_marginLeft="45dp" />
+            android:layout_marginStart="45dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,7 +62,6 @@
             android:textStyle="normal|bold"
             android:textSize="16sp"
             android:layout_below="@+id/firstNameProvided"
-            android:layout_alignLeft="@+id/firstNameProvided"
             android:layout_alignStart="@+id/firstNameProvided" />
 
         <TextView
@@ -75,14 +73,12 @@
             android:textStyle="normal|bold"
             android:textSize="16sp"
             android:layout_below="@+id/lastNameProvided"
-            android:layout_alignLeft="@+id/lastNameProvided"
             android:layout_alignStart="@+id/lastNameProvided" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/emailAddressProvided"
-            android:layout_alignLeft="@+id/emailAddressProvided"
             android:layout_alignStart="@+id/emailAddressProvided"
             android:layout_marginTop="11dp"
             android:id="@+id/sciperProvided"

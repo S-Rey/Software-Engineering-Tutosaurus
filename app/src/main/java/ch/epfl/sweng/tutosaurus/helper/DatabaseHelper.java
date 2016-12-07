@@ -19,13 +19,13 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class DatabaseHelper {
 
-    public final static String TAG = "DatabaseHelper";
+    private final static String TAG = "DatabaseHelper";
 
-    public static final String MEETING_PATH = "meeting/";
+    private static final String MEETING_PATH = "meeting/";
     public static final String USER_PATH = "user/";
-    public static final String COURSE_PATH = "course/";
+    private static final String COURSE_PATH = "course/";
     public static final String MEETING_REQUEST_PATH = "meetingRequests";
-    public static final String MEETING_PER_USER_PATH = "meetingsPerUser/";
+    private static final String MEETING_PER_USER_PATH = "meetingsPerUser/";
 
     private DatabaseReference dbf;
 
@@ -95,7 +95,7 @@ public class DatabaseHelper {
         courseRef.setValue(true);
     }
 
-    public String addMeeting(Meeting meeting) {
+    private String addMeeting(Meeting meeting) {
         String key = dbf.child(MEETING_PATH).push().getKey();
         meeting.setId(key);
         DatabaseReference meetingRef = dbf.child(MEETING_PATH).child(key);

@@ -29,7 +29,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:layout_below="@+id/main_email"
-        android:layout_alignRight="@+id/main_email"
+        android:layout_marginEnd="@+id/main_email"
         android:layout_alignEnd="@+id/main_email"
         android:id="@+id/main_password"
         android:hint="@string/password_ask"
@@ -49,7 +49,7 @@
         android:textColor="@android:color/holo_blue_dark"
         android:onClick="sendMessageForReg"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/main_password"
+        android:layout_marginEnd="@+id/main_password"
         android:layout_alignEnd="@+id/main_password" />
 
     <Button
@@ -63,7 +63,6 @@
         android:textAllCaps="false"
         android:textStyle="normal|bold|italic"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/main_password"
         android:layout_alignStart="@+id/main_password" />
 
     <TextView

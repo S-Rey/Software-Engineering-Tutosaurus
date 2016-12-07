@@ -32,7 +32,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 public class PublicProfileActivity extends AppCompatActivity {
 
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
-    public String curentUserUid;
+    private String curentUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

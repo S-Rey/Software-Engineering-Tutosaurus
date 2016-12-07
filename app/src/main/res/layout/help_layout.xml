@@ -55,7 +55,6 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:layout_below="@+id/clockMessagePhone"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <ImageView
@@ -67,7 +66,6 @@
         android:scaleX="3"
         android:scaleY="3"
         android:layout_below="@+id/helpMessagePhone"
-        android:layout_alignLeft="@+id/imageView3"
         android:layout_alignStart="@+id/imageView3"
         android:clickable="true"
         android:onClick="sendMessageForEmail"

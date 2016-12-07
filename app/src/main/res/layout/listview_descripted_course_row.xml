@@ -16,7 +16,7 @@
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:maxHeight="42dp"
             android:maxWidth="42dp"
             android:scaleType="fitCenter"
