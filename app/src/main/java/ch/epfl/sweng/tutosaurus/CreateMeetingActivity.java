@@ -89,7 +89,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
     }
 
 
-    public void showDateTimePickerDialog(View v) throws InterruptedException {
+    public void showDateTimePickerDialog(View v) {
         timePicker.show(getFragmentManager(), "timePicker");
         datePicker.show(getFragmentManager(), "datePicker");
 

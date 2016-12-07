@@ -105,7 +105,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
-    private static OAuth2Config readConfig() throws IOException {
+    private static OAuth2Config readConfig() {
         return new OAuth2Config(new String[]{"Tequila.profile"}, CLIENT_ID, CLIENT_KEY, REDIRECT_URI);
     }
 

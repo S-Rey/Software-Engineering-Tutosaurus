@@ -29,7 +29,7 @@ public class MainActivityTest {
             MainActivity.class);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),
                 mActivityRule.getActivity());
         /**wifi = (WifiManager) mActivityRule.getActivity().getSystemService(Context.WIFI_SERVICE);
@@ -38,7 +38,7 @@ public class MainActivityTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         solo.finishOpenedActivities();
         //wifi.setWifiEnabled(true);
     }
