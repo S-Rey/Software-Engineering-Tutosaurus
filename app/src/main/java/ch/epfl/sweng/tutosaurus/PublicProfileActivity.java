@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,8 +31,8 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class PublicProfileActivity extends AppCompatActivity {
 
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
-    public String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
+    public String curentUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,11 @@ public class PublicProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_public_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            curentUserUid = currentUser.getUid();
+        }
 
         Intent intent = getIntent();
         final String userId = intent.getStringExtra("USER_ID");

@@ -1,6 +1,5 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -73,7 +72,9 @@ public class RegisterScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_screen);
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setDisplayHomeAsUpEnabled(true);
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -92,7 +93,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
             editor.putString("lastName", profile.lastNames);
             editor.putString("email", profile.email);
             editor.putString("sciper", profile.sciper);
-            editor.commit();
+            editor.apply();
 
             intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
             intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);

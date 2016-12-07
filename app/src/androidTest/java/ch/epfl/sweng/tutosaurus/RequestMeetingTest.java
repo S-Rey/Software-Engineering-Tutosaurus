@@ -3,11 +3,7 @@ package ch.epfl.sweng.tutosaurus;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
-import android.support.v4.app.FragmentManager;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.TimePicker;
-
-import java.sql.Time;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 

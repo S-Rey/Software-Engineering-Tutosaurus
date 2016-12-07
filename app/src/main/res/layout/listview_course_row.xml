@@ -16,7 +16,7 @@
         android:scaleType="fitCenter"
         android:layout_weight="1"
         android:background="@null"
-        android:contentDescription="Course Picture"/>
+        android:contentDescription="@string/course_picture"/>
 
     <TextView android:id="@+id/courseName"
         android:layout_width="fill_parent"

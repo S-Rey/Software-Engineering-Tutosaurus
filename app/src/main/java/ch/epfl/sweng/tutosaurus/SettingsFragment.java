@@ -1,6 +1,5 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.*;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -21,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,7 +45,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     private static final int PROJECTION_ID_INDEX = 0;
     private static final int MY_PERMISSIONS_REQUEST_CALENDAR = 101;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
-    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private String currentUserUid;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -54,16 +54,26 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Settings");
         addPreferencesFromResource(R.xml.settings_preferences_layout);
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            currentUserUid = currentUser.getUid();
+        }
+
         // remove dividers
         View rootView = getView();
-        ListView list = (ListView) rootView.findViewById(android.R.id.list);
-        list.setDividerHeight(0);
-        list.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return (event.getAction() == MotionEvent.ACTION_MOVE);
-            }
-        });
-        list.setVerticalScrollBarEnabled(false);
+        ListView list = null;
+        if (rootView != null) {
+            list = (ListView) rootView.findViewById(android.R.id.list);
+        }
+        if (list != null) {
+            list.setDividerHeight(0);
+            list.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    return (event.getAction() == MotionEvent.ACTION_MOVE);
+                }
+            });
+            list.setVerticalScrollBarEnabled(false);
+        }
 
         //SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
         //syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
@@ -103,7 +113,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     private void synchronizeCalendar() {
         DatabaseReference ref = dbh.getReference();
-        ref.child("meetingsPerUser/" + currentUser).addValueEventListener(new ValueEventListener() {
+        ref.child("meetingsPerUser/" + currentUserUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 CheckBoxPreference calendar = (CheckBoxPreference) findPreference("checkbox_preference_calendar");

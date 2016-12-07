@@ -1,16 +1,11 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.v4.view.NestedScrollingChild;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 import ch.epfl.sweng.tutosaurus.model.Course;

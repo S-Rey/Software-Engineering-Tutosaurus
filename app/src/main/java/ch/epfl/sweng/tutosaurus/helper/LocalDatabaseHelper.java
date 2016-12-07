@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,13 +28,13 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     // table user
     public static final String TABLE_USER = "user";
-    public static final String COLUMN_USER_ID = "user_id";
-    public static final String COLUMN_USER_SCIPER = "user_sciper";
-    public static final String COLUMN_USER_USERNAME = "user_username";
-    public static final String COLUMN_USER_FULLNAME = "user_full_name";
-    public static final String COLUMN_USER_EMAIL = "user_email";
-    public static final String COLUMN_USER_PICTURE = "user_picture";
-    public static final String COLUMN_USER_GLOBAL_RATING = "user_global_rating";
+    private static final String COLUMN_USER_ID = "user_id";
+    private static final String COLUMN_USER_SCIPER = "user_sciper";
+    private static final String COLUMN_USER_USERNAME = "user_username";
+    private static final String COLUMN_USER_FULLNAME = "user_full_name";
+    private static final String COLUMN_USER_EMAIL = "user_email";
+    private static final String COLUMN_USER_PICTURE = "user_picture";
+    private static final String COLUMN_USER_GLOBAL_RATING = "user_global_rating";
 
     // create table of user
     private static final String CREATE_TABLE_USER = " CREATE TABLE " + TABLE_USER + "(" +
@@ -50,11 +48,11 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     // table courseé
     public static final String TABLE_COURSE = "course";
-    public static final String COLUMN_COURSE_NAME = "course_name";
-    public static final String COLUMN_COURSE_IS_TEACHED = "course_is_teached";
-    public static final String COLUMN_COURSE_IS_STUDIED = "course_is_studied";
-    public static final String COLUMN_COURSE_RATING = "course_rating";
-    public static final String COLUMN_COURSE_HOURS = "course_hours";
+    private static final String COLUMN_COURSE_NAME = "course_name";
+    private static final String COLUMN_COURSE_IS_TEACHED = "course_is_teached";
+    private static final String COLUMN_COURSE_IS_STUDIED = "course_is_studied";
+    private static final String COLUMN_COURSE_RATING = "course_rating";
+    private static final String COLUMN_COURSE_HOURS = "course_hours";
 
 
     // create table of course
@@ -67,7 +65,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
 
     public static final String TABLE_LANGUAGE = "language";
-    public static final String COLUMN_LANGUAGE_NAME = "language_name";
+    private static final String COLUMN_LANGUAGE_NAME = "language_name";
 
     // create table of langugage
     private static final String CREATE_TABLE_LANGUAGE = " CREATE TABLE " + TABLE_LANGUAGE + "(" +
@@ -108,8 +106,8 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
      * Save an User object into the database.
      *
      * also check for the profile picture (user = int, db = string)
-     * @param user
-     * @param db
+     * @param user the user to inject
+     * @param db the SQL database in which to inject the user
      */
     public static void insertUser(User user,SQLiteDatabase db) {
         if (user == null) {
@@ -148,7 +146,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
     private static void insertCourseTable(User user, SQLiteDatabase db) {
 
         // COURSE TABLE
-        Set<String> courseNames = new HashSet();
+        Set<String> courseNames = new HashSet<>();
         courseNames.addAll(user.getStudying().keySet());
         courseNames.addAll(user.getTeaching().keySet());
 

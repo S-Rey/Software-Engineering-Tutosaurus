@@ -37,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
     private NetworkChangeReceiver receiver;
     private TextView networkStatus;
 
-    public final static String TAG = "MainActivity";
+    private final static String TAG = "MainActivity";
 
     private EditText passwordEditText;
 
     private FirebaseAuth mAuth;
 
-    SQLiteOpenHelper dbHelper;
-    SQLiteDatabase database;
+    private SQLiteOpenHelper dbHelper;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         Button login = (Button) findViewById(R.id.connectionButton);
         Button bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
 
-        ArrayList<Button> buttons = new ArrayList<Button>();
+        ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(resetPasswordButton);
         buttons.add(registerButton);
         buttons.add(login);

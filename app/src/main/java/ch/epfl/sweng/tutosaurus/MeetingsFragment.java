@@ -13,14 +13,13 @@ import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,18 +29,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
-import ch.epfl.sweng.tutosaurus.adapter.MeetingRatingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class MeetingsFragment extends Fragment {
 
     private static final int MY_PERMISSIONS_REQUEST_CALENDAR = 100;
-    View myView;
+    private View myView;
     private MeetingAdapter adapter;
-    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
-    public static final String[] EVENT_PROJECTION = new String[] {
+    private String currentUserUid;
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
             CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
             CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
@@ -58,8 +56,13 @@ public class MeetingsFragment extends Fragment {
         myView = inflater.inflate(R.layout.meetings_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Meetings");
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            currentUserUid = currentUser.getUid();
+        }
+
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
-        Query ref = dbh.getMeetingsRefForUser(currentUser);
+        Query ref = dbh.getMeetingsRefForUser(currentUserUid);
         long lastWeekInMillis = System.currentTimeMillis() + 59958140730000L - (86400 * 7 * 1000);
         ref = ref.orderByChild("date/time").startAt(lastWeekInMillis);
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);
@@ -79,7 +82,7 @@ public class MeetingsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         DatabaseReference ref = dbh.getReference();
-        ref.child("meetingsPerUser/" + currentUser).addValueEventListener(new ValueEventListener() {
+        ref.child("meetingsPerUser/" + currentUserUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());

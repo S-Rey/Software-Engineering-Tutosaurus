@@ -66,7 +66,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         return false;
     }
 
-    public boolean isConnected() {
+    private boolean isConnected() {
         return isConnected;
     }
 
@@ -74,7 +74,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         if (buttons == null) {
             throw new IllegalArgumentException("null reference to buttons to manage");
         } else if (!buttons.isEmpty()) {
-            buttonsToManage = new ArrayList<Button>(buttons);
+            buttonsToManage = new ArrayList<>(buttons);
         }
     }
 

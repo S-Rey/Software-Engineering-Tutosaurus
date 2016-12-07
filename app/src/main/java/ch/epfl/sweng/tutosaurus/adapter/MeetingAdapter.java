@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,14 +18,13 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,13 +42,17 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    protected String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    protected String currentUserUid;
     protected DatabaseHelper dbh = DatabaseHelper.getInstance();
     protected Context context;
     protected float meetingRating;
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.context = activity.getBaseContext();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            currentUserUid = currentUser.getUid();
+        }
     }
 
     @Override
@@ -82,7 +84,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 String displayParticipant = "";
                 for (String participant: participants) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        if (!userSnapshot.getKey().equals(currentUser) && userSnapshot.getKey().equals(participant)) {
+                        if (!userSnapshot.getKey().equals(currentUserUid) && userSnapshot.getKey().equals(participant)) {
                             User user = userSnapshot.getValue(User.class);
                             if (displayParticipant == null) {
                                 displayParticipant = user.getFullName();
@@ -180,7 +182,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                     meetingRating = rating.getRating();
                                     Log.d("Meeting Adapter", Float.toString(meetingRating));
                                     meeting.setRated(true);
-                                    dbh.setRating(currentUser, meetingRating);
+                                    dbh.setRating(currentUserUid, meetingRating);
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("Cancel",

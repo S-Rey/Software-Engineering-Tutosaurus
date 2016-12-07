@@ -11,8 +11,8 @@ import android.os.SystemClock;
 
 public class MockLocationProvider {
 
-    String providerName;
-    Context context;
+    private String providerName;
+    private Context context;
 
 
     public MockLocationProvider(String name, Context context) {

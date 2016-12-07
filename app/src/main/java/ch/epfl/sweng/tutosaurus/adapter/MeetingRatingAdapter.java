@@ -2,15 +2,11 @@ package ch.epfl.sweng.tutosaurus.adapter;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,15 +16,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import ch.epfl.sweng.tutosaurus.LocationActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
-
-import static android.R.attr.name;
-import static android.R.attr.targetActivity;
 
 
 /**
@@ -96,7 +88,7 @@ public class MeetingRatingAdapter extends MeetingAdapter {
                 String displayParticipant = "";
                 for (String participant: participants) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        if (!userSnapshot.getKey().equals(currentUser) && userSnapshot.getKey().equals(participant)) {
+                        if (!userSnapshot.getKey().equals(currentUserUid) && userSnapshot.getKey().equals(participant)) {
                             User user = userSnapshot.getValue(User.class);
                             if (displayParticipant == null) {
                                 displayParticipant = user.getFullName();

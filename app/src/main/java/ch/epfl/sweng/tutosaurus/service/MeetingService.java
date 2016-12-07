@@ -28,7 +28,7 @@ import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 public class MeetingService extends Service {
 
-    public static final String TAG = "MeetingService";
+    private static final String TAG = "MeetingService";
 
     private String currentEmail;
     private int numNewRequests = 0;

@@ -64,8 +64,8 @@ dependencies {
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     compile 'com.android.support:appcompat-v7:25.0.1'
-    testCompile 'org.mockito:mockito-core:1.+'
-    androidTestCompile 'org.mockito:mockito-core:1.+'
+    testCompile 'org.mockito:mockito-core:2.2.29'
+    androidTestCompile 'org.mockito:mockito-core:2.2.29'
     androidTestCompile "com.google.dexmaker:dexmaker:1.2"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
 }

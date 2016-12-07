@@ -3,7 +3,6 @@ package ch.epfl.sweng.tutosaurus;
 import org.junit.Test;
 
 import ch.epfl.sweng.tutosaurus.model.Course;
-import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
 import static org.junit.Assert.assertEquals;
 

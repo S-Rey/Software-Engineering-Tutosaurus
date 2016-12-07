@@ -9,7 +9,7 @@ import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
  */
 
 public class OAuth2ConfigTest {
-    String[] scopes = new String[0];
+    private String[] scopes = new String[0];
 
     @Test
     public void createEmptyScopesConfigWorks(){
