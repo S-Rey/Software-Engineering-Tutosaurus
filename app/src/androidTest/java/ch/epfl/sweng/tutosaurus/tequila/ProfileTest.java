@@ -7,11 +7,6 @@ import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by Stephane on 11/17/2016.
- */
-
-
 public class ProfileTest {
     private final String firstName = "Donald Muriel";
     private final String lastName = "Trump";

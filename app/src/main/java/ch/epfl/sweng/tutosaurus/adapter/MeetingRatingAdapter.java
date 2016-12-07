@@ -22,11 +22,6 @@ import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-
-/**
- * Created by santo on 29/11/16.
- */
-
 public class MeetingRatingAdapter extends MeetingAdapter {
 
     private float ratingToSubmit;

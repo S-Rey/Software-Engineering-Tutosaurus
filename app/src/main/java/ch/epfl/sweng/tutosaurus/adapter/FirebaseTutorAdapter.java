@@ -1,6 +1,6 @@
 package ch.epfl.sweng.tutosaurus.adapter;
 
-        import android.app.Activity;
+import android.app.Activity;
         import android.content.Intent;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
@@ -20,10 +20,6 @@ package ch.epfl.sweng.tutosaurus.adapter;
         import ch.epfl.sweng.tutosaurus.PublicProfileActivity;
         import ch.epfl.sweng.tutosaurus.R;
         import ch.epfl.sweng.tutosaurus.model.User;
-
-/**
- * Created by albertochiappa on 01/11/16.
- */
 
 public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
 

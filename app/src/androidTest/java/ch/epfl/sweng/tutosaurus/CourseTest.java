@@ -6,10 +6,6 @@ import ch.epfl.sweng.tutosaurus.model.Course;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by albertochiappa on 27/11/16.
- */
-
 public class CourseTest {
     @Test
     public void testConstructors() {

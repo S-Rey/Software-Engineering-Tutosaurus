@@ -5,10 +5,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.SystemClock;
 
-/**
- * Created by santo on 26/11/16.
- */
-
 public class MockLocationProvider {
 
     private String providerName;

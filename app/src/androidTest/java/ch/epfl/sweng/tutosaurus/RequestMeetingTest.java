@@ -15,9 +15,6 @@ import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
-/**
- * Created by albertochiappa on 27/11/16.
- */
 
 public class RequestMeetingTest extends ActivityInstrumentationTestCase2<MainActivity> {
     public RequestMeetingTest() {

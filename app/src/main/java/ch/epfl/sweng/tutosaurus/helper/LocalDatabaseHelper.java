@@ -13,10 +13,6 @@ import java.util.Set;
 
 import ch.epfl.sweng.tutosaurus.model.User;
 
-/**
- * Created by samuel on 06.11.16.
- */
-
 public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
 

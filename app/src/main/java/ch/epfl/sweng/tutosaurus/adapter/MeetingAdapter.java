@@ -36,10 +36,6 @@ import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-/**
- * Created by ubervison on 10/28/16.
- */
-
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
     protected String currentUserUid;

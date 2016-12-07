@@ -17,10 +17,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.not;
 
-/**
- * Created by albertochiappa on 26/11/16.
- */
-
 public class SearchByNameTest extends ActivityInstrumentationTestCase2<MainActivity> {
     public SearchByNameTest() {
         super(MainActivity.class);

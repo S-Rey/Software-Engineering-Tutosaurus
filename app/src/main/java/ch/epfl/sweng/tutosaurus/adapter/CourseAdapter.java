@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 
-/**
- * Created by albertochiappa on 24/11/16.
- */
-
 public class CourseAdapter extends ArrayAdapter<Course> {
     private Context context;
     private int layoutResourceId;

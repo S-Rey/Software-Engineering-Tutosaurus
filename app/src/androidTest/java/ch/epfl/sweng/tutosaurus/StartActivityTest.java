@@ -21,10 +21,6 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
 
-/**
- * Created by ubervison on 28.11.16.
- */
-
 @RunWith(AndroidJUnit4.class)
 public class StartActivityTest {
 

@@ -15,11 +15,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
 
-/**
- * Created by albertochiappa on 26/11/16.
- */
-
-
 public class ShowFullTutorListTest extends ActivityInstrumentationTestCase2<MainActivity> {
     public ShowFullTutorListTest() {
         super(MainActivity.class);

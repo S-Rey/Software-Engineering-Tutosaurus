@@ -1,10 +1,6 @@
 package ch.epfl.sweng.tutosaurus.Tequila;
 
 /**
- * Created by Stephane on 10/24/2016.
- */
-
-/**
  * Tequila user profile information.
  *
  * @author Solal Pirelli

@@ -10,10 +10,6 @@ import java.util.Calendar;
 
 import static android.app.DatePickerDialog.*;
 
-/**
- * Created by santo on 14/11/16.
- */
-
 public class DatePickerFragment extends DialogFragment
         implements OnDateSetListener {
 

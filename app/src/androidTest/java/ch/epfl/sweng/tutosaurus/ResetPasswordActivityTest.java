@@ -17,10 +17,6 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Stephane on 11/27/2016.
- */
-
 @RunWith(AndroidJUnit4.class)
 public class ResetPasswordActivityTest {
 

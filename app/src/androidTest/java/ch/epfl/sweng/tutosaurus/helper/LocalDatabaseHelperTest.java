@@ -17,10 +17,6 @@ import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
-/**
- * Created by samuel on 29.11.16.
- */
-
 @RunWith(AndroidJUnit4.class)
 public class LocalDatabaseHelperTest {
 
