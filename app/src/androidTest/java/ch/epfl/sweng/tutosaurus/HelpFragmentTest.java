@@ -77,7 +77,7 @@ public class HelpFragmentTest {
 
     @Test
     public void testCall() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1000);
         Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_CALL);
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onView(withId(R.id.phoneLogo)).perform(click());
@@ -86,7 +86,7 @@ public class HelpFragmentTest {
 
     @Test
     public void testMessage() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1000);
         Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_SEND);
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onView(withId(R.id.messageLogo)).perform(click());
