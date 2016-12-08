@@ -64,14 +64,15 @@ public class HelpFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_help_layout));
     }
 
-//    @Test
-//    public void testCall() throws InterruptedException {
-//        Thread.sleep(500);
-//        Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_CALL);
-//        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
-//        onView(withId(R.id.phoneLogo)).perform(click());
-//        intended(expectedIntent);
-//    }
+    //Can't test the ACTION_CALL intent sending on jenkins because it doesn't allow apps to use the cell phone functionality
+    //@Test
+    public void testCall() throws InterruptedException {
+        Thread.sleep(500);
+        Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_CALL);
+        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
+        onView(withId(R.id.phoneLogo)).perform(click());
+        intended(expectedIntent);
+    }
 
     @Test
     public void testMessage() throws InterruptedException {
