@@ -64,7 +64,7 @@ public class HelpFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_help_layout));
     }
 
-    @Test
+    //@Test
     public void testCall() throws InterruptedException {
         Thread.sleep(500);
         Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_CALL);
