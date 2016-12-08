@@ -86,11 +86,6 @@ public class CreateMeetingActivity extends AppCompatActivity {
     public void showDateTimePickerDialog(View v) throws InterruptedException {
         timePicker.show(getFragmentManager(), "timePicker");
         datePicker.show(getFragmentManager(), "datePicker");
-
-        TextView dateTimeView = (TextView) findViewById(R.id.dateTime);
-        dateTimeView.setVisibility(View.VISIBLE);
-        String date = datePicker.getDate() + " h " + timePicker.getTime();
-        dateTimeView.setText(date);
     }
 
 
@@ -143,15 +138,18 @@ public class CreateMeetingActivity extends AppCompatActivity {
                 meeting.setDate(dateMeeting);
                 meeting.setCourse(courseMeeting);
 
-                MeetingRequest request = new MeetingRequest();
-                request.setFrom(currentUser);
-                request.setAccepted(false);
-                request.setMeeting(meeting);
-                request.setType("received");
-                dbh.requestMeeting(request, teacherId);
-                if (dateMeeting.getYear() == -1) {
+                if (courseMeeting == null) {
+                    Toast.makeText(getBaseContext(), "Course not selected", Toast.LENGTH_LONG).show();
+                } else if (dateMeeting.getYear() == -1) {  //TODO: <= getCurrentDate
                     Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
                 } else {
+                    MeetingRequest request = new MeetingRequest();
+                    request.setFrom(currentUser);
+                    request.setAccepted(false);
+                    request.setMeeting(meeting);
+                    request.setType("received");
+                    dbh.requestMeeting(request, teacherId);
+
                     Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getBaseContext(), StartActivity.class);
                     startActivity(intent);

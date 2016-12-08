@@ -6,11 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,9 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +43,8 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     protected DatabaseHelper dbh = DatabaseHelper.getInstance();
     protected Context context;
     protected float meetingRating;
+    private User otherUser;
+
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.context = activity.getBaseContext();
@@ -57,19 +54,13 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     protected void populateView(final View mainView, final Meeting meeting, int position) {
 
         if (meeting.getCourse() != null) {
-            //TextView subject = (TextView) mainView.findViewById(R.id.subjectMeeting);
-            //subject.setText(meeting.getCourse().getName());
-            LinearLayout subjectMeeting = (LinearLayout) mainView.findViewById(R.id.subjectMeeting);
             FullCourseList allCourses = FullCourseList.getInstance();
             Course courseMeeting = allCourses.getCourse(meeting.getCourse().getId());
 
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View view  = inflater.inflate(R.layout.listview_course_row, subjectMeeting, false);
-            ImageView coursePicture = (ImageView) view.findViewById(R.id.coursePicture);
+            TextView subject = (TextView) mainView.findViewById(R.id.courseName);
+            subject.setText(meeting.getCourse().getName());
+            ImageView coursePicture = (ImageView) mainView.findViewById(R.id.coursePicture);
             coursePicture.setImageResource(courseMeeting.getPictureId());
-            TextView courseName = (TextView) view.findViewById(R.id.courseName);
-            courseName.setText(courseMeeting.getName());
-            subjectMeeting.addView(view);
         }
 
         final TextView otherParticipantView = (TextView) mainView.findViewById(R.id.otherParticipantMeeting);
@@ -83,11 +74,11 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 for (String participant: participants) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         if (!userSnapshot.getKey().equals(currentUser) && userSnapshot.getKey().equals(participant)) {
-                            User user = userSnapshot.getValue(User.class);
+                            otherUser = userSnapshot.getValue(User.class);
                             if (displayParticipant == null) {
-                                displayParticipant = user.getFullName();
+                                displayParticipant = otherUser.getFullName();
                             } else {
-                                displayParticipant = displayParticipant + "\n" + user.getFullName();
+                                displayParticipant = displayParticipant + "\n" + otherUser.getFullName();
                             }
                             otherParticipantView.setText(displayParticipant);
                         }
@@ -149,8 +140,8 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         else if(meeting.isRated()) {
             detailsMeeting.setVisibility(View.GONE);
             RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
-            ratingBar.setVisibility(View.VISIBLE);
-            ratingBar.setRating(meetingRating);
+            //ratingBar.setVisibility(View.VISIBLE);
+            //ratingBar.setRating(meetingRating);
         }
         else {
             detailsMeeting.setText("Rate");
@@ -169,7 +160,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                             ActionBar.LayoutParams.MATCH_PARENT));
                     parent.addView(rating);
 
-                    // popDialog.setIcon(android.R.drawable.btn_star_big_on);
                     ratingDialog.setTitle("Rate this meeting");
                     ratingDialog.setView(parent);
 
@@ -178,9 +168,14 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     meetingRating = rating.getRating();
-                                    Log.d("Meeting Adapter", Float.toString(meetingRating));
                                     meeting.setRated(true);
-                                    dbh.setRating(currentUser, meetingRating);
+                                    dbh.setMeetingRated(currentUser, otherUser.getUid(), meeting.getId());
+                                    int numRatings = otherUser.getNumRatings();
+                                    float globalRating = otherUser.getGlobalRating();
+                                    globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
+                                    dbh.setRating(otherUser.getUid(), globalRating);
+                                    dbh.setNumRatings(otherUser.getUid(), numRatings + 1);
+
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("Cancel",

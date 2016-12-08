@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -30,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
-import ch.epfl.sweng.tutosaurus.adapter.MeetingRatingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 
@@ -48,7 +48,6 @@ public class MeetingsFragment extends Fragment {
             CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
     };
 
-    // The indices for the projection array above.
     private static final int PROJECTION_ID_INDEX = 0;
 
 
@@ -85,10 +84,10 @@ public class MeetingsFragment extends Fragment {
                 SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
                 boolean syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
                 if (syncCalendar) {
-                    for (DataSnapshot meetingSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot meetingSnapshot : snapshot.getChildren()) {;
                         Meeting meeting = meetingSnapshot.getValue(Meeting.class);
-                        long startMillis = 0;
-                        long endMillis = 0;
+                        long startMillis;
+                        long endMillis;
 
                         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
 
@@ -104,40 +103,42 @@ public class MeetingsFragment extends Fragment {
                             }
 
                         }
-                        //Log.d("Meetings Fragment", "ciao");
                         Calendar beginTime = Calendar.getInstance();
-                        Calendar endTime = Calendar.getInstance();
-                        if (meeting.getDate() != null) {
-                            beginTime.setTime(meeting.getDate());
-                            startMillis = beginTime.getTimeInMillis();
-                            endTime.setTime(meeting.getDate());
-                            //endTime.add(Calendar.HOUR, 2); //TODO: fix duration and create a calendar
-                            endMillis = endTime.getTimeInMillis();
-                        }
+                        beginTime.setTime(meeting.getDate());
+                        startMillis = beginTime.getTimeInMillis();
+                        long duration = meeting.getDuration()*60*60*1000 + 60*1000*60; //TODO: fix duration and create a calendar
 
-                        long calID;
                         ContentResolver contentResolver = getActivity().getContentResolver();
-                        Uri uri = CalendarContract.Calendars.CONTENT_URI;
-                        Cursor cursorCalendarID = contentResolver.query(uri, EVENT_PROJECTION, null, null, null);
-                        while (cursorCalendarID.moveToNext()) {
-                            calID = cursorCalendarID.getLong(PROJECTION_ID_INDEX);
+
+                        Uri calendarUri = CalendarContract.Calendars.CONTENT_URI;
+                        Cursor cursor = contentResolver.query(calendarUri, EVENT_PROJECTION, null, null, null);
+                        long calId;
+                        if (cursor.moveToFirst()) {
+                            calId = cursor.getLong(PROJECTION_ID_INDEX);
+                            Log.d("Meetings Fragment", Long.toString(calId));
                             ContentValues values = new ContentValues();
                             values.put(CalendarContract.Events.DTSTART, startMillis);
-                            values.put(CalendarContract.Events.DTEND, endMillis);
-                            values.put(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                            if (meeting.getCourse() != null) {
-                                values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                            }
+                            values.put(CalendarContract.Events.DURATION, duration);
+                            values.put(CalendarContract.Events.EVENT_TIMEZONE, CalendarContract.Calendars.CALENDAR_TIME_ZONE);
+                            values.put(CalendarContract.Events.TITLE, meeting.getCourse().getName());
                             if (meeting.getDescription() != null) {
                                 values.put(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
                             }
                             if (meeting.getNameLocation() != null) {
                                 values.put(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
                             }
-                            values.put(CalendarContract.Events.CALENDAR_ID, calID);
-                            Uri newEvent = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+                            values.put(CalendarContract.Events.CALENDAR_ID, calId);
+                            Log.d("Meetings Fragment", values.toString());
+                            Uri eventUri = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+
+                            // get the event ID that is the last element in the Uri
+                            long eventID = Long.parseLong(eventUri.getLastPathSegment());
+                            Log.d("Meetings Fragment", Long.toString(eventID));
+
                         }
+                        cursor.close();
                     }
+
                 }
             }
 
@@ -147,6 +148,21 @@ public class MeetingsFragment extends Fragment {
             }
 
         });
+    }
+
+
+    public boolean isEventInCal(Context context, String cal_meeting_id) {
+        Cursor cursor = context.getContentResolver().query(
+                Uri.parse("content://com.android.calendar/events"),
+                new String[] { "_id" }, " _id = ? ",
+                new String[] { cal_meeting_id }, null);
+
+        if (cursor.moveToFirst()) {
+            // will give all events
+            return true;
+        }
+
+        return false;
     }
 
 }
