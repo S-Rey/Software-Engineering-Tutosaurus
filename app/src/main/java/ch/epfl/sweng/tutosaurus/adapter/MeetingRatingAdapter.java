@@ -70,8 +70,7 @@ public class MeetingRatingAdapter extends MeetingAdapter {
                     });
                 }
             });
-
-            }
+        }
 
 
         final TextView otherParticipantView = (TextView) mainView.findViewById(R.id.otherParticipantMeeting);
@@ -110,8 +109,6 @@ public class MeetingRatingAdapter extends MeetingAdapter {
             String dateNewFormat = dateFormat.format(meeting.getDate());
             date.setText(dateNewFormat);
         }
-
-
     }
 
 
