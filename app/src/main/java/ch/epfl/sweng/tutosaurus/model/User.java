@@ -23,7 +23,7 @@ public class User implements Identifiable {
     private Map<String, Double> ratings = new HashMap<>(); /* (course id -> globalRating) */
     private Map<String, Integer> totalHoursTaught = new HashMap<>(); /* (course id -> hours taught */
 
-    private double globalRating;
+    private float globalRating;
     private int numRatings;
 
     /**
@@ -96,7 +96,7 @@ public class User implements Identifiable {
      * @param globalRating the user's globalRating between 0 and 1
      * @throws IllegalArgumentException if the globalRating is not comprised between 0 and 1
      */
-    public void setGlobalRating(double globalRating){
+    public void setGlobalRating(float globalRating){
         if(globalRating > 5.0 || globalRating < 0) {
             throw new IllegalArgumentException("The globalRating should be between 0 and 5");
         } else {
@@ -140,7 +140,7 @@ public class User implements Identifiable {
      * Returns this user's teacher globalRating.
      * @return the globalRating of the user
      */
-    public double getGlobalRating() {
+    public float getGlobalRating() {
         return this.globalRating;
     }
 
@@ -293,4 +293,12 @@ public class User implements Identifiable {
     }
 
     public void setCoursePresentation(Map<String, String> coursePresentation) {this.coursePresentation = coursePresentation;}
+
+    public int getNumRatings() {
+        return numRatings;
+    }
+
+    public void setNumRatings(int numRatings) {
+        this.numRatings = numRatings;
+    }
 }

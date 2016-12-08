@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/sciperNumber"
+        android:id="@+id/findTutorMessage"
         android:text="How do you want to find your tutor?"
         android:textSize="18dp"
         android:padding="10dp"

@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -41,6 +42,11 @@ public class TimePickerFragment extends DialogFragment
     public void onTimeSet(TimePicker view, int hour, int minute) {
         meetingHour = hour;
         meetingMinutes = minute;
+
+        TextView timeView = (TextView) getActivity().findViewById(R.id.timeView);
+        timeView.setVisibility(View.VISIBLE);
+        String date = "   h " + getTime();
+        timeView.setText(date);
     }
 
 

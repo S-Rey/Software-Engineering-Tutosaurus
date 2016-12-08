@@ -71,8 +71,12 @@ public class DatabaseHelper {
 
     public void setRating(String userId, float globalRating) {
         DatabaseReference userRatingRef = dbf.child(USER_PATH + userId + "/globalRating/");
-        //TODO: add the numRating, by now globalRating is the last rating
         userRatingRef.setValue(globalRating);
+    }
+
+    public void setNumRatings(String userId, int numRatings) {
+        DatabaseReference userNumRatingRef = dbf.child(USER_PATH + userId + "/numRatings/");
+        userNumRatingRef.setValue(numRatings);
     }
 
     public void addTeacherToCourse(String userId, String courseId) {
@@ -163,7 +167,7 @@ public class DatabaseHelper {
         chatIdFromRef.child(toUid).setValue(fromChat);
         chatIdToRef.child(fromUid).setValue(toChat);
 
-        DatabaseReference messageFromRef = dbf.child("messages/" + fromUid + "/" +toUid);
+        DatabaseReference messageFromRef = dbf.child("messages/" + fromUid + "/" + toUid);
         DatabaseReference messageToRef = dbf.child("messages/" + toUid + "/" + fromUid);
 
         String key = messageFromRef.push().getKey();
@@ -201,4 +205,11 @@ public class DatabaseHelper {
         return meetingId;
     }
 
+    public void setMeetingRated(String userId, String otherUserId, String meetingId) {
+        DatabaseReference meetingsPerUserCurrentUserRef = dbf.child(MEETING_PER_USER_PATH + userId +"/" + meetingId + "/rated/");
+        meetingsPerUserCurrentUserRef.setValue(true);
+
+        DatabaseReference meetingsPerUserOtherUserRef = dbf.child(MEETING_PER_USER_PATH + otherUserId +"/" + meetingId + "/rated/");
+        meetingsPerUserOtherUserRef.setValue(true);
+    }
 }
