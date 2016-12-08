@@ -49,7 +49,7 @@ public class LocalDatabaseHelperTest {
         albert.setFullName("Albert Einstein");
         albert.setEmail("albert.einstein@epfl.ch");
         albert.setUid("uid");
-        albert.setGlobalRating(1.0);
+        albert.setGlobalRating(1.0F);
         albert.setPicture(0);
         // Course
         albert.addTeaching("Physics");

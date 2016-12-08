@@ -151,6 +151,22 @@ public class HomeScreenActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
+        Intent intent = getIntent();
+        if (intent.getAction() != null) {
+            if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
+            }
+            if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
+            }
+
+            if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
+            }
+        }
         Log.d(TAG, "Resumed!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
@@ -234,8 +250,6 @@ public class HomeScreenActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
         } else if (id == R.id.nav_meetings_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
-        } else if (id == R.id.nav_db_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new DatabaseFragment()).commit();
         } else if (id == R.id.nav_messaging_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
         }

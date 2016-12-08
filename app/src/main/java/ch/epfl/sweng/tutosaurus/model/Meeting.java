@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Meeting {
 
-    private  String id;
+    private String id;
     private Date date;
     private String nameLocation;
     private double latitudeLocation;

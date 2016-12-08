@@ -55,7 +55,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
     private Dialog authDialog;
     private WebView webViewOauth;
-    Button sendButton;
 
     private static OAuth2Config config;
     private static Map<String, String> tokens;

@@ -43,6 +43,11 @@ public class DatePickerFragment extends DialogFragment
         meetingDay = dayOfMonth;
         meetingMonth = month;
 
+        TextView dateView = (TextView) getActivity().findViewById(R.id.dateView);
+        dateView.setVisibility(View.VISIBLE);
+        String date = getDate();
+        dateView.setText("  " + date);
+
     }
 
 
