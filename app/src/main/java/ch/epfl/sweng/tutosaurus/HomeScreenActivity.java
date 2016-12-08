@@ -141,8 +141,6 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-
-
     @Override
     public void onRestart() {
         super.onRestart();
@@ -307,8 +305,6 @@ public class HomeScreenActivity extends AppCompatActivity
         };
         changePasswordButton.setOnClickListener(changePassClick);
     }
-
-
 
     void setPassTabToOpen(View v){
         EditText changePassField = (EditText) v.findViewById(R.id.chooseNewPass);
