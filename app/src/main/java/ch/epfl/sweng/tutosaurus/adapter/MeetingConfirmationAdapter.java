@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
@@ -55,7 +56,7 @@ public class MeetingConfirmationAdapter extends FirebaseListAdapter<MeetingReque
 
             }
         });
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm", Locale.FRENCH);
         if (request.getMeeting().getNameLocation() != null) {
             location.setText(request.getMeeting().getNameLocation());
         }

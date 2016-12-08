@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ch.epfl.sweng.tutosaurus.LocationActivity;
 import ch.epfl.sweng.tutosaurus.R;
@@ -102,7 +103,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
         TextView date = (TextView) mainView.findViewById(R.id.dateMeeting);
         if (meeting.getDate() != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm", Locale.FRENCH);
             String dateNewFormat = dateFormat.format(meeting.getDate());
             date.setText(dateNewFormat);
         }
