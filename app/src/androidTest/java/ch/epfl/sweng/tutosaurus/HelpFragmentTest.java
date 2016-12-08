@@ -64,14 +64,14 @@ public class HelpFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_help_layout));
     }
 
-    @Test
-    public void testCall() throws InterruptedException {
-        Thread.sleep(500);
-        Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_CALL);
-        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
-        onView(withId(R.id.phoneLogo)).perform(click());
-        intended(expectedIntent);
-    }
+//    @Test
+//    public void testCall() throws InterruptedException {
+//        Thread.sleep(500);
+//        Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_CALL);
+//        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
+//        onView(withId(R.id.phoneLogo)).perform(click());
+//        intended(expectedIntent);
+//    }
 
     @Test
     public void testMessage() throws InterruptedException {
