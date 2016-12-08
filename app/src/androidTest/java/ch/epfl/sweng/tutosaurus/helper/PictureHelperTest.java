@@ -19,6 +19,7 @@ import java.io.IOException;
 import ch.epfl.sweng.tutosaurus.MainActivity;
 import ch.epfl.sweng.tutosaurus.R;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 
@@ -40,13 +41,13 @@ public class PictureHelperTest {
         icon = BitmapFactory.decodeResource(
                 mActivityRule.getActivity().getApplicationContext().getResources(),
                 R.drawable.einstein);
-        PictureHelper.storePicLocal(mActivityRule.getActivity(), "test", icon);
+        PictureHelper.storePicLocal(mActivityRule.getActivity(), "profile", icon);
     }
     @After
     public void tearDown () {
         String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath()
                 + File.separator + "pictures";
-        File file = new File(dirPath + "/test.jpg");
+        File file = new File(dirPath + "/profile.jpg");
         file.delete();
     }
 
@@ -54,18 +55,49 @@ public class PictureHelperTest {
     // The loaded picture == the stored one
     @Test
     public void loadLocalExistingPicTest() {
-        Bitmap loadPic = PictureHelper.loadPictureLocal(mActivityRule.getActivity(), "test");
+        Bitmap loadPic = PictureHelper.loadPictureLocal(mActivityRule.getActivity(), "profile");
         assertNotNull(loadPic);
         assert(loadPic.sameAs(icon));
     }
 
     // Return Null if image does not exist
     @Test
-    public void loadLocalFalsePicTest () {
+    public void loadLocalFalsePicTest() {
         assertNull(PictureHelper.loadPictureLocal(mActivityRule.getActivity(), "wrongName"));
     }
 
-    //@Test
+    @Test
+    public void loadLocalNullPicTest() {
+        assertNull(PictureHelper.loadPictureLocal(mActivityRule.getActivity(), null));
+    }
 
+    // Test if storePicLocal create a folder
+    @Test
+    public void storePicLocalNewDirTest() {
+        String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath() + File.separator + "pictures";
+        File projDir = new File(dirPath);
+        projDir.delete();
+
+        PictureHelper.storePicLocal(mActivityRule.getActivity(), "profile", icon);
+        projDir = new File(dirPath);
+        assert(projDir.exists());
+    }
+
+    @Test
+    public void storePictureOnlineTest() {
+        String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath() + File.separator + "pictures";
+        PictureHelper.storePictureOnline(dirPath+"/profile.jpg", "test/profile.jpg");
+    }
+
+    @Test
+    public void firstMethodToStoreProfilePictureOnlineTest() {
+        String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath() + File.separator + "pictures";
+        PictureHelper.storePicOnline(dirPath+"/profile.jpg", "000000");
+    }
+
+    @Test
+    public void secondMethodStoreFalsePictureOnlineTest() throws FileNotFoundException {
+        PictureHelper.storeProfilePicOnline(mActivityRule.getActivity(), "000000");
+    }
 
 }
