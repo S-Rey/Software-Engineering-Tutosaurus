@@ -39,8 +39,11 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
         }
         // remove dividers
         View rootView = getView();
-        ListView list = (ListView) rootView.findViewById(android.R.id.list);
-        list.setDividerHeight(0);
+        ListView list;
+        if (rootView != null) {
+            list = (ListView) rootView.findViewById(android.R.id.list);
+            list.setDividerHeight(0);
+        }
 
         courses = FullCourseList.getInstance().getListOfCourses();
         for (Course course: courses) {
