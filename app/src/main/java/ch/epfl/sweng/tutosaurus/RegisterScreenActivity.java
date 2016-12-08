@@ -110,11 +110,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
     }
 
     private static void getConfig() {
-        try {
-            config = readConfig();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        config = readConfig();
     }
 
     private static void getAccessToken(OAuth2Config config, String code) {
