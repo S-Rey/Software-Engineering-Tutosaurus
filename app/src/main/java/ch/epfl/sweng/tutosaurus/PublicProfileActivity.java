@@ -76,7 +76,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                 // Set profile picture
                 final ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
                 StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-//                Log.d(TAG, "tutor: " +tutor.getSciper() + " " + tutor.getFullName());
+                // Log.d(TAG, "tutor: " +tutor.getSciper() + " " + tutor.getFullName());
                 StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getSciper()+".png");
                 picRef.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override

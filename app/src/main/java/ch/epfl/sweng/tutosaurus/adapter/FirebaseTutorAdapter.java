@@ -49,23 +49,6 @@ public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
                 v.getContext().startActivity(intent);
             }
         });
-
-        /*StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-        Log.d(TAG, "tutor: " +tutor.getSciper() + " " + tutor.getFullName());
-        StorageReference picRef = storageRef.child("profilePictures").child(tutor.getSciper()+".png");
-        picRef.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap pic = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                profilePicture.setImageBitmap(pic);
-                Log.d(TAG, "success");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "failure");
-            }
-        });*/
     }
 
 
