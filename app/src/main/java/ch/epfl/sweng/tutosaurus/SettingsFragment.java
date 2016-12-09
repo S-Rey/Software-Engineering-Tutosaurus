@@ -56,6 +56,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 Intent serviceIntent = new Intent(getActivity(), MeetingService.class);
                 if(isChecked) {
                     getActivity().startService(serviceIntent);
+                } else {
+                    getActivity().stopService(serviceIntent);
                 }
                 break;
             case "checkbox_preference_calendar":
