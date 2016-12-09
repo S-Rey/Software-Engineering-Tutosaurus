@@ -1,10 +1,14 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,12 +17,18 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -71,11 +81,15 @@ public class PublicProfileActivity extends AppCompatActivity {
                 // Set profile name
                 TextView profileName= (TextView) findViewById(R.id.profileName);
                 profileName.setText(matchingTutor.getFullName());
-                /*
+
                 // Set profile picture
-                ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
-                profilePicture.setImageResource(user.getPicture());
-                */
+                final ImageView profilePicture=(ImageView) findViewById(R.id.publicProfilePicture);
+                StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
+                StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getSciper()+".png");
+                Glide.with(getBaseContext())
+                        .using(new FirebaseImageLoader())
+                        .load(picRef)
+                        .into(profilePicture);
 
                 // Set email
                 TextView email = (TextView) findViewById(R.id.emailView);
@@ -92,8 +106,8 @@ public class PublicProfileActivity extends AppCompatActivity {
                 //studentRate.setRating(4f);
 
                 // Set the level TODO: get total progress!!!
-                ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
-                level.setProgress(88);
+                //ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
+                //level.setProgress(88);
 
 
                 // Set "expert in" listview
