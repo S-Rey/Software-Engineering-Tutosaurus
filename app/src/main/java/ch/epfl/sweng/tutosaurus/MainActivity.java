@@ -97,15 +97,6 @@ public class MainActivity extends AppCompatActivity {
         bypassLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                /*if (MyAppVariables.getRegistered() == false) {
-                    AlertDialog.Builder signUpAlertB = new AlertDialog.Builder(MainActivity.this);
-                    signUpAlertB.setMessage("Sign up First!");
-
-                    signUpAlertB.setPositiveButton("Ok", null);
-
-                    AlertDialog signUpAlert = signUpAlertB.create();
-                    signUpAlert.show();
-                } else {*/
                 String email = "albert.einstein@epfl.ch";
                 String password = "tototo";
                 LoginAsyncTask loginTask = new LoginAsyncTask();
@@ -128,6 +119,21 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     LoginAsyncTask loginTask = new LoginAsyncTask();
                     loginTask.execute(email, password);
+                    Log.d(TAG, "3");
+                    /**mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
+                                    if (task.isSuccessful()) {
+                                        dispatchHomeScreenIntent();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                        loginAlertB.setMessage("Login failed");
+                                        loginAlertB.create().show();
+                                    }
+                                }
+                            });*/
                 }
             }
         });
@@ -136,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.v(LOG_TAG, "onDestory");
+        Log.v(LOG_TAG, "onDestroy");
         super.onDestroy();
 
         unregisterReceiver(receiver);
@@ -170,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void testDB() {
+    /**public void testDB() {
         dbHelper = new LocalDatabaseHelper(this);
         database = dbHelper.getWritableDatabase();
         Toast.makeText(getBaseContext(), database.toString(), Toast.LENGTH_LONG).show();
@@ -193,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         LocalDatabaseHelper.insertUser(profileTwo, database);
         User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
         Toast.makeText(getBaseContext(), user.getUsername(), Toast.LENGTH_LONG).show();
-    }
+    }*/
 
     private class LoginAsyncTask extends AsyncTask<String, String, Task> {
 
