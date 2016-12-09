@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.Query;
 
 import ch.epfl.sweng.tutosaurus.adapter.ChatListAdapter;
@@ -25,7 +26,7 @@ public class MessagingFragment extends Fragment {
 
     private static final String TAG = "MessagingFragment";
 
-    View myView;
+    private View myView;
     private ListView listView;
 
     public static final String EXTRA_MESSAGE_USER_ID = "ch.epfl.sweng.tutosaurus.USER_ID";
@@ -38,8 +39,12 @@ public class MessagingFragment extends Fragment {
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Messages");
         DatabaseHelper dbh = DatabaseHelper.getInstance();
         listView = (ListView) myView.findViewById(R.id.message_list);
-        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Query chatRef = dbh.getReference().child("chats").child(currentUser);
+        String currentUserUid = "";
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            currentUserUid = currentUser.getUid();
+        }
+        Query chatRef = dbh.getReference().child("chats").child(currentUserUid);
         Log.d(TAG, "chatRef: " + chatRef.toString());
         Query userRef = dbh.getReference().child("user");
 

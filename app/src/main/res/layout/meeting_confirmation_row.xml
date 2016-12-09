@@ -28,7 +28,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location: "
+                    android:text="@string/meeting_confirmation_location"
                     android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/meeting_confirmation_row_location"
@@ -43,7 +43,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date: "
+                    android:text="@string/meeting_confirmation_date"
                     android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/meeting_confirmation_row_date"
@@ -56,6 +56,6 @@
         android:id="@+id/meeting_confirmation_row_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm"
+        android:text="@string/meeting_confirmation_confirm"
         android:layout_weight="20"/>
 </LinearLayout>

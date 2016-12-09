@@ -2,10 +2,6 @@ package ch.epfl.sweng.tutosaurus.Tequila;
 
 import android.app.Application;
 
-/**
- * Created by Stephane on 10/28/2016.
- */
-
 public class MyAppVariables extends Application {
     private static boolean registered = false;
 

@@ -17,6 +17,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +40,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private static final int PLACE_PICKER_REQUEST = 1;
 
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
-    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private String currentUserUid;
 
 
     private String teacherId;
@@ -57,10 +58,15 @@ public class CreateMeetingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            currentUserUid = currentUser.getUid();
+        }
+
         Intent intent = getIntent();
         teacherId = intent.getStringExtra("TEACHER");
         meeting.addParticipant(teacherId);
-        meeting.addParticipant(currentUser);
+        meeting.addParticipant(currentUserUid);
 
         final DatabaseReference ref = dbh.getReference();
         ref.child("user/" + teacherId).addValueEventListener(new ValueEventListener() {
@@ -86,6 +92,11 @@ public class CreateMeetingActivity extends AppCompatActivity {
     public void showDateTimePickerDialog(View v) throws InterruptedException {
         timePicker.show(getFragmentManager(), "timePicker");
         datePicker.show(getFragmentManager(), "datePicker");
+
+        TextView dateTimeView = (TextView) findViewById(R.id.dateView   );
+        dateTimeView.setVisibility(View.VISIBLE);
+        String date = datePicker.getDate() + " h " + timePicker.getTime();
+        dateTimeView.setText(date);
     }
 
 
@@ -138,21 +149,25 @@ public class CreateMeetingActivity extends AppCompatActivity {
                 meeting.setDate(dateMeeting);
                 meeting.setCourse(courseMeeting);
 
-                if (courseMeeting == null) {
-                    Toast.makeText(getBaseContext(), "Course not selected", Toast.LENGTH_LONG).show();
-                } else if (dateMeeting.getYear() == -1) {  //TODO: <= getCurrentDate
+                if (dateMeeting.getYear() == -1) {
                     Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
                 } else {
-                    MeetingRequest request = new MeetingRequest();
-                    request.setFrom(currentUser);
-                    request.setAccepted(false);
-                    request.setMeeting(meeting);
-                    request.setType("received");
-                    dbh.requestMeeting(request, teacherId);
+                    if (courseMeeting == null) {
+                        Toast.makeText(getBaseContext(), "Course not selected", Toast.LENGTH_LONG).show();
+                    } else if (dateMeeting.getYear() == -1) {  //TODO: <= getCurrentDate
+                        Toast.makeText(getBaseContext(), "Date not selected", Toast.LENGTH_LONG).show();
+                    } else {
+                        MeetingRequest request = new MeetingRequest();
+                        request.setFrom(currentUserUid);
+                        request.setAccepted(false);
+                        request.setMeeting(meeting);
+                        request.setType("received");
+                        dbh.requestMeeting(request, teacherId);
 
-                    Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getBaseContext(), StartActivity.class);
-                    startActivity(intent);
+                        Toast.makeText(getBaseContext(), "Meeting requested, wait for confirmation", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getBaseContext(), StartActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });

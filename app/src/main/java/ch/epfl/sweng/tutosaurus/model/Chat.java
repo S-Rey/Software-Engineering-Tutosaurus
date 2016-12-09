@@ -1,9 +1,5 @@
 package ch.epfl.sweng.tutosaurus.model;
 
-/**
- * Created by ubervison on 11/5/16.
- */
-
 public class Chat implements Identifiable {
 
     private String fullName;
