@@ -78,12 +78,14 @@ public class MeetingTest{
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
+        onView(withId(R.id.changePassword)).perform(click());
+        Thread.sleep(100);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
         //mock = new MockLocationProvider(LocationManager.NETWORK_PROVIDER, mainActivity);
-        onView(withId(R.id.byName)).perform(click());
         Thread.sleep(1000);
+        onView(withId(R.id.byName)).perform(click());
         onView(withId(R.id.nameToSearch)).perform(typeText("Albert Einstein"));
         onView(withId(R.id.searchByName)).perform(click());
         Thread.sleep(1000);
@@ -122,7 +124,8 @@ public class MeetingTest{
 
         onView(withId(R.id.addMeeting)).perform(click());
 
-        onData(withId(R.id.meeting_confirmation_row_confirm)).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+        //Thread.sleep(2000);
+        //onData(withId(R.id.meeting_confirmation_row_confirm)).inAdapterView(withId(R.id.meetingRequests)).atPosition(0).perform(click());
     }
 
 }
