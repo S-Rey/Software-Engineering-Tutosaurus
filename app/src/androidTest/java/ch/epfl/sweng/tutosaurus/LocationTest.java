@@ -1,20 +1,11 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.PickerActions;
-import android.support.test.espresso.intent.Intents;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.app.ActivityCompat;
-import android.test.ActivityInstrumentationTestCase2;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -23,30 +14,21 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 import ch.epfl.sweng.tutosaurus.mockObjects.MockLocationProvider;
 
-import static android.content.Context.LOCATION_SERVICE;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.open;
-import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.core.StringContains.containsString;
 
 /**
  * Created by santo on 26/11/16.
@@ -64,7 +46,7 @@ public class LocationTest{
 
 
     @Rule
-    public ActivityTestRule<MainActivity> mainActivityTestRule = new ActivityTestRule<MainActivity>(
+    public ActivityTestRule<MainActivity> mainActivityTestRule = new ActivityTestRule<>(
             MainActivity.class
     );
 

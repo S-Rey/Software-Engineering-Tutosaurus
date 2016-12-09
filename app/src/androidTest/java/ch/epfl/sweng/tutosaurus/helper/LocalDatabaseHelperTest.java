@@ -2,8 +2,6 @@ package ch.epfl.sweng.tutosaurus.helper;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.test.espresso.core.deps.guava.base.Strings;
-import android.support.test.espresso.core.deps.guava.primitives.Booleans;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
@@ -12,18 +10,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.HashMap;
-import java.util.Map;
 
-import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
-/**
- * Created by samuel on 29.11.16.
- */
 
 @RunWith(AndroidJUnit4.class)
 public class LocalDatabaseHelperTest {
@@ -65,7 +57,7 @@ public class LocalDatabaseHelperTest {
         coursePresentation.put("French", "Chocolatine");
         albert.setCoursePresentation(coursePresentation);
         // Languages
-        languages = new HashMap<String,Boolean>();
+        languages = new HashMap<>();
         languages.put("German", true);
         languages.put("French", true);
         languages.put("Chinese", false);
@@ -127,7 +119,7 @@ public class LocalDatabaseHelperTest {
         LocalDatabaseHelper.insertUser(albert,database);
         User dbAlbert = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
 
-        assertTrue(albert.getTeaching().equals(albert.getTeaching()));
+        assertTrue(albert.getTeaching().equals(dbAlbert.getTeaching()));
     }
 
     @Test
