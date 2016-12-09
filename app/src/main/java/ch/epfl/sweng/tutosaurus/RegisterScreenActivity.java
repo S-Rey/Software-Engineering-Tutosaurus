@@ -1,6 +1,5 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,7 +17,6 @@ import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
@@ -72,7 +70,9 @@ public class RegisterScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_screen);
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setDisplayHomeAsUpEnabled(true);
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -91,7 +91,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
             editor.putString("lastName", profile.lastNames);
             editor.putString("email", profile.email);
             editor.putString("sciper", profile.sciper);
-            editor.commit();
+            editor.apply();
 
             intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
             intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
@@ -103,16 +103,12 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
-    private static OAuth2Config readConfig() throws IOException {
+    private static OAuth2Config readConfig() {
         return new OAuth2Config(new String[]{"Tequila.profile"}, CLIENT_ID, CLIENT_KEY, REDIRECT_URI);
     }
 
     private static void getConfig() {
-        try {
-            config = readConfig();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        config = readConfig();
     }
 
     private static void getAccessToken(OAuth2Config config, String code) {

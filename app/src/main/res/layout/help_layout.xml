@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:onClick="sendMessageForCall"
-        android:contentDescription="Phone logo" />
+        android:contentDescription="@string/phone_logo"/>
 
     <TextView
         android:text="@string/phone_number_help"
@@ -55,7 +55,6 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:layout_below="@+id/clockMessagePhone"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <ImageView
@@ -71,7 +70,7 @@
         android:layout_alignStart="@+id/phoneLogo"
         android:clickable="true"
         android:onClick="sendMessageForEmail"
-        android:contentDescription="Email logo" />
+        android:contentDescription="@string/help_email_logo"/>
 
     <TextView
         android:text="@string/email_address_help"
@@ -93,7 +92,6 @@
         android:textStyle="normal|bold|italic"
         android:textSize="16sp"
         android:layout_below="@+id/emailAddressHelp"
-        android:layout_alignLeft="@+id/phoneNumberHelp"
         android:layout_alignStart="@+id/phoneNumberHelp" />
 
     <TextView
@@ -105,7 +103,6 @@
         android:textSize="18sp"
         android:layout_marginTop="11dp"
         android:layout_below="@+id/clockMessageEmail"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

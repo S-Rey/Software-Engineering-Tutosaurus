@@ -18,7 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
@@ -36,8 +35,8 @@ public class ConfirmationActivity extends AppCompatActivity {
     private String sciper;
     private String gaspar;
 
-    SQLiteOpenHelper dbHelper;
-    SQLiteDatabase database;
+    private SQLiteOpenHelper dbHelper;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,9 @@ public class ConfirmationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirmation);
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setDisplayHomeAsUpEnabled(true);
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -70,13 +71,13 @@ public class ConfirmationActivity extends AppCompatActivity {
         gaspar = intent.getStringExtra(RegisterScreenActivity.EXTRA_MESSAGE_GASPAR);
 
         TextView first_name_text = (TextView) findViewById(R.id.firstNameProvided);
-        first_name_text.setText("First name : " + first_name);
+        first_name_text.setText(getString(R.string.confirmation_first_name) + first_name);
         TextView last_name_text = (TextView) findViewById(R.id.lastNameProvided);
-        last_name_text.setText("Last name : " + last_name);
+        last_name_text.setText(getString(R.string.confirmation_last_name) + last_name);
         TextView email_address_text = (TextView) findViewById(R.id.emailAddressProvided);
-        email_address_text.setText("Email address : " + email);
+        email_address_text.setText(getString(R.string.confirmation_email) + email);
         TextView sciper_text = (TextView) findViewById(R.id.sciperProvided);
-        sciper_text.setText("Sciper : " + sciper);
+        sciper_text.setText(getString(R.string.confirmation_sciper) + sciper);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
