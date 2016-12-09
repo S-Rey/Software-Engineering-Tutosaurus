@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import ch.epfl.sweng.tutosaurus.adapter.MeetingConfirmationAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -74,6 +76,10 @@ public class ProfileFragment extends Fragment {
                     ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
                 profilePicture.setImageResource(user.getPicture());
                 */
+
+                // Set rating
+                RatingBar ratingBar = (RatingBar) myView.findViewById(R.id.ratingBar);
+                ratingBar.setRating(thisUser.getGlobalRating());
             }
 
             @Override

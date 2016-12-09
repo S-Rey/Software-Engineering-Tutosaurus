@@ -17,7 +17,6 @@ import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
@@ -54,7 +53,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
     private Dialog authDialog;
     private WebView webViewOauth;
-    Button sendButton;
 
     private static OAuth2Config config;
     private static Map<String, String> tokens;

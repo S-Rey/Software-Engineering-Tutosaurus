@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/sym_action_call"
         android:layout_marginTop="18dp"
-        android:id="@+id/imageView3"
+        android:id="@+id/phoneLogo"
         android:scaleX="2.5"
         android:scaleY="2.5"
         android:layout_alignParentTop="true"
@@ -28,7 +28,7 @@
         android:text="@string/phone_number_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView3"
+        android:layout_below="@+id/phoneLogo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="31dp"
         android:id="@+id/phoneNumberHelp"
@@ -62,11 +62,12 @@
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/sym_action_email"
         android:layout_marginTop="57dp"
-        android:id="@+id/imageView4"
+        android:id="@+id/messageLogo"
         android:scaleX="3"
         android:scaleY="3"
         android:layout_below="@+id/helpMessagePhone"
-        android:layout_alignStart="@+id/imageView3"
+        android:layout_alignLeft="@+id/phoneLogo"
+        android:layout_alignStart="@+id/phoneLogo"
         android:clickable="true"
         android:onClick="sendMessageForEmail"
         android:contentDescription="@string/help_email_logo"/>
@@ -79,7 +80,7 @@
         android:id="@+id/emailAddressHelp"
         android:textSize="21sp"
         android:textStyle="normal|bold"
-        android:layout_below="@+id/imageView4"
+        android:layout_below="@+id/messageLogo"
         android:layout_centerHorizontal="true" />
 
     <TextView

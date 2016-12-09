@@ -205,7 +205,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
             user.setEmail(cursor.getString(4));
             user.setUid(cursor.getString(0));
             user.setPicture(cursor.getInt(5));
-            user.setGlobalRating(cursor.getDouble(6));
+            user.setGlobalRating(cursor.getFloat(6));
             return user;
         } else {
             return null;

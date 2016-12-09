@@ -66,9 +66,11 @@ public class SettingsFragmentTest {
     public void testSettingTabNotificationsCheckbox() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_notification", true)) {
             onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
+            Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_notification", true), equalTo(false));
         } else {
             onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
+            Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_notification", true), equalTo(true));
         }
     }
@@ -77,15 +79,18 @@ public class SettingsFragmentTest {
     public void testSettingTabCalendarCheckbox() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_calendar", true)) {
             onData(PreferenceMatchers.withKey("checkbox_preference_calendar")).perform(click());
+            Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_calendar", true), equalTo(false));
         } else {
             onData(PreferenceMatchers.withKey("checkbox_preference_calendar")).perform(click());
+            Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_calendar", true), equalTo(true));
         }
     }
 
     @Test
     public void testSettingTabRatingAppBrowser() throws InterruptedException {
+        Thread.sleep(1000);
         Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("http://google.com/"));
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_rating")).perform(click());

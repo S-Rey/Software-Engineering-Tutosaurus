@@ -8,9 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/sciperNumber"
-        android:text="@string/how_do_you_want_to_find_your_tutor"
-        android:textSize="18sp"
+        android:id="@+id/findTutorMessage"
+        android:text="How do you want to find your tutor?"
+        android:textSize="18dp"
         android:padding="10dp"
         android:textAlignment="center" />
 
