@@ -2,6 +2,7 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -9,6 +10,9 @@ import com.robotium.solo.Solo;
 
 import org.junit.After;
 import org.junit.Rule;
+
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
 /**
  * Created by Stephane on 12/8/2016.
@@ -116,6 +120,14 @@ public class ConfirmationActivityTest extends ActivityInstrumentationTestCase2<C
         solo.clickOnView(solo.getView(R.id.backToLoginButton));
         boolean failMessageDisplayed = solo.searchText("Auth failed");
         assertTrue(failMessageDisplayed);
+    }
+
+    public void testConfirmationHomeUpGoesToRegister() {
+        solo.assertCurrentActivity("correct activity", ConfirmationActivity.class);
+        Intents.init();
+        solo.clickOnActionBarHomeButton();
+        intended(hasComponent(RegisterScreenActivity.class.getName()));
+        Intents.release();
     }
 
     /**public void testRegister() {

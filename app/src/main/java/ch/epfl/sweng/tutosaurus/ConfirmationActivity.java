@@ -49,17 +49,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
+        setConfirmationAuthListener();
 
         Intent intent = getIntent();
 
@@ -80,24 +70,27 @@ public class ConfirmationActivity extends AppCompatActivity {
         sciper_text.setText(getString(R.string.confirmation_sciper) + sciper);
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent myIntent = new Intent(getApplicationContext(), RegisterScreenActivity.class);
-        startActivityForResult(myIntent, 0);
-        return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent myIntent = new Intent(getApplicationContext(), RegisterScreenActivity.class);
+                startActivityForResult(myIntent, 0);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
-    public void onStop() {
+    protected void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
+        removeConfirmationAuthListener();
     }
 
     public void confirmRegistration(View view) {
@@ -134,5 +127,25 @@ public class ConfirmationActivity extends AppCompatActivity {
         dbHelper = new LocalDatabaseHelper(this);
         database = dbHelper.getWritableDatabase();
         LocalDatabaseHelper.insertUser(user, database);
+    }
+
+    protected void setConfirmationAuthListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+    }
+
+    protected void removeConfirmationAuthListener() {
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 }
