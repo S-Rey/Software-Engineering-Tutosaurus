@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -206,9 +207,9 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 if (syncCalendar) {
                     Calendar beginTime = Calendar.getInstance();
                     beginTime.setTime(meeting.getDate());
-
                     Intent intent = new Intent(Intent.ACTION_INSERT);
                     intent.setData(CalendarContract.Events.CONTENT_URI);
+                    intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
                     intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
                     intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
                     intent.putExtra(Intent.EXTRA_EMAIL, otherUser.getEmail());
