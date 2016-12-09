@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.Query;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
@@ -17,10 +18,10 @@ import ch.epfl.sweng.tutosaurus.model.Meeting;
 
 public class MeetingsFragment extends Fragment {
 
-    View myView;
+    private View myView;
     private MeetingAdapter adapter;
-    private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private String currentUserUid;
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
 
 
     @Nullable
@@ -29,8 +30,13 @@ public class MeetingsFragment extends Fragment {
         myView = inflater.inflate(R.layout.meetings_layout, container, false);
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Meetings");
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            currentUserUid = currentUser.getUid();
+        }
+
         ListView meetingList = (ListView) myView.findViewById(R.id.meetingList);
-        Query ref = dbh.getMeetingsRefForUser(currentUser);
+        Query ref = dbh.getMeetingsRefForUser(currentUserUid);
         long lastWeekInMillis = System.currentTimeMillis() + 59958140730000L - (86400 * 7 * 1000);
         ref = ref.orderByChild("date/time").startAt(lastWeekInMillis);
         adapter = new MeetingAdapter(getActivity(), Meeting.class, R.layout.listview_meetings_row, ref);

@@ -4,13 +4,8 @@ import org.junit.Test;
 
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
-import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
 import static org.junit.Assert.assertEquals;
-
-/**
- * Created by albertochiappa on 27/11/16.
- */
 
 public class CourseTest {
     @Test

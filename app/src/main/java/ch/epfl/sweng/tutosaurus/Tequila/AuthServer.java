@@ -1,9 +1,5 @@
 package ch.epfl.sweng.tutosaurus.Tequila;
 
-/**
- * Created by Stephane on 10/24/2016.
- */
-
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;

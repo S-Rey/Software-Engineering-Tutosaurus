@@ -30,7 +30,7 @@
                 android:layout_weight="0.6">
 
                 <TextView
-                    android:text="Alberto Chiappa"
+                    android:text="@string/alberto_chiappa"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.50"
@@ -40,7 +40,7 @@
                     android:layout_marginBottom="5dp" />
 
                 <TextView
-                    android:text="Professor"
+                    android:text="@string/public_profile_professor"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.1"
@@ -60,7 +60,7 @@
                     android:visibility="visible"
                     android:isIndicator="true" />
                 <TextView
-                    android:text="Student"
+                    android:text="@string/public_profile_student"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.1"
@@ -85,13 +85,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/dino_register"
-                android:id="@+id/profilePicture"
+                android:id="@+id/publicProfilePicture"
                 android:maxWidth="42dp"
                 android:maxHeight="42dp"
                 android:scaleType="fitCenter"
                 android:layout_weight="0.5"
-                android:layout_marginLeft="0dp"
-                android:contentDescription="Dino register"/>
+                android:layout_marginStart="0dp"
+                android:contentDescription="@string/profile_dino_register"/>
         </LinearLayout>
 
         <LinearLayout
@@ -101,7 +101,7 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:text="Email"
+                android:text="@string/profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView6"
@@ -110,7 +110,7 @@
                 android:layout_gravity="bottom"/>
 
             <TextView
-                android:hint="alberto.chiappa@epfl.ch"
+                android:hint="@string/profile_content_alberto_chiappa_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/emailView"
@@ -129,7 +129,7 @@
             android:layout_marginTop="20dp"
             android:visibility="gone"/>
         <TextView
-            android:text="level 10: Tirannosaurus Rex"
+            android:text="@string/level_10_tirannosaurus_rex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/levelTextView"
@@ -139,7 +139,7 @@
             android:visibility="gone"/>
 
         <TextView
-                android:text="Expert in:"
+                android:text="@string/profile_expert_in"
                 android:layout_height="40dp"
                 android:gravity="center_horizontal|center_vertical"
                 android:layout_width="match_parent"
@@ -160,7 +160,7 @@
 
         <Button
             android:id="@+id/createMeetingButton"
-            android:text="Request meeting"
+            android:text="@string/profile_request_meeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

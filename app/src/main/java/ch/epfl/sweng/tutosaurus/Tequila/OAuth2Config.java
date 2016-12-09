@@ -1,10 +1,6 @@
 package ch.epfl.sweng.tutosaurus.Tequila;
 
 /**
- * Created by Stephane on 10/24/2016.
- */
-
-/**
  * Configuration for an OAuth2 client.
  *
  * @author Solal Pirelli
@@ -38,10 +34,10 @@ public final class OAuth2Config {
 
     /**
      * Creating the configuartion for the OAuth2 authenfication service for Tequila
-     * @param scopes
-     * @param clientId
-     * @param clientSecret
-     * @param redirectUri
+     * @param scopes the copes for this config
+     * @param clientId the client id of this config
+     * @param clientSecret the client secret of this config
+     * @param redirectUri the redirect uri of this config
      */
     public OAuth2Config(String[] scopes, String clientId, String clientSecret, String redirectUri) {
         this.scopes = scopes;

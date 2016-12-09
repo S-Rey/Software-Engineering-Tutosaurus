@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -21,9 +20,9 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -31,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ch.epfl.sweng.tutosaurus.LocationActivity;
 import ch.epfl.sweng.tutosaurus.R;
@@ -40,21 +40,21 @@ import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-/**
- * Created by ubervison on 10/28/16.
- */
-
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    protected String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    protected DatabaseHelper dbh = DatabaseHelper.getInstance();
-    protected Context context;
+    private String currentUserUid;
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private Context context;
     private float meetingRating;
-    private User otherUser;
+    private User user;
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.context = activity.getBaseContext();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            currentUserUid = currentUser.getUid();
+        }
     }
 
     @Override
@@ -80,12 +80,12 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 String displayParticipant = "";
                 for (String participant: participants) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        if (!userSnapshot.getKey().equals(currentUser) && userSnapshot.getKey().equals(participant)) {
-                            otherUser = userSnapshot.getValue(User.class);
+                        if (!userSnapshot.getKey().equals(currentUserUid) && userSnapshot.getKey().equals(participant)) {
+                            user = userSnapshot.getValue(User.class);
                             if (displayParticipant == null) {
-                                displayParticipant = otherUser.getFullName();
+                                displayParticipant = user.getFullName();
                             } else {
-                                displayParticipant = displayParticipant + "\n" + otherUser.getFullName();
+                                displayParticipant = displayParticipant + "\n" + user.getFullName();
                             }
                             otherParticipantView.setText(displayParticipant);
                         }
@@ -102,7 +102,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
         TextView date = (TextView) mainView.findViewById(R.id.dateMeeting);
         if (meeting.getDate() != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm", Locale.FRENCH);
             String dateNewFormat = dateFormat.format(meeting.getDate());
             date.setText(dateNewFormat);
         }
@@ -176,13 +176,14 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                 public void onClick(DialogInterface dialog, int which) {
                                     meetingRating = rating.getRating();
                                     meeting.setRated(true);
-                                    dbh.setMeetingRated(currentUser, otherUser.getUid(), meeting.getId());
-                                    int numRatings = otherUser.getNumRatings();
-                                    float globalRating = otherUser.getGlobalRating();
+                                    dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId());
+                                    int numRatings = user.getNumRatings();
+                                    float globalRating = user.getGlobalRating();
                                     globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
-                                    dbh.setRating(otherUser.getUid(), globalRating);
-                                    dbh.setNumRatings(otherUser.getUid(), numRatings + 1);
+                                    dbh.setRating(user.getUid(), globalRating);
+                                    dbh.setNumRatings(user.getUid(), numRatings + 1);
 
+                                    dbh.setRating(currentUserUid, meetingRating);
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("Cancel",
@@ -212,7 +213,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                     intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
                     intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
                     intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                    intent.putExtra(Intent.EXTRA_EMAIL, otherUser.getEmail());
+                    intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
 
                     if (meeting.getDescription() != null) {
                         intent.putExtra(CalendarContract.Events.DESCRIPTION, meeting.getDescription());

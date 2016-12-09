@@ -1,10 +1,6 @@
 package ch.epfl.sweng.tutosaurus.Tequila;
 
 /**
- * Created by Stephane on 10/24/2016.
- */
-
-/**
  * Tequila user profile information.
  *
  * @author Solal Pirelli
@@ -34,11 +30,11 @@ public final class Profile {
 
     /**
      * Create User Profile. Profiles are always fetched by Tequila and thus assumed to be automatically correct.
-     * @param sciper
-     * @param gaspar
-     * @param email
-     * @param firstNames
-     * @param lastNames
+     * @param sciper the sciper associated with this profile
+     * @param gaspar the gaspar associated with this profile
+     * @param email the email associated with this profile
+     * @param firstNames the first names of this profile's user
+     * @param lastNames the last names of this profile's user
      */
     public Profile(String sciper, String gaspar, String email, String firstNames, String lastNames) {
         this.sciper = sciper;

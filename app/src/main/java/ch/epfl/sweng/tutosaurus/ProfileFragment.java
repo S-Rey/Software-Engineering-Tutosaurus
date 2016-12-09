@@ -39,7 +39,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class ProfileFragment extends Fragment {
 
-    View myView;
+    private View myView;
 
     private String currentUser;
     DatabaseHelper dbh = DatabaseHelper.getInstance();
@@ -117,8 +117,7 @@ public class ProfileFragment extends Fragment {
 
     /**
      * Download a picture from the sciper/ folder from the storage of Firebase
-     * @param key
-     * @return
+     * @param key the name of the picture
      */
      private void getImage(String key) {
         StorageReference storageRef = FirebaseStorage.getInstance().

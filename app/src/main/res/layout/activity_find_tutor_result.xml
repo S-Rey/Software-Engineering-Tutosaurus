@@ -18,7 +18,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
         android:id="@+id/noResultView"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:visibility="visible"/>
 
 
