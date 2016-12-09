@@ -1,6 +1,10 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -33,6 +37,7 @@ import java.io.FileNotFoundException;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingConfirmationAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
 
@@ -45,11 +50,15 @@ public class ProfileFragment extends Fragment {
     DatabaseHelper dbh = DatabaseHelper.getInstance();
     private MeetingAdapter adapter;
 
+    SQLiteOpenHelper dbHelper;
+    SQLiteDatabase database;
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.profile_layout, container, false);
-        ((HomeScreenActivity) getActivity()).setActionBarTitle("Profile");
+        final Activity activity = getActivity();
+        ((HomeScreenActivity)activity).setActionBarTitle("Profile");
         loadImageFromStorage();
 
         ((HomeScreenActivity) getActivity()).setPassTabToOpen(myView);
@@ -71,6 +80,7 @@ public class ProfileFragment extends Fragment {
                 // Set profile name
                 TextView profileName = (TextView) myView.findViewById(R.id.profileName);
                 profileName.setText(thisUser.getFullName());
+                saveUserLocalDB(thisUser, activity);
                 /*
                 // Set profile picture
                     ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
@@ -142,13 +152,14 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    private void saveUserLocalDB(User user, Context context) {
+        dbHelper = new LocalDatabaseHelper(context);
+        Activity activity = (HomeScreenActivity) getActivity();
+        if(dbHelper != null) {
+            database = dbHelper.getWritableDatabase();
+            LocalDatabaseHelper.insertUser(user, database);
+        }
+    }
+
+
 }
-
-
-
-
-
-
-
-
-
