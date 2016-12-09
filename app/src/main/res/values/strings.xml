@@ -39,6 +39,9 @@
     <string name="choose_password">Choose Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="confirm_register">Confirm Registration</string>
+    <string name="mismatch_password">Passwords must match</string>
+    <string name="missing_password">Password missing</string>
+    <string name="authentification_failed">Auth failed</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

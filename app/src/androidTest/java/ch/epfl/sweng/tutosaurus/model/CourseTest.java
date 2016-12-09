@@ -1,7 +1,8 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.model;
 
 import org.junit.Test;
 
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
