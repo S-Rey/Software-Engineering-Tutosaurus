@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
@@ -13,15 +16,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +48,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     protected String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     protected DatabaseHelper dbh = DatabaseHelper.getInstance();
     protected Context context;
-    protected float meetingRating;
+    private float meetingRating;
     private User otherUser;
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
@@ -191,7 +197,36 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         }
 
 
-    }
+        final Button syncCalendar = (Button) mainView.findViewById(R.id.syncCalendar);
+        syncCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(mainView.getContext());
+                boolean syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
+                if (syncCalendar) {
+                    Calendar beginTime = Calendar.getInstance();
+                    beginTime.setTime(meeting.getDate());
 
+                    Intent intent = new Intent(Intent.ACTION_INSERT);
+                    intent.setData(CalendarContract.Events.CONTENT_URI);
+                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+                    intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
+                    intent.putExtra(Intent.EXTRA_EMAIL, otherUser.getEmail());
+
+                    if (meeting.getDescription() != null) {
+                        intent.putExtra(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
+                    }
+
+                    if (meeting.getNameLocation() != null) {
+                        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
+                    }
+
+                    mainView.getContext().startActivity(intent);
+                } else {
+                    Toast.makeText(mainView.getContext(), "Enable synchronization", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
 }

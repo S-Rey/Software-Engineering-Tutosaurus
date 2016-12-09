@@ -104,7 +104,13 @@
                 android:text="map"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.7"/>
+                android:layout_weight="1"/>
+
+            <Button android:id="@+id/syncCalendar"
+                android:text="@string/add_to_calendar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
