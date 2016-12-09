@@ -147,8 +147,8 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         else if(meeting.isRated()) {
             detailsMeeting.setVisibility(View.GONE);
             RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
-            //ratingBar.setVisibility(View.VISIBLE);
-            //ratingBar.setRating(meetingRating);
+            ratingBar.setVisibility(View.VISIBLE);
+            ratingBar.setRating(meetingRating);
         }
         else {
             detailsMeeting.setText("Rate");

@@ -66,7 +66,6 @@ public class MeetingTest{
         onView(withId(R.id.searchByName)).perform(click());
         Thread.sleep(1000);
         onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
-        Thread.sleep(1000);
     }
 
 
@@ -76,7 +75,6 @@ public class MeetingTest{
         //Set test location
         //mock.pushLocation(-12.34, 23.45);
         onView(withId(R.id.createMeetingButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
-
         int year = 2020;
         int month = 11;
         int day = 15;
@@ -99,9 +97,7 @@ public class MeetingTest{
         closeSoftKeyboard();
 
         onView(withId(R.id.addMeeting)).perform(click());
-
-        //Thread.sleep(2000);
-        //onData(withId(R.id.meeting_confirmation_row_confirm)).inAdapterView(withId(R.id.meetingRequests)).atPosition(0).perform(click());
+        //onData(withId(R.id.meeting_confirmation_row_confirm)).inAdapterView(withId(R.id.meetingRequests)).atPosition(1).perform(click());
     }
 
 }
