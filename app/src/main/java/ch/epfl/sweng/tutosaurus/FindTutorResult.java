@@ -31,10 +31,6 @@ public class FindTutorResult extends AppCompatActivity {
                 String tutorName = extras.getString("NAME_TO_SEARCH");
                 ref = ref.orderByChild("fullName").equalTo(tutorName);
                 break;
-            case "findTutorBySciper":
-                String tutorSciper = extras.getString("SCIPER_TO_SEARCH");
-                ref = ref.orderByChild("sciper").equalTo(tutorSciper);
-                break;
             case "findTutorByCourse":
                 String courseId = extras.getString("COURSE_ID");
                 ref = findTutorBySubject(courseId, ref);
