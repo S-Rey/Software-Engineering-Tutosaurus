@@ -41,7 +41,7 @@ public class FindTutorsFragment extends Fragment {
                 EditText nameToSearch=(EditText) getView().findViewById(R.id.nameToSearch);
                 String name=nameToSearch.getText().toString();
                 Bundle extras = new Bundle();
-                extras.putString("NAME_TO_SEARCH", name);
+                extras.putString("EXTRA_INFO", name);
                 extras.putString("METHOD_TO_CALL", "findTutorByName");
                 intent.putExtras(extras);
                 startActivity(intent);
@@ -73,6 +73,7 @@ public class FindTutorsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),FindTutorResult.class);
                 Bundle extras = new Bundle();
                 extras.putString("METHOD_TO_CALL", "showFullList");
+                extras.putString("EXTRA_INFO", "noExtraInfo");
                 intent.putExtras(extras);
                 startActivity(intent);
             }

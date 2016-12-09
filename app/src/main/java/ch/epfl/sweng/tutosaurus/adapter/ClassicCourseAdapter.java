@@ -61,7 +61,7 @@ public class ClassicCourseAdapter extends ArrayAdapter<Course> {
         final Intent intent = new Intent(context,FindTutorResult.class);
         Bundle extras = new Bundle();
         extras.putString("METHOD_TO_CALL", "findTutorByCourse");
-        extras.putString("COURSE_ID", course.getId());
+        extras.putString("EXTRA_INFO", course.getId());
         intent.putExtras(extras);
 
         holder.courseName.setOnClickListener(new View.OnClickListener(){

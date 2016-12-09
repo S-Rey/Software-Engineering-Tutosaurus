@@ -38,7 +38,6 @@ public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
         TextView profileName = (TextView) view.findViewById(R.id.profileName);
         profileName.setText(tutor.getFullName());
         final ImageView profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
-        profilePicture.setImageResource(tutor.getPicture());
 
         // Set the OnClickListener on each name of the list
         final Intent intent = new Intent(view.getContext(), PublicProfileActivity.class);
@@ -51,7 +50,7 @@ public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
             }
         });
 
-        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
+        /*StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
         Log.d(TAG, "tutor: " +tutor.getSciper() + " " + tutor.getFullName());
         StorageReference picRef = storageRef.child("profilePictures").child(tutor.getSciper()+".png");
         picRef.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -66,7 +65,7 @@ public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "failure");
             }
-        });
+        });*/
     }
 
 
