@@ -64,10 +64,20 @@ public class HelpFragmentTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_help_layout));
     }
 
-    //Can't test the ACTION_CALL intent sending on jenkins because it doesn't allow apps to use the cell phone functionality
-    //@Test
+    @Before
+    public void grantPhonePermission() {
+        // In M+, trying to call a number will trigger a runtime dialog. Make sure
+        // the permission is granted before running this test.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getInstrumentation().getUiAutomation().executeShellCommand(
+                    "pm grant " + getTargetContext().getPackageName()
+                            + " android.permission.CALL_PHONE");
+        }
+    }
+
+    @Test
     public void testCall() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1000);
         Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_CALL);
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onView(withId(R.id.phoneLogo)).perform(click());
@@ -76,7 +86,7 @@ public class HelpFragmentTest {
 
     @Test
     public void testMessage() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1000);
         Matcher<Intent> expectedIntent = hasAction(Intent.ACTION_SEND);
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onView(withId(R.id.messageLogo)).perform(click());
