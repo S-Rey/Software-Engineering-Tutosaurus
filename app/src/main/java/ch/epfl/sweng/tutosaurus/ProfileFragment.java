@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,10 @@ public class ProfileFragment extends Fragment {
                     ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
                 profilePicture.setImageResource(user.getPicture());
                 */
+
+                // Set rating
+                RatingBar ratingBar = (RatingBar) myView.findViewById(R.id.ratingBar);
+                ratingBar.setRating(thisUser.getGlobalRating());
             }
 
             @Override

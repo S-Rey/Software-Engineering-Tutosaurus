@@ -27,7 +27,7 @@
     <ImageView
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/logo_epfl"
-        android:id="@+id/imageView"
+        android:id="@+id/epflLogo"
         android:layout_width="wrap_content"
         android:adjustViewBounds="true"
         android:maxWidth="250dp"
@@ -35,7 +35,7 @@
         android:layout_marginTop="14dp"
         android:layout_below="@+id/aboutDescription"
         android:layout_centerHorizontal="true"
-        android:contentDescription="EPFL logo"/>
+        android:contentDescription="EPFL logo" />
 
     <TextView
         android:layout_width="wrap_content"
