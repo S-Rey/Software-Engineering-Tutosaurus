@@ -118,13 +118,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="enable_notifications">Enable Notifications</string>
-    <string name="sync_calendar">Synchronise calendar</string>
     <string name="share_location">Share nameLocation</string>
-    <string name="rate_app">Rate the app</string>
+    <string name="epfl_web_site">Go to EPFL website</string>
 
     <string name="load_picture">Load From Gallery</string>
     <string name="take_picture">Take With Camera</string>
+
     <string name="change_password">Change Password</string>
+    <string name="explanations_change_password">Please choose a new password for your account.</string>
     <string name="send_new_password">Send</string>
 
     <string name="title_lists_subjects">List of subjects</string>

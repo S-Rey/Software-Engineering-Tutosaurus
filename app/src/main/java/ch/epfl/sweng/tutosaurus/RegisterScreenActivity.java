@@ -75,6 +75,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         mActionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);

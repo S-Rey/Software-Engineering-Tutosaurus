@@ -11,6 +11,18 @@
     tools:context="ch.epfl.sweng.tutosaurus.MainActivity"
     android:focusableInTouchMode="true">
 
+    <TextView
+        android:text="@string/welcoming_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomingMessage"
+        android:textSize="24sp"
+        android:textStyle="normal|bold|italic"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <ImageView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -22,6 +34,28 @@
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="Dino logo"/>
+
+    <TextView
+        android:id="@+id/networkStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status_connected"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAlignment="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/main_email"
+        android:hint="@string/email_ask"
+        android:textAlignment="center"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@+id/networkStatus"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -38,19 +72,27 @@
         android:background="@android:drawable/editbox_background" />
 
     <Button
-        android:text="@string/register_button"
+        android:text="@string/password_forgot_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="@null"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/forgotPasswordButton"
+        android:textSize="14sp"
+        android:textStyle="normal|italic"
+        android:textAllCaps="false"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/main_password"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Login with Albert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/registerButton"
-        android:background="@android:drawable/editbox_background"
-        android:textSize="24sp"
-        android:textStyle="normal|bold|italic"
-        android:textAllCaps="false"
-        android:textColor="@android:color/holo_blue_dark"
-        android:onClick="sendMessageForReg"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/main_password"
-        android:layout_alignEnd="@+id/main_password" />
+        android:id="@+id/mainBypassLoginButton"
+        android:layout_above="@+id/registerButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:text="@string/connection_button"
@@ -66,61 +108,19 @@
         android:layout_alignLeft="@+id/main_password"
         android:layout_alignStart="@+id/main_password" />
 
-    <TextView
-        android:text="@string/welcoming_message"
+    <Button
+        android:text="@string/register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/welcomingMessage"
+        android:id="@+id/registerButton"
+        android:background="@android:drawable/editbox_background"
         android:textSize="24sp"
         android:textStyle="normal|bold|italic"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/password_forgot_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:background="@null"
-        android:textColor="@color/colorAccent"
-        android:id="@+id/forgotPasswordButton"
-        android:textSize="14sp"
-        android:textStyle="normal|italic"
         android:textAllCaps="false"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/main_password"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/main_email"
-        android:hint="@string/email_ask"
-        android:textAlignment="center"
-        android:background="@android:drawable/editbox_background"
-        android:layout_below="@+id/networkStatus"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="Login with Albert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mainBypassLoginButton"
-        android:layout_above="@+id/registerButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp" />
-
-    <TextView
-        android:id="@+id/networkStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/status_connected"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textAlignment="center"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textColor="@android:color/holo_blue_dark"
+        android:onClick="sendMessageForReg"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/main_password"
+        android:layout_alignEnd="@+id/main_password" />
 
 </RelativeLayout>

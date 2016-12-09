@@ -162,6 +162,10 @@ public class HomeScreenActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
             }
 
+            if (intent.getAction().equals("OPEN_TAB_SETTINGS")) {
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+            }
+
             if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
@@ -261,81 +265,6 @@ public class HomeScreenActivity extends AppCompatActivity
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
-    }
-
-    public void changePassword(View view) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        EditText newPasswordChoosed = (EditText) findViewById(R.id.chooseNewPass);
-        EditText newPasswordConfirmed = (EditText) findViewById(R.id.confirmNewPass);
-
-        if (newPasswordChoosed.getText().toString().equals("") || newPasswordConfirmed.getText().toString().equals("")) {
-            Toast.makeText(this, "Please fill both boxes above", Toast.LENGTH_SHORT).show();
-        } else if (!newPasswordChoosed.getText().toString().equals(newPasswordConfirmed.getText().toString())) {
-            Toast.makeText(this, "Passwords must match", Toast.LENGTH_SHORT).show();
-        } else {
-            user.updatePassword(newPasswordChoosed.getText().toString());
-            Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show();
-            closePassword();
-        }
-    }
-
-    private void openPassword() {
-        EditText changePassField = (EditText) findViewById(R.id.chooseNewPass);
-        EditText changePassFieldConfirm = (EditText) findViewById(R.id.confirmNewPass);
-        changePassField.setHint("Choose New Password");
-        changePassField.setVisibility(View.VISIBLE);
-        changePassFieldConfirm.setHint("Confirm New Password");
-        changePassFieldConfirm.setVisibility(View.VISIBLE);
-
-        Button sendNewPassInfo = (Button) findViewById(R.id.changeNewPass);
-        sendNewPassInfo.setVisibility(View.VISIBLE);
-
-        Button changePasswordButton = (Button) findViewById(R.id.changePassword);
-        View.OnClickListener changePassClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closePassword();
-            }
-        };
-        changePasswordButton.setOnClickListener(changePassClick);
-    }
-
-    private void closePassword() {
-        EditText changePassField = (EditText) findViewById(R.id.chooseNewPass);
-        EditText changePassFieldConfirm = (EditText) findViewById(R.id.confirmNewPass);
-        Button sendNewPassInfo = (Button) findViewById(R.id.changeNewPass);
-        changePassField.setVisibility(View.GONE);
-        changePassField.setText("");
-        changePassFieldConfirm.setVisibility(View.GONE);
-        changePassFieldConfirm.setText("");
-        sendNewPassInfo.setVisibility(View.GONE);
-
-        Button changePasswordButton = (Button) findViewById(R.id.changePassword);
-        View.OnClickListener changePassClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPassword();
-            }
-        };
-        changePasswordButton.setOnClickListener(changePassClick);
-    }
-
-    void setPassTabToOpen(View v){
-        EditText changePassField = (EditText) v.findViewById(R.id.chooseNewPass);
-        EditText changePassFieldConfirm = (EditText) v.findViewById(R.id.confirmNewPass);
-        Button sendNewPassInfo = (Button) v.findViewById(R.id.changeNewPass);
-        changePassField.setVisibility(View.GONE);
-        changePassFieldConfirm.setVisibility(View.GONE);
-        sendNewPassInfo.setVisibility(View.GONE);
-
-        Button changePasswordButton = (Button) v.findViewById(R.id.changePassword);
-        View.OnClickListener changePassClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPassword();
-            }
-        };
-        changePasswordButton.setOnClickListener(changePassClick);
     }
 
     private void loadImageFromGallery(View view) {
