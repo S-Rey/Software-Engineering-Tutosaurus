@@ -257,5 +257,5 @@
     <string name="title_activity_public_profile">Profile</string>
     <string name="nameLocation">Location</string>
     <string name="title_activity_reset_password">Reset Password</string>
-    <string name="add_to_calendar">Add to calendar</string>
+    <string name="add_to_calendar">Calendar</string>
 </resources>
