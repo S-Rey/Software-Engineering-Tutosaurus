@@ -19,10 +19,6 @@ import ch.epfl.sweng.tutosaurus.adapter.ClassicCourseAdapter;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
-/**
- * Created by Vincent on 05/10/2016.
- */
-
 public class FindTutorsFragment extends Fragment {
     private View myView;
 

@@ -17,10 +17,6 @@ import ch.epfl.sweng.tutosaurus.FindTutorResult;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 
-/**
- * Created by albertochiappa on 23/11/16.
- */
-
 public class ClassicCourseAdapter extends ArrayAdapter<Course> {
     private Context context;
     private int layoutResourceId;

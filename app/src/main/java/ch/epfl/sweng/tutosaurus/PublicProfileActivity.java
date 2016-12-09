@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,9 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,8 +41,8 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class PublicProfileActivity extends AppCompatActivity {
 
-    DatabaseHelper dbh = DatabaseHelper.getInstance();
-    public String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private DatabaseHelper dbh = DatabaseHelper.getInstance();
+    private String curentUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,11 @@ public class PublicProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_public_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null) {
+            curentUserUid = currentUser.getUid();
+        }
 
         Intent intent = getIntent();
         final String userId = intent.getStringExtra("USER_ID");
@@ -74,24 +83,13 @@ public class PublicProfileActivity extends AppCompatActivity {
                 profileName.setText(matchingTutor.getFullName());
 
                 // Set profile picture
-                final ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
+                final ImageView profilePicture=(ImageView) findViewById(R.id.publicProfilePicture);
                 StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-                // Log.d(TAG, "tutor: " +tutor.getSciper() + " " + tutor.getFullName());
                 StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getSciper()+".png");
-                picRef.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap pic = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        profilePicture.setImageBitmap(pic);
-                       // Log.d(TAG, "success");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //Log.d(TAG, "failure");
-                    }
-                });
-
+                Glide.with(getBaseContext())
+                        .using(new FirebaseImageLoader())
+                        .load(picRef)
+                        .into(profilePicture);
 
                 // Set email
                 TextView email = (TextView) findViewById(R.id.emailView);
