@@ -103,16 +103,16 @@ public class ConfirmationActivity extends AppCompatActivity {
         String pw1 = ((EditText) findViewById(R.id.confirmation_password1)).getText().toString();
         String pw2 = ((EditText) findViewById(R.id.confirmation_password2)).getText().toString();
         if (pw1.isEmpty() || pw2.isEmpty()) {
-            Toast.makeText(this, "Password missing ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.missing_password, Toast.LENGTH_SHORT).show();
         } else if (!pw1.equals(pw2)) {
-            Toast.makeText(this, "Passwords must match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.mismatch_password, Toast.LENGTH_SHORT).show();
         } else {
             mAuth.createUserWithEmailAndPassword(email, pw1).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     Log.d(TAG, "createUserWithEmailAndPassword:onComplete:" + task.isSuccessful());
                     if (!task.isSuccessful()) {
-                        Toast.makeText(ConfirmationActivity.this, "Auth failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ConfirmationActivity.this, R.string.authentification_failed, Toast.LENGTH_SHORT).show();
                     } else {
                         String uid = user.getUid();
                         DatabaseHelper dbh = DatabaseHelper.getInstance();
