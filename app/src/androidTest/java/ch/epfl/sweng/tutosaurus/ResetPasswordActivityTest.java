@@ -48,7 +48,7 @@ public class ResetPasswordActivityTest {
     @Test
     public void correctFailToastDisplayed() {
         solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
-        solo.clickOnView(solo.getView(R.id.resetPasswordEmailInput));
+        solo.clickOnView(solo.getView(R.id.resetEmailInput));
         solo.typeText(0, invalid_email);
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
         boolean toastMsg = solo.searchText("Failed to send reset!");
@@ -58,7 +58,7 @@ public class ResetPasswordActivityTest {
     @Test
     public void correctSuccessToastDisplayed() {
         solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
-        solo.clickOnView(solo.getView(R.id.resetPasswordEmailInput));
+        solo.clickOnView(solo.getView(R.id.resetEmailInput));
         solo.typeText(0, valid_email);
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
         boolean toastMsg = solo.searchText("Instructions sent to your email!");

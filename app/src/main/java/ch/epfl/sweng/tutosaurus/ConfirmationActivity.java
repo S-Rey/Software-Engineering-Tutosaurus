@@ -76,9 +76,10 @@ public class ConfirmationActivity extends AppCompatActivity {
             case android.R.id.home:
                 Intent myIntent = new Intent(getApplicationContext(), RegisterScreenActivity.class);
                 startActivityForResult(myIntent, 0);
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
