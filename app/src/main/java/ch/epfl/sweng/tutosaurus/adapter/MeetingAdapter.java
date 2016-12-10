@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -16,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,13 +41,11 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
     private String currentUserUid;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
-    private Context context;
     private float meetingRating;
     private User user;
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
-        this.context = activity.getBaseContext();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null) {
             currentUserUid = currentUser.getUid();
@@ -203,30 +198,24 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         syncCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences calendar = PreferenceManager.getDefaultSharedPreferences(mainView.getContext());
-                boolean syncCalendar = calendar.getBoolean("checkbox_preference_calendar", true);
-                if (syncCalendar) {
-                    Calendar beginTime = Calendar.getInstance();
-                    beginTime.setTime(meeting.getDate());
-                    Intent intent = new Intent(Intent.ACTION_INSERT);
-                    intent.setData(CalendarContract.Events.CONTENT_URI);
-                    intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
-                    intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                    intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.setTime(meeting.getDate());
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.Events.CONTENT_URI);
+                intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+                intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
+                intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
 
-                    if (meeting.getDescription() != null) {
-                        intent.putExtra(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
-                    }
-
-                    if (meeting.getNameLocation() != null) {
-                        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
-                    }
-
-                    mainView.getContext().startActivity(intent);
-                } else {
-                    Toast.makeText(mainView.getContext(), "Enable synchronization", Toast.LENGTH_SHORT).show();
+                if (meeting.getDescription() != null) {
+                    intent.putExtra(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
                 }
+
+                if (meeting.getNameLocation() != null) {
+                    intent.putExtra(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
+                }
+
+                mainView.getContext().startActivity(intent);
             }
         });
     }

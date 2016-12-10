@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.anything;
 /**
  * Created by santo on 26/11/16.
  *
- * Tests that the locationActivity is able to use locations
+ * Tests that creating a meeting and displaying it in the list of meetings work
  * .
  */
 
@@ -41,7 +41,6 @@ import static org.hamcrest.Matchers.anything;
 public class MeetingTest{
 
     private MockLocationProvider mock;
-    private MainActivity mainActivity;
 
 
     @Rule
@@ -57,7 +56,6 @@ public class MeetingTest{
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
-        Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
         Thread.sleep(1000);
