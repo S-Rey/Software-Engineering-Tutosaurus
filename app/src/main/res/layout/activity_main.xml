@@ -63,18 +63,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/main_password" />
 
-    <TextView
-        android:text="@string/welcoming_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/welcomingMessage"
-        android:textSize="24sp"
-        android:textStyle="normal|bold|italic"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:text="@string/password_forgot_btn"
         android:layout_width="wrap_content"
@@ -119,5 +107,27 @@
         android:textAlignment="center"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/app_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomingMessage"
+        android:textSize="30sp"
+        android:textStyle="normal|bold|italic"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="@string/welcoming_message"
+        android:textStyle="normal|bold|italic"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcomingMessage"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView3" />
 
 </RelativeLayout>
