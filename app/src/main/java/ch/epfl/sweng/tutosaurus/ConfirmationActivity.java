@@ -61,13 +61,13 @@ public class ConfirmationActivity extends AppCompatActivity {
         gaspar = intent.getStringExtra(RegisterScreenActivity.EXTRA_MESSAGE_GASPAR);
 
         TextView first_name_text = (TextView) findViewById(R.id.firstNameProvided);
-        first_name_text.setText(getString(R.string.confirmation_first_name) + first_name);
+        first_name_text.setText(getString(R.string.confirmation_first_name, first_name));
         TextView last_name_text = (TextView) findViewById(R.id.lastNameProvided);
-        last_name_text.setText(getString(R.string.confirmation_last_name) + last_name);
+        last_name_text.setText(getString(R.string.confirmation_last_name, last_name));
         TextView email_address_text = (TextView) findViewById(R.id.emailAddressProvided);
-        email_address_text.setText(getString(R.string.confirmation_email) + email);
+        email_address_text.setText(getString(R.string.confirmation_email, email));
         TextView sciper_text = (TextView) findViewById(R.id.sciperProvided);
-        sciper_text.setText(getString(R.string.confirmation_sciper) + sciper);
+        sciper_text.setText(getString(R.string.confirmation_sciper, sciper));
     }
 
     @Override
