@@ -33,7 +33,7 @@
         android:maxHeight="200dp"
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
-        android:contentDescription="Dino logo"/>
+        android:contentDescription="@string/dino_logo"/>
 
     <TextView
         android:id="@+id/networkStatus"
@@ -63,7 +63,6 @@
         android:inputType="textPassword"
         android:ems="10"
         android:layout_below="@+id/main_email"
-        android:layout_alignRight="@+id/main_email"
         android:layout_alignEnd="@+id/main_email"
         android:id="@+id/main_password"
         android:hint="@string/password_ask"
@@ -86,7 +85,7 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="Login with Albert"
+        android:text="@string/login_with_albert_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/mainBypassLoginButton"

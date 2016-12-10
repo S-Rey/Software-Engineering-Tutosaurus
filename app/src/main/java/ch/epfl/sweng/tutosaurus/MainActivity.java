@@ -27,9 +27,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
-import ch.epfl.sweng.tutosaurus.model.User;
-
 import static ch.epfl.sweng.tutosaurus.NetworkChangeReceiver.LOG_TAG;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,14 +34,14 @@ public class MainActivity extends AppCompatActivity {
     private NetworkChangeReceiver receiver;
     private TextView networkStatus;
 
-    public final static String TAG = "MainActivity";
+    private final static String TAG = "MainActivity";
 
     private EditText passwordEditText;
 
     private FirebaseAuth mAuth;
 
-    SQLiteOpenHelper dbHelper;
-    SQLiteDatabase database;
+    private SQLiteOpenHelper dbHelper;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Button login = (Button) findViewById(R.id.connectionButton);
         Button bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
 
-        ArrayList<Button> buttons = new ArrayList<Button>();
+        ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(resetPasswordButton);
         buttons.add(registerButton);
         buttons.add(login);
@@ -120,20 +117,6 @@ public class MainActivity extends AppCompatActivity {
                     LoginAsyncTask loginTask = new LoginAsyncTask();
                     loginTask.execute(email, password);
                     Log.d(TAG, "3");
-                    /**mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
-                                    if (task.isSuccessful()) {
-                                        dispatchHomeScreenIntent();
-                                    } else {
-                                        Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-                                        loginAlertB.setMessage("Login failed");
-                                        loginAlertB.create().show();
-                                    }
-                                }
-                            });*/
                 }
             }
         });

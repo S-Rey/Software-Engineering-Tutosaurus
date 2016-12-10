@@ -24,7 +24,7 @@
         android:layout_marginTop="140dp"
         android:layout_marginBottom="15dp"
         android:layout_centerHorizontal="true"
-        android:contentDescription="Dino register"/>
+        android:contentDescription="@string/dino_register"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -49,7 +49,6 @@
         android:textAlignment="center"
         android:background="@android:drawable/editbox_background"
         android:layout_below="@+id/registerGaspar"
-        android:layout_alignLeft="@+id/registerGaspar"
         android:layout_alignStart="@+id/registerGaspar" />
 
     <TextView

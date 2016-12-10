@@ -33,8 +33,8 @@ public class PictureHelper {
 
     /**
      * Store the profile picture in the local folder storage in a folder which the name is the sciper
-     * @param activity
-     * @param sciper
+     * @param activity the activity whose storage directory we will get the pic from
+     * @param sciper the sciper of the user whose pic we want to store
      * @throws FileNotFoundException
      */
     static public void storeProfilePicOnline (Activity activity, String sciper) throws FileNotFoundException {
@@ -50,8 +50,8 @@ public class PictureHelper {
     /**
      * Upload a picture (located at picPath) under sciper/ folder in the storage of Firebase.
      * Called by storePicOnline
-     * @param picPath
-     * @param key
+     * @param picPath the path in which we want to store the pic
+     * @param key the name of the file
      */
     static public void storePicOnline(String picPath, String key) {
         Uri file = Uri.fromFile(new File(picPath));
@@ -76,8 +76,8 @@ public class PictureHelper {
     /**
      *  Store a picture store at localPicPath to the onlinePicPath (don't forget the extension jpg
      *  or png)
-     * @param localPicPath
-     * @param onlinePicPath
+     * @param localPicPath the local path of the file
+     * @param onlinePicPath the path on firebase storage
      */
     static public void storePictureOnline(String localPicPath, String onlinePicPath) {
         Uri file = Uri.fromFile(new File(localPicPath));
@@ -100,8 +100,8 @@ public class PictureHelper {
 
     /**
      * Write a picture (in JPEG format) to the internal storage at pictures/
-     * @param activity
-     * @param name
+     * @param activity the activity whose storage directory we want to save the picture in
+     * @param name the name of the pic
      */
     static public void storePicLocal (final Activity activity, String name, Bitmap pic) {
         String dirPath = activity.getFilesDir().getAbsolutePath() + File.separator + "pictures";
@@ -131,8 +131,8 @@ public class PictureHelper {
     /**
      * Load the picture specified by name and return it in case of success
      * otherwise return null
-     * @param activity
-     * @param name
+     * @param activity the activity whose storage directory we will load the picture from
+     * @param name the name of the picture
      * @return bitmap
      */
     @Nullable

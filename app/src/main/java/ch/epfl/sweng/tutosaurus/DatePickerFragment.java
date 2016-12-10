@@ -12,10 +12,6 @@ import java.util.Calendar;
 
 import static android.app.DatePickerDialog.*;
 
-/**
- * Created by santo on 14/11/16.
- */
-
 public class DatePickerFragment extends DialogFragment
         implements OnDateSetListener {
 
@@ -44,7 +40,7 @@ public class DatePickerFragment extends DialogFragment
         meetingMonth = month;
 
         TextView dateView = (TextView) getActivity().findViewById(R.id.dateView);
-        dateView.setVisibility(View.VISIBLE);
+        dateView.setVisibility( View.VISIBLE);
         String date = getDate();
         dateView.setText("  " + date);
 

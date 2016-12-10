@@ -60,8 +60,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FindTutorResult"
-            android:label="List of matches"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="List of matches" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".CreateMeetingActivity" />
         <activity

@@ -1,35 +1,15 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.*;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.PreferenceFragment;
-import android.provider.CalendarContract;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Calendar;
-
-import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
-import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.service.MeetingService;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -76,6 +56,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 Intent serviceIntent = new Intent(getActivity(), MeetingService.class);
                 if(isChecked) {
                     getActivity().startService(serviceIntent);
+                } else {
+                    getActivity().stopService(serviceIntent);
                 }
                 break;
             default:
