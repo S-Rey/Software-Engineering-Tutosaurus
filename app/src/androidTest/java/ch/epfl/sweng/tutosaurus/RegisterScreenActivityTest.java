@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 
 import com.robotium.solo.Solo;
@@ -10,6 +11,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -47,6 +50,15 @@ public class RegisterScreenActivityTest {
         //assertTrue(tequilaWebPage);
         boolean teqWebPage = solo.searchText("Sign in");
         assertTrue(teqWebPage);
+    }
+
+    @Test
+    public void testRegisterHomeUpGoesToMain() {
+        solo.assertCurrentActivity("correct activity", RegisterScreenActivity.class);
+        Intents.init();
+        solo.clickOnActionBarHomeButton();
+        intended(hasComponent(MainActivity.class.getName()));
+        Intents.release();
     }
 
 }

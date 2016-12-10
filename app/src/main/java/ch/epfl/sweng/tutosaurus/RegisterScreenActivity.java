@@ -75,10 +75,15 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(myIntent, 0);
-        return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivityForResult(myIntent, 0);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void sendMessageForAccess(View view) {

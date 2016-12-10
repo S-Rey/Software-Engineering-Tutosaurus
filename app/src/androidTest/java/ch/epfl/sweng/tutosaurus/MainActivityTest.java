@@ -85,6 +85,14 @@ public class MainActivityTest {
     }
 
     @Test
+    public void LogInWithoutAnyInputDisplaysWarning(){
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.connectionButton));
+        boolean warningDisplayed = solo.searchText("Please type in your email and password");
+        assertTrue(warningDisplayed);
+    }
+
+    @Test
     public void LogInWithoutPasswordDisplaysWarning(){
         solo.assertCurrentActivity("correct activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.main_email));
