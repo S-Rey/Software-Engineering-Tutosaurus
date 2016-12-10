@@ -263,7 +263,7 @@ public class HomeScreenActivity extends AppCompatActivity
             mActionBar.setTitle(title);
         }
     }
-    
+
     private void loadImageFromGallery(View view) {
         Intent imageGalleryIntent = new Intent(Intent.ACTION_PICK);
         File picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
