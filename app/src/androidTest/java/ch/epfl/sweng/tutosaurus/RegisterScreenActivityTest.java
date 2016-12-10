@@ -39,11 +39,9 @@ public class RegisterScreenActivityTest {
     }
 
     @Test
-    public void ClickOnRegisterPopsupTequilaLoginWebpage(){
+    public void ClickOnRegisterPopupTequilaLoginWebpage(){
         solo.assertCurrentActivity("correct activity", RegisterScreenActivity.class);
-        solo.clickOnView(solo.getView(R.id.registerGaspar));
         solo.typeText(0, "albert");
-        solo.clickOnView(solo.getView(R.id.registerPassword));
         solo.typeText(1, "notThePassword");
         solo.clickOnView(solo.getView(R.id.registerLogin));
         //boolean tequilaWebPage = solo.searchText("tequila.epfl.ch");
