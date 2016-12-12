@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -39,13 +41,11 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
     private String currentUserUid;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
-    private Context context;
     private float meetingRating;
     private User user;
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
-        this.context = activity.getBaseContext();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null) {
             currentUserUid = currentUser.getUid();
@@ -142,8 +142,8 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         else if(meeting.isRated()) {
             detailsMeeting.setVisibility(View.GONE);
             RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
-            //ratingBar.setVisibility(View.VISIBLE);
-            //ratingBar.setRating(meetingRating);
+            ratingBar.setVisibility(View.VISIBLE);
+            ratingBar.setRating(meetingRating);
         }
         else {
             detailsMeeting.setText("Rate");
@@ -192,5 +192,32 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 }
             });
         }
+
+
+        final Button syncCalendar = (Button) mainView.findViewById(R.id.syncCalendar);
+        syncCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.setTime(meeting.getDate());
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.Events.CONTENT_URI);
+                intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+                intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
+                intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
+
+                if (meeting.getDescription() != null) {
+                    intent.putExtra(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
+                }
+
+                if (meeting.getNameLocation() != null) {
+                    intent.putExtra(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
+                }
+
+                mainView.getContext().startActivity(intent);
+            }
+        });
     }
+
 }

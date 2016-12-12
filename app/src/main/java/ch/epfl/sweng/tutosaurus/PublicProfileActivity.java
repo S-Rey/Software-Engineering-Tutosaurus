@@ -91,6 +91,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                         .load(picRef)
                         .into(profilePicture);
 
+
                 // Set email
                 TextView email = (TextView) findViewById(R.id.emailView);
                 email.setText(matchingTutor.getEmail());
@@ -101,14 +102,6 @@ public class PublicProfileActivity extends AppCompatActivity {
                 professorRate.setVisibility(View.VISIBLE);
                 TextView professorView = (TextView) findViewById(R.id.professorView);
                 professorView.setVisibility(View.VISIBLE);
-
-                //RatingBar studentRate=(RatingBar) findViewById(R.id.ratingBarStudent);
-                //studentRate.setRating(4f);
-
-                // Set the level TODO: get total progress!!!
-                //ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
-                //level.setProgress(88);
-
 
                 // Set "expert in" listview
                 LinearLayout courseList = (LinearLayout) findViewById(R.id.courseListLayout);

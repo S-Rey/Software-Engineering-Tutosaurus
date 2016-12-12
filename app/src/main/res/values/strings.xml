@@ -306,4 +306,5 @@
     <string name="confirmation_last_name">"Last name : "</string>
     <string name="confirmation_email">"Email address : "</string>
     <string name="confirmation_sciper">"Sciper : "</string>
+    <string name="add_to_calendar">Calendar</string>
 </resources>
