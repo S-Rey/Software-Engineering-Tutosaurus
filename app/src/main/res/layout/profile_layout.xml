@@ -62,45 +62,6 @@
             </RelativeLayout>
         </LinearLayout>
 
-
-        <Button
-            android:text="@string/change_password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/changePassword"
-            />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/chooseNewPass"
-            android:background="@android:drawable/editbox_background"
-            android:textAlignment="center" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/confirmNewPass"
-            android:background="@android:drawable/editbox_background"
-            android:textAlignment="center" />
-
-        <Button
-            android:text="@string/send_new_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/changeNewPass"
-            android:background="@android:drawable/editbox_background"
-            android:textSize="18sp"
-            android:textStyle="normal|bold|italic"
-            android:textColor="@color/colorAccent"
-            android:onClick="changePassword" />
-
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

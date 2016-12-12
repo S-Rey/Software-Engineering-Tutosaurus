@@ -52,7 +52,6 @@ public class ProfileFragment extends Fragment {
         ((HomeScreenActivity) getActivity()).setActionBarTitle("Profile");
         loadImageFromStorage();
 
-        ((HomeScreenActivity) getActivity()).setPassTabToOpen(myView);
         DatabaseHelper dbh = DatabaseHelper.getInstance();
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();

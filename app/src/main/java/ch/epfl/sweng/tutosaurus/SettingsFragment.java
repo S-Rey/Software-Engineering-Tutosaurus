@@ -60,8 +60,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     getActivity().stopService(serviceIntent);
                 }
                 break;
-            case "checkbox_preference_calendar":
-                break;
             default:
                 break;
         }
