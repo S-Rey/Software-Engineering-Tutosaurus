@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.PreferenceMatchers;
 import android.support.test.runner.AndroidJUnit4;
@@ -27,6 +28,9 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.contrib.DrawerActions.open;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertTrue;
 
@@ -129,6 +133,23 @@ public class ChangePasswordActivityTest {
         boolean previousPasswordSetBack = solo.searchText("Password changed successfully");
         assertTrue(previousPasswordSetBack);
         Espresso.pressBack();
+        onView(withId(R.id.action_logOutButton)).perform(click());
+    }
+
+    @Test
+    public void testBackButton() throws InterruptedException {
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.main_email));
+        solo.typeText(0, "vincent.rinaldi@epfl.ch");
+        solo.clickOnView(solo.getView(R.id.main_password));
+        solo.typeText(1, "mrstvm95");
+        solo.clickOnView(solo.getView(R.id.connectionButton));
+        Thread.sleep(2000);
+        onView(withId(R.id.drawer_layout)).perform(open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
+        onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
+        solo.clickOnActionBarHomeButton();
+        intended(hasAction("OPEN_TAB_SETTINGS"));
         onView(withId(R.id.action_logOutButton)).perform(click());
     }
 
