@@ -77,7 +77,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     private void setEnabledWhenConnected() {
         if (buttonsToManage != null && !buttonsToManage.isEmpty()) {
             for (Button button : buttonsToManage) {
-                button.setEnabled(true);
+                if(button != null) {
+                    button.setEnabled(true);
+                }
             }
         }
     }
@@ -85,7 +87,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     private void setDisabledWhenNotConnected() {
         if (buttonsToManage != null && !buttonsToManage.isEmpty()) {
             for (Button button : buttonsToManage) {
-                button.setEnabled(false);
+                if(button != null) {
+                    button.setEnabled(false);
+                }
             }
         }
     }
