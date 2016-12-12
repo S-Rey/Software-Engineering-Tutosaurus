@@ -11,6 +11,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +31,11 @@ public class StartActivityTest {
             true,
             false
     );
+
+    @Before
+    public void signOutBefore() {
+        FirebaseAuth.getInstance().signOut();
+    }
 
     @Test
     public void mainActivityWhenNotLoggedIn() {
@@ -54,7 +60,7 @@ public class StartActivityTest {
     }
 
     @After
-    public void signOut() {
+    public void signOutAfter() {
         FirebaseAuth.getInstance().signOut();
     }
 

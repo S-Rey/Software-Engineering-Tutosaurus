@@ -85,11 +85,13 @@ public class PublicProfileActivity extends AppCompatActivity {
                 // Set profile picture
                 final ImageView profilePicture=(ImageView) findViewById(R.id.publicProfilePicture);
                 StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
+
                 StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getSciper()+".png");
                 Glide.with(getBaseContext())
                         .using(new FirebaseImageLoader())
                         .load(picRef)
                         .into(profilePicture);
+
 
                 // Set email
                 TextView email = (TextView) findViewById(R.id.emailView);
@@ -101,14 +103,6 @@ public class PublicProfileActivity extends AppCompatActivity {
                 professorRate.setVisibility(View.VISIBLE);
                 TextView professorView = (TextView) findViewById(R.id.professorView);
                 professorView.setVisibility(View.VISIBLE);
-
-                //RatingBar studentRate=(RatingBar) findViewById(R.id.ratingBarStudent);
-                //studentRate.setRating(4f);
-
-                // Set the level TODO: get total progress!!!
-                //ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
-                //level.setProgress(88);
-
 
                 // Set "expert in" listview
                 LinearLayout courseList = (LinearLayout) findViewById(R.id.courseListLayout);
