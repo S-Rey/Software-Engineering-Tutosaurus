@@ -1,5 +1,6 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
@@ -10,21 +11,30 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import ch.epfl.sweng.tutosaurus.adapter.ChatListAdapter;
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.model.Chat;
+
 import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 
@@ -61,6 +71,31 @@ public class MessagingFragmentTests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        onData(anything())
+                .inAdapterView(allOf(
+                        isAssignableFrom(AdapterView.class),
+                        isDisplayed()
+                ))
+                .atPosition(0)
+                .perform(click());
+        intended(hasComponent(hasClassName(ChatActivity.class.getName())));
+        Intents.release();
+    }
+
+    @Test
+    public void testOpenChatChatList() {
+        Intents.init();
+        rule.launchActivity(new Intent().setAction("OPEN_TAB_MESSAGES"));
+        //onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        //onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.action_switch_adapter)).perform(click());
+        onView(withId(R.id.action_switch_adapter)).perform(click());
+
         onData(anything())
                 .inAdapterView(allOf(
                         isAssignableFrom(AdapterView.class),
