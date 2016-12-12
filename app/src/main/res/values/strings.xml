@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name_title">TUTOSAURUS</string>
     <string name="app_name">TutoSaurus</string>
-    <string name="welcoming_message">Welcome to TutoSaurus !</string>
+    <string name="welcoming_message">The app for every tutor and tutoree</string>
     <string name="welcome_message_description">Dino welcome</string>
     <string name="instructions_message">Do not forget to sign up before logging in to the application.</string>
     <string name="email_ask">Enter Email</string>
@@ -302,9 +302,9 @@
     <string name="level_10_tirannosaurus_rex">level 10: Tirannosaurus Rex</string>
     <string name="profile_expert_in">Expert in:</string>
     <string name="profile_request_meeting">Request meeting</string>
-    <string name="confirmation_first_name">"First name : "</string>
-    <string name="confirmation_last_name">"Last name : "</string>
-    <string name="confirmation_email">"Email address : "</string>
-    <string name="confirmation_sciper">"Sciper : "</string>
+    <string name="confirmation_first_name">"First name : %1$s"</string>
+    <string name="confirmation_last_name">"Last name : %1$s"</string>
+    <string name="confirmation_email">"Email address : %1$s"</string>
+    <string name="confirmation_sciper">"Sciper : %1$s"</string>
     <string name="add_to_calendar">Calendar</string>
 </resources>
