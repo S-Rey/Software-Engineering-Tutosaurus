@@ -22,4 +22,6 @@ public class NetworkChangeReceiverTest {
     public void setUp() throws Exception {
         receiver = new NetworkChangeReceiver();
     }
+
+
 }
