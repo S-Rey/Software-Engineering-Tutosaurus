@@ -8,6 +8,8 @@ import android.widget.ListView;
 
 import com.google.firebase.database.Query;
 
+import ch.epfl.sweng.tutosaurus.SearchFactory.SearchCriterion;
+import ch.epfl.sweng.tutosaurus.SearchFactory.SearchCriterionFactory;
 import ch.epfl.sweng.tutosaurus.adapter.FirebaseTutorAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
@@ -26,32 +28,13 @@ public class FindTutorResult extends AppCompatActivity {
 
         String methodToCall = extras.getString("METHOD_TO_CALL");
         ListView tutorList = (ListView) findViewById(R.id.tutorList);
-        Query ref = dbh.getUserRef();
 
-        switch (methodToCall) {
-            case "findTutorByName":
-                String tutorName = extras.getString("NAME_TO_SEARCH");
-                ref = ref.orderByChild("fullName").equalTo(tutorName);
-                break;
-            case "findTutorBySciper":
-                String tutorSciper = extras.getString("SCIPER_TO_SEARCH");
-                ref = ref.orderByChild("sciper").equalTo(tutorSciper);
-                break;
-            case "findTutorByCourse":
-                String courseId = extras.getString("COURSE_ID");
-                ref = findTutorBySubject(courseId, ref);
-                break;
-            case "showFullList":
-                ref = ref.orderByChild("fullName");
-                break;
-        }
+        SearchCriterion searchCriterion = new SearchCriterionFactory().findSearchCriterionNamed(methodToCall);
+        Query ref = searchCriterion.performSearch(extras.getString("EXTRA_INFO"));
         FirebaseTutorAdapter adapter = new FirebaseTutorAdapter(this, User.class, R.layout.listview_tutor_row, ref);
         tutorList.setAdapter(adapter);
     }
 
-    private Query findTutorBySubject(String subject, Query userRef){
-        return userRef.orderByChild("teaching/" + subject).equalTo(true);
-    }
 
 }
 

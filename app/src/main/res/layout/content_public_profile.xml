@@ -126,7 +126,8 @@
             android:id="@+id/levelBar"
             android:progress="85"
             android:progressDrawable="@drawable/greenprogress"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:visibility="gone"/>
         <TextView
             android:text="@string/level_10_tirannosaurus_rex"
             android:layout_width="match_parent"
@@ -134,7 +135,8 @@
             android:id="@+id/levelTextView"
             android:textSize="16sp"
             android:gravity="center_horizontal|center_vertical"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            android:visibility="gone"/>
 
         <TextView
                 android:text="@string/profile_expert_in"
