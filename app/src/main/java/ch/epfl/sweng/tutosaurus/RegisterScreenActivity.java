@@ -34,7 +34,7 @@ import ch.epfl.sweng.tutosaurus.Tequila.Profile;
  * 2. Client accesses request url <br>
  * 3. Client enters username and password; gets 'code' in return. If user already entered details, the webview uses a cookie. <br>
  * 4. Client uses 'code' to request access token: AuthServer.fetchTokens(config, code). config is the same as in step 1, it contains client id and client secret.
- *    At this point, the user is logged in.<br>
+ * At this point, the user is logged in.<br>
  * 5. Client requests profile info using the token obtained in step 4. <br>
  */
 public class RegisterScreenActivity extends AppCompatActivity {
@@ -75,14 +75,20 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(myIntent, 0);
-        return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivityForResult(myIntent, 0);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void sendMessageForAccess(View view) {
-        if(MyAppVariables.getRegistered()){
+        if (MyAppVariables.getRegistered()) {
             Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
 
             SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
@@ -143,7 +149,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... url) {
-            for(String s : url) {
+            for (String s : url) {
                 Log.d(TAG, "ManageAccessToken.url: " + s);
             }
             String code = AuthClient.extractCode(url[0]);
@@ -164,7 +170,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void startAuthDialog(){
+    private void startAuthDialog() {
         getConfig();
         codeRequestUrl = AuthClient.createCodeRequestUrl(config);
         Log.d(TAG, "codeRequestUrl: " + codeRequestUrl);
@@ -187,8 +193,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
                 public void onReceiveValue(Boolean aBoolean) {
                 }
             });
-        }
-        else {
+        } else {
             cookieManager.removeAllCookie();
         }
 
@@ -203,7 +208,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                Log.d(TAG, "onPageFinishedUrl: "+ url);
+                Log.d(TAG, "onPageFinishedUrl: " + url);
                 super.onPageFinished(view, url);
 
                 String js_g = "javascript:document.getElementById('username').value = '" + gaspar + "';";
@@ -216,9 +221,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
                         view.evaluateJavascript(js_g + js_pw, null);
                     }
 
-                }
-
-                else if (url.contains("?code=") && !authComplete) {
+                } else if (url.contains("?code=") && !authComplete) {
                     MyAppVariables.setRegistered(true);
                     authComplete = true;
                     authDialog.dismiss();
@@ -236,8 +239,8 @@ public class RegisterScreenActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        String gaspar = ((EditText)findViewById(R.id.registerGaspar)).getText().toString();
-        String password = ((EditText)findViewById(R.id.registerPassword)).getText().toString();
+        String gaspar = ((EditText) findViewById(R.id.registerGaspar)).getText().toString();
+        String password = ((EditText) findViewById(R.id.registerPassword)).getText().toString();
 
         this.gaspar = gaspar;
         this.password = password;
