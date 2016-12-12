@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,23 +83,13 @@ public class PublicProfileActivity extends AppCompatActivity {
                 profileName.setText(matchingTutor.getFullName());
 
                 // Set profile picture
-                final ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
+                final ImageView profilePicture=(ImageView) findViewById(R.id.publicProfilePicture);
                 StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-                // Log.d(TAG, "tutor: " +tutor.getSciper() + " " + tutor.getFullName());
-//                StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getSciper()+".png");
-//                picRef.getBytes(1024*1024).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//                    @Override
-//                    public void onSuccess(byte[] bytes) {
-//                        Bitmap pic = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                        profilePicture.setImageBitmap(pic);
-//                       // Log.d(TAG, "success");
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        //Log.d(TAG, "failure");
-//                    }
-//                });
+                StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getSciper()+".png");
+                Glide.with(getBaseContext())
+                        .using(new FirebaseImageLoader())
+                        .load(picRef)
+                        .into(profilePicture);
 
 
                 // Set email
@@ -109,14 +102,6 @@ public class PublicProfileActivity extends AppCompatActivity {
                 professorRate.setVisibility(View.VISIBLE);
                 TextView professorView = (TextView) findViewById(R.id.professorView);
                 professorView.setVisibility(View.VISIBLE);
-
-                //RatingBar studentRate=(RatingBar) findViewById(R.id.ratingBarStudent);
-                //studentRate.setRating(4f);
-
-                // Set the level TODO: get total progress!!!
-                //ProgressBar level=(ProgressBar) findViewById(R.id.levelBar);
-                //level.setProgress(88);
-
 
                 // Set "expert in" listview
                 LinearLayout courseList = (LinearLayout) findViewById(R.id.courseListLayout);
