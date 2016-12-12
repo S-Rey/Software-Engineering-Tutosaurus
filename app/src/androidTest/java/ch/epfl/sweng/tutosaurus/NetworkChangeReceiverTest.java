@@ -23,5 +23,5 @@ public class NetworkChangeReceiverTest {
         receiver = new NetworkChangeReceiver();
     }
 
-    
+
 }

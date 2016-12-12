@@ -210,7 +210,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
                 String js_g = "javascript:document.getElementById('username').value = '" + gaspar + "';";
                 String js_pw = "javascript:document.getElementById('password').value = '" + password + "';";
-                //Log.d(TAG, "js: " + js_g + js_pw);
 
                 if (url.contains("requestkey")) {
                     Log.d(TAG, "TRIGGERED");
