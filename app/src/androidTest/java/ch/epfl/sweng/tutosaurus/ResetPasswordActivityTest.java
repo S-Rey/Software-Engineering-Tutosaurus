@@ -48,21 +48,25 @@ public class ResetPasswordActivityTest {
     @Test
     public void correctFailToastDisplayed() {
         solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
-        solo.clickOnView(solo.getView(R.id.resetPasswordEmailInput));
         solo.typeText(0, invalid_email);
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
         boolean toastMsg = solo.searchText("Failed to send reset!");
-        //assertTrue(toastMsg);
+        assertTrue(toastMsg);
     }
 
     @Test
     public void correctSuccessToastDisplayed() {
         solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
-        solo.clickOnView(solo.getView(R.id.resetPasswordEmailInput));
         solo.typeText(0, valid_email);
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
-        boolean toastMsg = solo.searchText("Instructions sent to your email!");
-        //assertTrue(toastMsg);
+        boolean toastMsgDisplayed = solo.searchText("Instructions sent to your email!");
+        boolean tooManyRequests = false;
+        //Check that test fails because too many requests for a particular email were sent
+        if (!toastMsgDisplayed) {
+            solo.clickOnView(solo.getView(R.id.rstPasswordButton));
+            tooManyRequests = solo.searchText("Failed to send reset!");
+        }
+        assertTrue(tooManyRequests || toastMsgDisplayed);
     }
 
     @Test
@@ -72,15 +76,6 @@ public class ResetPasswordActivityTest {
         boolean toastMsg = solo.searchText("Enter your registered email id");
         assertTrue(toastMsg);
     }
-
-    /**@Test
-    public void activityFinishCorrectly() throws Exception {
-        solo.assertCurrentActivity("correct activity", ResetPasswordActivity.class);
-        solo.clickOnView(solo.getView(R.id.backButton));
-        //Not a good test
-        Thread.sleep(2000);
-        assertTrue(mActivityRule.getActivity().isFinishing());
-    }*/
 
     @Test
     public void goToMainActivityOnBackButton() {
