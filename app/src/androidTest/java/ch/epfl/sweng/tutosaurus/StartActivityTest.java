@@ -5,6 +5,7 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +25,8 @@ import static android.support.test.espresso.intent.matcher.ComponentNameMatchers
 
 @RunWith(AndroidJUnit4.class)
 public class StartActivityTest {
+
+    private boolean logged_in = false;
 
     @Rule
     public ActivityTestRule<StartActivity> rule = new ActivityTestRule<>(
@@ -49,13 +52,22 @@ public class StartActivityTest {
     public void homeScreenActivityWhenLoggedIn() {
         Intents.init();
         Task<AuthResult> loginTask = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
+        loginTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                logged_in = true;
+            }
+        });
         try {
             Tasks.await(loginTask);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        rule.launchActivity(new Intent());
-        intended(hasComponent(hasClassName(HomeScreenActivity.class.getName())));
+        if (logged_in) {
+            rule.launchActivity(new Intent());
+            intended(hasComponent(hasClassName(HomeScreenActivity.class.getName())));
+        }
+        logged_in = false;
         Intents.release();
     }
 
