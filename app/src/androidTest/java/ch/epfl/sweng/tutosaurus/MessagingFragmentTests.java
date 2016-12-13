@@ -26,9 +26,11 @@ import ch.epfl.sweng.tutosaurus.adapter.ChatListAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Chat;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -80,6 +82,34 @@ public class MessagingFragmentTests {
                 .perform(click());
         intended(hasComponent(hasClassName(ChatActivity.class.getName())));
         Intents.release();
+    }
+
+    @Test
+    public void testTypeMessage() {
+        rule.launchActivity(new Intent().setAction("OPEN_TAB_MESSAGES"));
+        //onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        //onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_messaging_layout));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onData(anything())
+                .inAdapterView(allOf(
+                        isAssignableFrom(AdapterView.class),
+                        isDisplayed()
+                ))
+                .atPosition(0)
+                .perform(click());
+        closeSoftKeyboard();
+        onView(withId(R.id.chat_message_input)).perform(typeText("Hello World!"));
+        closeSoftKeyboard();
+        onView(withId(R.id.chat_message_send)).perform(click());
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
