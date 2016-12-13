@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name_title">TUTOSAURUS</string>
     <string name="app_name">TutoSaurus</string>
-    <string name="welcoming_message">Welcome to TutoSaurus !</string>
+    <string name="welcoming_message">The app for every tutor and tutoree.</string>
     <string name="welcome_message_description">Dino welcome</string>
     <string name="instructions_message">Do not forget to sign up before logging in to the application.</string>
     <string name="email_ask">Enter Email</string>
@@ -121,13 +121,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="enable_notifications">Enable Notifications</string>
-    <string name="sync_calendar">Synchronise calendar</string>
     <string name="share_location">Share nameLocation</string>
-    <string name="rate_app">Rate the app</string>
+    <string name="epfl_web_site">Go to EPFL website</string>
 
     <string name="load_picture">Load From Gallery</string>
     <string name="take_picture">Take With Camera</string>
+
     <string name="change_password">Change Password</string>
+    <string name="explanations_change_password">Please choose a new password for your account.</string>
     <string name="send_new_password">Send</string>
 
     <string name="title_lists_subjects">List of subjects</string>
@@ -302,9 +303,9 @@
     <string name="level_10_tirannosaurus_rex">level 10: Tirannosaurus Rex</string>
     <string name="profile_expert_in">Expert in:</string>
     <string name="profile_request_meeting">Request meeting</string>
-    <string name="confirmation_first_name">"First name : "</string>
-    <string name="confirmation_last_name">"Last name : "</string>
-    <string name="confirmation_email">"Email address : "</string>
-    <string name="confirmation_sciper">"Sciper : "</string>
+    <string name="confirmation_first_name">"First name : %1$s"</string>
+    <string name="confirmation_last_name">"Last name : %1$s"</string>
+    <string name="confirmation_email">"Email address : %1$s"</string>
+    <string name="confirmation_sciper">"Sciper : %1$s"</string>
     <string name="add_to_calendar">Calendar</string>
 </resources>

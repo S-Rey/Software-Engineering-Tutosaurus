@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 
 import com.robotium.solo.Solo;
@@ -10,6 +11,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -36,17 +39,24 @@ public class RegisterScreenActivityTest {
     }
 
     @Test
-    public void ClickOnRegisterPopsupTequilaLoginWebpage(){
+    public void ClickOnRegisterPopupTequilaLoginWebpage(){
         solo.assertCurrentActivity("correct activity", RegisterScreenActivity.class);
-        solo.clickOnView(solo.getView(R.id.registerGaspar));
         solo.typeText(0, "albert");
-        solo.clickOnView(solo.getView(R.id.registerPassword));
         solo.typeText(1, "notThePassword");
         solo.clickOnView(solo.getView(R.id.registerLogin));
         //boolean tequilaWebPage = solo.searchText("tequila.epfl.ch");
         //assertTrue(tequilaWebPage);
         boolean teqWebPage = solo.searchText("Sign in");
         assertTrue(teqWebPage);
+    }
+
+    @Test
+    public void testRegisterHomeUpGoesToMain() {
+        solo.assertCurrentActivity("correct activity", RegisterScreenActivity.class);
+        Intents.init();
+        solo.clickOnActionBarHomeButton();
+        intended(hasComponent(MainActivity.class.getName()));
+        Intents.release();
     }
 
 }

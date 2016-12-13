@@ -14,12 +14,12 @@
         android:selectable="false">
     </PreferenceScreen>
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="checkbox_preference_calendar"
-        android:id="@+id/checkbox_calendar"
-        android:title="@string/sync_calendar"
-        android:layout="@layout/preference_checkbox" />
+    <PreferenceScreen
+        android:key="intent_preference_password"
+        android:title="@string/change_password"
+        android:layout="@layout/preference_intent">
+        <intent android:action="example.action.ChangePasswordActivity" />
+    </PreferenceScreen>
 
     <PreferenceScreen
         android:layout="@layout/preference_divider"
@@ -27,11 +27,11 @@
     </PreferenceScreen>
 
     <PreferenceScreen
-        android:title="@string/rate_app"
-        android:key="intent_preference_rating"
+        android:title="@string/epfl_web_site"
+        android:key="intent_preference_epfl"
         android:layout="@layout/preference_intent">
         <intent android:action="android.intent.action.VIEW"
-            android:data="http://google.com/" />
+            android:data="https://www.epfl.ch/" />
     </PreferenceScreen>
 
     <PreferenceScreen

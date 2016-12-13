@@ -76,24 +76,20 @@ public class SettingsFragmentTest {
     }
 
     @Test
-    public void testSettingTabCalendarCheckbox() throws InterruptedException {
-        if (sharedPreferences.getBoolean("checkbox_preference_calendar", true)) {
-            onData(PreferenceMatchers.withKey("checkbox_preference_calendar")).perform(click());
-            Thread.sleep(1000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_calendar", true), equalTo(false));
-        } else {
-            onData(PreferenceMatchers.withKey("checkbox_preference_calendar")).perform(click());
-            Thread.sleep(1000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_calendar", true), equalTo(true));
-        }
+    public void testSettingTabChangePasswordActivityIntent() throws InterruptedException {
+        Thread.sleep(1000);
+        Matcher<Intent> expectedIntent = allOf(hasAction("example.action.ChangePasswordActivity"));
+        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
+        onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
+        intended(expectedIntent);
     }
 
     @Test
-    public void testSettingTabRatingAppBrowser() throws InterruptedException {
+    public void testSettingTabEPFLWebSiteBrowser() throws InterruptedException {
         Thread.sleep(1000);
-        Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("http://google.com/"));
+        Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("https://www.epfl.ch/"));
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
-        onData(PreferenceMatchers.withKey("intent_preference_rating")).perform(click());
+        onData(PreferenceMatchers.withKey("intent_preference_epfl")).perform(click());
         intended(expectedIntent);
     }
 
