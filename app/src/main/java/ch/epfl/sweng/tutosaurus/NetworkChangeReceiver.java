@@ -14,10 +14,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Created by Stephane on 12/2/2016.
- */
-
-/**
  * Class to be instantiated only once in MainActivity thus preferable to be Singleton
  */
 public class NetworkChangeReceiver extends BroadcastReceiver {
@@ -66,7 +62,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         return false;
     }
 
-    public boolean isConnected() {
+    private boolean isConnected() {
         return isConnected;
     }
 
@@ -74,14 +70,16 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         if (buttons == null) {
             throw new IllegalArgumentException("null reference to buttons to manage");
         } else if (!buttons.isEmpty()) {
-            buttonsToManage = new ArrayList<Button>(buttons);
+            buttonsToManage = new ArrayList<>(buttons);
         }
     }
 
     private void setEnabledWhenConnected() {
         if (buttonsToManage != null && !buttonsToManage.isEmpty()) {
             for (Button button : buttonsToManage) {
-                button.setEnabled(true);
+                if(button != null) {
+                    button.setEnabled(true);
+                }
             }
         }
     }
@@ -89,7 +87,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     private void setDisabledWhenNotConnected() {
         if (buttonsToManage != null && !buttonsToManage.isEmpty()) {
             for (Button button : buttonsToManage) {
-                button.setEnabled(false);
+                if(button != null) {
+                    button.setEnabled(false);
+                }
             }
         }
     }

@@ -4,12 +4,8 @@ import org.junit.Test;
 
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 
-/**
- * Created by Stephane on 11/17/2016.
- */
-
 public class OAuth2ConfigTest {
-    String[] scopes = new String[0];
+    private String[] scopes = new String[0];
 
     @Test
     public void createEmptyScopesConfigWorks(){

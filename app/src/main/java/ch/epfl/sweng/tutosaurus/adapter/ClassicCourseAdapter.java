@@ -17,10 +17,6 @@ import ch.epfl.sweng.tutosaurus.FindTutorResult;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 
-/**
- * Created by albertochiappa on 23/11/16.
- */
-
 public class ClassicCourseAdapter extends ArrayAdapter<Course> {
     private Context context;
     private int layoutResourceId;
@@ -61,7 +57,7 @@ public class ClassicCourseAdapter extends ArrayAdapter<Course> {
         final Intent intent = new Intent(context,FindTutorResult.class);
         Bundle extras = new Bundle();
         extras.putString("METHOD_TO_CALL", "findTutorByCourse");
-        extras.putString("COURSE_ID", course.getId());
+        extras.putString("EXTRA_INFO", course.getId());
         intent.putExtras(extras);
 
         holder.courseName.setOnClickListener(new View.OnClickListener(){

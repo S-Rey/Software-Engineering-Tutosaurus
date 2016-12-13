@@ -85,9 +85,16 @@ public class MainActivityTest {
     }
 
     @Test
+    public void LogInWithoutAnyInputDisplaysWarning(){
+        solo.assertCurrentActivity("correct activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.connectionButton));
+        boolean warningDisplayed = solo.searchText("Please type in your email and password");
+        assertTrue(warningDisplayed);
+    }
+
+    @Test
     public void LogInWithoutPasswordDisplaysWarning(){
         solo.assertCurrentActivity("correct activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.main_email));
         solo.typeText(0, valid_email);
         solo.clickOnView(solo.getView(R.id.connectionButton));
         boolean warningDisplayed = solo.searchText("Please type in your email and password");
@@ -97,8 +104,7 @@ public class MainActivityTest {
     @Test
     public void LogInWithoutEmailDisplaysWarning(){
         solo.assertCurrentActivity("correct activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.main_password));
-        solo.typeText(0, "blabla");
+        solo.typeText(1, valid_password);
         solo.clickOnView(solo.getView(R.id.connectionButton));
         boolean warningDisplayed = solo.searchText("Please type in your email and password");
         assertTrue(warningDisplayed);
@@ -107,10 +113,8 @@ public class MainActivityTest {
     @Test
     public void logInWithInvalidCredentialsShouldDisplayFail(){
         solo.assertCurrentActivity("correct activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.main_email));
-        solo.typeText(1, invalid_email);
-        solo.clickOnView(solo.getView(R.id.main_password));
-        solo.typeText(0, nonsense);
+        solo.typeText(0, invalid_email);
+        solo.typeText(1, nonsense);
         solo.clickOnView(solo.getView(R.id.connectionButton));
         boolean warningDisplayed = solo.searchText("Login failed");
         assertTrue(warningDisplayed);
@@ -119,10 +123,8 @@ public class MainActivityTest {
     @Test
     public void loginInWithValidGoesToHome(){
         solo.assertCurrentActivity("correct activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.main_email));
-        solo.typeText(1, valid_email);
-        solo.clickOnView(solo.getView(R.id.main_password));
-        solo.typeText(0, valid_password);
+        solo.typeText(0, valid_email);
+        solo.typeText(1, valid_password);
         Intents.init();
         solo.clickOnView(solo.getView(R.id.connectionButton));
         intended(hasComponent(HomeScreenActivity.class.getName()));

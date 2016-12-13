@@ -1,7 +1,5 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,16 +11,13 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +44,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
-import ch.epfl.sweng.tutosaurus.model.Chat;
 import ch.epfl.sweng.tutosaurus.service.MeetingService;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -60,8 +54,8 @@ public class HomeScreenActivity extends AppCompatActivity
 
     private static final String TAG = "HomeScreenActivity";
 
-    public static final int GALLERY_REQUEST = 1;
-    public static final int REQUEST_IMAGE_CAPTURE = 2;
+    private static final int GALLERY_REQUEST = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
 
     private final int PROFILE_PICTURE_HEIGHT = 600;
     private final int PROFILE_PICTURE_WIDTH = 600;
@@ -162,6 +156,10 @@ public class HomeScreenActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
             }
 
+            if (intent.getAction().equals("OPEN_TAB_SETTINGS")) {
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+            }
+
             if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
@@ -251,7 +249,7 @@ public class HomeScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_meetings_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
         } else if (id == R.id.nav_messaging_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment(), "MESSAGING_FRAGMENT").commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -260,82 +258,10 @@ public class HomeScreenActivity extends AppCompatActivity
     }
 
     public void setActionBarTitle(String title) {
-        getSupportActionBar().setTitle(title);
-    }
-
-    public void changePassword(View view) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        EditText newPasswordChoosed = (EditText) findViewById(R.id.chooseNewPass);
-        EditText newPasswordConfirmed = (EditText) findViewById(R.id.confirmNewPass);
-
-        if (newPasswordChoosed.getText().toString().equals("") || newPasswordConfirmed.getText().toString().equals("")) {
-            Toast.makeText(this, "Please fill both boxes above", Toast.LENGTH_SHORT).show();
-        } else if (!newPasswordChoosed.getText().toString().equals(newPasswordConfirmed.getText().toString())) {
-            Toast.makeText(this, "Passwords must match", Toast.LENGTH_SHORT).show();
-        } else {
-            user.updatePassword(newPasswordChoosed.getText().toString());
-            Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show();
-            closePassword();
+        ActionBar mActionBar = getSupportActionBar();
+        if(mActionBar != null) {
+            mActionBar.setTitle(title);
         }
-    }
-
-    private void openPassword() {
-        EditText changePassField = (EditText) findViewById(R.id.chooseNewPass);
-        EditText changePassFieldConfirm = (EditText) findViewById(R.id.confirmNewPass);
-        changePassField.setHint("Choose New Password");
-        changePassField.setVisibility(View.VISIBLE);
-        changePassFieldConfirm.setHint("Confirm New Password");
-        changePassFieldConfirm.setVisibility(View.VISIBLE);
-
-        Button sendNewPassInfo = (Button) findViewById(R.id.changeNewPass);
-        sendNewPassInfo.setVisibility(View.VISIBLE);
-
-        Button changePasswordButton = (Button) findViewById(R.id.changePassword);
-        View.OnClickListener changePassClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closePassword();
-            }
-        };
-        changePasswordButton.setOnClickListener(changePassClick);
-    }
-
-    private void closePassword() {
-        EditText changePassField = (EditText) findViewById(R.id.chooseNewPass);
-        EditText changePassFieldConfirm = (EditText) findViewById(R.id.confirmNewPass);
-        Button sendNewPassInfo = (Button) findViewById(R.id.changeNewPass);
-        changePassField.setVisibility(View.GONE);
-        changePassField.setText("");
-        changePassFieldConfirm.setVisibility(View.GONE);
-        changePassFieldConfirm.setText("");
-        sendNewPassInfo.setVisibility(View.GONE);
-
-        Button changePasswordButton = (Button) findViewById(R.id.changePassword);
-        View.OnClickListener changePassClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPassword();
-            }
-        };
-        changePasswordButton.setOnClickListener(changePassClick);
-    }
-
-    void setPassTabToOpen(View v){
-        EditText changePassField = (EditText) v.findViewById(R.id.chooseNewPass);
-        EditText changePassFieldConfirm = (EditText) v.findViewById(R.id.confirmNewPass);
-        Button sendNewPassInfo = (Button) v.findViewById(R.id.changeNewPass);
-        changePassField.setVisibility(View.GONE);
-        changePassFieldConfirm.setVisibility(View.GONE);
-        sendNewPassInfo.setVisibility(View.GONE);
-
-        Button changePasswordButton = (Button) v.findViewById(R.id.changePassword);
-        View.OnClickListener changePassClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPassword();
-            }
-        };
-        changePasswordButton.setOnClickListener(changePassClick);
     }
 
     private void loadImageFromGallery(View view) {
@@ -363,7 +289,7 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-    protected void dispatchChatIntent(Intent chatIntent) {
+    void dispatchChatIntent(Intent chatIntent) {
         if(chatIntent.getComponent().getClassName().equals(ChatActivity.class.getName())) {
             startActivity(chatIntent);
         } else {
@@ -381,7 +307,9 @@ public class HomeScreenActivity extends AppCompatActivity
             e.printStackTrace();
         } finally {
             try {
-                fos.close();
+                if (fos != null) {
+                    fos.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -422,18 +350,18 @@ public class HomeScreenActivity extends AppCompatActivity
                     pictureView.setImageBitmap(imageSelected);
                     pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     saveToInternalStorage(imageSelected);
+                    assert inputStream != null;
                     inputStream.close();
-
-                    String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    PictureHelper.storePicOnline(imageSelectedUri.getPath(), currentUser);
-
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    if(currentUser != null) {
+                        String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        PictureHelper.storePicOnline(imageSelectedUri.getPath(), currentUserUid);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();
                 }
-
             }
-
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -473,11 +401,13 @@ public class HomeScreenActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String strName = arrayAdapter.getItem(which);
-                        if(strName.equals("Take picture with camera")){
-                            dispatchTakePictureIntent(view);
-                        }
-                        else if(strName.equals("Load picture from gallery")){
-                            loadImageFromGallery(view);
+                        if (strName != null) {
+                            if(strName.equals("Take picture with camera")){
+                                dispatchTakePictureIntent(view);
+                            }
+                            else if(strName.equals("Load picture from gallery")){
+                                loadImageFromGallery(view);
+                            }
                         }
                     }
                 });

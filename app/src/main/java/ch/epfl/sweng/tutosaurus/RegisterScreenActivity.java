@@ -1,6 +1,5 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,7 +17,6 @@ import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
@@ -26,7 +24,6 @@ import java.util.Map;
 
 import ch.epfl.sweng.tutosaurus.Tequila.AuthClient;
 import ch.epfl.sweng.tutosaurus.Tequila.AuthServer;
-import ch.epfl.sweng.tutosaurus.Tequila.MyAppVariables;
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
@@ -36,7 +33,7 @@ import ch.epfl.sweng.tutosaurus.Tequila.Profile;
  * 2. Client accesses request url <br>
  * 3. Client enters username and password; gets 'code' in return. If user already entered details, the webview uses a cookie. <br>
  * 4. Client uses 'code' to request access token: AuthServer.fetchTokens(config, code). config is the same as in step 1, it contains client id and client secret.
- *    At this point, the user is logged in.<br>
+ * At this point, the user is logged in.<br>
  * 5. Client requests profile info using the token obtained in step 4. <br>
  */
 public class RegisterScreenActivity extends AppCompatActivity {
@@ -72,47 +69,49 @@ public class RegisterScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_screen);
 
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
-        mActionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(myIntent, 0);
-        return true;
-    }
-
-    private void sendMessageForAccess(View view) {
-        if(MyAppVariables.getRegistered()){
-            Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
-
-            SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putString("firstName", profile.firstNames);
-            editor.putString("lastName", profile.lastNames);
-            editor.putString("email", profile.email);
-            editor.putString("sciper", profile.sciper);
-            editor.commit();
-
-            intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
-            intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
-            intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
-            intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
-            intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.gaspar);
-
-            startActivity(intent);
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
-    private static OAuth2Config readConfig() throws IOException {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivityForResult(myIntent, 0);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void sendMessageForAccess(View view) {
+        Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
+
+        SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("firstName", profile.firstNames);
+        editor.putString("lastName", profile.lastNames);
+        editor.putString("email", profile.email);
+        editor.putString("sciper", profile.sciper);
+        editor.apply();
+
+        intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
+        intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
+        intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
+        intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
+        intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.gaspar);
+
+        startActivity(intent);
+    }
+
+    private static OAuth2Config readConfig() {
         return new OAuth2Config(new String[]{"Tequila.profile"}, CLIENT_ID, CLIENT_KEY, REDIRECT_URI);
     }
 
     private static void getConfig() {
-        try {
-            config = readConfig();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        config = readConfig();
     }
 
     private static void getAccessToken(OAuth2Config config, String code) {
@@ -147,7 +146,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... url) {
-            for(String s : url) {
+            for (String s : url) {
                 Log.d(TAG, "ManageAccessToken.url: " + s);
             }
             String code = AuthClient.extractCode(url[0]);
@@ -168,7 +167,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void startAuthDialog(){
+    private void startAuthDialog() {
         getConfig();
         codeRequestUrl = AuthClient.createCodeRequestUrl(config);
         Log.d(TAG, "codeRequestUrl: " + codeRequestUrl);
@@ -191,8 +190,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
                 public void onReceiveValue(Boolean aBoolean) {
                 }
             });
-        }
-        else {
+        } else {
             cookieManager.removeAllCookie();
         }
 
@@ -207,12 +205,11 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                Log.d(TAG, "onPageFinishedUrl: "+ url);
+                Log.d(TAG, "onPageFinishedUrl: " + url);
                 super.onPageFinished(view, url);
 
                 String js_g = "javascript:document.getElementById('username').value = '" + gaspar + "';";
                 String js_pw = "javascript:document.getElementById('password').value = '" + password + "';";
-                //Log.d(TAG, "js: " + js_g + js_pw);
 
                 if (url.contains("requestkey")) {
                     Log.d(TAG, "TRIGGERED");
@@ -220,10 +217,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
                         view.evaluateJavascript(js_g + js_pw, null);
                     }
 
-                }
-
-                else if (url.contains("?code=") && !authComplete) {
-                    MyAppVariables.setRegistered(true);
+                } else if (url.contains("?code=") && !authComplete) {
                     authComplete = true;
                     authDialog.dismiss();
                     new ManageAccessToken().execute(url);
@@ -240,8 +234,8 @@ public class RegisterScreenActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        String gaspar = ((EditText)findViewById(R.id.registerGaspar)).getText().toString();
-        String password = ((EditText)findViewById(R.id.registerPassword)).getText().toString();
+        String gaspar = ((EditText) findViewById(R.id.registerGaspar)).getText().toString();
+        String password = ((EditText) findViewById(R.id.registerPassword)).getText().toString();
 
         this.gaspar = gaspar;
         this.password = password;

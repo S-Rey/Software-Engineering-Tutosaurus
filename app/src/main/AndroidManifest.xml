@@ -35,6 +35,7 @@
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -59,13 +60,21 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FindTutorResult"
-            android:label="List of matches"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="List of matches" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".CreateMeetingActivity" />
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/change_password">
+            <intent-filter>
+                <action android:name="example.action.ChangePasswordActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
+
 </manifest>

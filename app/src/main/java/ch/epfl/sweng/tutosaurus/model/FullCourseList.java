@@ -4,10 +4,6 @@ import java.util.ArrayList;
 
 import ch.epfl.sweng.tutosaurus.R;
 
-/**
- * Created by albertochiappa on 23/11/16.
- */
-
 public class FullCourseList {
     private static FullCourseList ourInstance = new FullCourseList();
     private ArrayList<Course> listOfCourses;

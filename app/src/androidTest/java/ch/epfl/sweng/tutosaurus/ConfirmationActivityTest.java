@@ -2,6 +2,7 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -9,6 +10,9 @@ import com.robotium.solo.Solo;
 
 import org.junit.After;
 import org.junit.Rule;
+
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
 /**
  * Created by Stephane on 12/8/2016.
@@ -89,9 +93,7 @@ public class ConfirmationActivityTest extends ActivityInstrumentationTestCase2<C
 
     public void testMismatchedPassword(){
         solo.assertCurrentActivity("correct activity", ConfirmationActivity.class);
-        solo.clickOnView(solo.getView(R.id.confirmation_password1));
         solo.typeText(1, "bla bla");
-        solo.clickOnView(solo.getView(R.id.confirmation_password2));
         solo.typeText(0, "bli bli");
         solo.clickOnView(solo.getView(R.id.backToLoginButton));
         boolean mismatchWarningDisplayed = solo.searchText("Passwords must match");
@@ -100,7 +102,6 @@ public class ConfirmationActivityTest extends ActivityInstrumentationTestCase2<C
 
     public void testEmptyPassword(){
         solo.assertCurrentActivity("correct activity", ConfirmationActivity.class);
-        solo.clickOnView(solo.getView(R.id.confirmation_password2));
         solo.typeText(1, "bli bli");
         solo.clickOnView(solo.getView(R.id.backToLoginButton));
         boolean missingWarningDisplayed = solo.searchText("Password missing");
@@ -109,13 +110,19 @@ public class ConfirmationActivityTest extends ActivityInstrumentationTestCase2<C
 
     public void testRegisterWithExistingAccountFails() {
         solo.assertCurrentActivity("correct activity", ConfirmationActivity.class);
-        solo.clickOnView(solo.getView(R.id.confirmation_password1));
         solo.typeText(1, "bla bla");
-        solo.clickOnView(solo.getView(R.id.confirmation_password2));
         solo.typeText(0, "bla bla");
         solo.clickOnView(solo.getView(R.id.backToLoginButton));
         boolean failMessageDisplayed = solo.searchText("Auth failed");
         assertTrue(failMessageDisplayed);
+    }
+
+    public void testConfirmationHomeUpGoesToRegister() {
+        solo.assertCurrentActivity("correct activity", ConfirmationActivity.class);
+        Intents.init();
+        solo.clickOnActionBarHomeButton();
+        intended(hasComponent(RegisterScreenActivity.class.getName()));
+        Intents.release();
     }
 
     /**public void testRegister() {
