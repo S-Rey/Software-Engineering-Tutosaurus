@@ -105,7 +105,6 @@ public class MeetingTest{
         Thread.sleep(2000);
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
-        onView(withId(R.id.showDetailsMeeting)).perform(click());
 
     }
 
