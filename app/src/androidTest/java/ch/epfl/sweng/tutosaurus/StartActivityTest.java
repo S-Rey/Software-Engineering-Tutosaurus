@@ -48,7 +48,7 @@ public class StartActivityTest {
         Intents.release();
     }
 
-    @Test
+    /*@Test
     public void homeScreenActivityWhenLoggedIn() {
         Intents.init();
         Task<AuthResult> loginTask = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
@@ -69,7 +69,7 @@ public class StartActivityTest {
         }
         logged_in = false;
         Intents.release();
-    }
+    }*/
 
     @After
     public void signOutAfter() {
