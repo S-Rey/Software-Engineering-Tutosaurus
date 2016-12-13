@@ -38,6 +38,7 @@ import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingConfirmationAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
+import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
 
@@ -94,6 +95,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
+                // if offline, retrieve user from local database
+                User user = getUserLocalDB(activity);
+                if (user == null) {
+                    return;
+                }
+                TextView profileName = (TextView) myView.findViewById(R.id.profileName);
+                profileName.setText(user.getFullName());
+                RatingBar ratingBar = (RatingBar) myView.findViewById(R.id.ratingBar);
+                ratingBar.setRating(user.getGlobalRating());
             }
         });
 
@@ -157,6 +167,17 @@ public class ProfileFragment extends Fragment {
             database = dbHelper.getWritableDatabase();
             LocalDatabaseHelper.insertUser(user, database);
         }
+    }
+
+    @Nullable
+    private User getUserLocalDB(Context context) {
+        dbHelper = new LocalDatabaseHelper(context);
+        Activity activity = (HomeScreenActivity) getActivity();
+        if(dbHelper != null) {
+            database = dbHelper.getReadableDatabase();
+            return LocalDatabaseHelper.getUser(database);
+        }
+        return null;
     }
 
 
