@@ -366,15 +366,7 @@ public class HomeScreenActivity extends AppCompatActivity
                         String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         PictureHelper.storePicOnline(imageSelectedUri.getPath(), currentUserUid);
                     }
-                    // Store Profile Pic online
-                    User user = getUserLocalDB(this);
-                    if (user != null) {
-                        String filePath = this.getFilesDir().getAbsolutePath() + File.separator
-                                + "user_profile_pic.bmp";
-                        Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
 
-                        PictureHelper.storePicOnline(filePath, user.getSciper());
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();
@@ -388,6 +380,13 @@ public class HomeScreenActivity extends AppCompatActivity
             pictureView.setImageBitmap(imageBitmap);
             pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             saveToInternalStorage(imageBitmap);
+        }
+        // Store Profile Pic online
+        User user = getUserLocalDB(this);
+        if (user != null) {
+            String filePath = this.getFilesDir().getAbsolutePath() + File.separator
+                    + "user_profile_pic.bmp";
+            PictureHelper.storePicOnline(filePath, user.getSciper());
         }
     }
 
