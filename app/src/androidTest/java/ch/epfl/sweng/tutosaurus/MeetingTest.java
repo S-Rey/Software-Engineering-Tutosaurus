@@ -28,6 +28,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.hasToString;
+import static org.hamcrest.core.StringStartsWith.startsWith;
 
 /**
  * Created by santo on 26/11/16.
@@ -70,8 +72,6 @@ public class MeetingTest{
     @Test
     public void testRequestAndConfirmMeeting() throws InterruptedException {
 
-        //Set test location
-        //mock.pushLocation(-12.34, 23.45);
         onView(withId(R.id.createMeetingButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         int year = 2020;
         int month = 11;
@@ -95,7 +95,19 @@ public class MeetingTest{
         closeSoftKeyboard();
 
         onView(withId(R.id.addMeeting)).perform(click());
-        //onData(withId(R.id.meeting_confirmation_row_confirm)).inAdapterView(withId(R.id.meetingRequests)).atPosition(1).perform(click());
+        Thread.sleep(1000);
+        onData(anything()).inAdapterView(withId(R.id.meetingRequests)).atPosition(0).
+                onChildView(withId(R.id.meeting_confirmation_row_confirm)).perform(click());
+
+        Thread.sleep(1000);
+        onView(withId(R.id.drawer_layout)).perform(open());
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
+        Thread.sleep(2000);
+        onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
+                onChildView(withId(R.id.showDetailsMeeting)).perform(click());
+        onView(withId(R.id.showDetailsMeeting)).perform(click());
+
     }
+
 
 }

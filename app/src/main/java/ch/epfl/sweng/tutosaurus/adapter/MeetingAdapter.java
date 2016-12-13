@@ -1,7 +1,6 @@
 package ch.epfl.sweng.tutosaurus.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.CalendarContract;
@@ -205,7 +204,9 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
                 intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
+                if (user.getEmail() != null) {
+                    intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
+                }
 
                 if (meeting.getDescription() != null) {
                     intent.putExtra(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
