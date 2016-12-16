@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
-import ch.epfl.sweng.tutosaurus.mockObjects.MockLocationProvider;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
@@ -28,8 +27,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.hasToString;
-import static org.hamcrest.core.StringStartsWith.startsWith;
+
 
 /**
  * Created by santo on 26/11/16.
@@ -41,8 +39,6 @@ import static org.hamcrest.core.StringStartsWith.startsWith;
 
 @RunWith(AndroidJUnit4.class)
 public class MeetingTest{
-
-    private MockLocationProvider mock;
 
 
     @Rule
