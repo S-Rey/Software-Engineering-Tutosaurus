@@ -11,7 +11,6 @@ public class Meeting {
     private String nameLocation;
     private double latitudeLocation;
     private double longitudeLocation;
-    private int duration;
     private String description;
     private List<String> participants = new ArrayList<>();
     private Course course;
@@ -25,39 +24,6 @@ public class Meeting {
 
     }
 
-    /**
-     * Constructor for the Meeting class
-     * @param date the date at which the meeting takes place
-     */
-    public Meeting(Date date) {
-        this.date = date;
-    }
-
-    /**
-     * Constructor for the Meeting class
-     * @param date the date at which the meeting takes place
-     * @param duration the duration of this meeting (in minutes)
-     */
-    public Meeting(Date date, int duration) {
-        this.date = date;
-        this.duration = duration;
-    }
-
-    /**
-     * Constructor for the Meeting class
-     * @param date the date at which the meeting takes place
-     * @param duration the duration of this meeting (in minutes)
-     * @param course the subject of this meeting
-     */
-    public Meeting(Date date, int duration, Course course) {
-        this.date = date;
-        this.duration = duration;
-        this.course = course;
-    }
-
-    public void setParticipants(List<String> participants) {
-        this.participants = participants;
-    }
 
     public void setDate(Date date) {
         this.date = date;
@@ -77,14 +43,6 @@ public class Meeting {
 
     public Course getCourse() {
         return this.course;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 
 
@@ -120,6 +78,7 @@ public class Meeting {
         return this.id;
     }
 
+
     /**
      * Returns the date at which this meeting takes place.
      * @return the date of the meeting
@@ -128,6 +87,7 @@ public class Meeting {
         return this.date;
     }
 
+
     /**
      * Returns the nameLocation where this meeting takes place.
      * @return the nameLocation of the meeting
@@ -135,6 +95,7 @@ public class Meeting {
     public String getNameLocation() {
         return this.nameLocation;
     }
+
 
     public String getDescription() {
         return description;

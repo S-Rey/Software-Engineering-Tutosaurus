@@ -199,9 +199,6 @@ public class User implements Identifiable {
     public String getCourseDescriprion(String courseId){
         return coursePresentation.get(courseId);
     }
-    public Map<String, String> getCoursePresentation(){
-        return this.coursePresentation;
-    }
 
     /**
      * Increase the number of hours taught in a particular course.
@@ -276,27 +273,24 @@ public class User implements Identifiable {
         }
     }
 
-    public Map<String, Boolean> getSpeaking() {
-        return speaking;
-    }
 
     public void setSpeaking(Map<String, Boolean> speaking) {
         this.speaking = speaking;
     }
 
-    public Map<String, Boolean> getMeetings() {
-        return meetings;
-    }
 
     public void setMeetings(Map<String, Boolean> meetings) {
         this.meetings = meetings;
     }
 
+
     public void setCoursePresentation(Map<String, String> coursePresentation) {this.coursePresentation = coursePresentation;}
+
 
     public int getNumRatings() {
         return numRatings;
     }
+
 
     public void setNumRatings(int numRatings) {
         this.numRatings = numRatings;
