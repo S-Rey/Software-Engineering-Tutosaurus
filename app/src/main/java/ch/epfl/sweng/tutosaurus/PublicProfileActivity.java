@@ -162,7 +162,6 @@ public class PublicProfileActivity extends AppCompatActivity {
                 courseDescriptionView.setText(matchingTutor.getCourseDescriprion(course.getId()));
                 setOpenDescriptionListener(courseRow);
             }
-
             courseLayout.addView(courseRow);
         }
     }

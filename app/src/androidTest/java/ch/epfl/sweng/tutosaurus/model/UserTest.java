@@ -2,6 +2,7 @@ package ch.epfl.sweng.tutosaurus.model;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
@@ -48,5 +49,9 @@ public class UserTest {
         assertEquals(userToString, "Albert Einstein");
     }
 
-
+    @Test
+    public void canGetCoursePresentationAsHashMap(){
+        user = new User("000000", "Einstein");
+        assertEquals(HashMap.class, user.getCoursePresentation().getClass());
+    }
 }
