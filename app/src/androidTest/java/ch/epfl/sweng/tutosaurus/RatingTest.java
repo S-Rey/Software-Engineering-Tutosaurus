@@ -89,10 +89,10 @@ public class RatingTest {
 
 
     @Test
-    public void ratingBarIsDisplayed() {
+    public void ratingBarIsDisplayed() throws InterruptedException {
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
-
+        Thread.sleep(1000);
         onView(withId(android.R.id.button1)).perform(click());
     }
 
