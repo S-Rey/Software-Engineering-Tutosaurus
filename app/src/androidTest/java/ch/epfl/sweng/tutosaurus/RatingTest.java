@@ -1,10 +1,12 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -35,6 +37,10 @@ import static org.hamcrest.Matchers.anything;
 
 @RunWith(AndroidJUnit4.class)
 public class RatingTest {
+
+    UiDevice mDevice;
+
+
     @Rule
     public ActivityTestRule<MainActivity> mainActivityTestRule = new ActivityTestRule<>(
             MainActivity.class
@@ -85,6 +91,8 @@ public class RatingTest {
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
         Thread.sleep(2000);
+
+        mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
     }
 
 
@@ -92,8 +100,9 @@ public class RatingTest {
     public void ratingBarIsDisplayed() throws InterruptedException {
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
-        Thread.sleep(1000);
-        onView(withId(android.R.id.button1)).perform(click());
+
+        onView(withText("Ok")).perform(click());
+
     }
 
 }
