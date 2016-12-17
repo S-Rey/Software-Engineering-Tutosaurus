@@ -128,4 +128,5 @@ public class Meeting {
     public void setRated(boolean rated) {
         this.rated = rated;
     }
+
 }

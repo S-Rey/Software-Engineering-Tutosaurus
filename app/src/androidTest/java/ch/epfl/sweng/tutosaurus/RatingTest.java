@@ -66,7 +66,7 @@ public class RatingTest {
         int year = date.getYear() + 1900;
         int month = date.getMonth();
         int day = date.getDay() + 11;
-        int hour = date.getHours() - 1;
+        int hour = date.getHours() - 12;
         int minutes = date.getMinutes();
 
         onView(withId(R.id.pickDateTime)).perform(click());

@@ -201,7 +201,7 @@ public class User implements Identifiable {
      * Returns a map containing the descriptions of the courses.
      * @return a map of descriptions mapped to the courseId
      */
-    public String getCourseDescriprion(String courseId){
+    public String getCourseDescription(String courseId){
         return coursePresentation.get(courseId);
     }
 

@@ -1,26 +1,19 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -156,10 +149,10 @@ public class PublicProfileActivity extends AppCompatActivity {
             ImageView coursePicture = (ImageView) courseRow.findViewById(R.id.coursePicture);
             coursePicture.setImageResource(course.getPictureId());
             TextView courseDescriptionView = (TextView) courseRow.findViewById(R.id.courseDescription);
-            String courseDescriprion = matchingTutor.getCourseDescriprion(course.getId());
+            String courseDescriprion = matchingTutor.getCourseDescription(course.getId());
 
             if(courseDescriprion!=null){
-                courseDescriptionView.setText(matchingTutor.getCourseDescriprion(course.getId()));
+                courseDescriptionView.setText(matchingTutor.getCourseDescription(course.getId()));
                 setOpenDescriptionListener(courseRow);
             }
             courseLayout.addView(courseRow);
