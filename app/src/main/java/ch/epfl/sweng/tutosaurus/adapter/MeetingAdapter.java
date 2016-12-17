@@ -172,12 +172,14 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                 public void onClick(DialogInterface dialog, int which) {
                                     meetingRating = rating.getRating();
                                     meeting.setRated(true);
-                                    dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId());
-                                    int numRatings = user.getNumRatings();
-                                    float globalRating = user.getGlobalRating();
-                                    globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
-                                    dbh.setRating(user.getUid(), globalRating);
-                                    dbh.setNumRatings(user.getUid(), numRatings + 1);
+                                    if (user != null) {
+                                        dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId());
+                                        int numRatings = user.getNumRatings();
+                                        float globalRating = user.getGlobalRating();
+                                        globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
+                                        dbh.setRating(user.getUid(), globalRating);
+                                        dbh.setNumRatings(user.getUid(), numRatings + 1);
+                                    }
 
                                     dbh.setRating(currentUserUid, meetingRating);
                                     dialog.dismiss();
