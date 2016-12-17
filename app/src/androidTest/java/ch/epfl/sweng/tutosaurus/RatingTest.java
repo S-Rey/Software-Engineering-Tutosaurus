@@ -8,6 +8,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
 import android.widget.DatePicker;
+import android.widget.RatingBar;
 import android.widget.TimePicker;
 
 import org.hamcrest.Matchers;
@@ -37,9 +38,6 @@ import static org.hamcrest.Matchers.anything;
 
 @RunWith(AndroidJUnit4.class)
 public class RatingTest {
-
-    UiDevice mDevice;
-
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityTestRule = new ActivityTestRule<>(
@@ -92,7 +90,6 @@ public class RatingTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
         Thread.sleep(2000);
 
-        mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
     }
 
 
@@ -100,6 +97,8 @@ public class RatingTest {
     public void ratingBarIsDisplayed() throws InterruptedException {
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
+
+        onView(withClassName(Matchers.equalTo(RatingBar.class.getName()))).perform(click());
 
         onView(withText("Ok")).perform(click());
 
