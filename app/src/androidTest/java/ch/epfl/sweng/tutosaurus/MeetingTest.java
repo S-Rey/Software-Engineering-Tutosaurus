@@ -1,6 +1,7 @@
 package ch.epfl.sweng.tutosaurus;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.rule.ActivityTestRule;
@@ -19,6 +20,7 @@ import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -63,13 +65,13 @@ public class MeetingTest{
         onView(withId(R.id.searchByName)).perform(click());
         Thread.sleep(1000);
         onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
+        onView(withId(R.id.createMeetingButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
     }
 
 
     @Test
     public void testRequestAndConfirmMeeting() throws InterruptedException {
 
-        onView(withId(R.id.createMeetingButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
         int year = 2020;
         int month = 11;
         int day = 15;
@@ -104,6 +106,15 @@ public class MeetingTest{
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.syncCalendar)).perform(click());
+
+    }
+
+    
+    @Test
+    public void testPlacePicker() throws InterruptedException {
+        onView(withId(R.id.pickLocation)).perform(click());
+        Thread.sleep(3000);
+        pressBack();
 
     }
 
