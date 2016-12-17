@@ -206,7 +206,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
                 intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                if (user.getEmail() != null) {
+                if (user != null) {
                     intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
                 }
 

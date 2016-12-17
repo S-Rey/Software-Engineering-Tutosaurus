@@ -119,12 +119,4 @@ public class MeetingTest{
     }
 
 
-//    @Test
-//    public void testPlacePicker() throws InterruptedException {
-//        onView(withId(R.id.pickLocation)).perform(click());
-//        Thread.sleep(5000);
-//        pressBack();
-//    }
-
-
 }
