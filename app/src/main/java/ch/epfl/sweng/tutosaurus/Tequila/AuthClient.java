@@ -11,9 +11,9 @@ public final class AuthClient {
     public static String createCodeRequestUrl(OAuth2Config config) {
         return "https://tequila.epfl.ch/cgi-bin/OAuth2IdP/auth" +
                 "?response_type=code" +
-                "&client_id=" + HttpUtils.urlEncode(config.clientId) +
-                "&redirect_uri=" + HttpUtils.urlEncode(config.redirectUri) +
-                "&scope=" + TextUtils.join(",", config.scopes);
+                "&client_id=" + HttpUtils.urlEncode(config.getClientId()) +
+                "&redirect_uri=" + HttpUtils.urlEncode(config.getRedirectUri()) +
+                "&scope=" + TextUtils.join(",", config.getScopes());
     }
 
     public static String extractCode(String redirectUri) {
