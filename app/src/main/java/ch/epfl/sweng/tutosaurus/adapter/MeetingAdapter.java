@@ -109,20 +109,22 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         final double latitudeMeeting = meeting.getLatitudeLocation();
         final double longitudeMeeting = meeting.getLongitudeLocation();
         TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
-        if (meeting.getNameLocation() != null) {
-            locationMeeting.setText(meeting.getNameLocation());
-        }
 
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
-        showLocationMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
-                intent.putExtra("latitudeMeeting", latitudeMeeting);
-                intent.putExtra("longitudeMeeting", longitudeMeeting);
-                view.getContext().startActivity(intent);
-            }
-        });
+        if (meeting.getNameLocation() != null) {
+            locationMeeting.setText(meeting.getNameLocation());
+            showLocationMeeting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
+                    intent.putExtra("latitudeMeeting", latitudeMeeting);
+                    intent.putExtra("longitudeMeeting", longitudeMeeting);
+                    view.getContext().startActivity(intent);
+                }
+            });
+        } else {
+            showLocationMeeting.setVisibility(View.GONE);
+        }
 
         final Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
         if(meeting.getDate().getTime() > new Date().getTime() + 59958140730000L) {
