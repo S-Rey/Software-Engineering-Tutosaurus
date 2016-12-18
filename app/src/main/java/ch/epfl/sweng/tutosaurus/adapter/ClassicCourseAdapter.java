@@ -81,9 +81,4 @@ public class ClassicCourseAdapter extends ArrayAdapter<Course> {
         ImageView courseSymbol;
         TextView courseName;
     }
-
-    public Course getItemAtPosition(int position){
-        return courses.get(position);
-    }
-
 }

@@ -196,8 +196,18 @@ public class User implements Identifiable {
         return this.studying;
     }
 
-    public String getCourseDescriprion(String courseId){
+
+    /**
+     * Returns a map containing the descriptions of the courses.
+     * @return a map of descriptions mapped to the courseId
+     */
+    public String getCourseDescription(String courseId){
         return coursePresentation.get(courseId);
+    }
+
+
+    public Map<String, String> getCoursePresentation(){
+        return coursePresentation;
     }
 
     /**

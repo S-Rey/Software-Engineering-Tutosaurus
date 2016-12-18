@@ -109,20 +109,22 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         final double latitudeMeeting = meeting.getLatitudeLocation();
         final double longitudeMeeting = meeting.getLongitudeLocation();
         TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
-        if (meeting.getNameLocation() != null) {
-            locationMeeting.setText(meeting.getNameLocation());
-        }
 
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
-        showLocationMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
-                intent.putExtra("latitudeMeeting", latitudeMeeting);
-                intent.putExtra("longitudeMeeting", longitudeMeeting);
-                view.getContext().startActivity(intent);
-            }
-        });
+        if (meeting.getNameLocation() != null) {
+            locationMeeting.setText(meeting.getNameLocation());
+            showLocationMeeting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
+                    intent.putExtra("latitudeMeeting", latitudeMeeting);
+                    intent.putExtra("longitudeMeeting", longitudeMeeting);
+                    view.getContext().startActivity(intent);
+                }
+            });
+        } else {
+            showLocationMeeting.setVisibility(View.GONE);
+        }
 
         final Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
         if(meeting.getDate().getTime() > new Date().getTime() + 59958140730000L) {
@@ -170,14 +172,16 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                 public void onClick(DialogInterface dialog, int which) {
                                     meetingRating = rating.getRating();
                                     meeting.setRated(true);
-                                    dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId());
-                                    int numRatings = user.getNumRatings();
-                                    float globalRating = user.getGlobalRating();
-                                    globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
-                                    dbh.setRating(user.getUid(), globalRating);
-                                    dbh.setNumRatings(user.getUid(), numRatings + 1);
+                                    if (user != null) {
+                                        dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId());
+                                        int numRatings = user.getNumRatings();
+                                        float globalRating = user.getGlobalRating();
+                                        globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
+                                        dbh.setRating(user.getUid(), globalRating);
+                                        dbh.setNumRatings(user.getUid(), numRatings + 1);
+                                    }
 
-                                    dbh.setRating(currentUserUid, meetingRating);
+                                    //dbh.setRating(currentUserUid, meetingRating);
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("Cancel",
@@ -204,7 +208,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
                 intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                if (user.getEmail() != null) {
+                if (user != null) {
                     intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
                 }
 
