@@ -112,13 +112,13 @@ public class ProfileFragmentTest {
 
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
 
-        intending(toPackage("com.sec.android.gallery3d")).respondWith(result);
+        intending(toPackage("com.android.gallery")).respondWith(result);
 
         onView(withId(R.id.picture_view)).perform(click());
         onView(withText("Load picture from gallery")).perform(click());
 
         // We can also validate that an intent resolving to the "camera" activity has been sent out by our app
-        intended(toPackage("com.sec.android.gallery3d"));
+        intended(toPackage("com.android.gallery"));
 
         // ... additional test steps and validation ...
     }
