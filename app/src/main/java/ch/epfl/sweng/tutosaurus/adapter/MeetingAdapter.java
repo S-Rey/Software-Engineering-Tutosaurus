@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -108,23 +109,23 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
         final double latitudeMeeting = meeting.getLatitudeLocation();
         final double longitudeMeeting = meeting.getLongitudeLocation();
-        TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
+        final TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
 
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
-        if (meeting.getNameLocation() != null) {
-            locationMeeting.setText(meeting.getNameLocation());
-            showLocationMeeting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
-                    intent.putExtra("latitudeMeeting", latitudeMeeting);
-                    intent.putExtra("longitudeMeeting", longitudeMeeting);
-                    view.getContext().startActivity(intent);
+        showLocationMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (meeting.getNameLocation() == null) {
+                    Toast.makeText(mainView.getContext(), "Place not selected", Toast.LENGTH_SHORT).show();
+                } else {
+                    locationMeeting.setText(meeting.getNameLocation());
                 }
-            });
-        } else {
-            showLocationMeeting.setVisibility(View.GONE);
-        }
+                Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
+                intent.putExtra("latitudeMeeting", latitudeMeeting);
+                intent.putExtra("longitudeMeeting", longitudeMeeting);
+                view.getContext().startActivity(intent);
+            }
+        });
 
         final Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
         if(meeting.getDate().getTime() > new Date().getTime() + 59958140730000L) {
@@ -181,7 +182,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                         dbh.setNumRatings(user.getUid(), numRatings + 1);
                                     }
 
-                                    //dbh.setRating(currentUserUid, meetingRating);
+                                    dbh.setRating(currentUserUid, meetingRating);
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("Cancel",
