@@ -51,7 +51,7 @@ public class SettingsFragmentTest {
 
     @Before
     public void logIn() {
-        Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("vincent.rinaldi@epfl.ch", "mrstvm95");
+        Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
             Tasks.await(login);
         } catch (ExecutionException | InterruptedException e) {
@@ -63,7 +63,7 @@ public class SettingsFragmentTest {
     }
 
     @Test
-    public void testSettingTabNotificationsCheckbox() throws InterruptedException {
+    public void testSettingTabNotificationCheckbox() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_notification", true)) {
             onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
             Thread.sleep(1000);
@@ -91,6 +91,19 @@ public class SettingsFragmentTest {
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_epfl")).perform(click());
         intended(expectedIntent);
+    }
+
+    @Test
+    public void testSettingTabSecondNotificationChange() throws InterruptedException {
+        if (sharedPreferences.getBoolean("checkbox_preference_notification", true)) {
+            onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
+            Thread.sleep(1000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_notification", true), equalTo(false));
+        } else {
+            onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
+            Thread.sleep(1000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_notification", true), equalTo(true));
+        }
     }
 
     @After

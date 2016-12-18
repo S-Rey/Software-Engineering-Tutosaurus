@@ -16,11 +16,11 @@ import java.util.Map;
 public final class AuthServer {
     public static Map<String, String> fetchTokens(OAuth2Config config, String code) throws IOException {
         Map<String, String> result = new HashMap<>();
-        for (String scope : config.scopes) {
+        for (String scope : config.getScopes()) {
             String url = "https://tequila.epfl.ch/cgi-bin/OAuth2IdP/token" +
-                    "?client_id=" + HttpUtils.urlEncode(config.clientId) +
-                    "&client_secret=" + HttpUtils.urlEncode(config.clientSecret) +
-                    "&redirect_uri=" + HttpUtils.urlEncode(config.redirectUri) +
+                    "?client_id=" + HttpUtils.urlEncode(config.getClientId()) +
+                    "&client_secret=" + HttpUtils.urlEncode(config.getClientSecret()) +
+                    "&redirect_uri=" + HttpUtils.urlEncode(config.getRedirectUri()) +
                     "&grant_type=authorization_code" +
                     "&code=" + code +
                     "&scope=" + scope;

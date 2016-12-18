@@ -196,11 +196,18 @@ public class User implements Identifiable {
         return this.studying;
     }
 
-    public String getCourseDescriprion(String courseId){
+
+    /**
+     * Returns a map containing the descriptions of the courses.
+     * @return a map of descriptions mapped to the courseId
+     */
+    public String getCourseDescription(String courseId){
         return coursePresentation.get(courseId);
     }
+
+
     public Map<String, String> getCoursePresentation(){
-        return this.coursePresentation;
+        return coursePresentation;
     }
 
     /**
@@ -279,27 +286,24 @@ public class User implements Identifiable {
         }
     }
 
-    public Map<String, Boolean> getSpeaking() {
-        return speaking;
-    }
 
     public void setSpeaking(Map<String, Boolean> speaking) {
         this.speaking = speaking;
     }
 
-    public Map<String, Boolean> getMeetings() {
-        return meetings;
-    }
 
     public void setMeetings(Map<String, Boolean> meetings) {
         this.meetings = meetings;
     }
 
+
     public void setCoursePresentation(Map<String, String> coursePresentation) {this.coursePresentation = coursePresentation;}
+
 
     public int getNumRatings() {
         return numRatings;
     }
+
 
     public void setNumRatings(int numRatings) {
         this.numRatings = numRatings;

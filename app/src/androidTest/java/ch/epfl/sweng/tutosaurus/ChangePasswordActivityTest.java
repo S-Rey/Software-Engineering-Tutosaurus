@@ -53,18 +53,15 @@ public class ChangePasswordActivityTest {
     @Test
     public void notMachingPassword() throws InterruptedException {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.main_email));
-        solo.typeText(0, "vincent.rinaldi@epfl.ch");
-        solo.clickOnView(solo.getView(R.id.main_password));
-        solo.typeText(1, "mrstvm95");
+        solo.typeText(0, "albert.einstein@epfl.ch");
+        solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
         Thread.sleep(2000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
-        solo.clickOnView(solo.getView(R.id.chooseNewPass));
+        Thread.sleep(1000);
         solo.typeText(0, "newPass");
-        solo.clickOnView(solo.getView(R.id.confirmNewPass));
         solo.typeText(1, "newPassword");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         boolean toastMessageDisplayedIsCorrect = solo.searchText("Passwords must match");
@@ -76,16 +73,14 @@ public class ChangePasswordActivityTest {
     @Test
     public void notBothBoxesFilled() throws InterruptedException {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.main_email));
-        solo.typeText(0, "vincent.rinaldi@epfl.ch");
-        solo.clickOnView(solo.getView(R.id.main_password));
-        solo.typeText(1, "mrstvm95");
+        solo.typeText(0, "albert.einstein@epfl.ch");
+        solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
         Thread.sleep(2000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
-        solo.clickOnView(solo.getView(R.id.chooseNewPass));
+        Thread.sleep(1000);
         solo.typeText(0, "newPass");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         boolean toastMessageDisplayedIsCorrect = solo.searchText("Please fill both boxes above");
@@ -97,18 +92,15 @@ public class ChangePasswordActivityTest {
     @Test
     public void changePassword() throws InterruptedException {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.main_email));
-        solo.typeText(0, "vincent.rinaldi@epfl.ch");
-        solo.clickOnView(solo.getView(R.id.main_password));
-        solo.typeText(1, "mrstvm95");
+        solo.typeText(0, "albert.einstein@epfl.ch");
+        solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
         Thread.sleep(2000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
-        solo.clickOnView(solo.getView(R.id.chooseNewPass));
+        Thread.sleep(1000);
         solo.typeText(0, "newPass");
-        solo.clickOnView(solo.getView(R.id.confirmNewPass));
         solo.typeText(1, "newPass");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         boolean toastMessageDisplayedIsCorrect = solo.searchText("Password changed successfully");
@@ -116,19 +108,16 @@ public class ChangePasswordActivityTest {
         Espresso.pressBack();
         onView(withId(R.id.action_logOutButton)).perform(click());
 
-        solo.clickOnView(solo.getView(R.id.main_email));
-        solo.typeText(0, "vincent.rinaldi@epfl.ch");
-        solo.clickOnView(solo.getView(R.id.main_password));
+        solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "newPass");
         solo.clickOnView(solo.getView(R.id.connectionButton));
         Thread.sleep(2000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
-        solo.clickOnView(solo.getView(R.id.chooseNewPass));
-        solo.typeText(0, "mrstvm95");
-        solo.clickOnView(solo.getView(R.id.confirmNewPass));
-        solo.typeText(1, "mrstvm95");
+        Thread.sleep(1000);
+        solo.typeText(0, "tototo");
+        solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         boolean previousPasswordSetBack = solo.searchText("Password changed successfully");
         assertTrue(previousPasswordSetBack);
@@ -139,10 +128,8 @@ public class ChangePasswordActivityTest {
     @Test
     public void testBackButton() throws InterruptedException {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.main_email));
-        solo.typeText(0, "vincent.rinaldi@epfl.ch");
-        solo.clickOnView(solo.getView(R.id.main_password));
-        solo.typeText(1, "mrstvm95");
+        solo.typeText(0, "albert.einstein@epfl.ch");
+        solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
         Thread.sleep(2000);
         onView(withId(R.id.drawer_layout)).perform(open());
