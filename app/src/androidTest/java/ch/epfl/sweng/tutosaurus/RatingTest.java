@@ -65,9 +65,14 @@ public class RatingTest {
         Date date = new Date();
         int year = date.getYear() + 1900;
         int month = date.getMonth();
-        int day = date.getDay() + 11;
-        int hour = date.getHours() - 12;
-        int minutes = date.getMinutes();
+        int day = date.getDate();
+        int hour = 0;
+        int minutes = 0;
+        if (date.getHours() != 0) {
+            hour = date.getHours() - 1;
+            minutes = date.getMinutes();
+
+        }
 
         onView(withId(R.id.pickDateTime)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, month + 1, day));
