@@ -108,6 +108,7 @@ public class MeetingService extends Service {
                     .setAutoCancel(true);
 
             Intent resultIntent = new Intent(this, HomeScreenActivity.class);
+            resultIntent.setAction("OPEN_TAB_PROFILE");
             PendingIntent resultPendingIntent = PendingIntent.getActivity(
                     this,
                     1,

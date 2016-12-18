@@ -24,7 +24,6 @@ import java.util.Map;
 
 import ch.epfl.sweng.tutosaurus.Tequila.AuthClient;
 import ch.epfl.sweng.tutosaurus.Tequila.AuthServer;
-import ch.epfl.sweng.tutosaurus.Tequila.MyAppVariables;
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
@@ -88,25 +87,23 @@ public class RegisterScreenActivity extends AppCompatActivity {
     }
 
     private void sendMessageForAccess(View view) {
-        if (MyAppVariables.getRegistered()) {
-            Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
+        Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
 
-            SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putString("firstName", profile.firstNames);
-            editor.putString("lastName", profile.lastNames);
-            editor.putString("email", profile.email);
-            editor.putString("sciper", profile.sciper);
-            editor.apply();
+        SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("firstName", profile.firstNames);
+        editor.putString("lastName", profile.lastNames);
+        editor.putString("email", profile.email);
+        editor.putString("sciper", profile.sciper);
+        editor.apply();
 
-            intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
-            intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
-            intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
-            intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
-            intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.gaspar);
+        intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
+        intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
+        intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
+        intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
+        intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.gaspar);
 
-            startActivity(intent);
-        }
+        startActivity(intent);
     }
 
     private static OAuth2Config readConfig() {
@@ -213,7 +210,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
                 String js_g = "javascript:document.getElementById('username').value = '" + gaspar + "';";
                 String js_pw = "javascript:document.getElementById('password').value = '" + password + "';";
-                //Log.d(TAG, "js: " + js_g + js_pw);
 
                 if (url.contains("requestkey")) {
                     Log.d(TAG, "TRIGGERED");
@@ -222,7 +218,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
                     }
 
                 } else if (url.contains("?code=") && !authComplete) {
-                    MyAppVariables.setRegistered(true);
                     authComplete = true;
                     authDialog.dismiss();
                     new ManageAccessToken().execute(url);

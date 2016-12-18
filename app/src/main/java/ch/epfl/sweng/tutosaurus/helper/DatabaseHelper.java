@@ -48,35 +48,37 @@ public class DatabaseHelper {
         return dbf;
     }
 
+
     public void signUp(User user) {
         DatabaseReference ref = dbf.child(USER_PATH + user.getUid());
         ref.setValue(user);
     }
 
-    public void addCourse(Course course) {
-        DatabaseReference ref = dbf.child(COURSE_PATH + course.getId());
-        ref.setValue(course);
-    }
 
     public void addLanguageToUser(String userId, String languageId) {
         DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
         userSpeakLanguageRef.setValue(true);
     }
 
+
     public void removeLanguageFromUser(String userId, String languageId) {
         DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
         userSpeakLanguageRef.setValue(false);
     }
+
+
 
     public void setRating(String userId, float globalRating) {
         DatabaseReference userRatingRef = dbf.child(USER_PATH + userId + "/globalRating/");
         userRatingRef.setValue(globalRating);
     }
 
+
     public void setNumRatings(String userId, int numRatings) {
         DatabaseReference userNumRatingRef = dbf.child(USER_PATH + userId + "/numRatings/");
         userNumRatingRef.setValue(numRatings);
     }
+
 
     public void addTeacherToCourse(String userId, String courseId) {
         DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
@@ -85,6 +87,7 @@ public class DatabaseHelper {
         courseRef.setValue(true);
     }
 
+
     public void removeTeacherFromCourse(String userId, String courseId) {
         DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
         DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + userId + "/teaching/" + courseId);
@@ -92,12 +95,6 @@ public class DatabaseHelper {
         courseRef.setValue(false);
     }
 
-    public void addStudentToCourse(String userId, String courseId) {
-        DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/studying/" + userId);
-        DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + userId + "/studying/" + courseId);
-        userLearnCourseRef.setValue(true);
-        courseRef.setValue(true);
-    }
 
     private String addMeeting(Meeting meeting) {
         String key = dbf.child(MEETING_PATH).push().getKey();
@@ -119,41 +116,16 @@ public class DatabaseHelper {
         return key;
     }
 
+
     // the 'teacher' String is the teacher uid
     public String requestMeeting(MeetingRequest request, String teacher) {
         String key = dbf.child(MEETING_REQUEST_PATH).child(request.getFrom()).push().getKey();
         request.setUid(key);
         DatabaseReference requestRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key);
         requestRef.setValue(request);
-        /*DatabaseReference teacherMeetingRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("meeting");
-        DatabaseReference teacherUidRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("uid");
-        DatabaseReference teacherTypeRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("type");
-        DatabaseReference teacherAcceptedRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("accepted");
-        DatabaseReference teacherFromRef = dbf.child(MEETING_REQUEST_PATH).child(teacher).child(key).child("from");
-
-        teacherMeetingRef.setValue(request);
-        teacherTypeRef.setValue("received");
-        teacherAcceptedRef.setValue(false);
-        teacherFromRef.setValue(request.getFrom());
-        teacherUidRef.setValue(key);*/
         return key; // return the key of this request
     }
 
-    public void getMeeting(String key) {
-        // Attach a listener to read the data at our posts reference
-        dbf.child("meeting/" + key).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Meeting meeting = dataSnapshot.getValue(Meeting.class);
-                System.out.println(meeting);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-    }
 
     public void sendMessage(String fromUid, String fromFullName, String toUid, String toFullName, String content){
         DatabaseReference chatIdFromRef = dbf.child("chats/" + fromUid);
@@ -177,22 +149,27 @@ public class DatabaseHelper {
         messageToRef.child(key).setValue(message);
     }
 
+
     public void addSubjectDescription(String description, String userId, String courseId){
         DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + userId + "/coursePresentation/" + courseId);
         userLearnCourseRef.setValue(description);
     }
 
+
     public DatabaseReference getMeetingsRefForUser(String key) {
         return dbf.child(MEETING_PER_USER_PATH + key);
     }
+
 
     public DatabaseReference getUserRef() {
         return dbf.child(USER_PATH);
     }
 
+
     public DatabaseReference getMeetingRequestsRef() {
         return dbf.child(MEETING_REQUEST_PATH);
     }
+
 
     public String confirmMeeting(String currentUserUid, MeetingRequest request) {
         String meetingId;
@@ -203,6 +180,7 @@ public class DatabaseHelper {
         meetingRequestRef.removeValue();
         return meetingId;
     }
+
 
     public void setMeetingRated(String userId, String otherUserId, String meetingId) {
         DatabaseReference meetingsPerUserCurrentUserRef = dbf.child(MEETING_PER_USER_PATH + userId +"/" + meetingId + "/rated/");
