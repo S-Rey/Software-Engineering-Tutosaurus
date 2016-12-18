@@ -63,7 +63,7 @@ public class SettingsFragmentTest {
     }
 
     @Test
-    public void testSettingTabNotificationsCheckbox() throws InterruptedException {
+    public void testSettingTabNotificationCheckbox() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_notification", true)) {
             onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
             Thread.sleep(1000);
@@ -91,6 +91,21 @@ public class SettingsFragmentTest {
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_epfl")).perform(click());
         intended(expectedIntent);
+    }
+
+    @Test
+    public void testSettingTabSecondNotificationChange() throws InterruptedException {
+        if (sharedPreferences.getBoolean("checkbox_preference_mathematics", false)) {
+            Thread.sleep(2000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            Thread.sleep(2000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(false));
+        } else {
+            Thread.sleep(2000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            Thread.sleep(2000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(true));
+        }
     }
 
     @After

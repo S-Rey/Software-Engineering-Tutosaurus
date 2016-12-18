@@ -348,7 +348,7 @@ public class BeATutorFragmentTest {
     }
 
     @Test
-    public void testSecondDatabaseChangeForLanguage() throws InterruptedException {
+    public void testBeATutorTabSecondDatabaseChangeForLanguage() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_english", false)) {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
@@ -363,7 +363,7 @@ public class BeATutorFragmentTest {
     }
 
     @Test
-    public void testSecondDatabaseChangeForSubject() throws InterruptedException {
+    public void testBeATutorTabSecondDatabaseChangeForSubject() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_mathematics", false)) {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
