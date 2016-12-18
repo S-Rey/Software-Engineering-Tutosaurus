@@ -23,5 +23,20 @@ public class NetworkChangeReceiverTest {
         receiver = new NetworkChangeReceiver();
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void checkNullTextViewThrowsException() {
+        receiver.setNetStatusTextView(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkNullButtonsThrowsException() {
+        receiver.setButtonsToManage(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkNullActivityThrowsException() {
+        receiver.setActivity(null);
+    }
+
 
 }
