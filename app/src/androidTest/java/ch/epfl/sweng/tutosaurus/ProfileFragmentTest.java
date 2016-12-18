@@ -88,26 +88,25 @@ public class ProfileFragmentTest {
         Thread.sleep(500);
         Bitmap icon = BitmapFactory.decodeResource(
                 InstrumentationRegistry.getTargetContext().getResources(),
-                R.drawable.dino_welcome);
+                R.drawable.dino_logo);
 
         Intent resultData = new Intent();
         resultData.putExtra("data", icon);
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
 
-        //intending(toPackage("com.android.camera2")).respondWith(result);
-        intending(toPackage("com.sec.android.app.camera")).respondWith(result);
+        intending(toPackage("com.android.camera")).respondWith(result);
 
         onView(withId(R.id.picture_view)).perform(click());
         onView(withText("Take picture with camera")).perform(click());
 
-        intended(toPackage("com.sec.android.app.camera"));
+        intended(toPackage("com.android.camera"));
     }
 
     @Test
     public void testImageGalleryPicker() throws InterruptedException {
         Thread.sleep(500);
         Intent resultData = new Intent();
-        Uri uri1 = Uri.parse("android.resource://ch.epfl.sweng.tutosaurus/" + R.drawable.dino_register);
+        Uri uri1 = Uri.parse("android.resource://ch.epfl.sweng.tutosaurus/" + R.drawable.dino_logo);
         resultData.setDataAndType(uri1, "image/*");
 
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
