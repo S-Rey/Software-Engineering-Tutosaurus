@@ -61,13 +61,11 @@ public class MainActivity extends AppCompatActivity {
         Button resetPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
         Button registerButton = (Button) findViewById(R.id.registerButton);
         Button login = (Button) findViewById(R.id.connectionButton);
-        Button bypassLogin = (Button) findViewById(R.id.mainBypassLoginButton);
 
         ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(resetPasswordButton);
         buttons.add(registerButton);
         buttons.add(login);
-        buttons.add(bypassLogin);
 
         receiver.setButtonsToManage(buttons);
 
@@ -90,18 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        bypassLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                String email = "albert.einstein@epfl.ch";
-                String password = "tototo";
-                LoginAsyncTask loginTask = new LoginAsyncTask();
-                loginTask.execute(email, password);
-                Log.d(TAG, "3");
-            }
-        });
-
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
