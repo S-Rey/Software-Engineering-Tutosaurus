@@ -76,19 +76,22 @@ public class RegisterScreenActivityTest {
     public void testFetchBadTokensThrowsException()throws IOException{
         OAuth2Config config = new OAuth2Config(new String[]{"Tequila.profile"}, CLIENT_ID, CLIENT_KEY, REDIRECT_URI);
         String code = "nonsense";
-        Map<String, String> tokens = AuthServer.fetchTokens(config, code);
+        AuthServer authServer = new AuthServer();
+        Map<String, String> tokens = authServer.fetchTokens(config, code);
     }
 
     @Test(expected = IOException.class)
     public void testFetchProfileWithBadAcessToken() throws IOException{
         String invalid_token = "Bearer jd8ff5edaa22386b785ced275b13d625e4e14c07";
-        Profile profile = AuthServer.fetchProfile(invalid_token);
+        AuthServer authServer = new AuthServer();
+        Profile profile = authServer.fetchProfile(invalid_token);
     }
 
     @Test
     public void testAuthClientCodeExtract() {
         String uri = "url&code=1234";
-        String codeExtract = AuthClient.extractCode(uri);
+        AuthClient authClient = new AuthClient();
+        String codeExtract = authClient.extractCode(uri);
         assertEquals(codeExtract, "1234");
     }
 
