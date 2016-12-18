@@ -349,31 +349,31 @@ public class BeATutorFragmentTest {
 
     @Test
     public void testBeATutorTabSecondDatabaseChangeForLanguage() throws InterruptedException {
-        if (sharedPreferences.getBoolean("checkbox_preference_english", false)) {
+        if (sharedPreferences.getBoolean("checkbox_preference_french", false)) {
             Thread.sleep(2000);
-            onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
+            onData(PreferenceMatchers.withKey("checkbox_preference_french")).perform(click());
             Thread.sleep(2000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(false));
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_french", false), equalTo(false));
         } else {
             Thread.sleep(2000);
-            onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
+            onData(PreferenceMatchers.withKey("checkbox_preference_french")).perform(click());
             Thread.sleep(2000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(true));
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_french", false), equalTo(true));
         }
     }
 
     @Test
     public void testBeATutorTabSecondDatabaseChangeForSubject() throws InterruptedException {
-        if (sharedPreferences.getBoolean("checkbox_preference_mathematics", false)) {
+        if (sharedPreferences.getBoolean("checkbox_preference_physics", false)) {
             Thread.sleep(2000);
-            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            onData(PreferenceMatchers.withKey("checkbox_preference_physics")).perform(click());
             Thread.sleep(2000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(false));
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_physics", false), equalTo(false));
         } else {
             Thread.sleep(2000);
-            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            onData(PreferenceMatchers.withKey("checkbox_preference_physics")).perform(click());
             Thread.sleep(2000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(true));
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_physics", false), equalTo(true));
         }
     }
 
