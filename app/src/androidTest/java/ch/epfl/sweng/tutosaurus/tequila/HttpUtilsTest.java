@@ -2,7 +2,10 @@ package ch.epfl.sweng.tutosaurus.tequila;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import ch.epfl.sweng.tutosaurus.Tequila.HttpUtils;
+import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -13,5 +16,11 @@ public class HttpUtilsTest {
     @Test
     public void encodingUrlUtf_8Works(){
         assertThat(HttpUtils.urlEncode(urlSample), is(urlEncoded));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testMalformedUrlFetch() throws IOException {
+        String url = "invalidurl";
+        HttpUtils.fetch(url, Profile.class);
     }
 }

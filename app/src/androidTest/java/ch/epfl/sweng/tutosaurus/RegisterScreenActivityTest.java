@@ -15,12 +15,14 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Map;
 
+import ch.epfl.sweng.tutosaurus.Tequila.AuthClient;
 import ch.epfl.sweng.tutosaurus.Tequila.AuthServer;
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -82,6 +84,13 @@ public class RegisterScreenActivityTest {
     public void testFetchProfileWithBadAcessToken() throws IOException{
         String invalid_token = "Bearer jd8ff5edaa22386b785ced275b13d625e4e14c07";
         Profile profile = AuthServer.fetchProfile(invalid_token);
+    }
+
+    @Test
+    public void testAuthClientCodeExtract() {
+        String uri = "url&code=1234";
+        String codeExtract = AuthClient.extractCode(uri);
+        assertEquals(codeExtract, "1234");
     }
 
     /**@Test
