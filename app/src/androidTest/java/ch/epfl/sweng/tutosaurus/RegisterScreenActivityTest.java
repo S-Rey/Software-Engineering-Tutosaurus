@@ -3,7 +3,6 @@ package ch.epfl.sweng.tutosaurus;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
-import android.util.Log;
 
 import com.robotium.solo.Solo;
 
