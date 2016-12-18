@@ -51,7 +51,7 @@ public class SettingsFragmentTest {
 
     @Before
     public void logIn() {
-        Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("vincent.rinaldi@epfl.ch", "mrstvm95");
+        Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
             Tasks.await(login);
         } catch (ExecutionException | InterruptedException e) {

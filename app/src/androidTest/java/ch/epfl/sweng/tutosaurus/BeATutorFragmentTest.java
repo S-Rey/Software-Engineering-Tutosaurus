@@ -50,7 +50,7 @@ public class BeATutorFragmentTest {
 
     @Before
     public void logIn() {
-        Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("vincent.rinaldi@epfl.ch", "mrstvm95");
+        Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
             Tasks.await(login);
         } catch (ExecutionException | InterruptedException e) {
@@ -344,6 +344,36 @@ public class BeATutorFragmentTest {
                     equalTo("Enter your description."));
         } else {
             onData(PreferenceMatchers.withKey("edit_text_preference_computer_science")).check(matches(not(isEnabled())));
+        }
+    }
+
+    @Test
+    public void testSecondDatabaseChangeForLanguage() throws InterruptedException {
+        if (sharedPreferences.getBoolean("checkbox_preference_english", false)) {
+            Thread.sleep(2000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
+            Thread.sleep(2000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(false));
+        } else {
+            Thread.sleep(2000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
+            Thread.sleep(2000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(true));
+        }
+    }
+
+    @Test
+    public void testSecondDatabaseChangeForSubject() throws InterruptedException {
+        if (sharedPreferences.getBoolean("checkbox_preference_mathematics", false)) {
+            Thread.sleep(2000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            Thread.sleep(2000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(false));
+        } else {
+            Thread.sleep(2000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            Thread.sleep(2000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(true));
         }
     }
 

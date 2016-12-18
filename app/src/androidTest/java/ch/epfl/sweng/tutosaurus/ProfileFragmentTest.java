@@ -10,14 +10,17 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.view.GravityCompat;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.robotium.solo.Solo;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -36,12 +39,16 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class ProfileFragmentTest {
+
+    private Solo solo;
 
     @Rule
     public IntentsTestRule<HomeScreenActivity> activityRule = new IntentsTestRule<>(
@@ -52,15 +59,13 @@ public class ProfileFragmentTest {
 
     @Before
     public void logIn() {
-        Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("vincent.rinaldi@epfl.ch", "mrstvm95");
+        Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
             Tasks.await(login);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         activityRule.launchActivity(new Intent().setAction("OPEN_TAB_PROFILE"));
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_profile_layout));
     }
 
     @Test
@@ -103,7 +108,7 @@ public class ProfileFragmentTest {
     }
 
     @Test
-    public void testImageGalleryPicker() throws InterruptedException {
+    public void testImageGalleryPickerSuccess() throws InterruptedException {
         Thread.sleep(500);
         Intent resultData = new Intent();
         Uri uri1 = Uri.parse("android.resource://ch.epfl.sweng.tutosaurus/" + R.drawable.dino_logo);
@@ -116,10 +121,37 @@ public class ProfileFragmentTest {
         onView(withId(R.id.picture_view)).perform(click());
         onView(withText("Load picture from gallery")).perform(click());
 
-        // We can also validate that an intent resolving to the "camera" activity has been sent out by our app
+        intended(toPackage("com.android.gallery"));
+    }
+
+    @Test
+    public void testImageGalleryPickerFail() throws InterruptedException {
+        solo = new Solo(InstrumentationRegistry.getInstrumentation(),
+                activityRule.getActivity());
+        Thread.sleep(500);
+        Intent resultData = new Intent();
+        Uri uri1 = Uri.parse("");
+        resultData.setDataAndType(uri1, "image/*");
+
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
+
+        intending(toPackage("com.android.gallery")).respondWith(result);
+
+        onView(withId(R.id.picture_view)).perform(click());
+        onView(withText("Load picture from gallery")).perform(click());
+
         intended(toPackage("com.android.gallery"));
 
-        // ... additional test steps and validation ...
+        boolean toastMessageDisplayedIsCorrect = solo.searchText("Unable to load the image");
+        assertTrue(toastMessageDisplayedIsCorrect);
+        solo.finishOpenedActivities();
+    }
+
+    @Test
+    public void testBackButtonOfHomeScreen() throws InterruptedException {
+        Thread.sleep(500);
+        onView(withId(R.id.drawer_layout)).perform(open());
+        Espresso.pressBack();
     }
 
 
