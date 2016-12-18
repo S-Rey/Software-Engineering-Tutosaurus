@@ -126,6 +126,7 @@ public class ProfileFragment extends Fragment {
             Bitmap b = BitmapFactory.decodeStream(in);
             ImageView img = (ImageView) myView.findViewById(R.id.picture_view);
             img.setImageBitmap(b);
+            //getImage("000000");
         }
         catch (FileNotFoundException e) {
             ImageView img = (ImageView) myView.findViewById(R.id.picture_view);
@@ -142,10 +143,13 @@ public class ProfileFragment extends Fragment {
         StorageReference storageRef = FirebaseStorage.getInstance().
                 getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
         final long MAX_SIZE = 2048 * 2048;
-         storageRef.child("profilePictures/" + key + ".jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+         storageRef.child("profilePictures/" + key + ".png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
              @Override
              public void onSuccess(byte[] bytes) {
                  Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
+                 ImageView img = (ImageView) myView.findViewById(R.id.picture_view);
+                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                 img.setImageBitmap(bmp);
              }
          }).addOnFailureListener(new OnFailureListener() {
              @Override
