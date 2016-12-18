@@ -105,6 +105,9 @@ public class MeetingTest{
 
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showLocationMeeting)).perform(click());
+
+        Espresso.pressBack();
+
     }
 
     
