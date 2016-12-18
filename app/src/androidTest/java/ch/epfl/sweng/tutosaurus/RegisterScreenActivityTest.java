@@ -15,16 +15,12 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import ch.epfl.sweng.tutosaurus.Tequila.AuthClient;
 import ch.epfl.sweng.tutosaurus.Tequila.AuthServer;
-import ch.epfl.sweng.tutosaurus.Tequila.HttpUtils;
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
