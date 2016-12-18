@@ -11,12 +11,12 @@ public final class OAuth2Config {
      * Unless you wish to fetch data from other EPFL services,
      * `Tequila.profile` is the only scope you need.
      */
-    public final String[] scopes;
+    private final String[] scopes;
 
     /**
      * This is a public value that simply identifies your app.
      */
-    public final String clientId;
+    private final String clientId;
 
     /**
      * This value MUST be kept secret.
@@ -25,12 +25,12 @@ public final class OAuth2Config {
      * It MUST NOT be in any git repository.
      * Otherwise, somebody could impersonate your application.
      */
-    public final String clientSecret;
+    private final String clientSecret;
 
     /**
      * This is the URI that Tequila will redirect to after authenticating your users.
      */
-    public final String redirectUri;
+    private final String redirectUri;
 
     /**
      * Creating the configuartion for the OAuth2 authenfication service for Tequila
@@ -51,5 +51,21 @@ public final class OAuth2Config {
             this.clientSecret = clientSecret;
             this.redirectUri = redirectUri;
         }
+    }
+
+    public String[] getScopes() {
+        return scopes;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public String getRedirectUri() {
+        return redirectUri;
     }
 }

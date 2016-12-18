@@ -18,6 +18,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Map;
@@ -146,9 +147,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... url) {
-            for (String s : url) {
-                Log.d(TAG, "ManageAccessToken.url: " + s);
-            }
             String code = AuthClient.extractCode(url[0]);
             // This code is given by tutosaurus://login?code='code'
             getAccessToken(config, code);
@@ -158,10 +156,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String json) {
-            Log.d(TAG, "ManageAccessToken.json: " + json);
-            for (String token : tokens.keySet()) {
-                Log.d(TAG, "token name: " + token + " token value: " + tokens.get(token));
-            }
             pDialog.dismiss();
             sendMessageForAccess(null);
         }
@@ -170,7 +164,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private void startAuthDialog() {
         getConfig();
         codeRequestUrl = AuthClient.createCodeRequestUrl(config);
-        Log.d(TAG, "codeRequestUrl: " + codeRequestUrl);
 
         authDialog = new Dialog(RegisterScreenActivity.this);
         authDialog.setContentView(R.layout.auth_screen);
@@ -200,19 +193,16 @@ public class RegisterScreenActivity extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                Log.d(TAG, "onPageStartedUrl: " + url);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                Log.d(TAG, "onPageFinishedUrl: " + url);
                 super.onPageFinished(view, url);
 
                 String js_g = "javascript:document.getElementById('username').value = '" + gaspar + "';";
                 String js_pw = "javascript:document.getElementById('password').value = '" + password + "';";
 
                 if (url.contains("requestkey")) {
-                    Log.d(TAG, "TRIGGERED");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         view.evaluateJavascript(js_g + js_pw, null);
                     }
@@ -221,9 +211,11 @@ public class RegisterScreenActivity extends AppCompatActivity {
                     authComplete = true;
                     authDialog.dismiss();
                     new ManageAccessToken().execute(url);
+                } else if(url.contains("access_denied")) {
+                    authDialog.dismiss();
+                    Toast.makeText(RegisterScreenActivity.this, R.string.authorize_app_required, Toast.LENGTH_SHORT).show();
                 }
                 String cookies = CookieManager.getInstance().getCookie("tequila.epfl.ch");
-                Log.d(TAG, "All the cookies in a string: " + cookies);
 
             }
         });
@@ -242,18 +234,4 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         startAuthDialog();
     }
-
-    /**private void setScreenInfo(){
-     if(profile != null){
-     EditText first_name_text = (EditText) findViewById(R.id.firstNameEntry);
-     EditText last_name_text = (EditText) findViewById(R.id.lastNameEntry);
-     EditText email_address_text = (EditText) findViewById(R.id.emailAddressEntry);
-     EditText sciper_text = (EditText) findViewById(R.id.sciperEntry);
-
-     first_name_text.setText(profile.firstNames);
-     last_name_text.setText(profile.lastNames);
-     email_address_text.setText(profile.email);
-     sciper_text.setText(profile.sciper);
-     }
-     }*/
 }

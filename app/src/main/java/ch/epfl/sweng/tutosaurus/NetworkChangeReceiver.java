@@ -38,9 +38,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                 if (info.isConnectedOrConnecting()) {
                     if (!isConnected()) {
                         Log.v(LOG_TAG, "Now you are connected to Internet!");
-                        if (broadcastToastEnabled) {
-                            Toast.makeText(activity, "You got internet!", Toast.LENGTH_SHORT).show();
-                        }
                         isConnected = true;
                         //do your processing here ---
                         //if you need to post any data to the server or get status
