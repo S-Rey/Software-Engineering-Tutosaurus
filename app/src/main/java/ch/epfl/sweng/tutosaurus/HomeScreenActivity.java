@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -127,7 +128,10 @@ public class HomeScreenActivity extends AppCompatActivity
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
             }
-
+            if (intent.getAction().equals("OPEN_TAB_SETTINGS")) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+            }
             if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
@@ -155,11 +159,10 @@ public class HomeScreenActivity extends AppCompatActivity
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
             }
-
             if (intent.getAction().equals("OPEN_TAB_SETTINGS")) {
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
             }
-
             if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
@@ -240,6 +243,8 @@ public class HomeScreenActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new FindTutorsFragment()).commit();
         } else if (id == R.id.nav_beATutor_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new BeATutorFragment()).commit();
+        } else if (id == R.id.nav_messaging_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment(), "MESSAGING_FRAGMENT").commit();
         } else if (id == R.id.nav_settings_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
         } else if (id == R.id.nav_help_layout) {
@@ -248,8 +253,6 @@ public class HomeScreenActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
         } else if (id == R.id.nav_meetings_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
-        } else if (id == R.id.nav_messaging_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment(), "MESSAGING_FRAGMENT").commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -276,8 +279,7 @@ public class HomeScreenActivity extends AppCompatActivity
 
     private void dispatchTakePictureIntent(View v) {
         if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
-            Toast toast = Toast.makeText(HomeScreenActivity.this, "No camera", Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(HomeScreenActivity.this, "No camera", Toast.LENGTH_SHORT).show();
         }
         else {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

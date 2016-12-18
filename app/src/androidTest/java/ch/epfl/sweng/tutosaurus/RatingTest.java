@@ -103,8 +103,9 @@ public class RatingTest {
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
 
-        onView(withClassName(Matchers.equalTo(RatingBar.class.getName()))).perform(click());
+        Thread.sleep(1000);
 
+        onView(withClassName(Matchers.equalTo(RatingBar.class.getCanonicalName()))).perform(click());
         onView(withText("Ok")).perform(click());
 
     }
