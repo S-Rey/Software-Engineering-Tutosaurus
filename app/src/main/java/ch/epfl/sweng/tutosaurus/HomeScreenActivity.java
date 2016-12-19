@@ -502,9 +502,11 @@ public class HomeScreenActivity extends AppCompatActivity
                 //Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
                 ImageView img = (ImageView) findViewById(R.id.picture_view);
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                img.setImageBitmap(bmp);
-                saveToInternalStorage(bmp);
-                linkProfilePictureToNavView(circleView);
+                if(img != null) {
+                    img.setImageBitmap(bmp);
+                    saveToInternalStorage(bmp);
+                    linkProfilePictureToNavView(circleView);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
