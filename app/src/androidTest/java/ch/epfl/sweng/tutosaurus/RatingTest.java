@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 
-import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.TestActions.NestedScrollViewScrollToAction;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
