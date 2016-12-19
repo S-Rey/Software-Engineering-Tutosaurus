@@ -309,4 +309,5 @@
     <string name="confirmation_email">"Email address : %1$s"</string>
     <string name="confirmation_sciper">"Sciper : %1$s"</string>
     <string name="add_to_calendar">Calendar</string>
+    <string name="rate">Rate</string>
 </resources>

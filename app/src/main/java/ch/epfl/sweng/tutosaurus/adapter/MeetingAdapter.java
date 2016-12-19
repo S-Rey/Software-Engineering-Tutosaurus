@@ -39,10 +39,13 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
+    private static final long differenceTimeJavaFirebase = 59958140730000L;
     private String currentUserUid;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private float meetingRating;
     private User user;
+    private View mainView;
+    private Meeting meeting;
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
@@ -53,82 +56,67 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
     @Override
-    protected void populateView(final View mainView, final Meeting meeting, int position) {
+    protected void populateView(View mainView, Meeting meeting, int position) {
+        this.mainView = mainView;
+        this.meeting = meeting;
 
-        if (meeting.getCourse() != null) {
-            FullCourseList allCourses = FullCourseList.getInstance();
-            Course courseMeeting = allCourses.getCourse(meeting.getCourse().getId());
+        TextView subject = (TextView) mainView.findViewById(R.id.courseName);
+        populateCourse(subject);
 
-            TextView subject = (TextView) mainView.findViewById(R.id.courseName);
-            subject.setText(meeting.getCourse().getName());
-            ImageView coursePicture = (ImageView) mainView.findViewById(R.id.coursePicture);
-            coursePicture.setImageResource(courseMeeting.getPictureId());
-        }
-
-        final TextView otherParticipantView = (TextView) mainView.findViewById(R.id.otherParticipantMeeting);
-
-        Query ref = dbh.getUserRef();
-        ref.addValueEventListener( new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                List<String> participants = meeting.getParticipants();
-                String displayParticipant = "";
-                for (String participant: participants) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        if (!userSnapshot.getKey().equals(currentUserUid) && userSnapshot.getKey().equals(participant)) {
-                            user = userSnapshot.getValue(User.class);
-                            if (displayParticipant == null) {
-                                displayParticipant = user.getFullName();
-                            } else {
-                                displayParticipant = displayParticipant + "\n" + user.getFullName();
-                            }
-                            otherParticipantView.setText(displayParticipant);
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        TextView otherParticipantView = (TextView) mainView.findViewById(R.id.otherParticipantMeeting);
+        populateParticipants(otherParticipantView);
 
         TextView date = (TextView) mainView.findViewById(R.id.dateMeeting);
-        if (meeting.getDate() != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm", Locale.FRENCH);
-            String dateNewFormat = dateFormat.format(meeting.getDate());
-            date.setText(dateNewFormat);
-        }
+        populateDateMeeting(date);
 
         TextView descriptionMeeting = (TextView) mainView.findViewById(R.id.descriptionMeeting);
-        if (meeting.getDescription() != null) {
-            descriptionMeeting.setText(meeting.getDescription());
-        }
+        populateDescriptionMeeting(descriptionMeeting);
 
-        final double latitudeMeeting = meeting.getLatitudeLocation();
-        final double longitudeMeeting = meeting.getLongitudeLocation();
-        final TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
-
+        double latitudeMeeting = meeting.getLatitudeLocation();
+        double longitudeMeeting = meeting.getLongitudeLocation();
+        TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
-        showLocationMeeting.setOnClickListener(new View.OnClickListener() {
+        showLocationMeeting(latitudeMeeting, longitudeMeeting, showLocationMeeting, locationMeeting);
+
+        Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
+        populateDetailsMeeting(detailsMeeting);
+
+        Button syncCalendar = (Button) mainView.findViewById(R.id.syncCalendar);
+        populateSyncCalendar(syncCalendar);
+    }
+
+
+    private void populateSyncCalendar(Button syncCalendar) {
+        syncCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (meeting.getNameLocation() == null) {
-                    Toast.makeText(mainView.getContext(), "Place not selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    locationMeeting.setText(meeting.getNameLocation());
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.setTime(meeting.getDate());
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setData(CalendarContract.Events.CONTENT_URI);
+                intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+                intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
+                if (user != null) {
+                    intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
                 }
-                Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
-                intent.putExtra("latitudeMeeting", latitudeMeeting);
-                intent.putExtra("longitudeMeeting", longitudeMeeting);
-                view.getContext().startActivity(intent);
+
+                if (meeting.getDescription() != null) {
+                    intent.putExtra(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
+                }
+
+                if (meeting.getNameLocation() != null) {
+                    intent.putExtra(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
+                }
+
+                mainView.getContext().startActivity(intent);
             }
         });
+    }
 
-        final Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
-        if(meeting.getDate().getTime() > new Date().getTime() + 59958140730000L) {
+
+    private void populateDetailsMeeting(Button detailsMeeting) {
+        if(meeting.getDate().getTime() > new Date().getTime() + differenceTimeJavaFirebase) {
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -148,7 +136,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             ratingBar.setRating(meetingRating);
         }
         else {
-            detailsMeeting.setText("Rate");
+            detailsMeeting.setText(R.string.rate);
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -196,34 +184,83 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 }
             });
         }
+    }
 
 
-        final Button syncCalendar = (Button) mainView.findViewById(R.id.syncCalendar);
-        syncCalendar.setOnClickListener(new View.OnClickListener() {
+    private void showLocationMeeting(final double latitudeMeeting, final double longitudeMeeting,
+                                     Button showLocationMeeting, final TextView locationMeeting) {
+
+        showLocationMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar beginTime = Calendar.getInstance();
-                beginTime.setTime(meeting.getDate());
-                Intent intent = new Intent(Intent.ACTION_INSERT);
-                intent.setData(CalendarContract.Events.CONTENT_URI);
-                intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
-                intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
-                if (user != null) {
-                    intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
+                if (meeting.getNameLocation() == null) {
+                    Toast.makeText(mainView.getContext(), "Place not selected", Toast.LENGTH_SHORT).show();
+                } else {
+                    locationMeeting.setText(meeting.getNameLocation());
                 }
-
-                if (meeting.getDescription() != null) {
-                    intent.putExtra(CalendarContract.Events.DESCRIPTION, meeting.getDescription());
-                }
-
-                if (meeting.getNameLocation() != null) {
-                    intent.putExtra(CalendarContract.Events.EVENT_LOCATION, meeting.getNameLocation());
-                }
-
-                mainView.getContext().startActivity(intent);
+                Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
+                intent.putExtra("latitudeMeeting", latitudeMeeting);
+                intent.putExtra("longitudeMeeting", longitudeMeeting);
+                view.getContext().startActivity(intent);
             }
         });
+
+    }
+
+
+    private void populateDescriptionMeeting(TextView descriptionMeeting) {
+        if (meeting.getDescription() != null) {
+            descriptionMeeting.setText(meeting.getDescription());
+        }
+    }
+
+
+    private void populateDateMeeting(TextView date) {
+        if (meeting.getDate() != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm", Locale.ENGLISH);
+            String dateNewFormat = dateFormat.format(meeting.getDate());
+            date.setText(dateNewFormat);
+        }
+    }
+
+
+    private void populateParticipants(final TextView otherParticipantView) {
+        Query ref = dbh.getUserRef();
+        ref.addValueEventListener( new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                List<String> participants = meeting.getParticipants();
+                String displayParticipant = "";
+                for (String participant: participants) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        if (!userSnapshot.getKey().equals(currentUserUid) && userSnapshot.getKey().equals(participant)) {
+                            user = userSnapshot.getValue(User.class);
+                            if (displayParticipant.equals("")) {
+                                displayParticipant = user.getFullName();
+                            } else {
+                                displayParticipant = displayParticipant + "\n" + user.getFullName();
+                            }
+                            otherParticipantView.setText(displayParticipant);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    private void populateCourse(TextView subject) {
+        if (meeting.getCourse() != null) {
+            FullCourseList allCourses = FullCourseList.getInstance();
+            Course courseMeeting = allCourses.getCourse(meeting.getCourse().getId());
+            subject.setText(meeting.getCourse().getName());
+            ImageView coursePicture = (ImageView) mainView.findViewById(R.id.coursePicture);
+            coursePicture.setImageResource(courseMeeting.getPictureId());
+        }
     }
 
 }
