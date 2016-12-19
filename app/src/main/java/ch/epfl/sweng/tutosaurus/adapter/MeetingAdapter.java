@@ -132,7 +132,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             ratingBar.setRating(meeting.getRating());
         }
         else {
-            //detailsMeeting.setText(R.string.rate);
+            detailsMeeting.setText(R.string.rate);
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
