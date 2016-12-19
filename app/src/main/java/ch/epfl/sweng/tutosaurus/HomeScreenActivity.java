@@ -174,7 +174,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
                 // Set profile name
                 TextView profileName = (TextView) findViewById(R.id.profileName);
-                profileName.setText(thisUser.getFullName());
+                if(profileName != null) {
+                    profileName.setText(thisUser.getFullName());
+                }
                 dbHelper = new LocalDatabaseHelper(getBaseContext());
                 LocalDatabaseHelper.insertUser(thisUser,dbHelper.getWritableDatabase());
                 getImage(thisUser.getSciper());
