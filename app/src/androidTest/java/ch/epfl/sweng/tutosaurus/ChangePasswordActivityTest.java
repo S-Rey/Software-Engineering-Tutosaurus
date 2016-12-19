@@ -136,6 +136,7 @@ public class ChangePasswordActivityTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
         solo.clickOnActionBarHomeButton();
+        Thread.sleep(1000);
         intended(hasAction("OPEN_TAB_SETTINGS"));
         onView(withId(R.id.action_logOutButton)).perform(click());
     }
