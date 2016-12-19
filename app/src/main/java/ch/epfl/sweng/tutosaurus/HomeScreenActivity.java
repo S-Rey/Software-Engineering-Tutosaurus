@@ -381,7 +381,9 @@ public class HomeScreenActivity extends AppCompatActivity
         try {
             in = getApplicationContext().openFileInput("user_profile_pic.bmp");
             Bitmap b = BitmapFactory.decodeStream(in);
-            item.setImageBitmap(b);
+            if(b != null) {
+                item.setImageBitmap(b);
+            }
         }
         catch (FileNotFoundException e) {
             item.setImageResource(R.drawable.dino_logo);
