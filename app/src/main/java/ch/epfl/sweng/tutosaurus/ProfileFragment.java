@@ -90,6 +90,7 @@ public class ProfileFragment extends Fragment {
                 // Set rating
                 RatingBar ratingBar = (RatingBar) myView.findViewById(R.id.ratingBar);
                 ratingBar.setRating(thisUser.getGlobalRating());
+                getImage(thisUser.getSciper());
             }
 
             @Override
@@ -136,6 +137,7 @@ public class ProfileFragment extends Fragment {
         if(user != null) {
             getImage(user.getSciper());
         }
+
 
 
     }
