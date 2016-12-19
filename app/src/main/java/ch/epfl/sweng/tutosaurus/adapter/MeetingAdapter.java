@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +40,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    private static final long DIFFERENCE_TIME_JAVA = 59958140730000L;
+    private static final long DIFFERENCE_TIME_JAVA = 59958144000000L;
     private String currentUserUid;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private float meetingRating;
@@ -113,6 +114,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
     private void populateDetailsMeeting(final View mainView, final Meeting meeting, Button detailsMeeting) {
         if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
+            Log.d("Meeting Adapter","Current time: " + Long.toString(new Date().getTime()) + " Meeting Time: " + Long.toString(meeting.getDate().getTime()-DIFFERENCE_TIME_JAVA));
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -126,12 +128,14 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             });
         }
         else if(meeting.isRated()) {
+            Log.d("Meeting Adapter","Current time: " + Long.toString(new Date().getTime()) + " Meeting Time: " + Long.toString(meeting.getDate().getTime()-DIFFERENCE_TIME_JAVA));
             detailsMeeting.setVisibility(View.GONE);
             RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
             ratingBar.setVisibility(View.VISIBLE);
             ratingBar.setRating(meeting.getRating());
         }
         else {
+            Log.d("Meeting Adapter","Current time: " + Long.toString(new Date().getTime()) + " Meeting Time: " + Long.toString(meeting.getDate().getTime()-DIFFERENCE_TIME_JAVA));
             detailsMeeting.setText(R.string.rate);
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
