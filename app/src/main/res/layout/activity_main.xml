@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:background="@null"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/button_color_resetpassword"
         android:id="@+id/forgotPasswordButton"
         android:textSize="14sp"
         android:textStyle="normal|italic"
@@ -96,16 +96,6 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/main_password"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/login_with_albert_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mainBypassLoginButton"
-        android:layout_above="@+id/registerButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp" />
-
     <Button
         android:text="@string/connection_button"
         android:layout_width="wrap_content"
