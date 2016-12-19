@@ -1,17 +1,18 @@
 package ch.epfl.sweng.tutosaurus;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiDevice;
 import android.widget.DatePicker;
 import android.widget.RatingBar;
 import android.widget.TimePicker;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,7 +20,8 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 
-import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.TestActions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
@@ -108,6 +110,13 @@ public class RatingTest {
         onView(withClassName(Matchers.equalTo(RatingBar.class.getCanonicalName()))).perform(click());
         onView(withText("Ok")).perform(click());
 
+    }
+
+
+    @After
+    public void deleteMeeting() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseHelper.getInstance().getMeetingsRefForUser(uid).removeValue();
     }
 
 }
