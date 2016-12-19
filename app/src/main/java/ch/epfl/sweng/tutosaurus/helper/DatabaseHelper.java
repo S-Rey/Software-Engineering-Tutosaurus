@@ -182,11 +182,18 @@ public class DatabaseHelper {
     }
 
 
-    public void setMeetingRated(String userId, String otherUserId, String meetingId) {
+    public void setMeetingRated(String userId, String otherUserId, String meetingId, float rating) {
         DatabaseReference meetingsPerUserCurrentUserRef = dbf.child(MEETING_PER_USER_PATH + userId +"/" + meetingId + "/rated/");
         meetingsPerUserCurrentUserRef.setValue(true);
 
         DatabaseReference meetingsPerUserOtherUserRef = dbf.child(MEETING_PER_USER_PATH + otherUserId +"/" + meetingId + "/rated/");
         meetingsPerUserOtherUserRef.setValue(true);
+
+        DatabaseReference meetingsPerUserCurrentUserRefRating = dbf.child(MEETING_PER_USER_PATH + userId +"/" + meetingId + "/rating/");
+        meetingsPerUserCurrentUserRefRating.setValue(rating);
+
+        DatabaseReference meetingsPerUserOtherUserRefRating = dbf.child(MEETING_PER_USER_PATH + otherUserId +"/" + meetingId + "/rating/");
+        meetingsPerUserOtherUserRefRating.setValue(rating);
+
     }
 }

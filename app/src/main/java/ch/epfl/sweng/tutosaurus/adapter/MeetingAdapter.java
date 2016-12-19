@@ -39,7 +39,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    private static final long differenceTimeJavaFirebase = 59958140730000L;
+    private static final long DIFFERENCE_TIME_JAVA = 59958140730000L;
     private String currentUserUid;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private float meetingRating;
@@ -116,7 +116,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
 
     private void populateDetailsMeeting(Button detailsMeeting) {
-        if(meeting.getDate().getTime() > new Date().getTime() + differenceTimeJavaFirebase) {
+        if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -133,7 +133,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             detailsMeeting.setVisibility(View.GONE);
             RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
             ratingBar.setVisibility(View.VISIBLE);
-            ratingBar.setRating(meetingRating);
+            ratingBar.setRating(meeting.getRating());
         }
         else {
             detailsMeeting.setText(R.string.rate);
@@ -162,7 +162,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                     meetingRating = rating.getRating();
                                     meeting.setRated(true);
                                     if (user != null) {
-                                        dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId());
+                                        dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId(), meetingRating);
                                         int numRatings = user.getNumRatings();
                                         float globalRating = user.getGlobalRating();
                                         globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);

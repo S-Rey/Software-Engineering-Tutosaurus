@@ -15,6 +15,7 @@ public class Meeting {
     private List<String> participants = new ArrayList<>();
     private Course course;
     private boolean rated = false;
+    private float rating;
 
 
     /**
@@ -129,4 +130,7 @@ public class Meeting {
         this.rated = rated;
     }
 
+    public float getRating() {
+        return rating;
+    }
 }
