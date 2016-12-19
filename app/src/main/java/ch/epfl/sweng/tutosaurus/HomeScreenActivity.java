@@ -35,11 +35,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,6 +57,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
@@ -119,14 +129,7 @@ public class HomeScreenActivity extends AppCompatActivity
         String email_address = settings.getString("email", "");
         String sciper = settings.getString("sciper", "");
 
-        TextView nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
-        nameView.setText(first_name + " " + last_name);
 
-        TextView addressView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.mailAddress);
-        addressView.setText(email_address);
-
-        TextView sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
-        sciperView.setText(sciper);
 
         if (intent.getAction() != null) {
             if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
@@ -146,7 +149,41 @@ public class HomeScreenActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
             }
         }
+
+
+        String currentUser = null;
+        DatabaseHelper dbh = DatabaseHelper.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentFirebaseUser != null) {
+            currentUser = currentFirebaseUser.getUid();
+        }
+        String userId = currentUser;
+
+        DatabaseReference ref = dbh.getReference();
+        ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final User thisUser = dataSnapshot.getValue(User.class);
+
+                // Set profile name
+                TextView profileName = (TextView) findViewById(R.id.profileName);
+                profileName.setText(thisUser.getFullName());
+                dbHelper = new LocalDatabaseHelper(getBaseContext());
+                LocalDatabaseHelper.insertUser(thisUser,dbHelper.getWritableDatabase());
+                getImage(thisUser.getSciper());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(HomeScreenActivity.this, "Error Save user", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
+
+
 
     @Override
     public void onRestart() {
@@ -344,6 +381,7 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GALLERY_REQUEST) {
@@ -441,6 +479,32 @@ public class HomeScreenActivity extends AppCompatActivity
             return LocalDatabaseHelper.getUser(database);
         }
         return null;
+    }
+
+
+    private void getImage(String key) {
+        StorageReference storageRef = FirebaseStorage.getInstance().
+                getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
+        final long MAX_SIZE = 4096 * 4096;
+        storageRef.child("profilePictures/" + key + ".png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                //Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
+                ImageView img = (ImageView) findViewById(R.id.picture_view);
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                img.setImageBitmap(bmp);
+                Toast.makeText(HomeScreenActivity.this, "Set Image", Toast.LENGTH_SHORT).show();
+                saveToInternalStorage(bmp);
+                linkProfilePictureToNavView(circleView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(HomeScreenActivity.this, "Problem Retrieving", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
     }
 
 

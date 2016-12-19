@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingConfirmationAdapter;
@@ -41,6 +44,7 @@ import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileFragment extends Fragment {
@@ -90,7 +94,7 @@ public class ProfileFragment extends Fragment {
                 // Set rating
                 RatingBar ratingBar = (RatingBar) myView.findViewById(R.id.ratingBar);
                 ratingBar.setRating(thisUser.getGlobalRating());
-                getImage(thisUser.getSciper());
+                //getImage(thisUser.getSciper());
             }
 
             @Override
@@ -133,10 +137,10 @@ public class ProfileFragment extends Fragment {
             img.setImageResource(R.drawable.dino_logo);
             e.printStackTrace();
         }
-        User user = getUserLocalDB(getActivity().getApplicationContext());
-        if(user != null) {
-            getImage(user.getSciper());
-        }
+//        User user = getUserLocalDB(getActivity().getApplicationContext());
+//        if(user != null) {
+//            getImage(user.getSciper());
+//        }
 
 
 
@@ -146,27 +150,46 @@ public class ProfileFragment extends Fragment {
      * Download a picture from the sciper/ folder from the storage of Firebase
      * @param key the name of the picture
      */
-     private void getImage(String key) {
-        StorageReference storageRef = FirebaseStorage.getInstance().
-                getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-        final long MAX_SIZE = 4096 * 4096;
-         storageRef.child("profilePictures/" + key + ".png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-             @Override
-             public void onSuccess(byte[] bytes) {
-                 //Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
-                 ImageView img = (ImageView) myView.findViewById(R.id.picture_view);
-                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                 img.setImageBitmap(bmp);
-             }
-         }).addOnFailureListener(new OnFailureListener() {
-             @Override
-             public void onFailure(@NonNull Exception exception) {
-                 // Handle any errors
-             }
-         });
-
-
-    }
+//     private void getImage(String key) {
+//        StorageReference storageRef = FirebaseStorage.getInstance().
+//                getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
+//        final long MAX_SIZE = 4096 * 4096;
+//         storageRef.child("profilePictures/" + key + ".png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//             @Override
+//             public void onSuccess(byte[] bytes) {
+//                 //Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
+//                 ImageView img = (ImageView) myView.findViewById(R.id.picture_view);
+//                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//                 img.setImageBitmap(bmp);
+//                 saveToInternalStorage(bmp);
+//                 NavigationView navigationView = (NavigationView) myView.findViewById(R.id.nav_view);
+//                 if(navigationView!=null) {
+//                     CircleImageView circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
+//                     FileInputStream in;
+//                     try {
+//                         in = getActivity().openFileInput("user_profile_pic.bmp");
+//                         Bitmap b = BitmapFactory.decodeStream(in);
+//                         circleView.setImageBitmap(b);
+//                         Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
+//
+//                     }
+//                     catch (FileNotFoundException e) {
+//                         circleView.setImageResource(R.drawable.dino_logo);
+//                         e.printStackTrace();
+//                     }
+//                 } else {
+//                 }
+//
+//             }
+//         }).addOnFailureListener(new OnFailureListener() {
+//             @Override
+//             public void onFailure(@NonNull Exception exception) {
+//                 // Handle any errors
+//             }
+//         });
+//
+//
+//    }
 
 
     private void saveUserLocalDB(User user, Context context) {
