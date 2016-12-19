@@ -44,8 +44,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private float meetingRating;
     private User user;
-    private View mainView;
-    private Meeting meeting;
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
@@ -56,37 +54,35 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
     @Override
-    protected void populateView(View mainView, Meeting meeting, int position) {
-        this.mainView = mainView;
-        this.meeting = meeting;
+    protected void populateView(final View mainView, final Meeting meeting, int position) {
 
         TextView subject = (TextView) mainView.findViewById(R.id.courseName);
-        populateCourse(subject);
+        populateCourse(mainView, meeting, subject);
 
         TextView otherParticipantView = (TextView) mainView.findViewById(R.id.otherParticipantMeeting);
-        populateParticipants(otherParticipantView);
+        populateParticipants(meeting, otherParticipantView);
 
         TextView date = (TextView) mainView.findViewById(R.id.dateMeeting);
-        populateDateMeeting(date);
+        populateDateMeeting(meeting, date);
 
         TextView descriptionMeeting = (TextView) mainView.findViewById(R.id.descriptionMeeting);
-        populateDescriptionMeeting(descriptionMeeting);
+        populateDescriptionMeeting(meeting, descriptionMeeting);
 
         double latitudeMeeting = meeting.getLatitudeLocation();
         double longitudeMeeting = meeting.getLongitudeLocation();
         TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
-        showLocationMeeting(latitudeMeeting, longitudeMeeting, showLocationMeeting, locationMeeting);
+        showLocationMeeting(mainView, meeting, latitudeMeeting, longitudeMeeting, showLocationMeeting, locationMeeting);
 
         Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
-        populateDetailsMeeting(detailsMeeting);
+        populateDetailsMeeting(mainView, meeting, detailsMeeting);
 
         Button syncCalendar = (Button) mainView.findViewById(R.id.syncCalendar);
-        populateSyncCalendar(syncCalendar);
+        populateSyncCalendar(mainView, meeting, syncCalendar);
     }
 
 
-    private void populateSyncCalendar(Button syncCalendar) {
+    private void populateSyncCalendar(final View mainView, final Meeting meeting, Button syncCalendar) {
         syncCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +111,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    private void populateDetailsMeeting(Button detailsMeeting) {
+    private void populateDetailsMeeting(final View mainView, final Meeting meeting, Button detailsMeeting) {
         if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -187,7 +183,8 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    private void showLocationMeeting(final double latitudeMeeting, final double longitudeMeeting,
+    private void showLocationMeeting(final View mainView, final Meeting meeting,
+                                     final double latitudeMeeting, final double longitudeMeeting,
                                      Button showLocationMeeting, final TextView locationMeeting) {
 
         showLocationMeeting.setOnClickListener(new View.OnClickListener() {
@@ -208,14 +205,14 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    private void populateDescriptionMeeting(TextView descriptionMeeting) {
+    private void populateDescriptionMeeting(final Meeting meeting, TextView descriptionMeeting) {
         if (meeting.getDescription() != null) {
             descriptionMeeting.setText(meeting.getDescription());
         }
     }
 
 
-    private void populateDateMeeting(TextView date) {
+    private void populateDateMeeting(final Meeting meeting, TextView date) {
         if (meeting.getDate() != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm", Locale.ENGLISH);
             String dateNewFormat = dateFormat.format(meeting.getDate());
@@ -224,7 +221,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    private void populateParticipants(final TextView otherParticipantView) {
+    private void populateParticipants(final Meeting meeting, final TextView otherParticipantView) {
         Query ref = dbh.getUserRef();
         ref.addValueEventListener( new ValueEventListener() {
             @Override
@@ -253,7 +250,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    private void populateCourse(TextView subject) {
+    private void populateCourse(final View mainView, final Meeting meeting, TextView subject) {
         if (meeting.getCourse() != null) {
             FullCourseList allCourses = FullCourseList.getInstance();
             Course courseMeeting = allCourses.getCourse(meeting.getCourse().getId());
