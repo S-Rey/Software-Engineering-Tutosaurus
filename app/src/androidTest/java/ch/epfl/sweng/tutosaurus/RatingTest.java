@@ -9,7 +9,10 @@ import android.widget.DatePicker;
 import android.widget.RatingBar;
 import android.widget.TimePicker;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,6 +21,7 @@ import org.junit.runner.RunWith;
 import java.util.Date;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
@@ -106,6 +110,13 @@ public class RatingTest {
         onView(withClassName(Matchers.equalTo(RatingBar.class.getCanonicalName()))).perform(click());
         onView(withText("Ok")).perform(click());
 
+    }
+
+
+    @After
+    public void deleteMeeting() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseHelper.getInstance().getMeetingsRefForUser(uid).removeValue();
     }
 
 }

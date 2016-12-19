@@ -13,13 +13,17 @@ import android.support.test.uiautomator.UiSelector;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.hamcrest.Matchers;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
@@ -121,6 +125,13 @@ public class MeetingTest{
     @Test
     public void testPlacePicker() throws InterruptedException {
         onView(withId(R.id.pickLocation)).perform(click());
+    }
+
+
+    @After
+    public void deleteMeeting() {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseHelper.getInstance().getMeetingsRefForUser(uid).removeValue();
     }
 
 
