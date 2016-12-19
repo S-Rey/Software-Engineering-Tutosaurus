@@ -129,7 +129,14 @@ public class HomeScreenActivity extends AppCompatActivity
         String email_address = settings.getString("email", "");
         String sciper = settings.getString("sciper", "");
 
+        TextView nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
+        nameView.setText(first_name + " " + last_name);
 
+        TextView addressView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.mailAddress);
+        addressView.setText(email_address);
+
+        TextView sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
+        sciperView.setText(sciper);
 
         if (intent.getAction() != null) {
             if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
@@ -171,12 +178,13 @@ public class HomeScreenActivity extends AppCompatActivity
                 dbHelper = new LocalDatabaseHelper(getBaseContext());
                 LocalDatabaseHelper.insertUser(thisUser,dbHelper.getWritableDatabase());
                 getImage(thisUser.getSciper());
-
+                setBurgerMenuUser(thisUser.getFullName(), thisUser.getEmail(), thisUser.getSciper());
+                Toast.makeText(HomeScreenActivity.this, "Loading Of User Done", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(HomeScreenActivity.this, "Error Save user", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeScreenActivity.this, "Error Loading User", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -493,18 +501,30 @@ public class HomeScreenActivity extends AppCompatActivity
                 ImageView img = (ImageView) findViewById(R.id.picture_view);
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 img.setImageBitmap(bmp);
-                Toast.makeText(HomeScreenActivity.this, "Set Image", Toast.LENGTH_SHORT).show();
                 saveToInternalStorage(bmp);
                 linkProfilePictureToNavView(circleView);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(HomeScreenActivity.this, "Problem Retrieving", Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeScreenActivity.this, "Problem Retrieving Image", Toast.LENGTH_LONG).show();
             }
         });
 
 
+    }
+
+
+    private void setBurgerMenuUser(String fullName, String email, String sciper) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        TextView nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
+        nameView.setText(fullName);
+
+        TextView addressView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.mailAddress);
+        addressView.setText(email);
+
+        TextView sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
+        sciperView.setText(sciper);
     }
 
 
