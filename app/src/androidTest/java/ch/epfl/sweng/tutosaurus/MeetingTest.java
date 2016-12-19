@@ -1,10 +1,15 @@
 package ch.epfl.sweng.tutosaurus;
 
+import android.os.Build;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiSelector;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -16,6 +21,7 @@ import org.junit.runner.RunWith;
 
 import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -68,7 +74,7 @@ public class MeetingTest{
 
 
     @Test
-    public void testRequestAndConfirmMeeting() throws InterruptedException {
+    public void testRequestAndConfirmMeeting() throws InterruptedException, UiObjectNotFoundException {
 
         int year = 2020;
         int month = 11;
@@ -106,6 +112,7 @@ public class MeetingTest{
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showLocationMeeting)).perform(click());
         Thread.sleep(1000);
+        allowPermissionsIfNeeded();
         Espresso.pressBack();
 
     }
@@ -114,6 +121,17 @@ public class MeetingTest{
     @Test
     public void testPlacePicker() throws InterruptedException {
         onView(withId(R.id.pickLocation)).perform(click());
+    }
+
+
+    private static void allowPermissionsIfNeeded() throws UiObjectNotFoundException {
+        if (Build.VERSION.SDK_INT >= 23) {
+            UiDevice device = UiDevice.getInstance(getInstrumentation());
+            UiObject allowPermissions = device.findObject(new UiSelector().clickable(true).checkable(false).index(1));
+            if (allowPermissions.exists()) {
+                allowPermissions.click();
+            }
+        }
     }
 
 
