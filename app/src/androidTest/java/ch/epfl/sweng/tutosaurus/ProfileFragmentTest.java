@@ -142,7 +142,7 @@ public class ProfileFragmentTest {
 
         intended(toPackage("com.android.gallery"));
 
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Unable to load the image");
+        boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Unable to load the image");
         assertTrue(toastMessageDisplayedIsCorrect);
         solo.finishOpenedActivities();
     }
@@ -158,5 +158,16 @@ public class ProfileFragmentTest {
     @After
     public void logOut() {
         FirebaseAuth.getInstance().signOut();
+    }
+
+    private boolean waitForToastWithText(String toastText) throws InterruptedException {
+        boolean toastFound = solo.searchText(toastText);
+        int numEfforts = 0;
+        while(toastFound == false && numEfforts < 1000){
+            Thread.sleep(5);
+            toastFound = solo.searchText(toastText);
+            numEfforts++;
+        }
+        return toastFound;
     }
 }
