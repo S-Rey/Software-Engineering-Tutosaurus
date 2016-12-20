@@ -118,12 +118,15 @@ public class ChangePasswordActivityTest {
         solo.clickOnView(solo.getView(R.id.connectionButton));
         Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
+        Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
+        Thread.sleep(1000);
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
         solo.clickOnActionBarHomeButton();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         intended(hasAction("OPEN_TAB_SETTINGS"));
         onView(withId(R.id.action_logOutButton)).perform(click());
+        Thread.sleep(2000);
     }
 
     @After
