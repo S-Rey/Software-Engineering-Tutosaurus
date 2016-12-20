@@ -67,9 +67,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(1, "newPassword");
         Thread.sleep(500);
         solo.clickOnView(solo.getView(R.id.changeNewPass));
-        Thread.sleep(500);
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Passwords must match");
-        Thread.sleep(2000);
+        boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Passwords must match");
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
         Thread.sleep(1000);
@@ -91,8 +89,7 @@ public class ChangePasswordActivityTest {
         Thread.sleep(1000);
         solo.typeText(0, "newPass");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
-        Thread.sleep(500);
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Please fill both boxes above");
+        boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Please fill both boxes above");
         Thread.sleep(500);
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
@@ -116,8 +113,8 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "tototo");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
-        Thread.sleep(500);
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Password changed successfully");
+        Thread.sleep(50);
+        boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Password changed successfully");
         Thread.sleep(500);
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
@@ -148,5 +145,16 @@ public class ChangePasswordActivityTest {
     @After
     public void tearDown() throws Exception {
         solo.finishOpenedActivities();
+    }
+
+    private boolean waitForToastWithText(String toastText) throws InterruptedException {
+        boolean toastFound = solo.searchText(toastText);
+        int numEfforts = 0;
+        while(toastFound == false && numEfforts < 1000){
+            Thread.sleep(5);
+            toastFound = solo.searchText(toastText);
+            numEfforts++;
+        }
+        return toastFound;
     }
 }
