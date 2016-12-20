@@ -65,13 +65,14 @@ public class ChangePasswordActivityTest {
         Thread.sleep(1000);
         solo.typeText(0, "newPass");
         solo.typeText(1, "newPassword");
+        Thread.sleep(500);
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         Thread.sleep(500);
         boolean toastMessageDisplayedIsCorrect = solo.searchText("Passwords must match");
-        Thread.sleep(500);
+        Thread.sleep(2000);
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
-        Thread.sleep(500);
+        Thread.sleep(1000);
         onView(withId(R.id.action_logOutButton)).perform(click());
     }
 
