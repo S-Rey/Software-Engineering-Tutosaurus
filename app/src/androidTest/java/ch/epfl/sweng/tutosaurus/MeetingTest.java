@@ -60,6 +60,8 @@ public class MeetingTest{
 
     @Before
     public void setUp() throws InterruptedException {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseHelper.getInstance().getMeetingsRefForUser(uid).removeValue();
         onView(withId(R.id.main_email)).perform(typeText("albert.einstein@epfl.ch"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
@@ -112,7 +114,7 @@ public class MeetingTest{
         Thread.sleep(2000);
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
-
+        Thread.sleep(500);
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showLocationMeeting)).perform(click());
         Thread.sleep(1000);

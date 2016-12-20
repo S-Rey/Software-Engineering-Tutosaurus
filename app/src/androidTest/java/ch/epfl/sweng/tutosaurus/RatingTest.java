@@ -49,6 +49,9 @@ public class RatingTest {
 
     @Before
     public void setUp() throws InterruptedException {
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseHelper.getInstance().getMeetingsRefForUser(uid).removeValue();
+
         onView(withId(R.id.main_email)).perform(typeText("albert.einstein@epfl.ch"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
