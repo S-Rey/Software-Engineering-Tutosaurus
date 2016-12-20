@@ -56,7 +56,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
@@ -76,7 +76,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
@@ -95,23 +95,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(2000);
-        onView(withId(R.id.drawer_layout)).perform(open());
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
-        onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
-        Thread.sleep(1000);
-        solo.typeText(0, "newPass");
-        solo.typeText(1, "newPass");
-        solo.clickOnView(solo.getView(R.id.changeNewPass));
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Password changed successfully");
-        assertTrue(toastMessageDisplayedIsCorrect);
-        Espresso.pressBack();
-        onView(withId(R.id.action_logOutButton)).perform(click());
-
-        solo.typeText(0, "albert.einstein@epfl.ch");
-        solo.typeText(1, "newPass");
-        solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
@@ -119,10 +103,11 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "tototo");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
-        boolean previousPasswordSetBack = solo.searchText("Password changed successfully");
-        assertTrue(previousPasswordSetBack);
+        boolean toastMessageDisplayedIsCorrect = solo.searchText("Password changed successfully");
+        assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
         onView(withId(R.id.action_logOutButton)).perform(click());
+
     }
 
     @Test
@@ -131,7 +116,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
