@@ -68,6 +68,7 @@ public class ChangePasswordActivityTest {
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         Thread.sleep(500);
         boolean toastMessageDisplayedIsCorrect = solo.searchText("Passwords must match");
+        Thread.sleep(500);
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
         Thread.sleep(500);
@@ -91,6 +92,7 @@ public class ChangePasswordActivityTest {
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         Thread.sleep(500);
         boolean toastMessageDisplayedIsCorrect = solo.searchText("Please fill both boxes above");
+        Thread.sleep(500);
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
         Thread.sleep(500);
@@ -115,6 +117,7 @@ public class ChangePasswordActivityTest {
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         Thread.sleep(500);
         boolean toastMessageDisplayedIsCorrect = solo.searchText("Password changed successfully");
+        Thread.sleep(500);
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
         Thread.sleep(500);
