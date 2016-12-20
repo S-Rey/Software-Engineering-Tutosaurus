@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +40,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    private static final long DIFFERENCE_TIME_JAVA = 59958140730000L;
+    private static final long DIFFERENCE_TIME_JAVA = 59958144000000L;
     private String currentUserUid;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private float meetingRating;
@@ -54,7 +55,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
     @Override
-    protected void populateView(final View mainView, final Meeting meeting, int position) {
+    protected void populateView(View mainView, final Meeting meeting, int position) {
 
         TextView subject = (TextView) mainView.findViewById(R.id.courseName);
         populateCourse(mainView, meeting, subject);
@@ -111,12 +112,16 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    private void populateDetailsMeeting(final View mainView, final Meeting meeting, Button detailsMeeting) {
+    private void populateDetailsMeeting(View mainView, final Meeting meeting, Button detailsMeeting) {
+        final View currentRow = mainView;
         if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
+            RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
+            ratingBar.setVisibility(View.GONE);
+            detailsMeeting.setVisibility(View.VISIBLE);
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    LinearLayout detailsLayout = (LinearLayout) mainView.findViewById(R.id.detailsMeeting);
+                    LinearLayout detailsLayout = (LinearLayout) currentRow.findViewById(R.id.detailsMeeting);
                     if (detailsLayout.getVisibility() == View.VISIBLE) {
                         detailsLayout.setVisibility(View.GONE);
                     } else {
@@ -132,17 +137,20 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             ratingBar.setRating(meeting.getRating());
         }
         else {
+            RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
+            ratingBar.setVisibility(View.GONE);
+            detailsMeeting.setVisibility(View.VISIBLE);
             detailsMeeting.setText(R.string.rate);
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final AlertDialog.Builder ratingDialog = new AlertDialog.Builder(mainView.getContext());
-                    final RatingBar rating = new RatingBar(mainView.getContext());
+                    final AlertDialog.Builder ratingDialog = new AlertDialog.Builder(currentRow.getContext());
+                    final RatingBar rating = new RatingBar(currentRow.getContext());
                     rating.setNumStars(5);
                     rating.setStepSize(1.0f);
                     rating.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
                             ActionBar.LayoutParams.WRAP_CONTENT));
-                    LinearLayout parent = new LinearLayout(mainView.getContext());
+                    LinearLayout parent = new LinearLayout(currentRow.getContext());
                     parent.setGravity(Gravity.CENTER);
                     parent.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                             ActionBar.LayoutParams.MATCH_PARENT));
@@ -158,15 +166,13 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                     meetingRating = rating.getRating();
                                     meeting.setRated(true);
                                     if (user != null) {
-                                        dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId(), meetingRating);
+                                        dbh.setMeetingRated(currentUserUid, meeting.getId(), meetingRating);
                                         int numRatings = user.getNumRatings();
                                         float globalRating = user.getGlobalRating();
                                         globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
                                         dbh.setRating(user.getUid(), globalRating);
                                         dbh.setNumRatings(user.getUid(), numRatings + 1);
                                     }
-
-                                    dbh.setRating(currentUserUid, meetingRating);
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("Cancel",
