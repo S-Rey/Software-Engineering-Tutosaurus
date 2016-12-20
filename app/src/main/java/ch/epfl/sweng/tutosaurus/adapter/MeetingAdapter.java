@@ -113,8 +113,11 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
 
     private void populateDetailsMeeting(final View mainView, final Meeting meeting, Button detailsMeeting) {
+        Log.d("MeetingAdapter", Boolean.toString(meeting.isRated()));
         if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
-            Log.d("Meeting Adapter","Current time: " + Long.toString(new Date().getTime()) + " Meeting Time: " + Long.toString(meeting.getDate().getTime()-DIFFERENCE_TIME_JAVA));
+            RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
+            ratingBar.setVisibility(View.GONE);
+            detailsMeeting.setVisibility(View.VISIBLE);
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -128,14 +131,16 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             });
         }
         else if(meeting.isRated()) {
-            Log.d("Meeting Adapter","Current time: " + Long.toString(new Date().getTime()) + " Meeting Time: " + Long.toString(meeting.getDate().getTime()-DIFFERENCE_TIME_JAVA));
             detailsMeeting.setVisibility(View.GONE);
             RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
             ratingBar.setVisibility(View.VISIBLE);
             ratingBar.setRating(meeting.getRating());
         }
         else {
-            Log.d("Meeting Adapter","Current time: " + Long.toString(new Date().getTime()) + " Meeting Time: " + Long.toString(meeting.getDate().getTime()-DIFFERENCE_TIME_JAVA));
+            Log.d("MeetingAdapter", "I'm not rated bro");
+            RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
+            ratingBar.setVisibility(View.GONE);
+            detailsMeeting.setVisibility(View.VISIBLE);
             detailsMeeting.setText(R.string.rate);
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -162,15 +167,13 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                                     meetingRating = rating.getRating();
                                     meeting.setRated(true);
                                     if (user != null) {
-                                        dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId(), meetingRating);
+                                        dbh.setMeetingRated(currentUserUid, meeting.getId(), meetingRating);
                                         int numRatings = user.getNumRatings();
                                         float globalRating = user.getGlobalRating();
                                         globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
                                         dbh.setRating(user.getUid(), globalRating);
                                         dbh.setNumRatings(user.getUid(), numRatings + 1);
                                     }
-
-                                    dbh.setRating(currentUserUid, meetingRating);
                                     dialog.dismiss();
                                 }
                             }).setNegativeButton("Cancel",
