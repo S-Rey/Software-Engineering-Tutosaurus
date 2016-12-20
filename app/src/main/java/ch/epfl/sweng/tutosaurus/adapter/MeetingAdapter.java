@@ -55,7 +55,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
     @Override
-    protected void populateView(final View mainView, final Meeting meeting, int position) {
+    protected void populateView(View mainView, final Meeting meeting, int position) {
 
         TextView subject = (TextView) mainView.findViewById(R.id.courseName);
         populateCourse(mainView, meeting, subject);
@@ -112,8 +112,8 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    private void populateDetailsMeeting(final View mainView, final Meeting meeting, Button detailsMeeting) {
-        Log.d("MeetingAdapter", Boolean.toString(meeting.isRated()));
+    private void populateDetailsMeeting(View mainView, final Meeting meeting, Button detailsMeeting) {
+        final View currentRow = mainView;
         if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
             RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
             ratingBar.setVisibility(View.GONE);
@@ -121,7 +121,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    LinearLayout detailsLayout = (LinearLayout) mainView.findViewById(R.id.detailsMeeting);
+                    LinearLayout detailsLayout = (LinearLayout) currentRow.findViewById(R.id.detailsMeeting);
                     if (detailsLayout.getVisibility() == View.VISIBLE) {
                         detailsLayout.setVisibility(View.GONE);
                     } else {
@@ -137,7 +137,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             ratingBar.setRating(meeting.getRating());
         }
         else {
-            Log.d("MeetingAdapter", "I'm not rated bro");
             RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
             ratingBar.setVisibility(View.GONE);
             detailsMeeting.setVisibility(View.VISIBLE);
@@ -145,13 +144,13 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final AlertDialog.Builder ratingDialog = new AlertDialog.Builder(mainView.getContext());
-                    final RatingBar rating = new RatingBar(mainView.getContext());
+                    final AlertDialog.Builder ratingDialog = new AlertDialog.Builder(currentRow.getContext());
+                    final RatingBar rating = new RatingBar(currentRow.getContext());
                     rating.setNumStars(5);
                     rating.setStepSize(1.0f);
                     rating.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
                             ActionBar.LayoutParams.WRAP_CONTENT));
-                    LinearLayout parent = new LinearLayout(mainView.getContext());
+                    LinearLayout parent = new LinearLayout(currentRow.getContext());
                     parent.setGravity(Gravity.CENTER);
                     parent.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                             ActionBar.LayoutParams.MATCH_PARENT));
