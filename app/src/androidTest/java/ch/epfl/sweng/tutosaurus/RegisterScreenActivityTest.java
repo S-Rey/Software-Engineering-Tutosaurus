@@ -30,10 +30,9 @@ import static org.junit.Assert.assertTrue;
 
 public class RegisterScreenActivityTest {
     private Solo solo;
-    private String validTequilaUrl = "https://tequila.epfl.ch/cgi-bin/tequila/login";
 
-    private static final String CLIENT_ID = "2e58be9551a5fd7286b718bd@epfl.ch";
-    private static final String CLIENT_KEY = "97fb52cdc30384634c5eeb8cdc684baf";
+    private static final String CLIENT_ID = "12345@epfl.ch";
+    private static final String CLIENT_KEY = "12345abc";
     private static final String REDIRECT_URI = "tutosaurus://login";
 
     @Rule
