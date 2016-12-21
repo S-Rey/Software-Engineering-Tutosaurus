@@ -61,7 +61,6 @@ public class SettingsFragmentTest {
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
-        Thread.sleep(500);
     }
 
     @Test
@@ -79,7 +78,7 @@ public class SettingsFragmentTest {
 
     @Test
     public void testSettingTabChangePasswordActivityIntent() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(500);
         Matcher<Intent> expectedIntent = allOf(hasAction("example.action.ChangePasswordActivity"));
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
@@ -88,7 +87,7 @@ public class SettingsFragmentTest {
 
     @Test
     public void testSettingTabEPFLWebSiteBrowser() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(500);
         Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("https://www.epfl.ch/"));
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_epfl")).perform(click());
