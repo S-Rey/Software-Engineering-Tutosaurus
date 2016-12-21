@@ -60,12 +60,12 @@ public class ChangePasswordActivityTest {
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
-        Thread.sleep(200);
+        Thread.sleep(1000);
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
-        Thread.sleep(200);
+        Thread.sleep(1000);
         solo.typeText(0, "newPass");
         solo.typeText(1, "newPassword");
-        Thread.sleep(200);
+        Thread.sleep(500);
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Passwords must match");
         assertTrue(toastMessageDisplayedIsCorrect);
@@ -84,9 +84,9 @@ public class ChangePasswordActivityTest {
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
-        Thread.sleep(200);
+        Thread.sleep(1000);
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
-        Thread.sleep(200);
+        Thread.sleep(1000);
         solo.typeText(0, "newPass");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
         boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Please fill both boxes above");
@@ -106,17 +106,16 @@ public class ChangePasswordActivityTest {
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
-        Thread.sleep(200);
+        Thread.sleep(1000);
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
-        Thread.sleep(200);
+        Thread.sleep(1000);
         solo.typeText(0, "tototo");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
-        Thread.sleep(50);
         boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Password changed successfully");
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
-        Thread.sleep(100);
+        Thread.sleep(500);
         onView(withId(R.id.action_logOutButton)).perform(click());
 
     }
@@ -134,7 +133,7 @@ public class ChangePasswordActivityTest {
         Thread.sleep(1000);
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
         solo.clickOnActionBarHomeButton();
-        Thread.sleep(200);
+        Thread.sleep(1000);
         intended(hasAction("OPEN_TAB_SETTINGS"));
         onView(withId(R.id.action_logOutButton)).perform(click());
     }
