@@ -74,7 +74,7 @@ public class BeATutorFragmentTest {
         }
     }
 
-    @Test
+    /*@Test
     public void testBeATutorTabFrenchCheckbox() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_french", false)) {
             onData(PreferenceMatchers.withKey("checkbox_preference_french")).perform(click());
@@ -137,7 +137,7 @@ public class BeATutorFragmentTest {
             Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_russian", false), equalTo(true));
         }
-    }
+    }*/
 
     @Test
     public void testBeATutorTabMathematicsCheckbox() throws InterruptedException {
@@ -186,7 +186,7 @@ public class BeATutorFragmentTest {
         }
     }
 
-    @Test
+    /*@Test
     public void testBeATutorTabPhysicsCheckbox() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_physics", false)) {
             onData(PreferenceMatchers.withKey("checkbox_preference_physics")).perform(click());
@@ -325,7 +325,7 @@ public class BeATutorFragmentTest {
         } else {
             onData(PreferenceMatchers.withKey("edit_text_preference_computer_science")).check(matches(not(isEnabled())));
         }
-    }
+    }*/
 
     @Test
     public void testBeATutorTabSecondDatabaseChangeForLanguage() throws InterruptedException {
