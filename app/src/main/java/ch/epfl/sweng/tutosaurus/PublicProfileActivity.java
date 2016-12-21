@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,6 +83,10 @@ public class PublicProfileActivity extends AppCompatActivity {
                 Glide.with(getBaseContext())
                         .using(new FirebaseImageLoader())
                         .load(picRef)
+                        /* Glide uses the hash of the path to determine cache invalidation. There is no easy way to determine
+                        * if a file with the same path has changed. A workaround is to define a signature that is always
+                        * different so that Glide fetches the data each time. */
+                        .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                         .into(profilePicture);
 
 
