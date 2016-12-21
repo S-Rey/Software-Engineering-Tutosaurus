@@ -41,9 +41,11 @@ public class StartActivityTest {
     }
 
     @Test
-    public void mainActivityWhenNotLoggedIn() {
+    public void mainActivityWhenNotLoggedIn() throws InterruptedException {
         Intents.init();
+        Thread.sleep(200);
         rule.launchActivity(new Intent());
+        Thread.sleep(200);
         intended(hasComponent(hasClassName(MainActivity.class.getName())));
         Intents.release();
     }
