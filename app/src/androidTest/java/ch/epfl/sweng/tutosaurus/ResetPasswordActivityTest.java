@@ -46,20 +46,20 @@ public class ResetPasswordActivityTest {
     }
 
     @Test
-    public void correctFailToastDisplayed() {
+    public void correctFailToastDisplayed() throws InterruptedException{
         solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
         solo.typeText(0, invalid_email);
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
-        boolean toastMsg = solo.searchText("Failed to send reset!");
+        boolean toastMsg = waitForToastWithText("Failed to send reset!");
         assertTrue(toastMsg);
     }
 
     @Test
-    public void correctSuccessToastDisplayed() {
+    public void correctSuccessToastDisplayed() throws InterruptedException {
         solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
         solo.typeText(0, valid_email);
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
-        boolean toastMsgDisplayed = solo.searchText("Instructions sent to your email!");
+        boolean toastMsgDisplayed = waitForToastWithText("Instructions sent to your email!");
         boolean tooManyRequests = false;
         //Check that test fails because too many requests for a particular email were sent
         if (!toastMsgDisplayed) {
@@ -70,10 +70,10 @@ public class ResetPasswordActivityTest {
     }
 
     @Test
-    public void correctToastDisplayedIfEmptyEmail() {
+    public void correctToastDisplayedIfEmptyEmail() throws InterruptedException {
         solo.assertCurrentActivity("wrong activity", ResetPasswordActivity.class);
         solo.clickOnView(solo.getView(R.id.rstPasswordButton));
-        boolean toastMsg = solo.searchText("Enter your registered email id");
+        boolean toastMsg = waitForToastWithText("Enter your registered email id");
         assertTrue(toastMsg);
     }
 
@@ -86,4 +86,14 @@ public class ResetPasswordActivityTest {
         Intents.release();
     }
 
+    private boolean waitForToastWithText(String toastText) throws InterruptedException {
+        boolean toastFound = solo.searchText(toastText);
+        int numEfforts = 0;
+        while(toastFound == false && numEfforts < 5000){
+            Thread.sleep(2);
+            toastFound = solo.searchText(toastText);
+            numEfforts++;
+        }
+        return toastFound;
+    }
 }

@@ -262,7 +262,10 @@ public class User implements Identifiable {
      * @return the globalRating for this course
      */
     public double getCourseRating(String courseId) {
-        return ratings.get(courseId);
+        if(ratings.containsKey(courseId)) {
+            return ratings.get(courseId);
+        }
+        return 0.0;
     }
 
 

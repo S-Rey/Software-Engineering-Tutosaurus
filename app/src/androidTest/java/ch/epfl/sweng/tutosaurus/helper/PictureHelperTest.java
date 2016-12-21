@@ -47,7 +47,7 @@ public class PictureHelperTest {
     public void tearDown () {
         String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath()
                 + File.separator + "pictures";
-        File file = new File(dirPath + "/profile.jpg");
+        File file = new File(dirPath + "/profile.png");
         file.delete();
     }
 
@@ -86,13 +86,13 @@ public class PictureHelperTest {
     @Test
     public void storePictureOnlineTest() {
         String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath() + File.separator + "pictures";
-        PictureHelper.storePictureOnline(dirPath+"/profile.jpg", "test/profile.jpg");
+        PictureHelper.storePictureOnline(dirPath+"/profile.png", "test/profile.png");
     }
 
     @Test
     public void firstMethodToStoreProfilePictureOnlineTest() {
         String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath() + File.separator + "pictures";
-        PictureHelper.storePicOnline(dirPath+"/profile.jpg", "000000");
+        PictureHelper.storePicOnline(dirPath+"/profile.png", "000000");
     }
 
     @Test

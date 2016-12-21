@@ -56,7 +56,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
@@ -65,12 +65,12 @@ public class ChangePasswordActivityTest {
         Thread.sleep(1000);
         solo.typeText(0, "newPass");
         solo.typeText(1, "newPassword");
-        solo.clickOnView(solo.getView(R.id.changeNewPass));
         Thread.sleep(500);
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Passwords must match");
+        solo.clickOnView(solo.getView(R.id.changeNewPass));
+        boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Passwords must match");
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
-        Thread.sleep(500);
+        Thread.sleep(100);
         onView(withId(R.id.action_logOutButton)).perform(click());
     }
 
@@ -80,7 +80,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
@@ -89,11 +89,10 @@ public class ChangePasswordActivityTest {
         Thread.sleep(1000);
         solo.typeText(0, "newPass");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
-        Thread.sleep(500);
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Please fill both boxes above");
+        boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Please fill both boxes above");
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
-        Thread.sleep(500);
+        Thread.sleep(200);
         onView(withId(R.id.action_logOutButton)).perform(click());
     }
 
@@ -103,7 +102,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
@@ -113,8 +112,7 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "tototo");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.changeNewPass));
-        Thread.sleep(500);
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Password changed successfully");
+        boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Password changed successfully");
         assertTrue(toastMessageDisplayedIsCorrect);
         Espresso.pressBack();
         Thread.sleep(500);
@@ -128,21 +126,31 @@ public class ChangePasswordActivityTest {
         solo.typeText(0, "albert.einstein@epfl.ch");
         solo.typeText(1, "tototo");
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
         Thread.sleep(1000);
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
         solo.clickOnActionBarHomeButton();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         intended(hasAction("OPEN_TAB_SETTINGS"));
         onView(withId(R.id.action_logOutButton)).perform(click());
-        Thread.sleep(2000);
     }
 
     @After
     public void tearDown() throws Exception {
         solo.finishOpenedActivities();
+    }
+
+    private boolean waitForToastWithText(String toastText) throws InterruptedException {
+        boolean toastFound = solo.searchText(toastText);
+        int numEfforts = 0;
+        while(toastFound == false && numEfforts < 5000){
+            Thread.sleep(1);
+            toastFound = solo.searchText(toastText);
+            numEfforts++;
+        }
+        return toastFound;
     }
 }

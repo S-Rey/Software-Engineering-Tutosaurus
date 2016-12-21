@@ -1,10 +1,14 @@
 package ch.epfl.sweng.tutosaurus.model;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import static org.junit.Assert.*;
 
+@RunWith(AndroidJUnit4.class)
 public final class FullCourseListTest {
 
     @Test

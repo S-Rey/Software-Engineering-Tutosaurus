@@ -24,7 +24,7 @@ import com.google.firebase.storage.UploadTask;
 public class PictureHelper {
 
     static private StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-    static final long MAX_SIZE = 1024 * 1024; // One MB
+    static final long MAX_SIZE = 4096 * 4096; // One MB
 
 
 
@@ -38,7 +38,7 @@ public class PictureHelper {
      * @throws FileNotFoundException
      */
     static public void storeProfilePicOnline (Activity activity, String sciper) throws FileNotFoundException {
-        String pathPic =  activity.getFilesDir().getAbsolutePath() + File.separator + "pictures/profile.jpg";
+        String pathPic =  activity.getFilesDir().getAbsolutePath() + File.separator + "pictures/profile.png";
         File file = new File(pathPic);
         if(file.exists()) {
             storePicOnline(pathPic, sciper);
@@ -55,7 +55,7 @@ public class PictureHelper {
      */
     static public void storePicOnline(String picPath, String key) {
         Uri file = Uri.fromFile(new File(picPath));
-        StorageReference riversRef = storageRef.child("profilePictures/"+key+".jpg"); //file.getLastPathSegment()
+        StorageReference riversRef = storageRef.child("profilePictures/"+key+".png"); //file.getLastPathSegment()
         UploadTask uploadTask = riversRef.putFile(file);
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -74,7 +74,7 @@ public class PictureHelper {
 
 
     /**
-     *  Store a picture store at localPicPath to the onlinePicPath (don't forget the extension jpg
+     *  Store a picture store at localPicPath to the onlinePicPath (don't forget the extension png
      *  or png)
      * @param localPicPath the local path of the file
      * @param onlinePicPath the path on firebase storage
@@ -112,12 +112,12 @@ public class PictureHelper {
         }
 
         if (pic != null) {
-            File file = new File(dirPath + "/" + name + ".jpg");
+            File file = new File(dirPath + "/" + name + ".png");
             try {
                 file.createNewFile();
                 FileOutputStream fileOutput = new FileOutputStream(file);
                 ByteArrayOutputStream byteArrOutputStream = new ByteArrayOutputStream();
-                pic.compress(Bitmap.CompressFormat.JPEG, 100, byteArrOutputStream);
+                pic.compress(Bitmap.CompressFormat.PNG, 100, byteArrOutputStream);
                 fileOutput.write(byteArrOutputStream.toByteArray());
                 fileOutput.close();
             } catch (IOException e) {
@@ -138,7 +138,7 @@ public class PictureHelper {
     @Nullable
     static public Bitmap loadPictureLocal(final Activity activity, String name) {
         String filePath = activity.getFilesDir().getAbsolutePath() + File.separator +
-                "pictures/" + name + ".jpg";
+                "pictures/" + name + ".png";
         try {
             File file = new File(filePath);
             FileInputStream fileInStream = new FileInputStream(file);

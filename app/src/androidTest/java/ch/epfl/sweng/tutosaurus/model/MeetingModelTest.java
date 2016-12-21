@@ -1,6 +1,9 @@
 package ch.epfl.sweng.tutosaurus.model;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -8,6 +11,7 @@ import static junit.framework.Assert.assertEquals;
  * Created by albertochiappa on 17/12/16.
  */
 
+@RunWith(AndroidJUnit4.class)
 public class MeetingModelTest {
     Meeting meeting = new Meeting();
 
