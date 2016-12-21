@@ -18,7 +18,7 @@ public class TimePickerFragment extends DialogFragment
 
     private int meetingHour;
     private int meetingMinutes;
-    //TODO: setArgument to change the textview (date-time picker)
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

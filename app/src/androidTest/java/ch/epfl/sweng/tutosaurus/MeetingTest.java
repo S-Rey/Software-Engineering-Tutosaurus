@@ -42,7 +42,7 @@ import static org.hamcrest.Matchers.anything;
 /**
  * Created by santo on 26/11/16.
  *
- * Tests that creating a meeting and displaying it in the list of meetings work
+ * Create a meeting, display it in the list of meetings, delete the meeting
  * .
  */
 
@@ -117,7 +117,6 @@ public class MeetingTest{
         Thread.sleep(1000);
         allowPermissionsIfNeeded();
         Espresso.pressBack();
-
     }
 
     

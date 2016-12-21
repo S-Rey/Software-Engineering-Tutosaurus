@@ -2,20 +2,18 @@ package ch.epfl.sweng.tutosaurus.helper;
 
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 
 import ch.epfl.sweng.tutosaurus.model.Chat;
-import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.Message;
 import ch.epfl.sweng.tutosaurus.model.User;
+
+
 
 public class DatabaseHelper {
 

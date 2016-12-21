@@ -37,6 +37,11 @@ import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+
+/**
+ * Firebase adapter used to populate the list of meetings of the user in MeetingsFragment
+ */
+
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
     private static final long DIFFERENCE_TIME_JAVA = 59958140730000L;
@@ -44,6 +49,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private float meetingRating;
     private User user;
+
 
     public MeetingAdapter(Activity activity, java.lang.Class<Meeting> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
@@ -53,6 +59,14 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         }
     }
 
+
+    /**
+     * Method that fill the list of meeting
+     *
+     * @param mainView view of the fragment where the adapter is used
+     * @param meeting
+     * @param position position in the list
+     */
     @Override
     protected void populateView(final View mainView, final Meeting meeting, int position) {
 
@@ -82,6 +96,12 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
+    /**
+     *
+     * @param mainView
+     * @param meeting
+     * @param syncCalendar
+     */
     private void populateSyncCalendar(final View mainView, final Meeting meeting, Button syncCalendar) {
         syncCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +131,12 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
+    /**
+     *
+     * @param mainView
+     * @param meeting
+     * @param detailsMeeting
+     */
     private void populateDetailsMeeting(final View mainView, final Meeting meeting, Button detailsMeeting) {
         if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
             detailsMeeting.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +209,15 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
+    /**
+     *
+     * @param mainView
+     * @param meeting
+     * @param latitudeMeeting
+     * @param longitudeMeeting
+     * @param showLocationMeeting
+     * @param locationMeeting
+     */
     private void showLocationMeeting(final View mainView, final Meeting meeting,
                                      final double latitudeMeeting, final double longitudeMeeting,
                                      Button showLocationMeeting, final TextView locationMeeting) {
@@ -205,6 +240,11 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
+    /**
+     *
+     * @param meeting
+     * @param descriptionMeeting
+     */
     private void populateDescriptionMeeting(final Meeting meeting, TextView descriptionMeeting) {
         if (meeting.getDescription() != null) {
             descriptionMeeting.setText(meeting.getDescription());
@@ -212,6 +252,11 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
+    /**
+     *
+     * @param meeting
+     * @param date
+     */
     private void populateDateMeeting(final Meeting meeting, TextView date) {
         if (meeting.getDate() != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm", Locale.ENGLISH);
@@ -221,6 +266,11 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
+    /***
+     *
+     * @param meeting
+     * @param otherParticipantView
+     */
     private void populateParticipants(final Meeting meeting, final TextView otherParticipantView) {
         Query ref = dbh.getUserRef();
         ref.addValueEventListener( new ValueEventListener() {
@@ -250,6 +300,12 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
+    /**
+     *
+     * @param mainView
+     * @param meeting
+     * @param subject
+     */
     private void populateCourse(final View mainView, final Meeting meeting, TextView subject) {
         if (meeting.getCourse() != null) {
             FullCourseList allCourses = FullCourseList.getInstance();
