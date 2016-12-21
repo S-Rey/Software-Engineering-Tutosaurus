@@ -79,7 +79,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                 // Set profile picture
                 final ImageView profilePicture=(ImageView) findViewById(R.id.publicProfilePicture);
                 StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-                StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getSciper()+".png");
+                StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getUid()+".png");
                 Glide.with(getBaseContext())
                         .using(new FirebaseImageLoader())
                         .load(picRef)

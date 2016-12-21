@@ -61,7 +61,7 @@ public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
         Log.d(TAG, "tutor: " +tutor.getSciper() + " " + tutor.getFullName());
-        final StorageReference picRef = storageRef.child("profilePictures").child(tutor.getSciper()+".png");
+        final StorageReference picRef = storageRef.child("profilePictures").child(tutor.getUid()+".png");
 
         Glide.with(activity)
                 .using(new FirebaseImageLoader())

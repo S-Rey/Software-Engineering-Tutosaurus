@@ -55,7 +55,7 @@ public class MessagingFragment extends Fragment {
         Query userRef = dbh.getReference().child("user");
 
         chatListAdapter = new ChatListAdapter(getActivity(), Chat.class, R.layout.message_chat_row, chatRef);
-        userListAdapter = new UserListAdapter(getActivity(), User.class, R.layout.message_user_row, userRef);
+        userListAdapter = new UserListAdapter(getActivity(), User.class, R.layout.message_chat_row, userRef);
 
         listView.setAdapter(userListAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
