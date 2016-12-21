@@ -55,16 +55,6 @@ public class MainActivityTest {
     }
 
     @Test
-    public void buttonsShouldNotBeEnabledOffline() {
-        solo.assertCurrentActivity("correct activity", MainActivity.class);
-        //onView(withId(R.id.mainBypassLoginButton)).check(matches(not(isEnabled())));
-        //onView(withId(R.id.rstPasswordButton)).check(matches(not(isClickable())));
-        //onView(withId(R.id.registerButton)).check(matches(not(isClickable())));
-        //onView(withId(R.id.connectionButton)).check(matches(not(isClickable())));
-        solo.clickOnView(solo.getView(R.id.connectionButton));
-    }
-
-    @Test
     public void forgotPasswordButtonGoesToCorrectActivity() {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
         Intents.init();

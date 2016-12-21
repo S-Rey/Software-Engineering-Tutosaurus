@@ -39,9 +39,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                     if (!isConnected()) {
                         Log.v(LOG_TAG, "Now you are connected to Internet!");
                         isConnected = true;
-                        //do your processing here ---
-                        //if you need to post any data to the server or get status
-                        //update from the server
+                        //In connected state we have internet, restore functionality
                         setEnabledWhenConnected();
                         showConnectedStatus();
                     }
