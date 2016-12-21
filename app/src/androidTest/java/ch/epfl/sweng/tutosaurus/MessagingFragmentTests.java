@@ -18,6 +18,9 @@ import org.junit.Test;
 
 import java.util.concurrent.ExecutionException;
 
+import ch.epfl.sweng.tutosaurus.activity.ChatActivity;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;

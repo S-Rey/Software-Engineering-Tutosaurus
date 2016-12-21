@@ -21,6 +21,8 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.ExecutionException;
 
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onData;

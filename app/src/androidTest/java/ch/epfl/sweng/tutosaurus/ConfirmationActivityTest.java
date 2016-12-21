@@ -11,6 +11,9 @@ import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Rule;
 
+import ch.epfl.sweng.tutosaurus.activity.ConfirmationActivity;
+import ch.epfl.sweng.tutosaurus.activity.RegisterScreenActivity;
+
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 

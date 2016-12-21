@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

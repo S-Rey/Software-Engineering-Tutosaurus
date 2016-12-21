@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ch.epfl.sweng.tutosaurus.activity.FindTutorResultActivity;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.adapter.ClassicCourseAdapter;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
@@ -33,7 +36,7 @@ public class FindTutorsFragment extends Fragment {
         searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),FindTutorResult.class);
+                Intent intent = new Intent(getActivity(),FindTutorResultActivity.class);
                 EditText nameToSearch=(EditText) getView().findViewById(R.id.nameToSearch);
                 String name=nameToSearch.getText().toString();
                 Bundle extras = new Bundle();
@@ -66,7 +69,7 @@ public class FindTutorsFragment extends Fragment {
         showFullList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),FindTutorResult.class);
+                Intent intent = new Intent(getActivity(),FindTutorResultActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("METHOD_TO_CALL", "showFullList");
                 extras.putString("EXTRA_INFO", "noExtraInfo");

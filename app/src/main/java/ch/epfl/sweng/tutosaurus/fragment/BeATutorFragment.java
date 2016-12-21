@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;

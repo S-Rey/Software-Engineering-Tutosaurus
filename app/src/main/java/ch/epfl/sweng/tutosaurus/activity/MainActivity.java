@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -27,7 +27,10 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import static ch.epfl.sweng.tutosaurus.NetworkChangeReceiver.LOG_TAG;
+import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
+import ch.epfl.sweng.tutosaurus.R;
+
+import static ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver.LOG_TAG;
 
 public class MainActivity extends AppCompatActivity {
 

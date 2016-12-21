@@ -2,11 +2,12 @@ package ch.epfl.sweng.tutosaurus;
 
 import android.widget.Button;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+
+import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
 
 /**
  * Created by Stephane on 12/11/2016.

@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +27,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.adapter.CourseAdapter;
+import ch.epfl.sweng.tutosaurus.fragment.DatePickerFragment;
+import ch.epfl.sweng.tutosaurus.fragment.TimePickerFragment;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;

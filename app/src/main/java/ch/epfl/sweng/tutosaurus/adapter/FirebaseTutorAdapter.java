@@ -2,31 +2,20 @@ package ch.epfl.sweng.tutosaurus.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.signature.StringSignature;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.concurrent.ExecutionException;
-
-import ch.epfl.sweng.tutosaurus.PublicProfileActivity;
+import ch.epfl.sweng.tutosaurus.activity.PublicProfileActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.User;
 

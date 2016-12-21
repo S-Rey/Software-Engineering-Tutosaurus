@@ -3,7 +3,6 @@ package ch.epfl.sweng.tutosaurus;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.contrib.PickerActions;
-import android.support.test.espresso.core.deps.guava.util.concurrent.ThreadFactoryBuilder;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.DatePicker;
@@ -22,6 +21,7 @@ import org.junit.runner.RunWith;
 import java.util.Date;
 
 import ch.epfl.sweng.tutosaurus.TestActions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;

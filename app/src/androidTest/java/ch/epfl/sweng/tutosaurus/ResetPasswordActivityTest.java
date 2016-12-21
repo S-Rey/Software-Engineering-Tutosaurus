@@ -13,6 +13,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
+import ch.epfl.sweng.tutosaurus.activity.ResetPasswordActivity;
+
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static org.junit.Assert.assertTrue;

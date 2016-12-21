@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 
 public class HelpFragment extends Fragment {
 
