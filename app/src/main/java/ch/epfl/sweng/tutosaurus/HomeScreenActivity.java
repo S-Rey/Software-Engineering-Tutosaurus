@@ -439,6 +439,7 @@ public class HomeScreenActivity extends AppCompatActivity
             String filePath = this.getFilesDir().getAbsolutePath() + File.separator
                     + "user_profile_pic.bmp";
             PictureHelper.storePicOnline(filePath, user.getSciper());
+            PictureHelper.storePicOnline(filePath, user.getUid());
         }
     }
 
