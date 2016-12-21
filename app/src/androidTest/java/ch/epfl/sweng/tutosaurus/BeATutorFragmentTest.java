@@ -72,6 +72,7 @@ public class BeATutorFragmentTest {
             Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(true));
         }
+        onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
     }
 
     /*@Test
@@ -150,6 +151,7 @@ public class BeATutorFragmentTest {
             Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(true));
         }
+        onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
     }
 
     @Test
