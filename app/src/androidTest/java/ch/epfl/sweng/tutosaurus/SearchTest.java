@@ -51,7 +51,7 @@ public class SearchTest extends ActivityInstrumentationTestCase2<HomeScreenActiv
         Thread.sleep(1000);
         onView(withId(R.id.bySubject)).perform(click());
         onView(withId(R.id.courseList)).check(matches(isDisplayed()));
-        Thread.sleep(1000);
+        Thread.sleep(500);
         ArrayList<Course> courseArrayList = FullCourseList.getInstance().getListOfCourses();
         for(int i=0; i<courseArrayList.size(); i++){
             onData(anything()).inAdapterView(withId(R.id.courseList)).atPosition(i)
@@ -64,7 +64,7 @@ public class SearchTest extends ActivityInstrumentationTestCase2<HomeScreenActiv
                     .perform(NestedScrollViewScrollToAction.scrollTo(), click());
             Espresso.pressBack();
             Espresso.pressBack();
-            Thread.sleep(1000);
+            Thread.sleep(500);
 
         }
         onView(withId(R.id.bySubject)).perform(click());
@@ -86,7 +86,7 @@ public class SearchTest extends ActivityInstrumentationTestCase2<HomeScreenActiv
         onView(withId(R.id.profileName)).check(matches(withText("Albert Einstein")));
         onView(withText("Mathematics"))
                 .perform(NestedScrollViewScrollToAction.scrollTo(), click());
-        Thread.sleep(1000);
+        Thread.sleep(200);
         onView(withText("Mathematics"))
                 .perform(NestedScrollViewScrollToAction.scrollTo(), click());
         Espresso.pressBack();
@@ -109,7 +109,7 @@ public class SearchTest extends ActivityInstrumentationTestCase2<HomeScreenActiv
         onView(withId(R.id.showFullList)).perform(click());
         Thread.sleep(1000);
         Espresso.pressBack();
-        Thread.sleep(1000);
+        Thread.sleep(500);
         onView(withId(R.id.byName)).perform(click());
         onView(withId(R.id.showFullList)).check(matches(not(isDisplayed())));
         onView(withId(R.id.byName)).perform(click());

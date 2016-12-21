@@ -35,11 +35,11 @@ public class FindTutorFragmentTest extends ActivityInstrumentationTestCase2<Main
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         getActivity();
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
-        Thread.sleep(1000);
+        Thread.sleep(500);
         onView(withId(R.id.findTutorMessage)).check(matches(withText("How do you want to find your tutor?")));
 
     }

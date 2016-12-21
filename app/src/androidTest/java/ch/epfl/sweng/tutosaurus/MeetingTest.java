@@ -65,7 +65,7 @@ public class MeetingTest{
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
-        Thread.sleep(2000);
+        Thread.sleep(4000);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseHelper.getInstance().getMeetingsRefForUser(uid).removeValue();
         onView(withId(R.id.drawer_layout)).perform(open());

@@ -55,16 +55,16 @@ public class RatingTest {
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
-        Thread.sleep(2000);
+        Thread.sleep(4000);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseHelper.getInstance().getMeetingRequestsRef().child(uid).removeValue();
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
-        Thread.sleep(1000);
+        Thread.sleep(500);
         onView(withId(R.id.byName)).perform(click());
         onView(withId(R.id.nameToSearch)).perform(typeText("Albert Einstein"));
         onView(withId(R.id.searchByName)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(500);
         onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
         onView(withId(R.id.createMeetingButton)).perform(NestedScrollViewScrollToAction.scrollTo(), click());
 
@@ -99,7 +99,6 @@ public class RatingTest {
         Thread.sleep(1000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
-        Thread.sleep(2000);
 
     }
 
