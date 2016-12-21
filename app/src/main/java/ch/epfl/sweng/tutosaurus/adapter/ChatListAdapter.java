@@ -39,8 +39,8 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat>{
         chatName.setText(chat.getFullName());
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-        final StorageReference picRef = storageRef.child("profilePictures").child(chat.getUid()+".png");
-        final ImageView profilePicture = (ImageView) mainView.findViewById(R.id.profilePicture);
+        StorageReference picRef = storageRef.child("profilePictures").child(chat.getUid()+".png");
+        ImageView profilePicture = (ImageView) mainView.findViewById(R.id.profilePicture);
 
         Glide.with(activity)
                 .using(new FirebaseImageLoader())

@@ -32,8 +32,8 @@ public class UserListAdapter extends FirebaseListAdapter<User> {
         TextView userFullName = (TextView) mainView.findViewById(R.id.message_chat_row_name);
         userFullName.setText(user.getFullName());
         StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-        final StorageReference picRef = storageRef.child("profilePictures").child(user.getUid()+".png");
-        final ImageView profilePicture = (ImageView) mainView.findViewById(R.id.profilePicture);
+        StorageReference picRef = storageRef.child("profilePictures").child(user.getUid()+".png");
+        ImageView profilePicture = (ImageView) mainView.findViewById(R.id.profilePicture);
 
         Glide.with(activity)
                 .using(new FirebaseImageLoader())
