@@ -163,8 +163,8 @@ public class ProfileFragmentTest {
     private boolean waitForToastWithText(String toastText) throws InterruptedException {
         boolean toastFound = solo.searchText(toastText);
         int numEfforts = 0;
-        while(toastFound == false && numEfforts < 1000){
-            Thread.sleep(5);
+        while(toastFound == false && numEfforts < 5000){
+            Thread.sleep(2);
             toastFound = solo.searchText(toastText);
             numEfforts++;
         }
