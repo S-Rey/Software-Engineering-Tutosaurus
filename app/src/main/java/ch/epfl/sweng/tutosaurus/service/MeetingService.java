@@ -90,7 +90,7 @@ public class MeetingService extends Service {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean areNotifEnabled = sharedPreferences.getBoolean("checkbox_preference_notification", true);
         Log.d(TAG, "Notifications enabled: " + areNotifEnabled);
-        if(shouldNotify && areNotifEnabled) {
+        if(shouldNotify && areNotifEnabled && numNewRequests > 0) {
             NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
             inboxStyle.setSummaryText(currentEmail);
