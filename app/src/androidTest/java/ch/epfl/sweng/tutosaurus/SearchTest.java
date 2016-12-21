@@ -84,11 +84,6 @@ public class SearchTest extends ActivityInstrumentationTestCase2<HomeScreenActiv
         onData(anything()).inAdapterView(withId(R.id.tutorList)).atPosition(0).perform(click());
         Thread.sleep(1000);
         onView(withId(R.id.profileName)).check(matches(withText("Albert Einstein")));
-        onView(withText("Mathematics"))
-                .perform(NestedScrollViewScrollToAction.scrollTo(), click());
-        Thread.sleep(200);
-        onView(withText("Mathematics"))
-                .perform(NestedScrollViewScrollToAction.scrollTo(), click());
         Espresso.pressBack();
         Espresso.pressBack();
         Thread.sleep(1000);
