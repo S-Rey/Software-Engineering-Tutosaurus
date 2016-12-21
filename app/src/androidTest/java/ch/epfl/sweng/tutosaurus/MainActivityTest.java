@@ -14,6 +14,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
+import ch.epfl.sweng.tutosaurus.activity.RegisterScreenActivity;
+import ch.epfl.sweng.tutosaurus.activity.ResetPasswordActivity;
+import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
+
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 

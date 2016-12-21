@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.Query;
 
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;

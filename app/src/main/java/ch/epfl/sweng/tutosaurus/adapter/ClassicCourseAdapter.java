@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ch.epfl.sweng.tutosaurus.FindTutorResult;
+import ch.epfl.sweng.tutosaurus.activity.FindTutorResultActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 
@@ -54,7 +54,7 @@ public class ClassicCourseAdapter extends ArrayAdapter<Course> {
         holder.courseSymbol.setImageResource(course.getPictureId());
 
         // Set the OnClickListener on each name of the list
-        final Intent intent = new Intent(context,FindTutorResult.class);
+        final Intent intent = new Intent(context,FindTutorResultActivity.class);
         Bundle extras = new Bundle();
         extras.putString("METHOD_TO_CALL", "findTutorByCourse");
         extras.putString("EXTRA_INFO", course.getId());

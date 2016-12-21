@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.text.BidiFormatter;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,9 +13,8 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
-import ch.epfl.sweng.tutosaurus.MainActivity;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
 import ch.epfl.sweng.tutosaurus.R;
 
 import static junit.framework.Assert.assertEquals;

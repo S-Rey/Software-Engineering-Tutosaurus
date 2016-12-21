@@ -18,6 +18,8 @@ import ch.epfl.sweng.tutosaurus.Tequila.AuthClient;
 import ch.epfl.sweng.tutosaurus.Tequila.AuthServer;
 import ch.epfl.sweng.tutosaurus.Tequila.OAuth2Config;
 import ch.epfl.sweng.tutosaurus.Tequila.Profile;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
+import ch.epfl.sweng.tutosaurus.activity.RegisterScreenActivity;
 
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;

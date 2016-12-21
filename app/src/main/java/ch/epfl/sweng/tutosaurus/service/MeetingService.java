@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.ListIterator;
 import java.util.Map;
 
-import ch.epfl.sweng.tutosaurus.HomeScreenActivity;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 

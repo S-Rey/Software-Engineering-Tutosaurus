@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import ch.epfl.sweng.tutosaurus.LocationActivity;
+import ch.epfl.sweng.tutosaurus.activity.LocationActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;

@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import ch.epfl.sweng.tutosaurus.TestActions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;

@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.network;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import ch.epfl.sweng.tutosaurus.R;
 
 /**
  * Class to be instantiated only once in MainActivity thus preferable to be Singleton
