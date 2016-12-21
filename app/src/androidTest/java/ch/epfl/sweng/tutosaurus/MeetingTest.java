@@ -68,6 +68,7 @@ public class MeetingTest{
         Thread.sleep(4000);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseHelper.getInstance().getMeetingsRefForUser(uid).removeValue();
+        DatabaseHelper.getInstance().getMeetingRequestsRef().child(uid).removeValue();
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
         Thread.sleep(1000);
@@ -82,6 +83,7 @@ public class MeetingTest{
 
     @Test
     public void testRequestAndConfirmMeeting() throws InterruptedException, UiObjectNotFoundException {
+
 
         int year = 2020;
         int month = 11;
