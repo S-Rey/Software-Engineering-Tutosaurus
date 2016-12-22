@@ -70,12 +70,12 @@ public class BeATutorFragmentTest {
         if (sharedPreferences.getBoolean("checkbox_preference_english", false)) {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(false));
         } else {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(true));
         }
     }
@@ -85,12 +85,12 @@ public class BeATutorFragmentTest {
         if (sharedPreferences.getBoolean("checkbox_preference_mathematics", false)) {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(false));
         } else {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(true));
         }
     }
@@ -134,12 +134,12 @@ public class BeATutorFragmentTest {
         if (sharedPreferences.getBoolean("checkbox_preference_english", false)) {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(false));
         } else {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(true));
         }
     }
@@ -149,12 +149,12 @@ public class BeATutorFragmentTest {
         if (sharedPreferences.getBoolean("checkbox_preference_mathematics", false)) {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(false));
         } else {
             Thread.sleep(2000);
             onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
-            Thread.sleep(10000);
+            Thread.sleep(2000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(true));
         }
     }

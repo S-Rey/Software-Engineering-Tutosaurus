@@ -53,54 +53,19 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             list.setDividerHeight(0);
         }
 
-        String userId = currentuserUid;
-        DatabaseReference ref = dbh.getReference();
-        ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final User thisUser = dataSnapshot.getValue(User.class);
+        courses = FullCourseList.getInstance().getListOfCourses();
+        for (Course course: courses) {
+            String courseName = course.getId();
+            EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceManager().findPreference(
+                    "edit_text_preference_" + courseName);
 
-                //Set subject preferences
-                courses = FullCourseList.getInstance().getListOfCourses();
-                for (Course course : courses) {
-                    String courseName = course.getId();
-                    CheckBoxPreference checkBoxSub = (CheckBoxPreference) getPreferenceManager().findPreference(
-                            "checkbox_preference_" + courseName);
-                    if (thisUser.getTeaching().containsKey(courseName)) {
-                        checkBoxSub.setChecked(thisUser.getTeaching().get(courseName));
-                    } else {
-                        checkBoxSub.setChecked(false);
-                    }
-                }
+            descriptionPreference.setTitle(descriptionPreference.getText());
 
-                //Set description preferences
-                for (Course course : courses) {
-                    String courseName = course.getId();
-                    EditTextPreference descriptionTextSub = (EditTextPreference) getPreferenceManager().findPreference(
-                            "edit_text_preference_" + courseName);
-                    if (thisUser.getCoursePresentation().containsKey(courseName)) {
-                        descriptionTextSub.setText(thisUser.getCourseDescription(courseName));
-                        descriptionTextSub.setTitle(descriptionTextSub.getText());
-                    } else {
-                        descriptionTextSub.setText("Enter your description.");
-                        descriptionTextSub.setTitle("Enter your description.");
-                    }
-
-                    if (!((CheckBoxPreference) findPreference("checkbox_preference_" + courseName)).isChecked()) {
-                        descriptionTextSub.setEnabled(false);
-                        descriptionTextSub.setSelectable(false);
-                    } else {
-                        descriptionTextSub.setEnabled(true);
-                        descriptionTextSub.setSelectable(true);
-                    }
-                }
+            if (!((CheckBoxPreference) findPreference("checkbox_preference_" + courseName)).isChecked()) {
+                descriptionPreference.setEnabled(false);
+                descriptionPreference.setSelectable(false);
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), "Error Loading Data", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }
     }
 
     @Override
