@@ -208,25 +208,6 @@ public class HomeScreenActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        if (intent.getAction() != null) {
-            if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
-            }
-            if(intent.getAction().equals("OPEN_TAB_FIND_TUTORS"))
-            if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
-            }
-            if (intent.getAction().equals("OPEN_TAB_SETTINGS")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
-            }
-            if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
-            }
-        }
         Log.d(TAG, "Resumed!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
