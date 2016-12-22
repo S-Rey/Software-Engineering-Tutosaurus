@@ -153,6 +153,7 @@
     <string name="find_tutors_tutor_s_name">Tutor\'s name</string>
     <string name="create_meeting_location">Location</string>
     <string name="find_tutor_search">search</string>
+    <string name="find_your_tutor">How do you want to find your tutor?</string>
     <string name="meeting_confirmation_confirm">Confirm</string>
     <string name="public_profile_student">Student</string>
     <string name="profile_profile_picture">Profile Picture</string>
