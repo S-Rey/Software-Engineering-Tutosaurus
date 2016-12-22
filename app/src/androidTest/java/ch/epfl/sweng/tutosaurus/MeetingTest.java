@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import ch.epfl.sweng.tutosaurus.TestActions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
@@ -42,7 +43,8 @@ import static org.hamcrest.Matchers.anything;
 /**
  * Created by santo on 26/11/16.
  *
- * Tests that creating a meeting and displaying it in the list of meetings work
+ * Integration Test
+ * Create a meeting, display it in the list of meetings, delete the meeting
  * .
  */
 
@@ -123,7 +125,6 @@ public class MeetingTest{
         Thread.sleep(1000);
         allowPermissionsIfNeeded();
         Espresso.pressBack();
-
     }
 
     

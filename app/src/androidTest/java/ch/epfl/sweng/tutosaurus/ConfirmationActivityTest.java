@@ -11,6 +11,9 @@ import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Rule;
 
+import ch.epfl.sweng.tutosaurus.activity.ConfirmationActivity;
+import ch.epfl.sweng.tutosaurus.activity.RegisterScreenActivity;
+
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
@@ -125,17 +128,5 @@ public class ConfirmationActivityTest extends ActivityInstrumentationTestCase2<C
         Intents.release();
     }
 
-    /**public void testRegister() {
-        setActivityIntent(mockIntent2);
-        getActivity();
-        solo.assertCurrentActivity("correct activity", ConfirmationActivity.class);
-        solo.clickOnView(solo.getView(R.id.confirmation_password1));
-        solo.typeText(1, "bla bla");
-        solo.clickOnView(solo.getView(R.id.confirmation_password2));
-        solo.typeText(0, "bla bla");
-        solo.clickOnView(solo.getView(R.id.backToLoginButton));
-        boolean failMessageDisplayed = solo.searchText("Auth failed");
-        assertTrue(failMessageDisplayed);
-    }*/
 
 }

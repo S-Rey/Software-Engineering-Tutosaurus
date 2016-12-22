@@ -14,6 +14,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
+import ch.epfl.sweng.tutosaurus.activity.RegisterScreenActivity;
+import ch.epfl.sweng.tutosaurus.activity.ResetPasswordActivity;
+import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
+
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
@@ -52,16 +58,6 @@ public class MainActivityTest {
     public void tearDown() throws Exception {
         solo.finishOpenedActivities();
         //wifi.setWifiEnabled(true);
-    }
-
-    @Test
-    public void buttonsShouldNotBeEnabledOffline() {
-        solo.assertCurrentActivity("correct activity", MainActivity.class);
-        //onView(withId(R.id.mainBypassLoginButton)).check(matches(not(isEnabled())));
-        //onView(withId(R.id.rstPasswordButton)).check(matches(not(isClickable())));
-        //onView(withId(R.id.registerButton)).check(matches(not(isClickable())));
-        //onView(withId(R.id.connectionButton)).check(matches(not(isClickable())));
-        solo.clickOnView(solo.getView(R.id.connectionButton));
     }
 
     @Test

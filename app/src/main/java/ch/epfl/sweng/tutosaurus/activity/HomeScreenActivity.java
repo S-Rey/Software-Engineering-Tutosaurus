@@ -1,6 +1,5 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -32,10 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,14 +52,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.epfl.sweng.tutosaurus.fragment.HelpFragment;
+import ch.epfl.sweng.tutosaurus.fragment.ProfileFragment;
+import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.fragment.AboutFragment;
+import ch.epfl.sweng.tutosaurus.fragment.BeATutorFragment;
+import ch.epfl.sweng.tutosaurus.fragment.FindTutorsFragment;
+import ch.epfl.sweng.tutosaurus.fragment.MeetingsFragment;
+import ch.epfl.sweng.tutosaurus.fragment.MessagingFragment;
+import ch.epfl.sweng.tutosaurus.fragment.SettingsFragment;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 import ch.epfl.sweng.tutosaurus.service.MeetingService;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static ch.epfl.sweng.tutosaurus.RegisterScreenActivity.PROFILE_INFOS;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -123,7 +125,7 @@ public class HomeScreenActivity extends AppCompatActivity
         circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
         linkProfilePictureToNavView(circleView);
 
-        SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(RegisterScreenActivity.PROFILE_INFOS, Context.MODE_PRIVATE);
         String first_name = settings.getString("firstName", "");
         String last_name = settings.getString("lastName", "");
         String email_address = settings.getString("email", "");
@@ -206,24 +208,6 @@ public class HomeScreenActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        if (intent.getAction() != null) {
-            if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
-            }
-            if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
-            }
-            if (intent.getAction().equals("OPEN_TAB_SETTINGS")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
-            }
-            if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
-            }
-        }
         Log.d(TAG, "Resumed!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
@@ -347,7 +331,7 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-    void dispatchChatIntent(Intent chatIntent) {
+    public void dispatchChatIntent(Intent chatIntent) {
         if(chatIntent.getComponent().getClassName().equals(ChatActivity.class.getName())) {
             startActivity(chatIntent);
         } else {

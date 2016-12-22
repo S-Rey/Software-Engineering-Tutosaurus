@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.fragment;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -12,13 +12,15 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
+import ch.epfl.sweng.tutosaurus.R;
+
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 
 
     private int meetingHour;
     private int meetingMinutes;
-    //TODO: setArgument to change the textview (date-time picker)
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
