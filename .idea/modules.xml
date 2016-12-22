@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TutoSaurus.iml" filepath="$PROJECT_DIR$/TutoSaurus.iml" />
-      <module fileurl="file://$USER_HOME$/Share/3eme/Sweng/sweng-team-no-clue/app/app.iml" filepath="$USER_HOME$/Share/3eme/Sweng/sweng-team-no-clue/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$USER_HOME$/Share/3eme/Sweng/sweng-team-no-clue/sweng-team-no-clue.iml" filepath="$USER_HOME$/Share/3eme/Sweng/sweng-team-no-clue/sweng-team-no-clue.iml" />
+      <module fileurl="file://$USER_HOME$/Share/3eme/Sweng/sweng-team-no-clue/app/app.iml" filepath="$USER_HOME$/Share/3eme/Sweng/sweng-team-no-clue/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/sweng-team-no-clue.iml" filepath="$PROJECT_DIR$/sweng-team-no-clue.iml" />
+      <module fileurl="file://$USER_HOME$/Share/3eme/Sweng/sweng-team-no-clue/sweng-team-no-clue.iml" filepath="$USER_HOME$/Share/3eme/Sweng/sweng-team-no-clue/sweng-team-no-clue.iml" />
     </modules>
   </component>
 </project>

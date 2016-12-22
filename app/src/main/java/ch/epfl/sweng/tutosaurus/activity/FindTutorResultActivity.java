@@ -17,8 +17,6 @@ import ch.epfl.sweng.tutosaurus.model.User;
 
 public class FindTutorResultActivity extends AppCompatActivity {
 
-    private DatabaseHelper dbh = DatabaseHelper.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
