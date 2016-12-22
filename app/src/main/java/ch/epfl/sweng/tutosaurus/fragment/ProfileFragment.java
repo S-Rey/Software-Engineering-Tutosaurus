@@ -185,7 +185,7 @@ public class ProfileFragment extends Fragment {
 
     private void saveUserLocalDB(User user, Context context) {
         dbHelper = new LocalDatabaseHelper(context);
-        Activity activity = (HomeScreenActivity) getActivity();
+        Activity activity = getActivity();
         if(dbHelper != null) {
             database = dbHelper.getWritableDatabase();
             LocalDatabaseHelper.insertUser(user, database);
@@ -195,7 +195,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     private User getUserLocalDB(Context context) {
         dbHelper = new LocalDatabaseHelper(context);
-        Activity activity = (HomeScreenActivity) getActivity();
+        Activity activity = getActivity();
         if(dbHelper != null) {
             database = dbHelper.getReadableDatabase();
             return LocalDatabaseHelper.getUser(database);

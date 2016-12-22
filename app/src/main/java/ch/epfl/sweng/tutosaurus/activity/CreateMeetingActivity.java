@@ -38,14 +38,17 @@ import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * Activity where the student can create a meeting request
+ */
+
 public class CreateMeetingActivity extends AppCompatActivity {
 
     private static final int PLACE_PICKER_REQUEST = 1;
 
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
+
     private String currentUserUid;
-
-
     private String teacherId;
 
     private TimePickerFragment timePicker = new TimePickerFragment();
@@ -123,7 +126,6 @@ public class CreateMeetingActivity extends AppCompatActivity {
             }
         }
 
-        // Fills the listview
         final CourseAdapter courseAdapter = new CourseAdapter(this, R.layout.listview_course_row, taughtCourses);
         final ListView courseListView = (ListView) findViewById(R.id.courseListView);
         courseListView.setAdapter(courseAdapter);
@@ -134,6 +136,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void setAddMeetingListener(final Button addMeetingButton){
         addMeetingButton.setOnClickListener(new View.OnClickListener() {

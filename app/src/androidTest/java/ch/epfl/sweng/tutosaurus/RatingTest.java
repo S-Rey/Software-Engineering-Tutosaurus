@@ -37,6 +37,10 @@ import static org.hamcrest.Matchers.anything;
 
 /**
  * Created by santo on 17/12/16.
+ *
+ * Integration test
+ * Create a meeting in the past and rate it, delete a meeting
+ *
  */
 
 @RunWith(AndroidJUnit4.class)

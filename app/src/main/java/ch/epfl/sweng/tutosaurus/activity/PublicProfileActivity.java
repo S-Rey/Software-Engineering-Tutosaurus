@@ -97,7 +97,7 @@ public class PublicProfileActivity extends AppCompatActivity {
 
                 // Set the ratings
                 RatingBar professorRate=(RatingBar) findViewById(R.id.ratingBarProfessor);
-                professorRate.setRating((float) matchingTutor.getGlobalRating());
+                professorRate.setRating(matchingTutor.getGlobalRating());
                 professorRate.setVisibility(View.VISIBLE);
                 TextView professorView = (TextView) findViewById(R.id.professorView);
                 professorView.setVisibility(View.VISIBLE);
