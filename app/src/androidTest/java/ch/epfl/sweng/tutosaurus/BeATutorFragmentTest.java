@@ -68,28 +68,29 @@ public class BeATutorFragmentTest {
     @Test
     public void testBeATutorTabEnglishCheckbox() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_english", false)) {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
-            Thread.sleep(2000);
+            Thread.sleep(5000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(false));
         } else {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
-            Thread.sleep(2000);
+            Thread.sleep(5000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(true));
         }
-        onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
     }
 
     @Test
     public void testBeATutorTabMathematicsCheckbox() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_mathematics", false)) {
-            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
             Thread.sleep(1000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            Thread.sleep(5000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(false));
         } else {
-            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
             Thread.sleep(1000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            Thread.sleep(5000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(true));
         }
     }
@@ -123,7 +124,6 @@ public class BeATutorFragmentTest {
             Thread.sleep(1000);
             assertThat(sharedPreferences.getString("edit_text_preference_mathematics", "Enter your description."),
                     equalTo("Enter your description."));
-            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
         } else {
             onData(PreferenceMatchers.withKey("edit_text_preference_mathematics")).check(matches(not(isEnabled())));
         }
@@ -131,31 +131,31 @@ public class BeATutorFragmentTest {
 
     @Test
     public void testBeATutorTabSecondDatabaseChangeForLanguage() throws InterruptedException {
-        if (sharedPreferences.getBoolean("checkbox_preference_french", false)) {
-            Thread.sleep(2000);
-            onData(PreferenceMatchers.withKey("checkbox_preference_french")).perform(click());
-            Thread.sleep(2000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_french", false), equalTo(false));
+        if (sharedPreferences.getBoolean("checkbox_preference_english", false)) {
+            Thread.sleep(1000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
+            Thread.sleep(5000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(false));
         } else {
-            Thread.sleep(2000);
-            onData(PreferenceMatchers.withKey("checkbox_preference_french")).perform(click());
-            Thread.sleep(2000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_french", false), equalTo(true));
+            Thread.sleep(1000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_english")).perform(click());
+            Thread.sleep(5000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_english", false), equalTo(true));
         }
     }
 
     @Test
     public void testBeATutorTabSecondDatabaseChangeForSubject() throws InterruptedException {
-        if (sharedPreferences.getBoolean("checkbox_preference_physics", false)) {
-            Thread.sleep(2000);
-            onData(PreferenceMatchers.withKey("checkbox_preference_physics")).perform(click());
-            Thread.sleep(2000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_physics", false), equalTo(false));
+        if (sharedPreferences.getBoolean("checkbox_preference_mathematics", false)) {
+            Thread.sleep(1000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            Thread.sleep(5000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(false));
         } else {
-            Thread.sleep(2000);
-            onData(PreferenceMatchers.withKey("checkbox_preference_physics")).perform(click());
-            Thread.sleep(2000);
-            assertThat(sharedPreferences.getBoolean("checkbox_preference_physics", false), equalTo(true));
+            Thread.sleep(1000);
+            onData(PreferenceMatchers.withKey("checkbox_preference_mathematics")).perform(click());
+            Thread.sleep(5000);
+            assertThat(sharedPreferences.getBoolean("checkbox_preference_mathematics", false), equalTo(true));
         }
     }
 
