@@ -22,6 +22,6 @@ public class HttpUtilsTest {
     public void testMalformedUrlFetch() throws IOException {
         String url = "invalidUrl";
         HttpUtils httpUtils = new HttpUtils();
-        HttpUtils.fetch(url, Profile.class);
+        httpUtils.fetch(url, Profile.class);
     }
 }
