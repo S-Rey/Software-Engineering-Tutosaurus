@@ -106,7 +106,6 @@ public class ConfirmationActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, pw1).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    Log.d(TAG, "createUserWithEmailAndPassword:onComplete:" + task.isSuccessful());
                     if (!task.isSuccessful()) {
                         Toast.makeText(ConfirmationActivity.this, R.string.authentification_failed, Toast.LENGTH_SHORT).show();
                     } else {
