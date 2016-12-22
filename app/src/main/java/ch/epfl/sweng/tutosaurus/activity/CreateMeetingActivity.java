@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +27,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.adapter.CourseAdapter;
+import ch.epfl.sweng.tutosaurus.fragment.DatePickerFragment;
+import ch.epfl.sweng.tutosaurus.fragment.TimePickerFragment;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
@@ -35,14 +38,17 @@ import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * Activity where the student can create a meeting request
+ */
+
 public class CreateMeetingActivity extends AppCompatActivity {
 
     private static final int PLACE_PICKER_REQUEST = 1;
 
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
+
     private String currentUserUid;
-
-
     private String teacherId;
 
     private TimePickerFragment timePicker = new TimePickerFragment();
@@ -120,7 +126,6 @@ public class CreateMeetingActivity extends AppCompatActivity {
             }
         }
 
-        // Fills the listview
         final CourseAdapter courseAdapter = new CourseAdapter(this, R.layout.listview_course_row, taughtCourses);
         final ListView courseListView = (ListView) findViewById(R.id.courseListView);
         courseListView.setAdapter(courseAdapter);
@@ -131,6 +136,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void setAddMeetingListener(final Button addMeetingButton){
         addMeetingButton.setOnClickListener(new View.OnClickListener() {

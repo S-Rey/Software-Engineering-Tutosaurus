@@ -23,6 +23,8 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.ExecutionException;
 
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -50,7 +52,7 @@ public class SettingsFragmentTest {
     );
 
     @Before
-    public void logIn() {
+    public void logIn() throws InterruptedException {
         Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
             Tasks.await(login);
@@ -59,6 +61,7 @@ public class SettingsFragmentTest {
         }
         activityRule.launchActivity(new Intent().setAction("OPEN_TAB_PROFILE"));
         onView(withId(R.id.drawer_layout)).perform(open());
+        Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
     }
 
@@ -77,7 +80,7 @@ public class SettingsFragmentTest {
 
     @Test
     public void testSettingTabChangePasswordActivityIntent() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(500);
         Matcher<Intent> expectedIntent = allOf(hasAction("example.action.ChangePasswordActivity"));
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_password")).perform(click());
@@ -86,7 +89,7 @@ public class SettingsFragmentTest {
 
     @Test
     public void testSettingTabEPFLWebSiteBrowser() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(500);
         Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("https://www.epfl.ch/"));
         intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
         onData(PreferenceMatchers.withKey("intent_preference_epfl")).perform(click());
@@ -97,11 +100,11 @@ public class SettingsFragmentTest {
     public void testSettingTabSecondNotificationChange() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_notification", true)) {
             onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
-            Thread.sleep(1000);
+            Thread.sleep(1500);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_notification", true), equalTo(false));
         } else {
             onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
-            Thread.sleep(1000);
+            Thread.sleep(1500);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_notification", true), equalTo(true));
         }
     }

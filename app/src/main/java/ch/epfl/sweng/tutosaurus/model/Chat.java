@@ -4,6 +4,7 @@ public class Chat implements Identifiable {
 
     private String fullName;
     private String uid;
+    private String sciper;
 
     public Chat() {
 

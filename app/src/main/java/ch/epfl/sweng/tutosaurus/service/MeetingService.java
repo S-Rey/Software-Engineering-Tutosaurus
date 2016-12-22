@@ -19,10 +19,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.ListIterator;
 import java.util.Map;
 
-import ch.epfl.sweng.tutosaurus.HomeScreenActivity;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
@@ -90,13 +92,15 @@ public class MeetingService extends Service {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean areNotifEnabled = sharedPreferences.getBoolean("checkbox_preference_notification", true);
         Log.d(TAG, "Notifications enabled: " + areNotifEnabled);
-        if(shouldNotify && areNotifEnabled) {
+        Log.d(TAG, "There are " + numNewRequests + " new notifications");
+        if(shouldNotify && areNotifEnabled && requests.size() > 0) {
             NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
             inboxStyle.setSummaryText(currentEmail);
             inboxStyle.setBigContentTitle(requests.size() + " new meeting requests");
-            for (Map.Entry<String, String> req : requests.entrySet()) {
-                inboxStyle.addLine(req.getValue());
+            ListIterator<String> reverseIterator = new ArrayList<>(requests.values()).listIterator(requests.size());
+            while(reverseIterator.hasPrevious()) {
+                inboxStyle.addLine(reverseIterator.previous());
             }
             notBuilder.setContentTitle(requests.size() + " new meeting requests")
                     .setSmallIcon(R.drawable.philosoraptor)

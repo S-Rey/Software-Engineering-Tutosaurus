@@ -6,15 +6,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.view.GravityCompat;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -29,8 +25,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -39,7 +36,6 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -142,7 +138,7 @@ public class ProfileFragmentTest {
 
         intended(toPackage("com.android.gallery"));
 
-        boolean toastMessageDisplayedIsCorrect = solo.searchText("Unable to load the image");
+        boolean toastMessageDisplayedIsCorrect = waitForToastWithText("Unable to load the image");
         assertTrue(toastMessageDisplayedIsCorrect);
         solo.finishOpenedActivities();
     }
@@ -158,5 +154,16 @@ public class ProfileFragmentTest {
     @After
     public void logOut() {
         FirebaseAuth.getInstance().signOut();
+    }
+
+    private boolean waitForToastWithText(String toastText) throws InterruptedException {
+        boolean toastFound = solo.searchText(toastText);
+        int numEfforts = 0;
+        while(toastFound == false && numEfforts < 5000){
+            Thread.sleep(2);
+            toastFound = solo.searchText(toastText);
+            numEfforts++;
+        }
+        return toastFound;
     }
 }

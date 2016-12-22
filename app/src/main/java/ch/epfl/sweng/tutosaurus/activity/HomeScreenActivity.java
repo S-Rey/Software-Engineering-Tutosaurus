@@ -1,10 +1,12 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -12,8 +14,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -28,14 +30,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,11 +52,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.epfl.sweng.tutosaurus.fragment.HelpFragment;
+import ch.epfl.sweng.tutosaurus.fragment.ProfileFragment;
+import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.fragment.AboutFragment;
+import ch.epfl.sweng.tutosaurus.fragment.BeATutorFragment;
+import ch.epfl.sweng.tutosaurus.fragment.FindTutorsFragment;
+import ch.epfl.sweng.tutosaurus.fragment.MeetingsFragment;
+import ch.epfl.sweng.tutosaurus.fragment.MessagingFragment;
+import ch.epfl.sweng.tutosaurus.fragment.SettingsFragment;
+import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
+import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.PictureHelper;
+import ch.epfl.sweng.tutosaurus.model.User;
 import ch.epfl.sweng.tutosaurus.service.MeetingService;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static ch.epfl.sweng.tutosaurus.RegisterScreenActivity.PROFILE_INFOS;
 
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -63,6 +81,9 @@ public class HomeScreenActivity extends AppCompatActivity
 
     private ImageView pictureView;
     private CircleImageView circleView;
+
+    SQLiteOpenHelper dbHelper;
+    SQLiteDatabase database;
 
     private FirebaseAuth mAuth;
 
@@ -104,7 +125,7 @@ public class HomeScreenActivity extends AppCompatActivity
         circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
         linkProfilePictureToNavView(circleView);
 
-        SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(RegisterScreenActivity.PROFILE_INFOS, Context.MODE_PRIVATE);
         String first_name = settings.getString("firstName", "");
         String last_name = settings.getString("lastName", "");
         String email_address = settings.getString("email", "");
@@ -137,7 +158,44 @@ public class HomeScreenActivity extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
             }
         }
+
+
+        String currentUser = null;
+        DatabaseHelper dbh = DatabaseHelper.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentFirebaseUser != null) {
+            currentUser = currentFirebaseUser.getUid();
+        }
+        String userId = currentUser;
+
+        DatabaseReference ref = dbh.getReference();
+        ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final User thisUser = dataSnapshot.getValue(User.class);
+
+                // Set profile name
+                TextView profileName = (TextView) findViewById(R.id.profileName);
+                if(profileName != null) {
+                    profileName.setText(thisUser.getFullName());
+                }
+                dbHelper = new LocalDatabaseHelper(getBaseContext());
+                LocalDatabaseHelper.insertUser(thisUser,dbHelper.getWritableDatabase());
+                getImage(thisUser.getSciper());
+                setBurgerMenuUser(thisUser.getFullName(), thisUser.getEmail(), thisUser.getSciper());
+                Toast.makeText(HomeScreenActivity.this, "Loading Of User Done", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(HomeScreenActivity.this, "Error Loading User", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
+
+
 
     @Override
     public void onRestart() {
@@ -291,7 +349,7 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-    void dispatchChatIntent(Intent chatIntent) {
+    public void dispatchChatIntent(Intent chatIntent) {
         if(chatIntent.getComponent().getClassName().equals(ChatActivity.class.getName())) {
             startActivity(chatIntent);
         } else {
@@ -327,13 +385,16 @@ public class HomeScreenActivity extends AppCompatActivity
         try {
             in = getApplicationContext().openFileInput("user_profile_pic.bmp");
             Bitmap b = BitmapFactory.decodeStream(in);
-            item.setImageBitmap(b);
+            if(b != null) {
+                item.setImageBitmap(b);
+            }
         }
         catch (FileNotFoundException e) {
             item.setImageResource(R.drawable.dino_logo);
             e.printStackTrace();
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -359,6 +420,7 @@ public class HomeScreenActivity extends AppCompatActivity
                         String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         PictureHelper.storePicOnline(imageSelectedUri.getPath(), currentUserUid);
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();
@@ -372,6 +434,14 @@ public class HomeScreenActivity extends AppCompatActivity
             pictureView.setImageBitmap(imageBitmap);
             pictureView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             saveToInternalStorage(imageBitmap);
+        }
+        // Store Profile Pic online
+        User user = getUserLocalDB(this);
+        if (user != null) {
+            String filePath = this.getFilesDir().getAbsolutePath() + File.separator
+                    + "user_profile_pic.bmp";
+            PictureHelper.storePicOnline(filePath, user.getSciper());
+            PictureHelper.storePicOnline(filePath, user.getUid());
         }
     }
 
@@ -415,4 +485,56 @@ public class HomeScreenActivity extends AppCompatActivity
                 });
         changePictureDialog.show();
     }
+
+    @Nullable
+    private User getUserLocalDB(Context context) {
+        dbHelper = new LocalDatabaseHelper(context);
+        if(dbHelper != null) {
+            database = dbHelper.getReadableDatabase();
+            return LocalDatabaseHelper.getUser(database);
+        }
+        return null;
+    }
+
+
+    private void getImage(String key) {
+        StorageReference storageRef = FirebaseStorage.getInstance().
+                getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
+        final long MAX_SIZE = 4096 * 4096;
+        storageRef.child("profilePictures/" + key + ".png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                //Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
+                ImageView img = (ImageView) findViewById(R.id.picture_view);
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                if(img != null) {
+                    img.setImageBitmap(bmp);
+                    saveToInternalStorage(bmp);
+                    linkProfilePictureToNavView(circleView);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(HomeScreenActivity.this, "Problem Retrieving Image", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
+
+
+    private void setBurgerMenuUser(String fullName, String email, String sciper) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        TextView nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
+        nameView.setText(fullName);
+
+        TextView addressView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.mailAddress);
+        addressView.setText(email);
+
+        TextView sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
+        sciperView.setText(sciper);
+    }
+
+
 }

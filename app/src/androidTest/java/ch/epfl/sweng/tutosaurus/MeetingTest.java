@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import ch.epfl.sweng.tutosaurus.TestActions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
@@ -42,6 +43,7 @@ import static org.hamcrest.Matchers.anything;
 /**
  * Created by santo on 26/11/16.
  *
+ * Integration Test
  * Create a meeting, display it in the list of meetings, delete the meeting
  * .
  */
@@ -59,11 +61,16 @@ public class MeetingTest{
 
     @Before
     public void setUp() throws InterruptedException {
+
         onView(withId(R.id.main_email)).perform(typeText("albert.einstein@epfl.ch"));
         Espresso.closeSoftKeyboard();
         onView(withId(R.id.main_password)).perform(typeText("tototo"));
         Espresso.closeSoftKeyboard();
         onView(withText("Log in")).perform(click());
+        Thread.sleep(4000);
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseHelper.getInstance().getMeetingsRefForUser(uid).removeValue();
+        DatabaseHelper.getInstance().getMeetingRequestsRef().child(uid).removeValue();
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_findTutors_layout));
         Thread.sleep(1000);
@@ -78,6 +85,7 @@ public class MeetingTest{
 
     @Test
     public void testRequestAndConfirmMeeting() throws InterruptedException, UiObjectNotFoundException {
+
 
         int year = 2020;
         int month = 11;
@@ -111,7 +119,7 @@ public class MeetingTest{
         Thread.sleep(2000);
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
-
+        Thread.sleep(500);
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showLocationMeeting)).perform(click());
         Thread.sleep(1000);

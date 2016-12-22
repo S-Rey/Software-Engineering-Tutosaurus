@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import ch.epfl.sweng.tutosaurus.LocationActivity;
+import ch.epfl.sweng.tutosaurus.activity.LocationActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
@@ -37,14 +37,13 @@ import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-
 /**
  * Firebase adapter used to populate the list of meetings of the user in MeetingsFragment
  */
 
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
-    private static final long DIFFERENCE_TIME_JAVA = 59958140730000L;
+    private static final long DIFFERENCE_TIME_JAVA = 59958144000000L; //discrepancy with Firebase date
     private String currentUserUid;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private float meetingRating;
@@ -68,7 +67,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
      * @param position position in the list
      */
     @Override
-    protected void populateView(final View mainView, final Meeting meeting, int position) {
+    protected void populateView(View mainView, final Meeting meeting, int position) {
 
         TextView subject = (TextView) mainView.findViewById(R.id.courseName);
         populateCourse(mainView, meeting, subject);
@@ -96,12 +95,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    /**
-     *
-     * @param mainView
-     * @param meeting
-     * @param syncCalendar
-     */
     private void populateSyncCalendar(final View mainView, final Meeting meeting, Button syncCalendar) {
         syncCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,93 +124,95 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    /**
-     *
-     * @param mainView
-     * @param meeting
-     * @param detailsMeeting
-     */
-    private void populateDetailsMeeting(final View mainView, final Meeting meeting, Button detailsMeeting) {
+    private void populateDetailsMeeting(View mainView, final Meeting meeting, Button detailsMeeting) {
+        final View currentRow = mainView;
+        final RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
         if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
-            detailsMeeting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    LinearLayout detailsLayout = (LinearLayout) mainView.findViewById(R.id.detailsMeeting);
-                    if (detailsLayout.getVisibility() == View.VISIBLE) {
-                        detailsLayout.setVisibility(View.GONE);
-                    } else {
-                        detailsLayout.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
+            showDetailsFutureMeetings(detailsMeeting, currentRow, ratingBar);
         }
         else if(meeting.isRated()) {
-            detailsMeeting.setVisibility(View.GONE);
-            RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
-            ratingBar.setVisibility(View.VISIBLE);
-            ratingBar.setRating(meeting.getRating());
+            showRatingRatedMeeting(meeting, detailsMeeting, ratingBar);
         }
         else {
-            detailsMeeting.setText(R.string.rate);
-            detailsMeeting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final AlertDialog.Builder ratingDialog = new AlertDialog.Builder(mainView.getContext());
-                    final RatingBar rating = new RatingBar(mainView.getContext());
-                    rating.setNumStars(5);
-                    rating.setStepSize(1.0f);
-                    rating.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
-                            ActionBar.LayoutParams.WRAP_CONTENT));
-                    LinearLayout parent = new LinearLayout(mainView.getContext());
-                    parent.setGravity(Gravity.CENTER);
-                    parent.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                            ActionBar.LayoutParams.MATCH_PARENT));
-                    parent.addView(rating);
-
-                    ratingDialog.setTitle("Rate this meeting");
-                    ratingDialog.setView(parent);
-
-                    // Button OK
-                    ratingDialog.setPositiveButton("Ok",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    meetingRating = rating.getRating();
-                                    meeting.setRated(true);
-                                    if (user != null) {
-                                        dbh.setMeetingRated(currentUserUid, user.getUid(), meeting.getId(), meetingRating);
-                                        int numRatings = user.getNumRatings();
-                                        float globalRating = user.getGlobalRating();
-                                        globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
-                                        dbh.setRating(user.getUid(), globalRating);
-                                        dbh.setNumRatings(user.getUid(), numRatings + 1);
-                                    }
-
-                                    dbh.setRating(currentUserUid, meetingRating);
-                                    dialog.dismiss();
-                                }
-                            }).setNegativeButton("Cancel",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-                    ratingDialog.create();
-                    ratingDialog.show();
-                }
-            });
+            showToBeRatedMeeting(meeting, detailsMeeting, currentRow, ratingBar);
         }
     }
 
 
-    /**
-     *
-     * @param mainView
-     * @param meeting
-     * @param latitudeMeeting
-     * @param longitudeMeeting
-     * @param showLocationMeeting
-     * @param locationMeeting
-     */
+    private void showToBeRatedMeeting(final Meeting meeting, Button detailsMeeting, final View currentRow, RatingBar ratingBar) {
+        ratingBar.setVisibility(View.GONE);
+        detailsMeeting.setVisibility(View.VISIBLE);
+        detailsMeeting.setText(R.string.rate);
+        detailsMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder ratingDialog = new AlertDialog.Builder(currentRow.getContext());
+                final RatingBar rating = new RatingBar(currentRow.getContext());
+                rating.setNumStars(5);
+                rating.setStepSize(1.0f);
+                rating.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.WRAP_CONTENT));
+                LinearLayout parent = new LinearLayout(currentRow.getContext());
+                parent.setGravity(Gravity.CENTER);
+                parent.setLayoutParams(new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
+                        ActionBar.LayoutParams.MATCH_PARENT));
+                parent.addView(rating);
+
+                ratingDialog.setTitle("Rate this meeting");
+                ratingDialog.setView(parent);
+
+                ratingDialog.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                meetingRating = rating.getRating();
+                                meeting.setRated(true);
+                                if (user != null) {
+                                    dbh.setMeetingRated(currentUserUid, meeting.getId(), meetingRating);
+                                    int numRatings = user.getNumRatings();
+                                    float globalRating = user.getGlobalRating();
+                                    globalRating = (globalRating * numRatings + meetingRating) / (numRatings + 1);
+                                    dbh.setRating(user.getUid(), globalRating);
+                                    dbh.setNumRatings(user.getUid(), numRatings + 1);
+                                }
+                                dialog.dismiss();
+                            }
+                        }).setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                ratingDialog.create();
+                ratingDialog.show();
+            }
+        });
+    }
+
+
+    private void showRatingRatedMeeting(Meeting meeting, Button detailsMeeting, RatingBar ratingBar) {
+        detailsMeeting.setVisibility(View.GONE);
+        ratingBar.setVisibility(View.VISIBLE);
+        ratingBar.setRating(meeting.getRating());
+    }
+
+
+    private void showDetailsFutureMeetings(Button detailsMeeting, final View currentRow, RatingBar ratingBar) {
+        ratingBar.setVisibility(View.GONE);
+        detailsMeeting.setVisibility(View.VISIBLE);
+        detailsMeeting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout detailsLayout = (LinearLayout) currentRow.findViewById(R.id.detailsMeeting);
+                if (detailsLayout.getVisibility() == View.VISIBLE) {
+                    detailsLayout.setVisibility(View.GONE);
+                } else {
+                    detailsLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+
     private void showLocationMeeting(final View mainView, final Meeting meeting,
                                      final double latitudeMeeting, final double longitudeMeeting,
                                      Button showLocationMeeting, final TextView locationMeeting) {
@@ -240,11 +235,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    /**
-     *
-     * @param meeting
-     * @param descriptionMeeting
-     */
     private void populateDescriptionMeeting(final Meeting meeting, TextView descriptionMeeting) {
         if (meeting.getDescription() != null) {
             descriptionMeeting.setText(meeting.getDescription());
@@ -252,11 +242,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    /**
-     *
-     * @param meeting
-     * @param date
-     */
     private void populateDateMeeting(final Meeting meeting, TextView date) {
         if (meeting.getDate() != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, HH:mm", Locale.ENGLISH);
@@ -266,11 +251,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    /***
-     *
-     * @param meeting
-     * @param otherParticipantView
-     */
     private void populateParticipants(final Meeting meeting, final TextView otherParticipantView) {
         Query ref = dbh.getUserRef();
         ref.addValueEventListener( new ValueEventListener() {
@@ -300,12 +280,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    /**
-     *
-     * @param mainView
-     * @param meeting
-     * @param subject
-     */
     private void populateCourse(final View mainView, final Meeting meeting, TextView subject) {
         if (meeting.getCourse() != null) {
             FullCourseList allCourses = FullCourseList.getInstance();

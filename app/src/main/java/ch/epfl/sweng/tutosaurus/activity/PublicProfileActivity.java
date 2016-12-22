@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.signature.StringSignature;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Map;
 
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
@@ -78,10 +80,14 @@ public class PublicProfileActivity extends AppCompatActivity {
                 // Set profile picture
                 final ImageView profilePicture=(ImageView) findViewById(R.id.publicProfilePicture);
                 StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-                StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getSciper()+".png");
+                StorageReference picRef = storageRef.child("profilePictures").child(matchingTutor.getUid()+".png");
                 Glide.with(getBaseContext())
                         .using(new FirebaseImageLoader())
                         .load(picRef)
+                        /* Glide uses the hash of the path to determine cache invalidation. There is no easy way to determine
+                        * if a file with the same path has changed. A workaround is to define a signature that is always
+                        * different so that Glide fetches the data each time. */
+                        .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
                         .into(profilePicture);
 
 
@@ -91,7 +97,7 @@ public class PublicProfileActivity extends AppCompatActivity {
 
                 // Set the ratings
                 RatingBar professorRate=(RatingBar) findViewById(R.id.ratingBarProfessor);
-                professorRate.setRating((float) matchingTutor.getGlobalRating());
+                professorRate.setRating(matchingTutor.getGlobalRating());
                 professorRate.setVisibility(View.VISIBLE);
                 TextView professorView = (TextView) findViewById(R.id.professorView);
                 professorView.setVisibility(View.VISIBLE);

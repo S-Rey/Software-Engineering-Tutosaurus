@@ -14,6 +14,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
+import ch.epfl.sweng.tutosaurus.activity.RegisterScreenActivity;
+import ch.epfl.sweng.tutosaurus.activity.ResetPasswordActivity;
+import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
+
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
@@ -55,16 +61,6 @@ public class MainActivityTest {
     }
 
     @Test
-    public void buttonsShouldNotBeEnabledOffline() {
-        solo.assertCurrentActivity("correct activity", MainActivity.class);
-        //onView(withId(R.id.mainBypassLoginButton)).check(matches(not(isEnabled())));
-        //onView(withId(R.id.rstPasswordButton)).check(matches(not(isClickable())));
-        //onView(withId(R.id.registerButton)).check(matches(not(isClickable())));
-        //onView(withId(R.id.connectionButton)).check(matches(not(isClickable())));
-        solo.clickOnView(solo.getView(R.id.connectionButton));
-    }
-
-    @Test
     public void forgotPasswordButtonGoesToCorrectActivity() {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
         Intents.init();
@@ -85,38 +81,38 @@ public class MainActivityTest {
     }
 
     @Test
-    public void LogInWithoutAnyInputDisplaysWarning(){
+    public void LogInWithoutAnyInputDisplaysWarning() throws InterruptedException {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        boolean warningDisplayed = solo.searchText("Please type in your email and password");
+        boolean warningDisplayed = waitForToastWithText("Please type in your email and password");
         assertTrue(warningDisplayed);
     }
 
     @Test
-    public void LogInWithoutPasswordDisplaysWarning(){
+    public void LogInWithoutPasswordDisplaysWarning() throws InterruptedException {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
         solo.typeText(0, valid_email);
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        boolean warningDisplayed = solo.searchText("Please type in your email and password");
+        boolean warningDisplayed = waitForToastWithText("Please type in your email and password");
         assertTrue(warningDisplayed);
     }
 
     @Test
-    public void LogInWithoutEmailDisplaysWarning(){
+    public void LogInWithoutEmailDisplaysWarning() throws InterruptedException {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
         solo.typeText(1, valid_password);
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        boolean warningDisplayed = solo.searchText("Please type in your email and password");
+        boolean warningDisplayed = waitForToastWithText("Please type in your email and password");
         assertTrue(warningDisplayed);
     }
 
     @Test
-    public void logInWithInvalidCredentialsShouldDisplayFail(){
+    public void logInWithInvalidCredentialsShouldDisplayFail() throws InterruptedException {
         solo.assertCurrentActivity("correct activity", MainActivity.class);
         solo.typeText(0, invalid_email);
         solo.typeText(1, nonsense);
         solo.clickOnView(solo.getView(R.id.connectionButton));
-        boolean warningDisplayed = solo.searchText("Login failed");
+        boolean warningDisplayed = waitForToastWithText("Login failed");
         assertTrue(warningDisplayed);
     }
 
@@ -129,6 +125,17 @@ public class MainActivityTest {
         solo.clickOnView(solo.getView(R.id.connectionButton));
         intended(hasComponent(HomeScreenActivity.class.getName()));
         Intents.release();
+    }
+
+    private boolean waitForToastWithText(String toastText) throws InterruptedException {
+        boolean toastFound = solo.searchText(toastText);
+        int numEfforts = 0;
+        while(toastFound == false && numEfforts < 5000){
+            Thread.sleep(1);
+            toastFound = solo.searchText(toastText);
+            numEfforts++;
+        }
+        return toastFound;
     }
 
 }

@@ -18,6 +18,8 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.ExecutionException;
 
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.open;
@@ -35,7 +37,7 @@ public class AboutFragmentTest {
     );
 
     @Before
-    public void logIn() {
+    public void logIn() throws InterruptedException {
         Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
             Tasks.await(login);
@@ -43,6 +45,7 @@ public class AboutFragmentTest {
             e.printStackTrace();
         }
         activityRule.launchActivity(new Intent().setAction("OPEN_TAB_PROFILE"));
+        Thread.sleep(1000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_about_layout));
     }
@@ -59,6 +62,7 @@ public class AboutFragmentTest {
 
     @Test
     public void checkTextDescription() {
+
         onView(withId(R.id.aboutDescription)).check(matches(withText("Copyright EPFL Inc. 2016. All rights reserved.")));
     }
 

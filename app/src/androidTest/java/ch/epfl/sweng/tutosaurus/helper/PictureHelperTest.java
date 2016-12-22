@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.text.BidiFormatter;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,9 +13,8 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
-import ch.epfl.sweng.tutosaurus.MainActivity;
+import ch.epfl.sweng.tutosaurus.activity.MainActivity;
 import ch.epfl.sweng.tutosaurus.R;
 
 import static junit.framework.Assert.assertEquals;
@@ -47,7 +45,7 @@ public class PictureHelperTest {
     public void tearDown () {
         String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath()
                 + File.separator + "pictures";
-        File file = new File(dirPath + "/profile.jpg");
+        File file = new File(dirPath + "/profile.png");
         file.delete();
     }
 
@@ -86,13 +84,13 @@ public class PictureHelperTest {
     @Test
     public void storePictureOnlineTest() {
         String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath() + File.separator + "pictures";
-        PictureHelper.storePictureOnline(dirPath+"/profile.jpg", "test/profile.jpg");
+        PictureHelper.storePictureOnline(dirPath+"/profile.png", "test/profile.png");
     }
 
     @Test
     public void firstMethodToStoreProfilePictureOnlineTest() {
         String dirPath = mActivityRule.getActivity().getFilesDir().getAbsolutePath() + File.separator + "pictures";
-        PictureHelper.storePicOnline(dirPath+"/profile.jpg", "000000");
+        PictureHelper.storePicOnline(dirPath+"/profile.png", "000000");
     }
 
     @Test

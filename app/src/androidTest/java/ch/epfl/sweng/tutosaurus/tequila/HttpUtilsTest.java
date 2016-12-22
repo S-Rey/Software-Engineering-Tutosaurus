@@ -20,8 +20,8 @@ public class HttpUtilsTest {
 
     @Test(expected = AssertionError.class)
     public void testMalformedUrlFetch() throws IOException {
-        String url = "invalidurl";
+        String url = "invalidUrl";
         HttpUtils httpUtils = new HttpUtils();
-        httpUtils.fetch(url, Profile.class);
+        HttpUtils.fetch(url, Profile.class);
     }
 }

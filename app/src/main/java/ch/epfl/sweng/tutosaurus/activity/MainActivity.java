@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus;
+package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -27,7 +27,10 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import static ch.epfl.sweng.tutosaurus.NetworkChangeReceiver.LOG_TAG;
+import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
+import ch.epfl.sweng.tutosaurus.R;
+
+import static ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver.LOG_TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -144,32 +147,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
-
-    /**public void testDB() {
-        dbHelper = new LocalDatabaseHelper(this);
-        database = dbHelper.getWritableDatabase();
-        Toast.makeText(getBaseContext(), database.toString(), Toast.LENGTH_LONG).show();
-
-        User profileTwo = new User("223415");
-        profileTwo.setUsername("Albert");
-        profileTwo.setFullName("Albert Einstein");
-        profileTwo.setEmail("albert.einstein@epfl.ch");
-        profileTwo.setPicture(R.drawable.einstein);
-
-        profileTwo.addLanguage("German");
-        profileTwo.addLanguage("English");
-
-        profileTwo.addStudying("French");
-        profileTwo.addTeaching("Physics");
-
-        profileTwo.setCourseRating("Physics", 1.0);
-        profileTwo.addHoursTaught("Physics", 4);
-
-        LocalDatabaseHelper.insertUser(profileTwo, database);
-        User user = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
-        Toast.makeText(getBaseContext(), user.getUsername(), Toast.LENGTH_LONG).show();
-    }*/
-
     private class LoginAsyncTask extends AsyncTask<String, String, Task> {
 
         @Override
@@ -203,14 +180,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
             }
         }
-
-
-//    public void testStorage() {
-//        String localPicPath = "/storage/emulated/0/Pictures/android.png";
-//        String onlinePicPath = "logo/android.png";
-//
-//        PictureHelper.storePictureOnline(localPicPath,onlinePicPath);
-//
-//    }
     }
 }
