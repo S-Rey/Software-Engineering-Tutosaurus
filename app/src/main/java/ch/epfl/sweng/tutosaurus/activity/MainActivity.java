@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     LoginAsyncTask loginTask = new LoginAsyncTask();
                     loginTask.execute(email, password);
-                    Log.d(TAG, "3");
                 }
             }
         });
