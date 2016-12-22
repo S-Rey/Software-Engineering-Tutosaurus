@@ -47,28 +47,6 @@ public class StartActivityTest {
         Intents.release();
     }
 
-    /*@Test
-    public void homeScreenActivityWhenLoggedIn() {
-        Intents.init();
-        Task<AuthResult> loginTask = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
-        loginTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                logged_in = true;
-            }
-        });
-        try {
-            Tasks.await(loginTask);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        if (logged_in) {
-            rule.launchActivity(new Intent());
-            intended(hasComponent(hasClassName(HomeScreenActivity.class.getName())));
-        }
-        logged_in = false;
-        Intents.release();
-    }*/
 
     @After
     public void signOutAfter() {
