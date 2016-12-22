@@ -51,7 +51,7 @@ public class BeATutorFragmentTest {
     );
 
     @Before
-    public void logIn() {
+    public void logIn() throws InterruptedException {
         Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
             Tasks.await(login);
@@ -59,7 +59,9 @@ public class BeATutorFragmentTest {
             e.printStackTrace();
         }
         activityRule.launchActivity(new Intent().setAction("OPEN_TAB_PROFILE"));
+        Thread.sleep(1000);
         onView(withId(R.id.drawer_layout)).perform(open());
+        Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_beATutor_layout));
     }
 

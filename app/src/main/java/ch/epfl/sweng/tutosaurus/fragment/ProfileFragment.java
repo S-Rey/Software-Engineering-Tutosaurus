@@ -3,6 +3,7 @@ package ch.epfl.sweng.tutosaurus.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -74,18 +76,15 @@ public class ProfileFragment extends Fragment {
 
                 // Set profile name
                 TextView profileName = (TextView) myView.findViewById(R.id.profileName);
-                profileName.setText(thisUser.getFullName());
-                saveUserLocalDB(thisUser, activity);
-                /*
-                // Set profile picture
-                    ImageView profilePicture=(ImageView) findViewById(R.id.profilePicture);
-                profilePicture.setImageResource(user.getPicture());
-                */
+                String name = thisUser.getFullName();
+                if(name.length() > 30) {
+                    name = name.substring(0,30) + "…";
+                }
+                profileName.setText(name);
 
                 // Set rating
                 RatingBar ratingBar = (RatingBar) myView.findViewById(R.id.ratingBar);
                 ratingBar.setRating(thisUser.getGlobalRating());
-                //getImage(thisUser.getSciper());
             }
 
             @Override
@@ -103,8 +102,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-
         Query refRequestedMeeting = dbh.getMeetingRequestsRef().child(currentUser);
         ListView meetingRequested = (ListView) myView.findViewById(R.id.meetingRequests);
         MeetingConfirmationAdapter requestedMeetingAdapter = new MeetingConfirmationAdapter(getActivity(),
@@ -112,6 +109,7 @@ public class ProfileFragment extends Fragment {
                                                                                             R.layout.meeting_confirmation_row,
                                                                                             refRequestedMeeting);
         meetingRequested.setAdapter(requestedMeetingAdapter);
+
         return myView;
     }
 
@@ -128,68 +126,6 @@ public class ProfileFragment extends Fragment {
             img.setImageResource(R.drawable.dino_logo);
             e.printStackTrace();
         }
-//        User user = getUserLocalDB(getActivity().getApplicationContext());
-//        if(user != null) {
-//            getImage(user.getSciper());
-//        }
-
-
-
-    }
-
-    /**
-     * Download a picture from the sciper/ folder from the storage of Firebase
-     * @param key the name of the picture
-     */
-//     private void getImage(String key) {
-//        StorageReference storageRef = FirebaseStorage.getInstance().
-//                getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
-//        final long MAX_SIZE = 4096 * 4096;
-//         storageRef.child("profilePictures/" + key + ".png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//             @Override
-//             public void onSuccess(byte[] bytes) {
-//                 //Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
-//                 ImageView img = (ImageView) myView.findViewById(R.id.picture_view);
-//                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                 img.setImageBitmap(bmp);
-//                 saveToInternalStorage(bmp);
-//                 NavigationView navigationView = (NavigationView) myView.findViewById(R.id.nav_view);
-//                 if(navigationView!=null) {
-//                     CircleImageView circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
-//                     FileInputStream in;
-//                     try {
-//                         in = getActivity().openFileInput("user_profile_pic.bmp");
-//                         Bitmap b = BitmapFactory.decodeStream(in);
-//                         circleView.setImageBitmap(b);
-//                         Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
-//
-//                     }
-//                     catch (FileNotFoundException e) {
-//                         circleView.setImageResource(R.drawable.dino_logo);
-//                         e.printStackTrace();
-//                     }
-//                 } else {
-//                 }
-//
-//             }
-//         }).addOnFailureListener(new OnFailureListener() {
-//             @Override
-//             public void onFailure(@NonNull Exception exception) {
-//                 // Handle any errors
-//             }
-//         });
-//
-//
-//    }
-
-
-    private void saveUserLocalDB(User user, Context context) {
-        dbHelper = new LocalDatabaseHelper(context);
-        Activity activity = getActivity();
-        if(dbHelper != null) {
-            database = dbHelper.getWritableDatabase();
-            LocalDatabaseHelper.insertUser(user, database);
-        }
     }
 
     @Nullable
@@ -202,6 +138,4 @@ public class ProfileFragment extends Fragment {
         }
         return null;
     }
-
-
 }

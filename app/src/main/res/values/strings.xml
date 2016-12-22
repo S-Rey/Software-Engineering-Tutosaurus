@@ -63,11 +63,11 @@
         This Android application is intended for students and tutors from Switzerland
         and provides study material needed to help every student realize their potential.</string>
 
-    <string name="phone_number_help">+41 21 000 0000</string>
+    <string name="phone_number_help">+41 79 138 0861</string>
     <string name="clock_message_phone">Monday to Friday : 06:00 to 18:00</string>
     <string name="help_message_phone">Need some help urgently ? You can call our support line.
         You will be put in interaction with one of our support agents.</string>
-    <string name="email_address_help">android.studio@epfl.ch</string>
+    <string name="email_address_help">vincent.rinaldi@epfl.ch</string>
     <string name="clock_message_email">Service available 24/7</string>
     <string name="help_message_email">You can also send us an email.
         A member of the assistance service will answer to your request soon.</string>

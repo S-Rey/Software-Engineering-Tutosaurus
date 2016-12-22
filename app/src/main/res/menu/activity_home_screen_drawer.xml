@@ -16,8 +16,12 @@
             android:title="@string/thirdLayout_button" />
         <item
             android:id="@+id/nav_messaging_layout"
-            android:title="@string/messages"
-            android:icon="@drawable/ic_menu_send" />
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/messages" />
+        <item
+            android:id="@+id/nav_meetings_layout"
+            android:icon="@android:drawable/btn_star"
+            android:title="@string/seventhLayout_button" />
         <item
             android:id="@+id/nav_settings_layout"
             android:icon="@drawable/ic_menu_manage"
@@ -30,10 +34,6 @@
             android:id="@+id/nav_about_layout"
             android:icon="@drawable/ic_menu_share"
             android:title="@string/sixthLayout_button" />
-        <item
-            android:id="@+id/nav_meetings_layout"
-            android:icon="@android:drawable/btn_star"
-            android:title="@string/seventhLayout_button" />
     </group>
 
 </menu>

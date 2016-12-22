@@ -1,5 +1,6 @@
 package ch.epfl.sweng.tutosaurus.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -125,21 +126,6 @@ public class HomeScreenActivity extends AppCompatActivity
         circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
         linkProfilePictureToNavView(circleView);
 
-        SharedPreferences settings = getSharedPreferences(RegisterScreenActivity.PROFILE_INFOS, Context.MODE_PRIVATE);
-        String first_name = settings.getString("firstName", "");
-        String last_name = settings.getString("lastName", "");
-        String email_address = settings.getString("email", "");
-        String sciper = settings.getString("sciper", "");
-
-        TextView nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
-        nameView.setText(first_name + " " + last_name);
-
-        TextView addressView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.mailAddress);
-        addressView.setText(email_address);
-
-        TextView sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
-        sciperView.setText(sciper);
-
         if (intent.getAction() != null) {
             if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -159,7 +145,6 @@ public class HomeScreenActivity extends AppCompatActivity
             }
         }
 
-
         String currentUser = null;
         DatabaseHelper dbh = DatabaseHelper.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -167,23 +152,18 @@ public class HomeScreenActivity extends AppCompatActivity
             currentUser = currentFirebaseUser.getUid();
         }
         String userId = currentUser;
-
         DatabaseReference ref = dbh.getReference();
         ref.child("user/" + userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final User thisUser = dataSnapshot.getValue(User.class);
-
-                // Set profile name
-                TextView profileName = (TextView) findViewById(R.id.profileName);
-                if(profileName != null) {
-                    profileName.setText(thisUser.getFullName());
-                }
                 dbHelper = new LocalDatabaseHelper(getBaseContext());
-                LocalDatabaseHelper.insertUser(thisUser,dbHelper.getWritableDatabase());
-                getImage(thisUser.getSciper());
+                if(dbHelper != null) {
+                    database = dbHelper.getWritableDatabase();
+                    LocalDatabaseHelper.insertUser(thisUser, database);
+                }
                 setBurgerMenuUser(thisUser.getFullName(), thisUser.getEmail(), thisUser.getSciper());
-                Toast.makeText(HomeScreenActivity.this, "Loading Of User Done", Toast.LENGTH_SHORT).show();
+                getImage(thisUser.getSciper());
             }
 
             @Override
@@ -191,11 +171,7 @@ public class HomeScreenActivity extends AppCompatActivity
                 Toast.makeText(HomeScreenActivity.this, "Error Loading User", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
-
-
 
     @Override
     public void onRestart() {
@@ -207,31 +183,12 @@ public class HomeScreenActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-        Intent intent = getIntent();
-        if (intent.getAction() != null) {
-            if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
-            }
-            if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
-            }
-            if (intent.getAction().equals("OPEN_TAB_SETTINGS")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
-            }
-            if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
-            }
-        }
         Log.d(TAG, "Resumed!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
 
     public void sendMessageForCall(View view) {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: (+41)210000000"));
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: (+41)791380861"));
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             //request permission from user if the app hasn't got the required permission
             ActivityCompat.requestPermissions(this,
@@ -245,7 +202,7 @@ public class HomeScreenActivity extends AppCompatActivity
     public void sendMessageForEmail(View view) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setData(Uri.parse("mailto:")).setType("text/plain");
-        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { "android.studio@epfl.ch" });
+        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { "vincent.rinaldi@epfl.ch" });
         startActivity(intent);
     }
 
@@ -303,14 +260,14 @@ public class HomeScreenActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame, new BeATutorFragment()).commit();
         } else if (id == R.id.nav_messaging_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment(), "MESSAGING_FRAGMENT").commit();
+        } else if (id == R.id.nav_meetings_layout) {
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
         } else if (id == R.id.nav_settings_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
         } else if (id == R.id.nav_help_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new HelpFragment()).commit();
         } else if (id == R.id.nav_about_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new AboutFragment()).commit();
-        } else if (id == R.id.nav_meetings_layout) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -496,12 +453,12 @@ public class HomeScreenActivity extends AppCompatActivity
         return null;
     }
 
-
     private void getImage(String key) {
         StorageReference storageRef = FirebaseStorage.getInstance().
                 getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
         final long MAX_SIZE = 4096 * 4096;
-        storageRef.child("profilePictures/" + key + ".png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        storageRef.child("profilePictures/" + key + ".png").getBytes(
+                Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 //Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
@@ -519,13 +476,11 @@ public class HomeScreenActivity extends AppCompatActivity
                 Toast.makeText(HomeScreenActivity.this, "Problem Retrieving Image", Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
-
 
     private void setBurgerMenuUser(String fullName, String email, String sciper) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         TextView nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);
         nameView.setText(fullName);
 
@@ -535,6 +490,4 @@ public class HomeScreenActivity extends AppCompatActivity
         TextView sciperView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.sciper);
         sciperView.setText(sciper);
     }
-
-
 }

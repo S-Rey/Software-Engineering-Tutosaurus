@@ -47,6 +47,7 @@ public class AboutFragmentTest {
         activityRule.launchActivity(new Intent().setAction("OPEN_TAB_PROFILE"));
         Thread.sleep(1000);
         onView(withId(R.id.drawer_layout)).perform(open());
+        Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_about_layout));
     }
 
@@ -62,7 +63,6 @@ public class AboutFragmentTest {
 
     @Test
     public void checkTextDescription() {
-
         onView(withId(R.id.aboutDescription)).check(matches(withText("Copyright EPFL Inc. 2016. All rights reserved.")));
     }
 

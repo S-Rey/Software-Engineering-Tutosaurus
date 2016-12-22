@@ -90,14 +90,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
     private void sendMessageForAccess(View view) {
         Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
 
-        SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("firstName", profile.firstNames);
-        editor.putString("lastName", profile.lastNames);
-        editor.putString("email", profile.email);
-        editor.putString("sciper", profile.sciper);
-        editor.apply();
-
         intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
         intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
         intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
