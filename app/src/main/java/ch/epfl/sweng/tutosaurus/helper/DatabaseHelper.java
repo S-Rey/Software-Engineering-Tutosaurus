@@ -29,12 +29,19 @@ public class DatabaseHelper {
 
     private static DatabaseHelper instance = null;
 
+    /**
+     * Private constructor for DatabaseHelper
+     */
     private DatabaseHelper(){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         db.setPersistenceEnabled(true);
         dbf = db.getReference();
     }
 
+    /**
+     * Getter for DatabaseHelper
+     * @return an instance of DatabaseHelper
+     */
     public static DatabaseHelper getInstance() {
         if(instance == null){
             instance = new DatabaseHelper();
@@ -42,42 +49,68 @@ public class DatabaseHelper {
         return instance;
     }
 
+    /**
+     * Getter for the reference of the database
+     * @return DatabaseReference to the database
+     */
     public DatabaseReference getReference(){
         return dbf;
     }
 
-
+    /**
+     * Register a user in the database
+     * @param  user the user to be registered
+     */
     public void signUp(User user) {
         DatabaseReference ref = dbf.child(USER_PATH + user.getUid());
         ref.setValue(user);
     }
 
-
+    /**
+     * Adds a teaching language to a user
+     * @param  userId id of the user
+     * @param languageId id of the language
+     */
     public void addLanguageToUser(String userId, String languageId) {
         DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
         userSpeakLanguageRef.setValue(true);
     }
 
-
+    /**
+     * Removes a teaching language from a user
+     * @param  userId id of the user
+     * @param languageId id of the language
+     */
     public void removeLanguageFromUser(String userId, String languageId) {
         DatabaseReference userSpeakLanguageRef = dbf.child(USER_PATH + userId + "/speaking/" + languageId);
         userSpeakLanguageRef.setValue(false);
     }
 
-
-
+    /**
+     * Sets the global rating of a user
+     * @param  userId id of the user
+     * @param globalRating the new rating
+     */
     public void setRating(String userId, float globalRating) {
         DatabaseReference userRatingRef = dbf.child(USER_PATH + userId + "/globalRating/");
         userRatingRef.setValue(globalRating);
     }
 
-
+    /**
+     * Setter for the total number of ratings
+     * @param  userId id of the user
+     * @param numRatings total number of ratings
+     */
     public void setNumRatings(String userId, int numRatings) {
         DatabaseReference userNumRatingRef = dbf.child(USER_PATH + userId + "/numRatings/");
         userNumRatingRef.setValue(numRatings);
     }
 
-
+    /**
+     * Add a taught course to a teacher and a teacher to the list of course's teachers
+     * @param  userId id of the user
+     * @param courseId id of the course
+     */
     public void addTeacherToCourse(String userId, String courseId) {
         DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
         DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + userId + "/teaching/" + courseId);
@@ -85,7 +118,11 @@ public class DatabaseHelper {
         courseRef.setValue(true);
     }
 
-
+    /**
+     * Removes a taught course from a teacher and a teacher from the list of course's teachers
+     * @param  userId id of the user
+     * @param courseId id of the course
+     */
     public void removeTeacherFromCourse(String userId, String courseId) {
         DatabaseReference courseRef = dbf.child(COURSE_PATH + courseId + "/teaching/" + userId);
         DatabaseReference userTeachCourseRef = dbf.child(USER_PATH + userId + "/teaching/" + courseId);
@@ -93,7 +130,10 @@ public class DatabaseHelper {
         courseRef.setValue(false);
     }
 
-
+    /**
+     * Adds a meeting in the database
+     * @param meeting the meeting to be added
+     */
     private String addMeeting(Meeting meeting) {
         String key = dbf.child(MEETING_PATH).push().getKey();
         meeting.setId(key);
@@ -114,8 +154,11 @@ public class DatabaseHelper {
         return key;
     }
 
-
-    // the 'teacher' String is the teacher uid
+    /**
+     * Adds a meeting request in the database
+     * @param request request of meeting to be added
+     * @param teacher id of the teacher to ask a meeting to
+     */
     public String requestMeeting(MeetingRequest request, String teacher) {
         String key = dbf.child(MEETING_REQUEST_PATH).child(request.getFrom()).push().getKey();
         request.setUid(key);
@@ -124,7 +167,14 @@ public class DatabaseHelper {
         return key; // return the key of this request
     }
 
-
+    /**
+     * Sends a message from a user to another one
+     * @param fromUid id of the sender
+     * @param fromFullName full name of the sender
+     * @param toUid id of the receiver
+     * @param toFullName full name of the receiver
+     * @param content content of the message
+     */
     public void sendMessage(String fromUid, String fromFullName, String toUid, String toFullName, String content){
         DatabaseReference chatIdFromRef = dbf.child("chats/" + fromUid);
         DatabaseReference chatIdToRef = dbf.child("chats/" + toUid);
@@ -147,28 +197,44 @@ public class DatabaseHelper {
         messageToRef.child(key).setValue(message);
     }
 
-
+    /**
+     * Adds the description to a user's subject
+     * @param description presentation of the subject
+     * @param userId id of the user to add a description to
+     * @param courseId id of the course to add a description
+     */
     public void addSubjectDescription(String description, String userId, String courseId){
         DatabaseReference userLearnCourseRef = dbf.child(USER_PATH + userId + "/coursePresentation/" + courseId);
         userLearnCourseRef.setValue(description);
     }
 
-
+    /**
+     * Returns a reference to the user's meeting in the database
+     * @param key the id of the user
+     */
     public DatabaseReference getMeetingsRefForUser(String key) {
         return dbf.child(MEETING_PER_USER_PATH + key);
     }
 
-
+    /**
+     * @return  a reference to all the users in the database
+     */
     public DatabaseReference getUserRef() {
         return dbf.child(USER_PATH);
     }
 
-
+    /**
+     * @return  a reference to all the umeeting requests
+     */
     public DatabaseReference getMeetingRequestsRef() {
         return dbf.child(MEETING_REQUEST_PATH);
     }
 
-
+    /**
+     * Confirms a requested meeting
+     * @param currentUserUid id of the user accepting the meeting
+     * @return  the id of the confirmed meeting
+     */
     public String confirmMeeting(String currentUserUid, MeetingRequest request) {
         String meetingId;
         DatabaseReference meetingRequestRef = dbf.child(MEETING_REQUEST_PATH).child(currentUserUid).child(request.getUid());
@@ -179,7 +245,12 @@ public class DatabaseHelper {
         return meetingId;
     }
 
-
+    /**
+     * Rates a past meeting
+     * @param userId id of the rated user
+     * @param meetingId id of the meeting being rated
+     * @param rating rating for the meeting
+     */
     public void setMeetingRated(String userId, String meetingId, float rating) {
         DatabaseReference meetingsPerUserCurrentUserRef = dbf.child(MEETING_PER_USER_PATH + userId +"/" + meetingId + "/rated/");
         meetingsPerUserCurrentUserRef.setValue(true);
