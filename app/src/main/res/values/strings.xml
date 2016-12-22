@@ -10,9 +10,13 @@
     <string name="password_reset_title">Forgot Password?</string>
     <string name="password_forgot_btn">Forgot your Password?</string>
     <string name="reset_password_btn">RESET PASSWORD</string>
+    <string name="login">Login</string>
+    <string name="login_failed">Login failed</string>
+    <string name="request_email_and_password">Please type in your email and password</string>
     <string name="request_email_password_reset">No worries! We just need the email you registered with and we\'ll send you
     the instructions.</string>
     <string name="request_registered_email">"Enter your registered email id"</string>
+    <string name="sending_request">Sending request…</string>
     <string name="reset_request_fail">Failed to send reset!</string>
     <string name="reset_password_sent">"Instructions sent to your email!"</string>
     <string name="authorize_app_required">Could not complete sign up</string>
@@ -30,6 +34,7 @@
         Please fill the boxes below with your Gaspar account
         and register with Tequila.</string>
     <string name="send_info_to_tequila">Confirm registration with Tequila</string>
+    <string name="gathering_info">Gathering Info …</string>
 
     <string name="thanks_message1">Thank you for registering !</string>
     <string name="thanks_message2">Please enter a password for your new account below.</string>
@@ -127,7 +132,7 @@
     <string name="send_new_password">Send</string>
     
     <string name="switch_adapter">switch adapter</string>
-    
+
     <string name="nameLocation">Location</string>
     <string name="title_activity_reset_password">Reset Password</string>
     <string name="course_picture">Course Picture</string>

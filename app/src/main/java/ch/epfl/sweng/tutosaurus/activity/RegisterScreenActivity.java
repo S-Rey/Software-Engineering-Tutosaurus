@@ -87,6 +87,10 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Private method only for use after successful login with tequila and fetched profile information
+     * @param view
+     */
     private void sendMessageForAccess(View view) {
         Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
 
@@ -139,7 +143,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(RegisterScreenActivity.this);
-            pDialog.setMessage("Gathering Info ...");
+            pDialog.setMessage(getString(R.string.gathering_info));
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -187,6 +191,9 @@ public class RegisterScreenActivity extends AppCompatActivity {
             cookieManager.removeAllCookie();
         }
 
+        /**
+         * Set new webView Client to probe the url for successful login with tequila
+         */
         webViewOauth.setWebViewClient(new WebViewClient() {
             boolean authComplete = false;
 
