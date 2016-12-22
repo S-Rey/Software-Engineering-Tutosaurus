@@ -40,8 +40,8 @@ public class UserListAdapter extends FirebaseListAdapter<User> {
                 .load(picRef)
                 /* Glide uses the hash of the path to determine cache invalidation. There is no easy way to determine
                 * if a file with the same path has changed. A workaround is to define a signature that is always
-                * different so that Glide fetches the data each time. */
-                .signature(new StringSignature(String.valueOf(System.currentTimeMillis())))
+                * different so that Glide fetches the data each time.
+                * .signature(new StringSignature(String.valueOf(System.currentTimeMillis()))) */
                 .into(profilePicture);
     }
 }
