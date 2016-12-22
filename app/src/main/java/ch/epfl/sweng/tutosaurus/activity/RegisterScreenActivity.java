@@ -96,17 +96,17 @@ public class RegisterScreenActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("firstName", profile.firstNames);
-        editor.putString("lastName", profile.lastNames);
-        editor.putString("email", profile.email);
-        editor.putString("sciper", profile.sciper);
+        editor.putString("firstName", profile.getFirstNames());
+        editor.putString("lastName", profile.getLastNames());
+        editor.putString("email", profile.getEmail());
+        editor.putString("sciper", profile.getSciper());
         editor.apply();
 
-        intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
-        intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
-        intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
-        intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
-        intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.gaspar);
+        intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.getFirstNames());
+        intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.getLastNames());
+        intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.getEmail());
+        intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.getSciper());
+        intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.getGaspar());
 
         startActivity(intent);
     }
