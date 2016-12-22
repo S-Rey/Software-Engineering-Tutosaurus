@@ -1,6 +1,5 @@
 package ch.epfl.sweng.tutosaurus.fragment;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -8,7 +7,6 @@ import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,15 +19,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
-import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
 public class BeATutorFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -69,7 +66,11 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                     String courseName = course.getId();
                     CheckBoxPreference checkBoxSub = (CheckBoxPreference) getPreferenceManager().findPreference(
                             "checkbox_preference_" + courseName);
-                    checkBoxSub.setChecked(thisUser.getTeaching().get(courseName));
+                    if (thisUser.getTeaching().containsKey(courseName)) {
+                        checkBoxSub.setChecked(thisUser.getTeaching().get(courseName));
+                    } else {
+                        checkBoxSub.setChecked(false);
+                    }
                 }
 
                 //Set description preferences
@@ -77,8 +78,13 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                     String courseName = course.getId();
                     EditTextPreference descriptionTextSub = (EditTextPreference) getPreferenceManager().findPreference(
                             "edit_text_preference_" + courseName);
-                    descriptionTextSub.setText(thisUser.getCourseDescription(courseName));
-                    descriptionTextSub.setTitle(descriptionTextSub.getText());
+                    if (thisUser.getCoursePresentation().containsKey(courseName)) {
+                        descriptionTextSub.setText(thisUser.getCourseDescription(courseName));
+                        descriptionTextSub.setTitle(descriptionTextSub.getText());
+                    } else {
+                        descriptionTextSub.setText("Enter your description.");
+                        descriptionTextSub.setTitle("Enter your description.");
+                    }
 
                     if (!((CheckBoxPreference) findPreference("checkbox_preference_" + courseName)).isChecked()) {
                         descriptionTextSub.setEnabled(false);
