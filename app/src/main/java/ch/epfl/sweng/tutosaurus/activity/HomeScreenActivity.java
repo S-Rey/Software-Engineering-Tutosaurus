@@ -213,6 +213,7 @@ public class HomeScreenActivity extends AppCompatActivity
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
             }
+            if(intent.getAction().equals("OPEN_TAB_FIND_TUTORS"))
             if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
