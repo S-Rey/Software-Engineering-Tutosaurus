@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:id="@+id/findTutorMessage"
-        android:text="How do you want to find your tutor?"
-        android:textSize="18dp"
+        android:text="@string/find_your_tutor"
+        android:textSize="18sp"
         android:padding="10dp"
         android:textAlignment="center" />
 

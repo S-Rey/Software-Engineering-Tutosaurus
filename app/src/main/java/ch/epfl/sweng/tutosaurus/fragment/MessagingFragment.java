@@ -75,6 +75,10 @@ public class MessagingFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        Intent resumeIntent = new Intent(getActivity(), HomeScreenActivity.class);
+        resumeIntent.setAction("OPEN_TAB_MESSAGES");
+        getActivity().setIntent(resumeIntent);
+
         return myView;
     }
 

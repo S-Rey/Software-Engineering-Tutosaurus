@@ -183,7 +183,6 @@ public class HomeScreenActivity extends AppCompatActivity
                 LocalDatabaseHelper.insertUser(thisUser,dbHelper.getWritableDatabase());
                 getImage(thisUser.getSciper());
                 setBurgerMenuUser(thisUser.getFullName(), thisUser.getEmail(), thisUser.getSciper());
-                Toast.makeText(HomeScreenActivity.this, "Loading Of User Done", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -208,24 +207,6 @@ public class HomeScreenActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         Intent intent = getIntent();
-        if (intent.getAction() != null) {
-            if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new ProfileFragment()).commit();
-            }
-            if (intent.getAction().equals("OPEN_TAB_MEETINGS")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new MeetingsFragment()).commit();
-            }
-            if (intent.getAction().equals("OPEN_TAB_SETTINGS")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
-            }
-            if(intent.getAction().equals("OPEN_TAB_MESSAGES")) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new MessagingFragment()).commit();
-            }
-        }
         Log.d(TAG, "Resumed!");
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
@@ -276,6 +257,13 @@ public class HomeScreenActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logOutButton) {
             mAuth.signOut();
+
+            // Delete all data
+            LocalDatabaseHelper.clear(dbHelper.getWritableDatabase());
+            File file = new File(this.getFilesDir().getAbsolutePath() +
+                                    File.separator + "user_profile_pic.bmp");
+            file.delete();
+
             Intent logInIntent = new Intent(this, MainActivity.class);
             logInIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(logInIntent);
@@ -420,7 +408,6 @@ public class HomeScreenActivity extends AppCompatActivity
                         String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         PictureHelper.storePicOnline(imageSelectedUri.getPath(), currentUserUid);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Unable to load the image", Toast.LENGTH_SHORT).show();
@@ -486,6 +473,11 @@ public class HomeScreenActivity extends AppCompatActivity
         changePictureDialog.show();
     }
 
+    /**
+     * Return user saved
+     * @param context
+     * @return
+     */
     @Nullable
     private User getUserLocalDB(Context context) {
         dbHelper = new LocalDatabaseHelper(context);
@@ -496,7 +488,10 @@ public class HomeScreenActivity extends AppCompatActivity
         return null;
     }
 
-
+    /**
+     * Retrieve profile pictore from Firebase
+     * @param key
+     */
     private void getImage(String key) {
         StorageReference storageRef = FirebaseStorage.getInstance().
                 getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
@@ -523,7 +518,12 @@ public class HomeScreenActivity extends AppCompatActivity
 
     }
 
-
+    /**
+     * Set the TextView of the burger menu
+     * @param fullName
+     * @param email
+     * @param sciper
+     */
     private void setBurgerMenuUser(String fullName, String email, String sciper) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         TextView nameView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName);

@@ -78,6 +78,10 @@ public class FindTutorsFragment extends Fragment {
             }
         });
 
+        Intent resumeIntent = new Intent(getActivity(), HomeScreenActivity.class);
+        resumeIntent.setAction("OPEN_TAB_FIND_TUTORS");
+        getActivity().setIntent(resumeIntent);
+
         return myView;
     }
 

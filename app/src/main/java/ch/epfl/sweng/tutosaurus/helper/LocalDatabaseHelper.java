@@ -91,6 +91,10 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Clear the local database
+     * @param db writable database
+     */
     public static void clear(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_COURSE);
@@ -138,7 +142,11 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_USER, null, userValues);
     }
 
-
+    /**
+     * Clear the local database and add an user
+     * @param user
+     * @param db
+     */
     private static void insertCourseTable(User user, SQLiteDatabase db) {
 
         // COURSE TABLE
@@ -173,6 +181,11 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Store the language of the user
+     * @param user
+     * @param db
+     */
     private static void insertLanguageTable(User user, SQLiteDatabase db) {
 
         // LANGUAGE TABLE
@@ -184,7 +197,11 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
+    /**
+     * Return the user of the local database
+     * @param db a readable database
+     * @return User or Null if error
+     */
     @Nullable
     public static User getUser(SQLiteDatabase db) {
         User user = getUserTable(db);
@@ -193,6 +210,11 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
 
+    /**
+     * Return an User without language nor course
+     * @param db
+     * @return
+     */
     @Nullable
     private static User getUserTable(SQLiteDatabase db) {
         String query = "SELECT * FROM " + TABLE_USER;
@@ -212,6 +234,11 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Set the course for the user
+     * @param user
+     * @param db readable database
+     */
     private static void getCourse(User user, SQLiteDatabase db) {
         if(user == null) {
             return;
@@ -235,6 +262,11 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Set the language for the user
+     * @param user
+     * @param db readable database
+     */
     private static void getLanguage(User user, SQLiteDatabase db) {
         if (user == null) {
             return;
