@@ -113,6 +113,7 @@ public class MeetingService extends Service {
 
             Intent resultIntent = new Intent(this, HomeScreenActivity.class);
             resultIntent.setAction("OPEN_TAB_PROFILE");
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent resultPendingIntent = PendingIntent.getActivity(
                     this,
                     1,

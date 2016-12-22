@@ -10,9 +10,13 @@
     <string name="password_reset_title">Forgot Password?</string>
     <string name="password_forgot_btn">Forgot your Password?</string>
     <string name="reset_password_btn">RESET PASSWORD</string>
+    <string name="login">Login</string>
+    <string name="login_failed">Login failed</string>
+    <string name="request_email_and_password">Please type in your email and password</string>
     <string name="request_email_password_reset">No worries! We just need the email you registered with and we\'ll send you
     the instructions.</string>
     <string name="request_registered_email">"Enter your registered email id"</string>
+    <string name="sending_request">Sending request…</string>
     <string name="reset_request_fail">Failed to send reset!</string>
     <string name="reset_password_sent">"Instructions sent to your email!"</string>
     <string name="authorize_app_required">Could not complete sign up</string>
@@ -30,6 +34,7 @@
         Please fill the boxes below with your Gaspar account
         and register with Tequila.</string>
     <string name="send_info_to_tequila">Confirm registration with Tequila</string>
+    <string name="gathering_info">Gathering Info …</string>
 
     <string name="thanks_message1">Thank you for registering !</string>
     <string name="thanks_message2">Please enter a password for your new account below.</string>
@@ -125,11 +130,11 @@
     <string name="change_password">Change Password</string>
     <string name="explanations_change_password">Please choose a new password for your account.</string>
     <string name="send_new_password">Send</string>
+    
+    <string name="switch_adapter">switch adapter</string>
 
-    <string name="action_settings">Settings</string>
     <string name="nameLocation">Location</string>
     <string name="title_activity_reset_password">Reset Password</string>
-    <string name="doctor_s_name">Doctor\'s Name</string>
     <string name="course_picture">Course Picture</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="messages">Messages</string>
@@ -142,7 +147,6 @@
     <string name="enter_message_prompt">Enter message…</string>
     <string name="by_name">By name</string>
     <string name="meeting_confirmation_location">Location:</string>
-    <string name="update_rank">Update</string>
     <string name="alberto_chiappa">Alberto Chiappa</string>
     <string name="create_meeting_date">Date</string>
     <string name="send_message_btn">Send message</string>
@@ -153,6 +157,7 @@
     <string name="find_tutors_tutor_s_name">Tutor\'s name</string>
     <string name="create_meeting_location">Location</string>
     <string name="find_tutor_search">search</string>
+    <string name="find_your_tutor">How do you want to find your tutor?</string>
     <string name="meeting_confirmation_confirm">Confirm</string>
     <string name="public_profile_student">Student</string>
     <string name="profile_profile_picture">Profile Picture</string>

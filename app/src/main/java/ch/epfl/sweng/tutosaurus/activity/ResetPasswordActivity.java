@@ -59,7 +59,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
                 progressDialog = new ProgressDialog(ResetPasswordActivity.this);
                 progressDialog.setIcon(R.drawable.dino_logo);
-                progressDialog.setMessage("Sending request...");
+                progressDialog.setMessage(getString(R.string.sending_request));
                 progressDialog.setIndeterminate(false);
                 progressDialog.setCancelable(true);
                 progressDialog.show();

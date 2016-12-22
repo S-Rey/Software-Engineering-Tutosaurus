@@ -128,6 +128,11 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Return the user saved or Null if nothing in local database
+     * @param context
+     * @return
+     */
     @Nullable
     private User getUserLocalDB(Context context) {
         dbHelper = new LocalDatabaseHelper(context);
