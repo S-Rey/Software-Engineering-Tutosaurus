@@ -22,12 +22,21 @@ import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Chat;
 
-
+/**
+ * An adapter for a list of chats on Firebase.
+ */
 public class ChatListAdapter extends FirebaseListAdapter<Chat>{
 
     private static final String TAG = "ChatListAdapter";
     private Activity activity;
 
+    /**
+     * A public constructor for the ChatListAdapter
+     * @param activity the activity this adapter will be bound to
+     * @param modelClass the type of object this adapter will receive from Firebase
+     * @param modelLayout the layout that will be populated with the data
+     * @param ref the location in Firebase from which this adapter will get its data
+     */
     public ChatListAdapter(Activity activity, java.lang.Class<Chat> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.activity = activity;

@@ -5,9 +5,8 @@ import com.google.firebase.database.Query;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 /**
- * Created by albertochiappa on 09/12/16.
+ * A criterion to search for all tutors.
  */
-
 public class ShowFullTutorList implements SearchCriterion {
 
     private DatabaseHelper dbh;

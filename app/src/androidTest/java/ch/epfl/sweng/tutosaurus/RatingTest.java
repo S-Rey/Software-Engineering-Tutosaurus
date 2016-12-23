@@ -99,7 +99,6 @@ public class RatingTest {
         Thread.sleep(1000);
         onData(anything()).inAdapterView(withId(R.id.meetingRequests)).atPosition(0).
                 onChildView(withId(R.id.meeting_confirmation_row_confirm)).perform(click());
-
         Thread.sleep(1000);
         onView(withId(R.id.drawer_layout)).perform(open());
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_meetings_layout));
@@ -112,7 +111,7 @@ public class RatingTest {
         onData(anything()).inAdapterView(withId(R.id.meetingList)).atPosition(0).
                 onChildView(withId(R.id.showDetailsMeeting)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withClassName(Matchers.equalTo(RatingBar.class.getCanonicalName()))).perform(click());
         onView(withText("Ok")).perform(click());

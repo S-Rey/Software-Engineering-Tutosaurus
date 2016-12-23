@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Represents a meeting between two or more users.
+ */
 public class Meeting {
 
     private String id;

@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 
+/**
+ * A fragment showing support information.
+ */
 public class HelpFragment extends Fragment {
 
     private View myView;

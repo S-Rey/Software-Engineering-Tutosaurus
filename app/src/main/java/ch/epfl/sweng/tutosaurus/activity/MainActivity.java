@@ -32,6 +32,9 @@ import ch.epfl.sweng.tutosaurus.R;
 
 import static ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver.LOG_TAG;
 
+/**
+ * The welcoming application of the app, in which the user logs in.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private NetworkChangeReceiver receiver;
@@ -39,12 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = "MainActivity";
 
-    private EditText passwordEditText;
-
     private FirebaseAuth mAuth;
-
-    private SQLiteOpenHelper dbHelper;
-    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,32 +78,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder loginAlertB = new AlertDialog.Builder(MainActivity.this);
-                loginAlertB.setTitle("Login").setPositiveButton("Ok", null).setIcon(R.drawable.dino_logo);
+                loginAlertB.setTitle(R.string.login).setPositiveButton("Ok", null).setIcon(R.drawable.dino_logo);
                 String email = ((EditText) findViewById(R.id.main_email)).getText().toString();
                 String password = ((EditText) findViewById(R.id.main_password)).getText().toString();
                 if (email.isEmpty() || password.isEmpty()) {
-                    loginAlertB.setMessage("Please type in your email and password");
+                    loginAlertB.setMessage(R.string.request_email_and_password);
                     loginAlertB.create().show();
                 } else {
                     LoginAsyncTask loginTask = new LoginAsyncTask();
                     loginTask.execute(email, password);
-                    Log.d(TAG, "3");
                 }
             }
         });
@@ -160,24 +146,17 @@ public class MainActivity extends AppCompatActivity {
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.d(TAG, "1");
             return task;
-        }
-
-        @Override
-        protected void onPostExecute(Task task) {
-            Log.d(TAG, "2");
         }
     }
 
     private class LoginOnCompleteListener implements OnCompleteListener<AuthResult> {
         @Override
         public void onComplete(@NonNull Task task) {
-            Log.d(TAG, "signInWithEmailAndPassword:onComplete:" + task.isSuccessful());
             if (task.isSuccessful()) {
                 dispatchHomeScreenIntent();
             } else {
-                Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
         }
     }

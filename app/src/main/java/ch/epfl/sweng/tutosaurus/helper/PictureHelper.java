@@ -20,16 +20,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-
+/**
+ * Utility class to ease storing and retrieving of online and local profile pictures.
+ */
 public class PictureHelper {
 
     static private StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://tutosaurus-16fce.appspot.com");
     static final long MAX_SIZE = 4096 * 4096; // One MB
-
-
-
-
-
 
     /**
      * Store the profile picture in the local folder storage in a folder which the name is the sciper
@@ -72,7 +69,6 @@ public class PictureHelper {
         });
     }
 
-
     /**
      *  Store a picture store at localPicPath to the onlinePicPath (don't forget the extension png
      *  or png)
@@ -96,7 +92,6 @@ public class PictureHelper {
             }
         });
     }
-
 
     /**
      * Write a picture (in JPEG format) to the internal storage at pictures/
@@ -123,10 +118,8 @@ public class PictureHelper {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
-
 
     /**
      * Load the picture specified by name and return it in case of success

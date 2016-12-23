@@ -14,6 +14,9 @@ import java.util.Calendar;
 
 import ch.epfl.sweng.tutosaurus.R;
 
+/**
+ * A dialog fragment whose purpose is to pick a time.
+ */
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 

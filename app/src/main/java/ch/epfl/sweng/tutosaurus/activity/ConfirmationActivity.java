@@ -24,6 +24,9 @@ import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * The activity in which the user confirms that the registration data provided is correct.
+ */
 public class ConfirmationActivity extends AppCompatActivity {
 
     private static final String TAG = "ConfirmationActivity";
@@ -106,7 +109,6 @@ public class ConfirmationActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, pw1).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    Log.d(TAG, "createUserWithEmailAndPassword:onComplete:" + task.isSuccessful());
                     if (!task.isSuccessful()) {
                         Toast.makeText(ConfirmationActivity.this, R.string.authentification_failed, Toast.LENGTH_SHORT).show();
                     } else {

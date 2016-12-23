@@ -30,6 +30,8 @@ import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
 
 /**
+ * Activity in which the user enter their registration info.
+ *
  * 1. Client creates request url: AuthClient.createCodeRequestUrl(config). The config is obtained from client id, client key and redirect uri. <br>
  * 2. Client accesses request url <br>
  * 3. Client enters username and password; gets 'code' in return. If user already entered details, the webview uses a cookie. <br>
@@ -87,22 +89,26 @@ public class RegisterScreenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Private method only for use after successful login with tequila and fetched profile information
+     * @param view
+     */
     private void sendMessageForAccess(View view) {
         Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
 
         SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("firstName", profile.firstNames);
-        editor.putString("lastName", profile.lastNames);
-        editor.putString("email", profile.email);
-        editor.putString("sciper", profile.sciper);
+        editor.putString("firstName", profile.getFirstNames());
+        editor.putString("lastName", profile.getLastNames());
+        editor.putString("email", profile.getEmail());
+        editor.putString("sciper", profile.getSciper());
         editor.apply();
 
-        intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.firstNames);
-        intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.lastNames);
-        intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.email);
-        intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.sciper);
-        intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.gaspar);
+        intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.getFirstNames());
+        intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.getLastNames());
+        intent.putExtra(EXTRA_MESSAGE_EMAIL_ADDRESS, profile.getEmail());
+        intent.putExtra(EXTRA_MESSAGE_SCIPER, profile.getSciper());
+        intent.putExtra(EXTRA_MESSAGE_GASPAR, profile.getGaspar());
 
         startActivity(intent);
     }
@@ -139,7 +145,7 @@ public class RegisterScreenActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(RegisterScreenActivity.this);
-            pDialog.setMessage("Gathering Info ...");
+            pDialog.setMessage(getString(R.string.gathering_info));
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
@@ -187,6 +193,9 @@ public class RegisterScreenActivity extends AppCompatActivity {
             cookieManager.removeAllCookie();
         }
 
+        /**
+         * Set new webView Client to probe the url for successful login with tequila
+         */
         webViewOauth.setWebViewClient(new WebViewClient() {
             boolean authComplete = false;
 

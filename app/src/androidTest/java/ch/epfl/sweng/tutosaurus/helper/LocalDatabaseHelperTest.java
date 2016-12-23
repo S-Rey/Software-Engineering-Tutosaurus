@@ -169,13 +169,4 @@ public class LocalDatabaseHelperTest {
     }
 
 
-/*    @Test
-    public void userMeetingTest() {
-        LocalDatabaseHelper.insertUser(albert,database);
-        User dbAlbert = LocalDatabaseHelper.getUser(dbHelper.getReadableDatabase());
-        Map dbMeeting = dbAlbert.getMeetings();
-        assertTrue(albert.getMeetings().equals(dbAlbert.getMeetings()));
-    }*/
-
-
 }

@@ -14,6 +14,9 @@ import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.service.MeetingService;
 
+/**
+ * A fragment where the user can set a variety of settings related to the app's functionality.
+ */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @RequiresApi(api = Build.VERSION_CODES.M)

@@ -3,6 +3,9 @@ package ch.epfl.sweng.tutosaurus.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a User of the application.
+ */
 public class User implements Identifiable {
 
     private String sciper;

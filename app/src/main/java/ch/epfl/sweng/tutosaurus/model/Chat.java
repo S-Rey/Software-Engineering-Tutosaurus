@@ -1,15 +1,21 @@
 package ch.epfl.sweng.tutosaurus.model;
 
+/**
+ * Represents a chat between two users.
+ */
 public class Chat implements Identifiable {
 
     private String fullName;
     private String uid;
-    private String sciper;
 
     public Chat() {
 
     }
 
+    /**
+     * A public constructor for a Chat.
+     * @param uid the uid of the other user
+     */
     public Chat(String uid){
         this.uid = uid;
     }

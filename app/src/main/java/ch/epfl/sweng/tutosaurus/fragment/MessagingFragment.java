@@ -28,6 +28,9 @@ import ch.epfl.sweng.tutosaurus.model.Chat;
 import ch.epfl.sweng.tutosaurus.model.Identifiable;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * A fragment where the user can select with which other user they want to chat.
+ */
 public class MessagingFragment extends Fragment {
 
     private static final String TAG = "MessagingFragment";
@@ -74,6 +77,10 @@ public class MessagingFragment extends Fragment {
         });
 
         setHasOptionsMenu(true);
+
+        Intent resumeIntent = new Intent(getActivity(), HomeScreenActivity.class);
+        resumeIntent.setAction("OPEN_TAB_MESSAGES");
+        getActivity().setIntent(resumeIntent);
 
         return myView;
     }
