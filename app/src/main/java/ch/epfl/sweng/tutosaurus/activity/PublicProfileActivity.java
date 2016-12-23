@@ -33,7 +33,9 @@ import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-
+/**
+ * Activity that displays the profile of the current user.
+ */
 public class PublicProfileActivity extends AppCompatActivity {
 
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
