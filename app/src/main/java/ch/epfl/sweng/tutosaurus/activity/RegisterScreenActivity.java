@@ -2,9 +2,7 @@ package ch.epfl.sweng.tutosaurus.activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -95,14 +93,6 @@ public class RegisterScreenActivity extends AppCompatActivity {
      */
     private void sendMessageForAccess(View view) {
         Intent intent = new Intent(RegisterScreenActivity.this, ConfirmationActivity.class);
-
-        SharedPreferences settings = getSharedPreferences(PROFILE_INFOS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("firstName", profile.getFirstNames());
-        editor.putString("lastName", profile.getLastNames());
-        editor.putString("email", profile.getEmail());
-        editor.putString("sciper", profile.getSciper());
-        editor.apply();
 
         intent.putExtra(EXTRA_MESSAGE_FIRST_NAME, profile.getFirstNames());
         intent.putExtra(EXTRA_MESSAGE_LAST_NAME, profile.getLastNames());

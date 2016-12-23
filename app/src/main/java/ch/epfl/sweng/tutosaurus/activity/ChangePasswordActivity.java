@@ -1,8 +1,8 @@
 package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -39,6 +39,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Change the password of an user account
+     * @param view
+     */
     public void changePassword(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         EditText newPasswordChoosed = (EditText) findViewById(R.id.chooseNewPass);

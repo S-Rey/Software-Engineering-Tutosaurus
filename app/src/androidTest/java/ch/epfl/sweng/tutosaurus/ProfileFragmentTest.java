@@ -54,7 +54,7 @@ public class ProfileFragmentTest {
     );
 
     @Before
-    public void logIn() {
+    public void logIn() throws InterruptedException {
         Task<AuthResult> login = FirebaseAuth.getInstance().signInWithEmailAndPassword("albert.einstein@epfl.ch", "tototo");
         try {
             Tasks.await(login);
@@ -62,6 +62,7 @@ public class ProfileFragmentTest {
             e.printStackTrace();
         }
         activityRule.launchActivity(new Intent().setAction("OPEN_TAB_PROFILE"));
+        Thread.sleep(1000);
     }
 
     @Test
@@ -149,7 +150,6 @@ public class ProfileFragmentTest {
         onView(withId(R.id.drawer_layout)).perform(open());
         Espresso.pressBack();
     }
-
 
     @After
     public void logOut() {

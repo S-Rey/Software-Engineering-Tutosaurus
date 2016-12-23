@@ -14,14 +14,17 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
-import static java.util.Arrays.*;
+import static java.util.Arrays.asList;
 
+/**
+ * Fragment where the user selects his spoken languages and the subjects he wants to teach
+ */
 public class BeATutorFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
@@ -39,6 +42,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
         if(currentUser != null) {
             currentuserUid = currentUser.getUid();
         }
+
         // remove dividers
         View rootView = getView();
         ListView list;
@@ -49,17 +53,11 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
 
         courses = FullCourseList.getInstance().getListOfCourses();
         for (Course course: courses) {
-
             String courseName = course.getId();
             EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceManager().findPreference(
                     "edit_text_preference_" + courseName);
 
-            if (descriptionPreference.getText().equals("")) {
-                descriptionPreference.setTitle("Enter your description.");
-                descriptionPreference.setText("Enter your description.");
-            } else {
-                descriptionPreference.setTitle(descriptionPreference.getText());
-            }
+            descriptionPreference.setTitle(descriptionPreference.getText());
 
             if (!((CheckBoxPreference) findPreference("checkbox_preference_" + courseName)).isChecked()) {
                 descriptionPreference.setEnabled(false);
@@ -67,7 +65,6 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             }
         }
     }
-
 
     @Override
     public void onResume() {
@@ -77,7 +74,6 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 .registerOnSharedPreferenceChangeListener(this);
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
@@ -86,8 +82,14 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    /**
+     * Manage the preferences of the user on each data changes
+     * @param sharedPreferences
+     * @param key
+     */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
+        //Add or remove a language from the preferences of the user depending of the selection
         for (String language : languages) {
             if (key.equals("checkbox_preference_" + language)) {
                 boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + language, true);
@@ -99,12 +101,13 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             }
         }
 
-
+        //Add or remove a subject from the preferences of the user and update its text description
         for (Course course : courses) {
             String courseName = course.getId();
             EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceScreen().findPreference(
                     "edit_text_preference_" + courseName);
 
+            //Add or remove the subject
             if (key.equals("checkbox_preference_" + courseName)) {
                 boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + courseName, true);
                 if (isEnable) {
@@ -112,22 +115,24 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                     descriptionPreference.setEnabled(true);
                     descriptionPreference.setSelectable(true);
                 } else {
-                    descriptionPreference.setEnabled(false);
                     dbh.removeTeacherFromCourse(currentuserUid, courseName);
+                    descriptionPreference.setEnabled(false);
                     descriptionPreference.setSelectable(false);
                 }
             }
 
+            //Update its description
             if (key.equals("edit_text_preference_" + courseName)) {
-                if (!(descriptionPreference.getText().equals("") || descriptionPreference.getText().equals("Enter your description."))) {
+                if (!(descriptionPreference.getText().equals("") ||
+                        descriptionPreference.getText().equals("Enter your description."))) {
                     descriptionPreference.setTitle(descriptionPreference.getText());
                     dbh.addSubjectDescription(descriptionPreference.getText(), currentuserUid, courseName);
                 } else {
                     descriptionPreference.setTitle("Enter your description.");
                     descriptionPreference.setText("Enter your description.");
+                    dbh.addSubjectDescription(descriptionPreference.getText(), currentuserUid, courseName);
                 }
             }
         }
     }
-
 }

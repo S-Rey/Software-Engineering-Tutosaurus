@@ -60,6 +60,7 @@ public class SettingsFragmentTest {
             e.printStackTrace();
         }
         activityRule.launchActivity(new Intent().setAction("OPEN_TAB_PROFILE"));
+        Thread.sleep(1000);
         onView(withId(R.id.drawer_layout)).perform(open());
         Thread.sleep(200);
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_settings_layout));
@@ -100,11 +101,11 @@ public class SettingsFragmentTest {
     public void testSettingTabSecondNotificationChange() throws InterruptedException {
         if (sharedPreferences.getBoolean("checkbox_preference_notification", true)) {
             onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
-            Thread.sleep(1500);
+            Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_notification", true), equalTo(false));
         } else {
             onData(PreferenceMatchers.withKey("checkbox_preference_notification")).perform(click());
-            Thread.sleep(1500);
+            Thread.sleep(1000);
             assertThat(sharedPreferences.getBoolean("checkbox_preference_notification", true), equalTo(true));
         }
     }

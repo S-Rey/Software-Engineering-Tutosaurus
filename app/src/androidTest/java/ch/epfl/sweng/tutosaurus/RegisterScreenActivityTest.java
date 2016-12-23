@@ -26,10 +26,6 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Stephane on 12/7/2016.
- */
-
 public class RegisterScreenActivityTest {
     private Solo solo;
 

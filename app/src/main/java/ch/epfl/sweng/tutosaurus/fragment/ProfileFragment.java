@@ -37,7 +37,9 @@ import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-
+/**
+ * Fragment where the main profile of the user is displayed
+ */
 public class ProfileFragment extends Fragment {
 
     private View myView;
@@ -74,7 +76,11 @@ public class ProfileFragment extends Fragment {
 
                 // Set profile name
                 TextView profileName = (TextView) myView.findViewById(R.id.profileName);
-                profileName.setText(thisUser.getFullName());
+                String name = thisUser.getFullName();
+                if(name.length() > 30) {
+                    name = name.substring(0,30) + "…";
+                }
+                profileName.setText(name);
 
                 // Set rating
                 RatingBar ratingBar = (RatingBar) myView.findViewById(R.id.ratingBar);
@@ -96,8 +102,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-
         Query refRequestedMeeting = dbh.getMeetingRequestsRef().child(currentUser);
         ListView meetingRequested = (ListView) myView.findViewById(R.id.meetingRequests);
         MeetingConfirmationAdapter requestedMeetingAdapter = new MeetingConfirmationAdapter(getActivity(),
@@ -105,9 +109,13 @@ public class ProfileFragment extends Fragment {
                                                                                             R.layout.meeting_confirmation_row,
                                                                                             refRequestedMeeting);
         meetingRequested.setAdapter(requestedMeetingAdapter);
+
         return myView;
     }
 
+    /**
+     * Load the image stored in internal storage and set it as the profile picture
+     */
     private void loadImageFromStorage() {
         FileInputStream in;
         try {
@@ -121,13 +129,12 @@ public class ProfileFragment extends Fragment {
             img.setImageResource(R.drawable.dino_logo);
             e.printStackTrace();
         }
-
     }
 
     /**
      * Return the user saved or Null if nothing in local database
      * @param context
-     * @return
+     * @return null
      */
     @Nullable
     private User getUserLocalDB(Context context) {
