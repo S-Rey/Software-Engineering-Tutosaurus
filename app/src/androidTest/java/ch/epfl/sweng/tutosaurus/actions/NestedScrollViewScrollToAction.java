@@ -1,4 +1,4 @@
-package ch.epfl.sweng.tutosaurus.TestActions;
+package ch.epfl.sweng.tutosaurus.actions;
 
 import android.graphics.Rect;
 import android.support.design.widget.CoordinatorLayout;

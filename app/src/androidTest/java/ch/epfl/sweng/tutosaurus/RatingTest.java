@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 
-import ch.epfl.sweng.tutosaurus.TestActions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 import ch.epfl.sweng.tutosaurus.activity.MainActivity;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 

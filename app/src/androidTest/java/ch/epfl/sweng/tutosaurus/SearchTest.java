@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import ch.epfl.sweng.tutosaurus.TestActions.NestedScrollViewScrollToAction;
+import ch.epfl.sweng.tutosaurus.actions.NestedScrollViewScrollToAction;
 import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
