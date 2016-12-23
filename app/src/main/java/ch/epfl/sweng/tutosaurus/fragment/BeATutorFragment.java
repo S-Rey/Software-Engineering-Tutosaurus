@@ -22,6 +22,9 @@ import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
 import static java.util.Arrays.asList;
 
+/**
+ * Fragment where the user selects his spoken languages and the subjects he wants to teach
+ */
 public class BeATutorFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private DatabaseHelper dbh = DatabaseHelper.getInstance();

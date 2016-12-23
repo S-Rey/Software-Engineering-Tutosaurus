@@ -2,7 +2,6 @@ package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
@@ -12,7 +11,6 @@ import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.SearchFactory.SearchCriterion;
 import ch.epfl.sweng.tutosaurus.SearchFactory.SearchCriterionFactory;
 import ch.epfl.sweng.tutosaurus.adapter.FirebaseTutorAdapter;
-import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
 /**

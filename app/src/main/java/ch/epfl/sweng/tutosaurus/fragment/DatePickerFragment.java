@@ -12,7 +12,7 @@ import java.util.Calendar;
 
 import ch.epfl.sweng.tutosaurus.R;
 
-import static android.app.DatePickerDialog.*;
+import static android.app.DatePickerDialog.OnDateSetListener;
 
 /**
  * A dialog fragment whose purpose is to pick a date.

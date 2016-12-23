@@ -37,7 +37,9 @@ import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-
+/**
+ * Fragment where the main profile of the user is displayed
+ */
 public class ProfileFragment extends Fragment {
 
     private View myView;

@@ -1,8 +1,8 @@
 package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -15,7 +15,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +40,6 @@ import ch.epfl.sweng.tutosaurus.model.User;
 /**
  * Activity where the student can create a meeting request
  */
-
 public class CreateMeetingActivity extends AppCompatActivity {
 
     private static final int PLACE_PICKER_REQUEST = 1;

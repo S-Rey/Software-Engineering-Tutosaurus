@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.activity.FindTutorResultActivity;
 import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
-import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.adapter.ClassicCourseAdapter;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;

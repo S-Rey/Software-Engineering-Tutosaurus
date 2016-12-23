@@ -18,9 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.Query;
 
+import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.activity.ChatActivity;
 import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
-import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.adapter.ChatListAdapter;
 import ch.epfl.sweng.tutosaurus.adapter.UserListAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
