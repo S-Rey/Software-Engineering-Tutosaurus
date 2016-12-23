@@ -24,6 +24,9 @@ import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * The activity in which the user confirms that the registration data provided is correct.
+ */
 public class ConfirmationActivity extends AppCompatActivity {
 
     private static final String TAG = "ConfirmationActivity";

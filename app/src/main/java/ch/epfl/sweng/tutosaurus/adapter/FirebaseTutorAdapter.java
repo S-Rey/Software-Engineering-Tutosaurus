@@ -19,6 +19,9 @@ import ch.epfl.sweng.tutosaurus.activity.PublicProfileActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * An adapter to display a list of tutors from Firebase.
+ */
 public class FirebaseTutorAdapter extends FirebaseListAdapter<User> {
 
     private static final String TAG = "FirebaseTutorAdapter";

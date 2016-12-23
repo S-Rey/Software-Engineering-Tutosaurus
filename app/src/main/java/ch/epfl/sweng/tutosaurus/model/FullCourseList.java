@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import ch.epfl.sweng.tutosaurus.R;
 
+/**
+ * A class that contain static definitions of the various available courses.
+ */
 public class FullCourseList {
     private static FullCourseList ourInstance = new FullCourseList();
     private ArrayList<Course> listOfCourses;

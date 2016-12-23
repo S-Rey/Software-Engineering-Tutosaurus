@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import ch.epfl.sweng.tutosaurus.R;
 
+/**
+ * Activity in which the user can request a password reset.
+ */
 public class ResetPasswordActivity extends AppCompatActivity {
 
     private EditText emailInput;

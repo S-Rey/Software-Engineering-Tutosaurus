@@ -30,6 +30,8 @@ import ch.epfl.sweng.tutosaurus.Tequila.Profile;
 
 
 /**
+ * Activity in which the user enter their registration info.
+ *
  * 1. Client creates request url: AuthClient.createCodeRequestUrl(config). The config is obtained from client id, client key and redirect uri. <br>
  * 2. Client accesses request url <br>
  * 3. Client enters username and password; gets 'code' in return. If user already entered details, the webview uses a cookie. <br>

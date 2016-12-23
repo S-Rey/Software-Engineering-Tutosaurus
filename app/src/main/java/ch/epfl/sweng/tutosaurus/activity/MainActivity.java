@@ -32,6 +32,9 @@ import ch.epfl.sweng.tutosaurus.R;
 
 import static ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver.LOG_TAG;
 
+/**
+ * The welcoming application of the app, in which the user logs in.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private NetworkChangeReceiver receiver;

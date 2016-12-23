@@ -21,6 +21,9 @@ import ch.epfl.sweng.tutosaurus.fragment.MessagingFragment;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Message;
 
+/**
+ * An activity in which the user chats with another user.
+ */
 public class ChatActivity extends AppCompatActivity {
     private static final String TAG = "ChatActivity";
 

@@ -15,7 +15,7 @@ import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 
 /**
- * It is used to populate listviews with the names of the courses and their icon
+ * Array Adapter that is used to populate listviews with the names of the courses and their icon
  */
 public class CourseAdapter extends ArrayAdapter<Course> {
     private Context context;

@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
 
+/**
+ * An activity showing various legal information about the app.
+ */
 public class AboutFragment extends Fragment {
 
     private View myView;

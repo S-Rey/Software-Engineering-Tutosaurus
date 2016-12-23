@@ -15,6 +15,9 @@ import ch.epfl.sweng.tutosaurus.adapter.FirebaseTutorAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * An activity where we diplay a list of tutors that match a certain criterion.
+ */
 public class FindTutorResultActivity extends AppCompatActivity {
 
     @Override

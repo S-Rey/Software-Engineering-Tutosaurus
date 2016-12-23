@@ -13,6 +13,9 @@ import com.google.firebase.database.Query;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Message;
 
+/**
+ * An adapter to display the messages between two users inside a ChatActivity.
+ */
 public class MessageListAdapter extends FirebaseListAdapter<Message>{
 
     private final static String TAG = "MessageListAdapter";

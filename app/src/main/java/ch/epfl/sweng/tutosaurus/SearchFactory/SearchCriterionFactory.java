@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by albertochiappa on 09/12/16.
+ * Factory class for criteria
  */
-
-
 public class SearchCriterionFactory {
     Map<String, SearchCriterion> searchNames;
 

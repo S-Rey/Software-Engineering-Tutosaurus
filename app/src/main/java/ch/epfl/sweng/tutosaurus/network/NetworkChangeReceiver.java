@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import ch.epfl.sweng.tutosaurus.R;
 
 /**
- * Class to be instantiated only once in MainActivity thus preferable to be Singleton
+ * Class to be instantiated only once in MainActivity thus preferable to be Singleton. Listens for changes in network connectivity.
  */
 public class NetworkChangeReceiver extends BroadcastReceiver {
     private Activity activity;

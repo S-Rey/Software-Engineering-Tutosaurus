@@ -5,9 +5,8 @@ import com.google.firebase.database.Query;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
 /**
- * Created by albertochiappa on 09/12/16.
+ * A criterion to search for tutors by their name.
  */
-
 public class SearchByName implements SearchCriterion {
 
     private DatabaseHelper dbh;

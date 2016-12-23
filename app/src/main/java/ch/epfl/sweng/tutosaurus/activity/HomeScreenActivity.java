@@ -68,6 +68,9 @@ import ch.epfl.sweng.tutosaurus.model.User;
 import ch.epfl.sweng.tutosaurus.service.MeetingService;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * The main activity of the app that contains the various fragments.
+ */
 public class HomeScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
