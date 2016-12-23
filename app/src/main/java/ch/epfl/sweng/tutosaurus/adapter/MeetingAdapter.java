@@ -88,7 +88,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         double latitudeMeeting = meeting.getLatitudeLocation();
         double longitudeMeeting = meeting.getLongitudeLocation();
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
-        showLocationMeeting(mainView, meeting, latitudeMeeting, longitudeMeeting, showLocationMeeting, locationMeeting);
+        showLocationMeeting(mainView, meeting, latitudeMeeting, longitudeMeeting, showLocationMeeting);
 
         Button detailsMeeting = (Button) mainView.findViewById(R.id.showDetailsMeeting);
         populateDetailsMeeting(mainView, meeting, detailsMeeting);
@@ -217,7 +217,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
     private void showLocationMeeting(final View mainView, final Meeting meeting,
                                      final double latitudeMeeting, final double longitudeMeeting,
-                                     Button showLocationMeeting, final TextView locationMeeting) {
+                                     Button showLocationMeeting) {
 
         showLocationMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
