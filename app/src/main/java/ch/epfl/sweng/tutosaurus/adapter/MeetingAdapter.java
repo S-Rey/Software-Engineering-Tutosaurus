@@ -44,6 +44,7 @@ import ch.epfl.sweng.tutosaurus.model.User;
 public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
 
     private static final long DIFFERENCE_TIME_JAVA = 59958144000000L; //discrepancy with Firebase date
+    private static final long DIFFERENCE_TIME_CALENDAR = 171401760000L; //discrepancy with the calendar
     private String currentUserUid;
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
     private float meetingRating;
@@ -104,7 +105,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
                 Intent intent = new Intent(Intent.ACTION_INSERT);
                 intent.setData(CalendarContract.Events.CONTENT_URI);
                 intent.putExtra(CalendarContract.Events.EVENT_TIMEZONE, "Switzerland/Lausanne");
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis() + DIFFERENCE_TIME_CALENDAR);
                 intent.putExtra(CalendarContract.Events.TITLE, meeting.getCourse().getName());
                 if (user != null) {
                     intent.putExtra(Intent.EXTRA_EMAIL, user.getEmail());
