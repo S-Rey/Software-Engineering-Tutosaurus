@@ -82,9 +82,11 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
         TextView descriptionMeeting = (TextView) mainView.findViewById(R.id.descriptionMeeting);
         populateDescriptionMeeting(meeting, descriptionMeeting);
 
+        TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
+        locationMeeting.setText(meeting.getNameLocation());
+
         double latitudeMeeting = meeting.getLatitudeLocation();
         double longitudeMeeting = meeting.getLongitudeLocation();
-        TextView locationMeeting = (TextView) mainView.findViewById(R.id.locationMeeting);
         Button showLocationMeeting = (Button) mainView.findViewById(R.id.showLocationMeeting);
         showLocationMeeting(mainView, meeting, latitudeMeeting, longitudeMeeting, showLocationMeeting, locationMeeting);
 
@@ -223,9 +225,6 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             public void onClick(View view) {
                 if (meeting.getNameLocation() == null) {
                     Toast.makeText(mainView.getContext(), "Place not selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    locationMeeting.setText(meeting.getNameLocation());
-                }
                 Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
                 intent.putExtra("latitudeMeeting", latitudeMeeting);
                 intent.putExtra("longitudeMeeting", longitudeMeeting);
