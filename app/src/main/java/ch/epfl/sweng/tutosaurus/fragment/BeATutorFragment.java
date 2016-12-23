@@ -7,14 +7,9 @@ import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +19,6 @@ import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
-import ch.epfl.sweng.tutosaurus.model.User;
 
 import static java.util.Arrays.asList;
 
@@ -45,6 +39,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
         if(currentUser != null) {
             currentuserUid = currentUser.getUid();
         }
+
         // remove dividers
         View rootView = getView();
         ListView list;
@@ -84,8 +79,14 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    /**
+     * Manage the preferences of the user on each data changes
+     * @param sharedPreferences
+     * @param key
+     */
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
+        //Add or remove a language from the preferences of the user depending of the selection
         for (String language : languages) {
             if (key.equals("checkbox_preference_" + language)) {
                 boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + language, true);
@@ -97,11 +98,13 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
             }
         }
 
+        //Add or remove a subject from the preferences of the user and update its text description
         for (Course course : courses) {
             String courseName = course.getId();
             EditTextPreference descriptionPreference = (EditTextPreference) getPreferenceScreen().findPreference(
                     "edit_text_preference_" + courseName);
 
+            //Add or remove the subject
             if (key.equals("checkbox_preference_" + courseName)) {
                 boolean isEnable = sharedPreferences.getBoolean("checkbox_preference_" + courseName, true);
                 if (isEnable) {
@@ -115,6 +118,7 @@ public class BeATutorFragment extends PreferenceFragment implements SharedPrefer
                 }
             }
 
+            //Update its description
             if (key.equals("edit_text_preference_" + courseName)) {
                 if (!(descriptionPreference.getText().equals("") ||
                         descriptionPreference.getText().equals("Enter your description."))) {

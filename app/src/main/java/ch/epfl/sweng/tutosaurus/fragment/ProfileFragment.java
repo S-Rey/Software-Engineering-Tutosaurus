@@ -3,7 +3,6 @@ package ch.epfl.sweng.tutosaurus.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -113,6 +111,9 @@ public class ProfileFragment extends Fragment {
         return myView;
     }
 
+    /**
+     * Load the image stored in internal storage and set it as the profile picture
+     */
     private void loadImageFromStorage() {
         FileInputStream in;
         try {
@@ -131,7 +132,7 @@ public class ProfileFragment extends Fragment {
     /**
      * Return the user saved or Null if nothing in local database
      * @param context
-     * @return
+     * @return null
      */
     @Nullable
     private User getUserLocalDB(Context context) {

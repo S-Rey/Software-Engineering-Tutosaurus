@@ -38,6 +38,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class HelpFragmentTest {
 
+    // Simple tests which doesn't cover any lines of the code have been added
+    // to check if some texts have been modified
+
     @Rule
     public IntentsTestRule<HomeScreenActivity> activityRule = new IntentsTestRule<>(
             HomeScreenActivity.class,

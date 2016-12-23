@@ -29,6 +29,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class AboutFragmentTest {
 
+    // Simple tests which doesn't cover any lines of the code just for checking
+    // if some texts have been modified like the version number or the description
+
     @Rule
     public IntentsTestRule<HomeScreenActivity> activityRule = new IntentsTestRule<>(
             HomeScreenActivity.class,

@@ -17,8 +17,8 @@ import ch.epfl.sweng.tutosaurus.activity.MainActivity;
 import ch.epfl.sweng.tutosaurus.activity.StartActivity;
 
 import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
 @RunWith(AndroidJUnit4.class)
 public class StartActivityTest {

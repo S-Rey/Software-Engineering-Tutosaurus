@@ -2,8 +2,6 @@ package ch.epfl.sweng.tutosaurus.activity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,13 +20,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
 import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
 
 import static ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver.LOG_TAG;
 

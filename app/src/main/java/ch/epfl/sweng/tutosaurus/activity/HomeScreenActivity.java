@@ -1,10 +1,8 @@
 package ch.epfl.sweng.tutosaurus.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -53,14 +51,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ch.epfl.sweng.tutosaurus.fragment.HelpFragment;
-import ch.epfl.sweng.tutosaurus.fragment.ProfileFragment;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.fragment.AboutFragment;
 import ch.epfl.sweng.tutosaurus.fragment.BeATutorFragment;
 import ch.epfl.sweng.tutosaurus.fragment.FindTutorsFragment;
+import ch.epfl.sweng.tutosaurus.fragment.HelpFragment;
 import ch.epfl.sweng.tutosaurus.fragment.MeetingsFragment;
 import ch.epfl.sweng.tutosaurus.fragment.MessagingFragment;
+import ch.epfl.sweng.tutosaurus.fragment.ProfileFragment;
 import ch.epfl.sweng.tutosaurus.fragment.SettingsFragment;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.helper.LocalDatabaseHelper;
@@ -126,6 +124,7 @@ public class HomeScreenActivity extends AppCompatActivity
         circleView = (CircleImageView) navigationView.getHeaderView(0).findViewById(R.id.circleView);
         linkProfilePictureToNavView(circleView);
 
+        //Handle specific intents
         if (intent.getAction() != null) {
             if (intent.getAction().equals("OPEN_TAB_PROFILE")) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -162,6 +161,7 @@ public class HomeScreenActivity extends AppCompatActivity
                     database = dbHelper.getWritableDatabase();
                     LocalDatabaseHelper.insertUser(thisUser, database);
                 }
+                //Update profile picture and user information in burger menu header
                 setBurgerMenuUser(thisUser.getFullName(), thisUser.getEmail(), thisUser.getSciper());
                 getImage(thisUser.getSciper());
             }
@@ -187,18 +187,26 @@ public class HomeScreenActivity extends AppCompatActivity
         pictureView = (ImageView) findViewById(R.id.picture_view);
     }
 
+    /**
+     * Send an intent to let the user call a phone number
+     * @param view
+     */
     public void sendMessageForCall(View view) {
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: (+41)791380861"));
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             //request permission from user if the app hasn't got the required permission
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.CALL_PHONE},   //request specific permission from user
+                    new String[]{android.Manifest.permission.CALL_PHONE},
                     10);
         } else {
             startActivity(intent);
         }
     }
 
+    /**
+     * Send an intent to let the user send an email
+     * @param view
+     */
     public void sendMessageForEmail(View view) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setData(Uri.parse("mailto:")).setType("text/plain");
@@ -230,7 +238,6 @@ public class HomeScreenActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_logOutButton) {
             mAuth.signOut();
 
@@ -282,6 +289,10 @@ public class HomeScreenActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Set the title of the tab as the text of the action bar
+     * @param title
+     */
     public void setActionBarTitle(String title) {
         ActionBar mActionBar = getSupportActionBar();
         if(mActionBar != null) {
@@ -289,6 +300,10 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Send an intent to open the photo gallery and select an image
+     * @param view
+     */
     private void loadImageFromGallery(View view) {
         Intent imageGalleryIntent = new Intent(Intent.ACTION_PICK);
         File picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -299,6 +314,10 @@ public class HomeScreenActivity extends AppCompatActivity
         startActivityForResult(imageGalleryIntent, GALLERY_REQUEST);
     }
 
+    /**
+     * Send an intent to open the camera to take a photo
+     * @param v
+     */
     private void dispatchTakePictureIntent(View v) {
         if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             Toast.makeText(HomeScreenActivity.this, "No camera", Toast.LENGTH_SHORT).show();
@@ -313,6 +332,10 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Start a chat after selecting one in the chat list
+     * @param chatIntent
+     */
     public void dispatchChatIntent(Intent chatIntent) {
         if(chatIntent.getComponent().getClassName().equals(ChatActivity.class.getName())) {
             startActivity(chatIntent);
@@ -321,6 +344,10 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Save the current picture to internal storage and update the circle picture in the menu
+     * @param bitmapImage
+     */
     private void saveToInternalStorage(Bitmap bitmapImage) {
         FileOutputStream fos = null;
         try {
@@ -344,6 +371,10 @@ public class HomeScreenActivity extends AppCompatActivity
         linkProfilePictureToNavView(circleView);
     }
 
+    /**
+     * Update the circle picture in the navigator header of the burger menu
+     * @param item
+     */
     private void linkProfilePictureToNavView(CircleImageView item) {
         FileInputStream in;
         try {
@@ -359,7 +390,12 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
-
+    /**
+     * Handle camera and gallery intents
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GALLERY_REQUEST) {
@@ -408,13 +444,20 @@ public class HomeScreenActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Resize image to specific dimensions
+     * @param img
+     */
     private Bitmap resizeBitmap(Bitmap img) {
         return ThumbnailUtils.extractThumbnail(img, PROFILE_PICTURE_WIDTH, PROFILE_PICTURE_HEIGHT);
     }
 
+    /**
+     * Build the Dialog View for taking/selecting a new profile picture
+     * @param view
+     */
     public void showChangePictureDialog(final View view){
         AlertDialog.Builder changePictureDialog = new AlertDialog.Builder(this);
-        //changePictureDialog.setTitle("New profile picture");
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item);
 
@@ -452,7 +495,7 @@ public class HomeScreenActivity extends AppCompatActivity
     /**
      * Return user saved
      * @param context
-     * @return
+     * @return null
      */
     @Nullable
     private User getUserLocalDB(Context context) {
@@ -476,7 +519,6 @@ public class HomeScreenActivity extends AppCompatActivity
                 Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                //Toast.makeText( getActivity().getBaseContext(),"hello",Toast.LENGTH_LONG).show();
                 ImageView img = (ImageView) findViewById(R.id.picture_view);
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 if(img != null) {

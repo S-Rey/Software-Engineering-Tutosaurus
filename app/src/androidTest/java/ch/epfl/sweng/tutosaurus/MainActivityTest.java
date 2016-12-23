@@ -22,7 +22,6 @@ import ch.epfl.sweng.tutosaurus.network.NetworkChangeReceiver;
 
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-
 import static org.junit.Assert.assertTrue;
 
 

@@ -82,48 +82,6 @@
     <string name="chemistry_enabled">Chemistry</string>
     <string name="computer_science_enabled">Computer Science</string>
 
-    <!-- TODO: List of subjects we can add -->
-    <!-- string name="analysis_enabled">Analysis (I, II, III, IV)</string> -->
-    <!-- string name="general_physics_enabled">General Physics (I, II)</string> -->
-    <!-- string name="linear_algebra_enabled">Linear Algebra</string> -->
-    <!-- string name="advanced_information_computation_communication_enabled">Advanced Information Computation Communication (I, II)</string> -->
-    <!-- string name="introduction_to_programming_enabled">Introduction to Programming</string> -->
-    <!-- string name="practice_of_object-oriented_programming_enabled">Practice of Object-Oriented Programming</string> -->
-    <!-- string name="digital_system_design_enabled">Digital System Design</string> -->
-    <!-- string name="functional_programming_enabled">Functional Programming</string> -->
-    <!-- string name="parallelism_and_concurrency_enabled">Parallelism and Concurrency</string> -->
-    <!-- string name="system-oriented_programming_enabled">System-Oriented Programming</string> -->
-    <!-- string name="computer_networks_enabled">Computer Networks</string> -->
-    <!-- string name="algorithms_enabled">Algorithms</string> -->
-    <!-- string name="probabilities_and_statistics_enabled">Probabilities and Statistics</string> -->
-    <!-- string name="theory_of_computation_enabled">Theory of Computation</string> -->
-    <!-- string name="computer_architecture_enabled">Computer Architecture</string> -->
-    <!-- string name="systems-on-chip_architecture_enabled">Systems-on-chip Architecture</string> -->
-    <!-- string name="introduction_to_multiprocessor_architecture_enabled">Introduction to Multiprocessor Architecture</string> -->
-    <!-- string name="networks_security_enabled">Networks Security</string> -->
-    <!-- string name="introduction_to_database_systems_enabled">Introduction to Database Systems</string> -->
-    <!-- string name="introduction_to_operating_systems_enabled">Introduction to Operating Systems</string> -->
-    <!-- string name="software_engineering_enabled">Software Engineering</string> -->
-    <!-- string name="advanced_general_chemistry_enabled">Advanced General Chemistry</string> -->
-    <!-- string name="introduction_to_life_sciences_enabled">Introduction to Life Sciences</string> -->
-    <!-- string name="introduction_to_visual_computing_enabled">Introduction to Visual Computing</string> -->
-    <!-- string name="circuits_and_systems_enabled">Circuits and Systems (I, II)</string> -->
-    <!-- string name="electronics_enabled">Electronics (I, II, III)</string> -->
-    <!-- string name="algebra_enabled">Algebra</string> -->
-    <!-- string name="quantum_calculations_enabled">Quantum Calculations</string> -->
-    <!-- string name="computer_language_processing_enabled">Computer Language Processing</string> -->
-    <!-- string name="electromagnetism_enabled">Electromagnetism (I, II)</string> -->
-    <!-- string name="artificial_intelligence_enabled">Artificial Intelligence</string> -->
-    <!-- string name="internet_analytics_enabled">Internet Analytics</string> -->
-    <!-- string name="introduction_to_computer_graphics_enabled">Introduction to Computer Graphics</string> -->
-    <!-- string name="stochastic_models_for_communications_enabled">Stochastic Models for Communications</string> -->
-    <!-- string name="numerical_methods_for_visual_computing_enabled">Numerical Methods for Visual Computing</string> -->
-    <!-- string name="operating_systems_implementation_enabled">Operating Systems Implementation</string> -->
-    <!-- string name="principles_of_digital_communications_enabled">Principles of Digital Communications</string> -->
-    <!-- string name="signal_processing_for_communications_enabled">Signal Processing for Communications</string> -->
-    <!-- string name="quantum_information_processing_enabled">Quantum Information Processing</string> -->
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="enable_notifications">Enable Notifications</string>
     <string name="epfl_web_site">Go to EPFL website</string>
 
