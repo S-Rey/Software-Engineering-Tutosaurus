@@ -127,17 +127,16 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
     }
 
 
-    private void populateDetailsMeeting(View mainView, final Meeting meeting, Button detailsMeeting) {
-        final View currentRow = mainView;
+    private void populateDetailsMeeting(final View mainView, final Meeting meeting, Button detailsMeeting) {
         final RatingBar ratingBar = (RatingBar) mainView.findViewById(R.id.ratingBar);
         if(meeting.getDate().getTime() > new Date().getTime() + DIFFERENCE_TIME_JAVA) {
-            showDetailsFutureMeetings(detailsMeeting, currentRow, ratingBar);
+            showDetailsFutureMeetings(detailsMeeting, mainView, ratingBar);
         }
         else if(meeting.isRated()) {
             showRatingRatedMeeting(meeting, detailsMeeting, ratingBar);
         }
         else {
-            showToBeRatedMeeting(meeting, detailsMeeting, currentRow, ratingBar);
+            showToBeRatedMeeting(meeting, detailsMeeting, mainView, ratingBar);
         }
     }
 
@@ -225,6 +224,7 @@ public class MeetingAdapter extends FirebaseListAdapter<Meeting>{
             public void onClick(View view) {
                 if (meeting.getNameLocation() == null) {
                     Toast.makeText(mainView.getContext(), "Place not selected", Toast.LENGTH_SHORT).show();
+                }
                 Intent intent = new Intent(mainView.getContext(), LocationActivity.class);
                 intent.putExtra("latitudeMeeting", latitudeMeeting);
                 intent.putExtra("longitudeMeeting", longitudeMeeting);
