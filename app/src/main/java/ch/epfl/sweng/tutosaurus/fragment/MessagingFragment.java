@@ -28,6 +28,9 @@ import ch.epfl.sweng.tutosaurus.model.Chat;
 import ch.epfl.sweng.tutosaurus.model.Identifiable;
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * A fragment where the user can select with which other user they want to chat.
+ */
 public class MessagingFragment extends Fragment {
 
     private static final String TAG = "MessagingFragment";

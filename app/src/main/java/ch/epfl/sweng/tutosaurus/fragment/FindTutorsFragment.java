@@ -22,6 +22,9 @@ import ch.epfl.sweng.tutosaurus.adapter.ClassicCourseAdapter;
 import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 
+/**
+ * A fragment where the user can search for tutors according to a variety of criteria.
+ */
 public class FindTutorsFragment extends Fragment {
     private View myView;
 

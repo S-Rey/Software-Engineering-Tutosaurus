@@ -13,9 +13,10 @@ import java.util.Set;
 
 import ch.epfl.sweng.tutosaurus.model.User;
 
+/**
+ * Utility class to ease manipulatin of the local SQL database.
+ */
 public class LocalDatabaseHelper extends SQLiteOpenHelper {
-
-
 
     private static final String LOGCAT = "LOGCATDB";
 

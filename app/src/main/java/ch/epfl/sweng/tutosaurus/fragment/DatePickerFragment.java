@@ -14,6 +14,9 @@ import ch.epfl.sweng.tutosaurus.R;
 
 import static android.app.DatePickerDialog.*;
 
+/**
+ * A dialog fragment whose purpose is to pick a date.
+ */
 public class DatePickerFragment extends DialogFragment
         implements OnDateSetListener {
 

@@ -17,6 +17,9 @@ import ch.epfl.sweng.tutosaurus.activity.FindTutorResultActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.model.Course;
 
+/**
+ * Adapter to populate the listviews that also need an onClickListener on each row
+ */
 public class ClassicCourseAdapter extends ArrayAdapter<Course> {
     private Context context;
     private int layoutResourceId;

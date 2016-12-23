@@ -1,8 +1,7 @@
 package ch.epfl.sweng.tutosaurus.SearchFactory;
 
 /**
- * Created by albertochiappa on 09/12/16.
+ * Exception that occurs when an invalid search criterion is provided.
  */
-
 public class NoSuchSearchCriterion extends RuntimeException {
 }

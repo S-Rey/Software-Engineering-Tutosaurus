@@ -1,5 +1,8 @@
 package ch.epfl.sweng.tutosaurus.model;
 
+/**
+ * Represents a course
+ */
 public class Course {
 
     private String name;

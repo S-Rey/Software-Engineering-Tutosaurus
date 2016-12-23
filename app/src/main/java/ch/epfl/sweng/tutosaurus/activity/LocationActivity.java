@@ -32,7 +32,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import ch.epfl.sweng.tutosaurus.R;
 
-
+/**
+ * Activity that allows an user to pick a location.
+ */
 public class LocationActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
 

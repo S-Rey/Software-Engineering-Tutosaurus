@@ -8,6 +8,9 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Headless activity that checks wether an user is logged in at application startup.
+ */
 public class StartActivity extends AppCompatActivity {
 
     private static final String TAG = "StartActivity";

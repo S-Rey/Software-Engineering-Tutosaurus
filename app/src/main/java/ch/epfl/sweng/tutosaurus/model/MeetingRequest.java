@@ -1,5 +1,8 @@
 package ch.epfl.sweng.tutosaurus.model;
 
+/**
+ * Represents a meeting request.
+ */
 public class MeetingRequest implements Identifiable{
 
     private String uid;

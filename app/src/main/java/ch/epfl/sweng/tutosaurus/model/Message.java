@@ -1,5 +1,8 @@
 package ch.epfl.sweng.tutosaurus.model;
 
+/**
+ * Represents a message sent from one user to another.
+ */
 public class Message {
 
     private String from;

@@ -13,6 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import ch.epfl.sweng.tutosaurus.R;
 
+/**
+ * An activity in which the user can request a password change.
+ */
 public class ChangePasswordActivity extends AppCompatActivity {
 
     @Override

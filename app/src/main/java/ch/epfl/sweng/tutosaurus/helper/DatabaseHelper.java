@@ -13,8 +13,9 @@ import ch.epfl.sweng.tutosaurus.model.MeetingRequest;
 import ch.epfl.sweng.tutosaurus.model.Message;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-
-
+/**
+ * Utility class with various methods to access and write to the Firebase database. Singleton.
+ */
 public class DatabaseHelper {
 
     private final static String TAG = "DatabaseHelper";

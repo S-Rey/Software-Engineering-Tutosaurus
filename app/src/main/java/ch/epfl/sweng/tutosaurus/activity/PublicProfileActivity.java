@@ -33,11 +33,12 @@ import ch.epfl.sweng.tutosaurus.model.Course;
 import ch.epfl.sweng.tutosaurus.model.FullCourseList;
 import ch.epfl.sweng.tutosaurus.model.User;
 
-
+/**
+ * Activity that displays the profile of the current user.
+ */
 public class PublicProfileActivity extends AppCompatActivity {
 
     private DatabaseHelper dbh = DatabaseHelper.getInstance();
-    private String curentUserUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +46,6 @@ public class PublicProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_public_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(currentUser != null) {
-            curentUserUid = currentUser.getUid();
-        }
 
         Intent intent = getIntent();
         final String userId = intent.getStringExtra("USER_ID");

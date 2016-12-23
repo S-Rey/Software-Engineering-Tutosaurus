@@ -28,6 +28,9 @@ import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 
+/**
+ * A service that listens for new meeting requests and show relevant notifications.
+ */
 public class MeetingService extends Service {
 
     private static final String TAG = "MeetingService";
