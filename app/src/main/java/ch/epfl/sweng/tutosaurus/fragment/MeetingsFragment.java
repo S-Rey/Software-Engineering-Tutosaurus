@@ -12,8 +12,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.Query;
 
-import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.adapter.MeetingAdapter;
 import ch.epfl.sweng.tutosaurus.helper.DatabaseHelper;
 import ch.epfl.sweng.tutosaurus.model.Meeting;
@@ -21,7 +21,6 @@ import ch.epfl.sweng.tutosaurus.model.Meeting;
 /**
  * Fragment where the list of all the meetings of the user is shown
  */
-
 public class MeetingsFragment extends Fragment {
 
     private static final long DIFFERENCE_TIME_JAVA = 59958144000000L; //discrepancy with Firebase date

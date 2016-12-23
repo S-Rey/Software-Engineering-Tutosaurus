@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 import ch.epfl.sweng.tutosaurus.R;
+import ch.epfl.sweng.tutosaurus.activity.HomeScreenActivity;
 
 /**
- * An activity showing various legal information about the app.
+ * A fragment showing various legal information about the app.
  */
 public class AboutFragment extends Fragment {
 

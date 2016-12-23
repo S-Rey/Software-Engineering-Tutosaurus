@@ -38,6 +38,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class HelpFragmentTest {
 
+    // Simple tests which doesn't cover any lines of the code have been added
+    // to check if some texts have been modified
+
     @Rule
     public IntentsTestRule<HomeScreenActivity> activityRule = new IntentsTestRule<>(
             HomeScreenActivity.class,
@@ -60,8 +63,7 @@ public class HelpFragmentTest {
 
     @Before
     public void grantPhonePermission() {
-        // In M+, trying to call a number will trigger a runtime dialog. Make sure
-        // the permission is granted before running this test.
+        // Wake sure the phone permission is granted before running these tests.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getInstrumentation().getUiAutomation().executeShellCommand(
                     "pm grant " + getTargetContext().getPackageName()
@@ -89,12 +91,12 @@ public class HelpFragmentTest {
 
     @Test
     public void checkTextPhoneNumber() {
-        onView(withId(R.id.phoneNumberHelp)).check(matches(withText("+41 21 000 0000")));
+        onView(withId(R.id.phoneNumberHelp)).check(matches(withText("+41 79 138 0861")));
     }
 
     @Test
     public void checkTextEmail() {
-        onView(withId(R.id.emailAddressHelp)).check(matches(withText("android.studio@epfl.ch")));
+        onView(withId(R.id.emailAddressHelp)).check(matches(withText("vincent.rinaldi@epfl.ch")));
     }
 
     @Test
