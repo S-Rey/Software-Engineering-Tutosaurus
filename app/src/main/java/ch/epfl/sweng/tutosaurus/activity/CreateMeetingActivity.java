@@ -97,7 +97,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
         timePicker.show(getFragmentManager(), "timePicker");
         datePicker.show(getFragmentManager(), "datePicker");
 
-        TextView dateTimeView = (TextView) findViewById(R.id.dateView   );
+        TextView dateTimeView = (TextView) findViewById(R.id.dateView);
         dateTimeView.setVisibility(View.VISIBLE);
         String date = datePicker.getDate() + " h " + timePicker.getTime();
         dateTimeView.setText(date);
