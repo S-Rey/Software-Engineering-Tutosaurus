@@ -10,7 +10,7 @@ Collaborators:
  
 
 ### Synopsis
-This repository contains all the code of the project of the Software Engeenreing classe givent at [EPFL](http://www.epfl.ch).
+This repository contains all the code of the project of the Software Engeenreing class givent at [EPFL](http://www.epfl.ch).
 
 The purpose of the Tutosaurus application was to put in contact students researching teacher students
 and students wanting to teach them.
