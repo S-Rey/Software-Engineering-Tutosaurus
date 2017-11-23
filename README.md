@@ -6,7 +6,7 @@ Collaborators:
  * [albertochiappa](https://github.com/albertochiappa)
  * Vincent Rinaldi
  * [BlaBlaEP](https://github.com/BlaBlaEP)
- * [S-Rey](https://github.com/BlaBlaEP)
+ * [S-Rey](https://github.com/S-Rey)
  
 
 ### Synopsis
@@ -22,6 +22,3 @@ Also after the meeting, the student and the teacher student can rate each other 
 
 ### Screenshots
 ![All the sections](screenshots/0.png)
-![Find tutors interface](screenshots/1.png)
-![User can choose their skills](screenshots/3.png)
-![The settings ](screenshots/3.png)
